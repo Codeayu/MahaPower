@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maharashtra Government Schemes Portal</title>
+    <link rel="stylesheet" href="static/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Noto+Sans:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <div class="logo">
+                    <h1>Maharashtra Government Schemes Portal</h1>
+                </div>
+                <div class="language-toggle">
+                    <button id="langToggle">English | मराठी</button>
+                </div>
+            </div>
+        </nav>
+        
+        <div class="hero">
+            <div class="container">
+                <h2 class="tagline">Empowering Citizens Through Accessible Schemes</h2>
+                <div class="search-section">
+                    <div class="search-bar">
+                        <input type="text" placeholder="Search for schemes...">
+                        <button class="search-btn"><i class="fas fa-search"></i></button>
+                    </div>
+                    <div class="filters">
+                        <select class="filter-dropdown">
+                            <option value="">Scheme Type</option>
+                            <option value="loan">Loan</option>
+                            <option value="skill">Skill</option>
+                            <option value="funding">Funding</option>
+                        </select>
+                        <select class="filter-dropdown">
+                            <option value="">Sector</option>
+                            <option value="agriculture">Agriculture</option>
+                            <option value="manufacturing">Manufacturing</option>
+                            <option value="women">Women Empowerment</option>
+                            <option value="msme">MSME</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Key Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Key Features</h2>
+            <div class="feature-cards">
+                <div class="feature-card">
+                    <div class="feature-icon">₹</div>
+                    <h3>Loan Assistance</h3>
+                    <p class="english">Easy access to government-backed loans with low interest rates</p>
+                    <p class="marathi">कमी व्याज दराने सरकारी कर्जांचा सहज प्रवेश</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛠️</div>
+                    <h3>Skill Development</h3>
+                    <p class="english">Free training programs to enhance your professional skills</p>
+                    <p class="marathi">आपल्या व्यावसायिक कौशल्यांना वाढविण्यासाठी मोफत प्रशिक्षण कार्यक्रम</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <h3>Startup Funding</h3>
+                    <p class="english">Financial support for innovative business ideas and startups</p>
+                    <p class="marathi">नवीन व्यवसाय कल्पना आणि स्टार्टअप्ससाठी आर्थिक सहाय्य</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scheme Showcase Section -->
+    <section class="schemes">
+        <div class="container">
+            <h2 class="section-title">Featured Schemes</h2>
+            <div class="scheme-grid">
+                <!-- Scheme Card 1 -->
+                <div class="scheme-card">
+                    <div class="scheme-image">
+                        <img src="/placeholder.svg?height=200&width=300" alt="Agriculture Scheme">
+                    </div>
+                    <div class="scheme-content">
+                        <div class="scheme-badge">Agriculture</div>
+                        <h3 class="scheme-title">Krishi Vikas Yojana</h3>
+                        <p class="scheme-title-marathi">कृषी विकास योजना</p>
+                        <p class="scheme-summary">Up to ₹5L at 4% interest for farm equipment</p>
+                        <button class="view-details">View Details</button>
+                    </div>
+                </div>
+
+                <!-- Scheme Card 2 -->
+                <div class="scheme-card">
+                    <div class="scheme-image">
+                        <img src="/placeholder.svg?height=200&width=300" alt="Women Empowerment Scheme">
+                    </div>
+                    <div class="scheme-content">
+                        <div class="scheme-badge">Women Empowerment</div>
+                        <h3 class="scheme-title">Mahila Sashaktikaran Yojana</h3>
+                        <p class="scheme-title-marathi">महिला सशक्तिकरण योजना</p>
+                        <p class="scheme-summary">Up to ₹3L at 2% interest for women entrepreneurs</p>
+                        <button class="view-details">View Details</button>
+                    </div>
+                </div>
+
+                <!-- Scheme Card 3 -->
+                <div class="scheme-card">
+                    <div class="scheme-image">
+                        <img src="/placeholder.svg?height=200&width=300" alt="MSME Scheme">
+                    </div>
+                    <div class="scheme-content">
+                        <div class="scheme-badge">MSME</div>
+                        <h3 class="scheme-title">MSME Growth Program</h3>
+                        <p class="scheme-title-marathi">एमएसएमई विकास कार्यक्रम</p>
+                        <p class="scheme-summary">Up to ₹10L funding with business mentorship</p>
+                        <button class="view-details">View Details</button>
+                    </div>
+                </div>
+
+                <!-- Scheme Card 4 -->
+                <div class="scheme-card">
+                    <div class="scheme-image">
+                        <img src="/placeholder.svg?height=200&width=300" alt="Skill Development Scheme">
+                    </div>
+                    <div class="scheme-content">
+                        <div class="scheme-badge">Skill Development</div>
+                        <h3 class="scheme-title">Kaushalya Vardhan Yojana</h3>
+                        <p class="scheme-title-marathi">कौशल्य वर्धन योजना</p>
+                        <p class="scheme-summary">Free training with ₹5000 monthly stipend</p>
+                        <button class="view-details">View Details</button>
+                    </div>
+                </div>
+
+                <!-- Scheme Card 5 -->
+                <div class="scheme-card">
+                    <div class="scheme-image">
+                        <img src="/placeholder.svg?height=200&width=300" alt="Education Scheme">
+                    </div>
+                    <div class="scheme-content">
+                        <div class="scheme-badge">Education</div>
+                        <h3 class="scheme-title">Vidyarthi Scholarship</h3>
+                        <p class="scheme-title-marathi">विद्यार्थी शिष्यवृत्ती</p>
+                        <p class="scheme-summary">Up to ₹50,000 annual scholarship for students</p>
+                        <button class="view-details">View Details</button>
+                    </div>
+                </div>
+
+                <!-- Scheme Card 6 -->
+                <div class="scheme-card">
+                    <div class="scheme-image">
+                        <img src="/placeholder.svg?height=200&width=300" alt="Healthcare Scheme">
+                    </div>
+                    <div class="scheme-content">
+                        <div class="scheme-badge">Healthcare</div>
+                        <h3 class="scheme-title">Arogya Suraksha Yojana</h3>
+                        <p class="scheme-title-marathi">आरोग्य सुरक्षा योजना</p>
+                        <p class="scheme-summary">Up to ₹5L health coverage for families</p>
+                        <button class="view-details">View Details</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-contact">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-envelope"></i> info@maharashtraschemes.gov.in</p>
+                    <p><i class="fas fa-phone"></i> 1800-123-4567</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-logo">
+                    <img src="/placeholder.svg?height=80&width=80" alt="Government of Maharashtra Logo">
+                    <p class="copyright">© 2025 Government of Maharashtra. All Rights Reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="static/script.js"></script>
+</body>
+</html>
