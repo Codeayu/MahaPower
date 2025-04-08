@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maharashtra Government Schemes Portal</title>
+    <link rel="stylesheet" href="static/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Noto+Sans:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 font-poppins">
+    <!-- Header Section -->
+    <header>
+        <nav class="navbar bg-gradient-to-r from-blue-500 to-blue-700 text-white py-4 shadow-lg">
+            <div class="container mx-auto flex justify-between items-center px-6">
+                <div class="logo">
+                    <h1 class="text-2xl font-extrabold tracking-wide">Maharashtra Government Schemes Portal</h1>
+                </div>
+                <div class="language-toggle">
+                    <button id="langToggle" class="bg-white text-blue-600 px-4 py-2 rounded-md shadow-md hover:bg-gray-100 transition duration-300">
+                        English | मराठी
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-10">
+        <div class="bg-white shadow-lg rounded-lg p-8">
+            {% if scheme.photo %}
+            <div class="scheme-image mb-8">
+                <img src="{{ scheme.photo.url }}" alt="{{ scheme.title }}" class="w-full h-72 object-cover rounded-lg shadow-md">
+            </div>
+            {% endif %}
+            <!-- Tabs -->
+            <div class="tabs">
+                <ul class="flex border-b">
+                    <li class="mr-1">
+                        <a href="#english" class="bg-white inline-block py-2 px-4 text-blue-500 font-semibold hover:text-blue-700 active-tab">English</a>
+                    </li>
+                    <li class="mr-1">
+                        <a href="#marathi" class="bg-white inline-block py-2 px-4 text-gray-500 font-semibold hover:text-blue-700">मराठी</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Tab Content -->
+            <div id="english" class="tab-content mt-6">
+                <!-- Scheme Image -->
+               
+
+                <!-- Scheme Details in English -->
+                <h1 class="text-4xl font-extrabold text-gray-800 mb-6">{{ scheme.name_en }}</h1>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h2 class="text-lg font-semibold text-gray-700">Scheme Type</h2>
+                        <p class="text-gray-600 mt-1">{{ scheme.scheme_type }}</p>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-semibold text-gray-700">Sector</h2>
+                        <p class="text-gray-600 mt-1">{{ scheme.sector }}</p>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-semibold text-gray-700">Start Date</h2>
+                        <p class="text-gray-600 mt-1">{{ scheme.created_at|date:"F j, Y" }}</p>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-semibold text-gray-700">Eligibility</h2>
+                        <p class="text-gray-600 mt-1">{{ scheme.eligibility_criteria_en }}</p>
+                    </div>
+                </div>
+                <div class="mt-8">
+                    <h2 class="text-lg font-semibold text-gray-700">Description</h2>
+                    <p class="text-gray-600 mt-2 leading-relaxed">{{ scheme.details_en }}</p>
+                </div>
+                <div class="mt-8">
+                    <h2 class="text-lg font-semibold text-gray-700">Benefits</h2>
+                    <ul class="list-disc list-inside text-gray-600 mt-2 space-y-2">
+                        <li>{{ scheme.summary_en }}</li>
+                    </ul>
+                </div>
+                {% if scheme.website_link %}
+                <div class="mt-8">
+                    <h2 class="text-lg font-semibold text-gray-700">Website</h2>
+                    <a href="{{ scheme.website_link }}" class="text-blue-500 hover:underline font-medium mt-2 inline-block" target="_blank">
+                        Visit Official Website
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+
+            <div id="marathi" class="tab-content mt-6 hidden">
+                <!-- Scheme Details in Marathi -->
+                <h1 class="text-4xl font-extrabold text-gray-800 mb-6">{{ scheme.name_mr }}</h1>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h2 class="text-lg font-semibold text-gray-700">योजना प्रकार</h2>
+                        <p class="text-gray-600 mt-1">{{ scheme.scheme_type }}</p>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-semibold text-gray-700">क्षेत्र</h2>
+                        <p class="text-gray-600 mt-1">{{ scheme.sector }}</p>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-semibold text-gray-700">सुरुवातीची तारीख</h2>
+                        <p class="text-gray-600 mt-1">{{ scheme.created_at|date:"F j, Y" }}</p>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-semibold text-gray-700">पात्रता</h2>
+                        <p class="text-gray-600 mt-1">{{ scheme.eligibility_criteria_mr }}</p>
+                    </div>
+                </div>
+                <div class="mt-8">
+                    <h2 class="text-lg font-semibold text-gray-700">वर्णन</h2>
+                    <p class="text-gray-600 mt-2 leading-relaxed">{{ scheme.details_mr }}</p>
+                </div>
+                <div class="mt-8">
+                    <h2 class="text-lg font-semibold text-gray-700">फायदे</h2>
+                    <ul class="list-disc list-inside text-gray-600 mt-2 space-y-2">
+                        <li>{{ scheme.summary_mr }}</li>
+                    </ul>
+                </div>
+                {% if scheme.website_link %}
+                <div class="mt-8">
+                    <h2 class="text-lg font-semibold text-gray-700">वेबसाईट</h2>
+                    <a href="{{ scheme.website_link }}" class="text-blue-500 hover:underline font-medium mt-2 inline-block" target="_blank">
+                        अधिकृत वेबसाईटला भेट द्या
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Tab switching logic
+        document.querySelectorAll('.tabs a').forEach(tab => {
+            tab.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelectorAll('.tabs a').forEach(t => t.classList.remove('text-blue-500', 'active-tab'));
+                document.querySelectorAll('.tab-content').forEach(content => content.classList.add('hidden'));
+                this.classList.add('text-blue-500', 'active-tab');
+                document.querySelector(this.getAttribute('href')).classList.remove('hidden');
+            });
+        });
+    </script>
+
+    <!-- Footer Section -->
+    <footer class="bg-gray-800 text-white py-6 mt-10">
+        <div class="container mx-auto text-center">
+            <p class="text-sm">&copy; 2023 Maharashtra Government Schemes Portal. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
