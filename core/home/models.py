@@ -45,8 +45,8 @@ class Scheme(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     is_active = models.BooleanField(default=True)
     photo = models.ImageField(upload_to='scheme_photos/', blank=True, null=True)
-    elibigility_criteria_en = models.TextField(blank=True, null=True, default="")
-    elibigility_criteria_mr = models.TextField(blank=True, null=True)
+    eligibility_criteria_en = models.TextField(blank=True, null=True, default="")
+    eligibility_criteria_mr = models.TextField(blank=True, null=True)
     created_by = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):

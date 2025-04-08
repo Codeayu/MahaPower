@@ -41,6 +41,7 @@ def is_admin(user):
 def is_staff_user(user):
     return user.is_authenticated and user.is_staff_user
 
+
 @login_required
 @user_passes_test(lambda u: u.is_superuser or u.is_staff_user)
 def add_scheme(request):
@@ -59,6 +60,7 @@ def add_scheme(request):
         is_active = request.POST.get('is_active') == 'on'
         website_link = request.POST.get('website_link')
 
+        # Check required fields
         if not all([name_en, name_mr, scheme_type, sector, summary_en, eligibility_criteria_en, eligibility_criteria_mr]):
             messages.error(request, "Please fill all required fields.")
         else:
@@ -72,7 +74,7 @@ def add_scheme(request):
                 details_en=details_en,
                 details_mr=details_mr,
                 photo=photo,
-                elibigility_criteria_en=eligibility_criteria_en,
+                eligibility_criteria_en=eligibility_criteria_en,  # Fixed typo
                 eligibility_criteria_mr=eligibility_criteria_mr,
                 is_active=is_active,
                 website_link=website_link,
