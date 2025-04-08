@@ -62,7 +62,7 @@
                     <p class="marathi">कमी व्याज दराने सरकारी कर्जांचा सहज प्रवेश</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">🛠️</div>
+                    <div class="feature-icon">🛠</div>
                     <h3>Skill Development</h3>
                     <p class="english">Free training programs to enhance your professional skills</p>
                     <p class="marathi">आपल्या व्यावसायिक कौशल्यांना वाढविण्यासाठी मोफत प्रशिक्षण कार्यक्रम</p>
@@ -85,14 +85,14 @@
                 {% for scheme in schemes %}
                 <div class="scheme-card">
                     <div class="scheme-image">
-                        <img src="{{ scheme.photo.url }}" alt="{{ scheme.title }}">
+                        <img src="{{ scheme.image.url }}" alt="{{ scheme.title }}">
                     </div>
                     <div class="scheme-content">
                         <div class="scheme-badge">{{ scheme.sector }}</div>
                         <h3 class="scheme-title">{{ scheme.name_en}}</h3>
                         <p class="scheme-title-marathi">{{ scheme.name_mr }}</p>
                         <p class="scheme-summary">{{ scheme.summary }}</p>
-                        <a href="/scheme_detail/{{ scheme.id }}" class="view-details">View Details</a>
+                        <a href="{% url 'scheme_detail' scheme.id %}" class="view-details">View Details</a>
                     </div>
                 </div>
                 {% endfor %}
