@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.utils import timezone
 
 # Custom user model to handle admin and staff roles
 class CustomUser(AbstractUser):
@@ -40,6 +41,12 @@ class Scheme(models.Model):
     details_en = models.TextField()
     details_mr = models.TextField()
     website_link = models.URLField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    is_active = models.BooleanField(default=True)
+    photo = models.ImageField(upload_to='scheme_photos/', blank=True, null=True)
+    elibigility_criteria_en = models.TextField(blank=True, null=True, default="")
+    elibigility_criteria_mr = models.TextField(blank=True, null=True)
     created_by = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):

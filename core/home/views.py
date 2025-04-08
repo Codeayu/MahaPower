@@ -53,9 +53,13 @@ def add_scheme(request):
         summary_mr = request.POST.get('summary_mr')
         details_en = request.POST.get('details_en')
         details_mr = request.POST.get('details_mr')
+        photo = request.FILES.get('photo')
+        eligibility_criteria_en = request.POST.get('eligibility_criteria_en')
+        eligibility_criteria_mr = request.POST.get('eligibility_criteria_mr')
+        is_active = request.POST.get('is_active') == 'on'
         website_link = request.POST.get('website_link')
 
-        if not all([name_en, name_mr, scheme_type, sector, summary_en]):
+        if not all([name_en, name_mr, scheme_type, sector, summary_en, eligibility_criteria_en, eligibility_criteria_mr]):
             messages.error(request, "Please fill all required fields.")
         else:
             Scheme.objects.create(
@@ -67,6 +71,10 @@ def add_scheme(request):
                 summary_mr=summary_mr,
                 details_en=details_en,
                 details_mr=details_mr,
+                photo=photo,
+                elibigility_criteria_en=eligibility_criteria_en,
+                eligibility_criteria_mr=eligibility_criteria_mr,
+                is_active=is_active,
                 website_link=website_link,
                 created_by=request.user
             )
