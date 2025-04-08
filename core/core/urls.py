@@ -21,6 +21,9 @@ from home import views
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('admin/', admin.site.urls),
+    # path('about/', views.about, name='about'),
+    # path('contact/', views.contact, name='contact'),
     path('scheme/<int:scheme_id>/', views.scheme_detail, name='scheme_detail'),
     path('add-scheme/', views.add_scheme, name='add_scheme'),
 ]

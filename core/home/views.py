@@ -1,23 +1,33 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
-from .models import Scheme
+from .models import Scheme, CustomUser
 from django.contrib import messages
+
 
 def index(request):
     schemes = Scheme.objects.all()
+    scheme_type = request.GET.get('scheme_type')  # Filter by scheme type
+    sector = request.GET.get('sector')  # Filter by sector
+    search_query = request.GET.get('search', '')  # Search query
+    lang = request.GET.get('lang', 'en')  # Default language is English
 
-    scheme_type = request.GET.get('type')
-    sector = request.GET.get('sector')
-    lang = request.GET.get('lang', 'en')
-
+    # Apply filters if query parameters are provided
     if scheme_type:
         schemes = schemes.filter(scheme_type=scheme_type)
     if sector:
         schemes = schemes.filter(sector=sector)
+    if search_query:
+        schemes = schemes.filter(name_en__icontains=search_query)  # Search by name in English
+        
+    print(schemes)
 
+    # Pass the filtered schemes and language to the templa  te
     return render(request, 'index.html', {
         'schemes': schemes,
         'lang': lang,
+        'search_query': search_query,
+        'scheme_type': scheme_type,
+        'sector': sector,
     })
 
 def scheme_detail(request, scheme_id):
@@ -64,3 +74,24 @@ def add_scheme(request):
             return redirect('index')
 
     return render(request, 'add_scheme.html')
+
+def register(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        full_name = request.POST.get('full_name')
+        role = request.POST.get('role')
+
+        if not all([username, password, full_name, role]):
+            messages.error(request, "Please fill all required fields.")
+        else:
+            user = CustomUser.objects.create_user(
+                username=username,
+                password=password,
+                full_name=full_name,
+                role=role
+            )
+            messages.success(request, "User registered successfully!")
+            return redirect('index')
+
+    return render(request, 'register.html')

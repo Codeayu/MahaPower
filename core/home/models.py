@@ -3,7 +3,18 @@ from django.contrib.auth.models import AbstractUser
 
 # Custom user model to handle admin and staff roles
 class CustomUser(AbstractUser):
-    is_staff_user = models.BooleanField(default=False)
+    ROLE_CHOICES = [
+        ('admin', 'Admin'),
+        ('staff', 'Staff'),
+        ]
+    full_name = models.CharField(max_length=100, blank=True)
+    username = models.CharField(max_length=150, unique=True)
+    password = models.CharField(max_length=128)
+    email = models.EmailField(unique=True)
+    Role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='staff')
+
+    def _str_(self):
+        return self.username
 
 # Main model for storing schemes
 class Scheme(models.Model):

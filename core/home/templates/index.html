@@ -82,89 +82,20 @@
         <div class="container">
             <h2 class="section-title">Featured Schemes</h2>
             <div class="scheme-grid">
-                <!-- Scheme Card 1 -->
+                {% for scheme in schemes %}
                 <div class="scheme-card">
                     <div class="scheme-image">
-                        <img src="/placeholder.svg?height=200&width=300" alt="Agriculture Scheme">
+                        <img src="{{ scheme.image.url }}" alt="{{ scheme.title }}">
                     </div>
                     <div class="scheme-content">
-                        <div class="scheme-badge">Agriculture</div>
-                        <h3 class="scheme-title">Krishi Vikas Yojana</h3>
-                        <p class="scheme-title-marathi">कृषी विकास योजना</p>
-                        <p class="scheme-summary">Up to ₹5L at 4% interest for farm equipment</p>
+                        <div class="scheme-badge">{{ scheme.sector }}</div>
+                        <h3 class="scheme-title">{{ scheme.name_en}}</h3>
+                        <p class="scheme-title-marathi">{{ scheme.name_mr }}</p>
+                        <p class="scheme-summary">{{ scheme.summary }}</p>
                         <button class="view-details">View Details</button>
                     </div>
                 </div>
-
-                <!-- Scheme Card 2 -->
-                <div class="scheme-card">
-                    <div class="scheme-image">
-                        <img src="/placeholder.svg?height=200&width=300" alt="Women Empowerment Scheme">
-                    </div>
-                    <div class="scheme-content">
-                        <div class="scheme-badge">Women Empowerment</div>
-                        <h3 class="scheme-title">Mahila Sashaktikaran Yojana</h3>
-                        <p class="scheme-title-marathi">महिला सशक्तिकरण योजना</p>
-                        <p class="scheme-summary">Up to ₹3L at 2% interest for women entrepreneurs</p>
-                        <button class="view-details">View Details</button>
-                    </div>
-                </div>
-
-                <!-- Scheme Card 3 -->
-                <div class="scheme-card">
-                    <div class="scheme-image">
-                        <img src="/placeholder.svg?height=200&width=300" alt="MSME Scheme">
-                    </div>
-                    <div class="scheme-content">
-                        <div class="scheme-badge">MSME</div>
-                        <h3 class="scheme-title">MSME Growth Program</h3>
-                        <p class="scheme-title-marathi">एमएसएमई विकास कार्यक्रम</p>
-                        <p class="scheme-summary">Up to ₹10L funding with business mentorship</p>
-                        <button class="view-details">View Details</button>
-                    </div>
-                </div>
-
-                <!-- Scheme Card 4 -->
-                <div class="scheme-card">
-                    <div class="scheme-image">
-                        <img src="/placeholder.svg?height=200&width=300" alt="Skill Development Scheme">
-                    </div>
-                    <div class="scheme-content">
-                        <div class="scheme-badge">Skill Development</div>
-                        <h3 class="scheme-title">Kaushalya Vardhan Yojana</h3>
-                        <p class="scheme-title-marathi">कौशल्य वर्धन योजना</p>
-                        <p class="scheme-summary">Free training with ₹5000 monthly stipend</p>
-                        <button class="view-details">View Details</button>
-                    </div>
-                </div>
-
-                <!-- Scheme Card 5 -->
-                <div class="scheme-card">
-                    <div class="scheme-image">
-                        <img src="/placeholder.svg?height=200&width=300" alt="Education Scheme">
-                    </div>
-                    <div class="scheme-content">
-                        <div class="scheme-badge">Education</div>
-                        <h3 class="scheme-title">Vidyarthi Scholarship</h3>
-                        <p class="scheme-title-marathi">विद्यार्थी शिष्यवृत्ती</p>
-                        <p class="scheme-summary">Up to ₹50,000 annual scholarship for students</p>
-                        <button class="view-details">View Details</button>
-                    </div>
-                </div>
-
-                <!-- Scheme Card 6 -->
-                <div class="scheme-card">
-                    <div class="scheme-image">
-                        <img src="/placeholder.svg?height=200&width=300" alt="Healthcare Scheme">
-                    </div>
-                    <div class="scheme-content">
-                        <div class="scheme-badge">Healthcare</div>
-                        <h3 class="scheme-title">Arogya Suraksha Yojana</h3>
-                        <p class="scheme-title-marathi">आरोग्य सुरक्षा योजना</p>
-                        <p class="scheme-summary">Up to ₹5L health coverage for families</p>
-                        <button class="view-details">View Details</button>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </section>

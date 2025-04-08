@@ -1,41 +1,100 @@
-<h2>Add New Scheme</h2>
-<form method="POST">
-  {% csrf_token %}
-  <label>Scheme Name (English):</label>
-  <input type="text" name="name_en" required><br>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Scheme</title>
+  <!-- Bootstrap CSS CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <header class="bg-primary text-white py-3">
+    <div class="container text-center">
+      <h1>Add New Scheme</h1>
+    </div>
+  </header>
 
-  <label>Scheme Name (Marathi):</label>
-  <input type="text" name="name_mr" required><br>
+  <main class="py-5">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="card shadow">
+            <div class="card-body">
+              <h2 class="card-title text-center mb-4">Scheme Details</h2>
+              <form method="POST" class="needs-validation" novalidate>
+                {% csrf_token %}
+                <div class="mb-3">
+                  <label for="name_en" class="form-label">Scheme Name (English):</label>
+                  <input type="text" class="form-control" id="name_en" name="name_en" placeholder="Enter scheme name in English" required>
+                </div>
 
-  <label>Scheme Type:</label>
-  <select name="scheme_type" required>
-    <option value="Loan">Loan</option>
-    <option value="Skill">Skill Development</option>
-    <option value="Funding">Startup Funding</option>
-  </select><br>
+                <div class="mb-3">
+                  <label for="name_mr" class="form-label">Scheme Name (Marathi):</label>
+                  <input type="text" class="form-control" id="name_mr" name="name_mr" placeholder="Enter scheme name in Marathi" required>
+                </div>
 
-  <label>Sector:</label>
-  <select name="sector" required>
-    <option value="Agriculture">Agriculture</option>
-    <option value="Manufacturing">Manufacturing</option>
-    <option value="Services">Services</option>
-    <option value="Other">Other</option>
-  </select><br>
+                <div class="mb-3">
+                  <label for="scheme_type" class="form-label">Scheme Type:</label>
+                  <select class="form-select" id="scheme_type" name="scheme_type" required>
+                    <option value="" disabled selected>Select scheme type</option>
+                    <option value="Loan">Loan</option>
+                    <option value="Skill">Skill Development</option>
+                    <option value="Funding">Startup Funding</option>
+                  </select>
+                </div>
 
-  <label>Summary (English):</label><br>
-  <textarea name="summary_en" required></textarea><br>
+                <div class="mb-3">
+                  <label for="sector" class="form-label">Sector:</label>
+                  <select class="form-select" id="sector" name="sector" required>
+                    <option value="" disabled selected>Select sector</option>
+                    <option value="Agriculture">Agriculture</option>
+                    <option value="Manufacturing">Manufacturing</option>
+                    <option value="Services">Services</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
 
-  <label>Summary (Marathi):</label><br>
-  <textarea name="summary_mr" required></textarea><br>
+                <div class="mb-3">
+                  <label for="summary_en" class="form-label">Summary (English):</label>
+                  <textarea class="form-control" id="summary_en" name="summary_en" rows="3" placeholder="Enter summary in English" required></textarea>
+                </div>
 
-  <label>Details (English):</label><br>
-  <textarea name="details_en"></textarea><br>
+                <div class="mb-3">
+                  <label for="summary_mr" class="form-label">Summary (Marathi):</label>
+                  <textarea class="form-control" id="summary_mr" name="summary_mr" rows="3" placeholder="Enter summary in Marathi" required></textarea>
+                </div>
 
-  <label>Details (Marathi):</label><br>
-  <textarea name="details_mr"></textarea><br>
+                <div class="mb-3">
+                  <label for="details_en" class="form-label">Details (English):</label>
+                  <textarea class="form-control" id="details_en" name="details_en" rows="4" placeholder="Enter detailed information in English"></textarea>
+                </div>
 
-  <label>Website Link:</label>
-  <input type="url" name="website_link"><br>
+                <div class="mb-3">
+                  <label for="details_mr" class="form-label">Details (Marathi):</label>
+                  <textarea class="form-control" id="details_mr" name="details_mr" rows="4" placeholder="Enter detailed information in Marathi"></textarea>
+                </div>
 
-  <button type="submit">Add Scheme</button>
-</form>
+                <div class="mb-3">
+                  <label for="website_link" class="form-label">Website Link:</label>
+                  <input type="url" class="form-control" id="website_link" name="website_link" placeholder="Enter website link">
+                </div>
+
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary btn-lg">Add Scheme</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-light text-center py-3">
+    <p class="mb-0">&copy; 2023 MahaPower. All rights reserved.</p>
+  </footer>
+
+  <!-- Bootstrap JS Bundle CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
