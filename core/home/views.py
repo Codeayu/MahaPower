@@ -109,16 +109,19 @@ def register(request):
 
     return render(request, 'register.html')
 
-def login_page(request):
-    return render(request, 'login.html')
-def login(request):
+
+
+
+def login_view(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
+        
         if user is not None:
             login(request, user)
-            return redirect('index')
+            return redirect('index')  
         else:
             messages.error(request, "Invalid username or password.")
+    
     return render(request, 'login.html')
