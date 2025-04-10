@@ -91,30 +91,30 @@ def add_scheme(request):
 def register(request):
     if request.method == 'POST':
         username = request.POST.get('username')
-        password = request.POST.get('password')
-        full_name = request.POST.get('fname')
+        password1 = request.POST.get('password1')
+        password2 = request.POST.get('password2')
+        full_name = request.POST.get('Fname')
         email = request.POST.get('email')
         role = request.POST.get('role')
 
-        # Ensure all required fields are provided; empty strings or None will trigger an error
-        if not all([username, password, full_name, role,email]):
+        if not all([username, password1, password2, full_name, email, role]):
             messages.error(request, "Please fill all required fields.")
-            if CustomUser.objects.filter(username=username).exists():
-                messages.error(request, "Username already exists. Please choose a different username.")
-            else:
-                user = CustomUser.objects.create_user(
-                    username=username,
-                    password=password,
-                    full_name=full_name,
-                    Role=role,
-                    email=email,
-                )
-                messages.success(request, "User registered successfully!")
-                return redirect('login_view')  # Redirect to login page after registration
-            return redirect('login_view')  # Redirect to login page after registration
-    else:
-    # If GET request, render the registration form
-        return render(request, 'register.html')
+        elif password1 != password2:
+            messages.error(request, "Passwords do not match.")
+        elif CustomUser.objects.filter(username=username).exists():
+            messages.error(request, "Username already exists.")
+        else:
+            user = CustomUser.objects.create_user(
+                username=username,
+                password=password1,
+                full_name=full_name,
+                role=role,
+                email=email
+            )
+            messages.success(request, "User registered successfully!")
+            return redirect('/login/')
+    
+    return render(request, 'register.html')
 
 
 
@@ -128,9 +128,9 @@ def login_view(request):
         if user is not None:
             login(request, user)
             if hasattr(user, 'role') and user.role == 'admin':
-                return redirect('Admin-dashboard')  
+                return redirect('/admin_user/')  
             if hasattr(user, 'role') and user.role == 'staff':
-                return redirect('Staff-dashboard')
+                return redirect('/staff_user/')
         messages.error(request, "Invalid username or password.")
     return render(request, 'login.html')
     
@@ -143,7 +143,7 @@ def admin_user(request):
 @login_required
 @user_passes_test(is_staff_user, login_url='login_view')
 def staff_user(request):
-    return render(request, 'staff_user.html')
+    return render(request, 'Staff.html')
 
 @login_required(login_url='/login/')
 def logout_user(request):

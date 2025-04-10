@@ -7,14 +7,13 @@ class CustomUser(AbstractUser):
     ROLE_CHOICES = [
         ('admin', 'Admin'),
         ('staff', 'Staff'),
-        ]
-    full_name = models.CharField(max_length=100, blank=True)
-    username = models.CharField(max_length=150, unique=True)
-    password = models.CharField(max_length=128)
-    email = models.EmailField(unique=True)
-    Role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='staff')
+    ]
 
-    def _str_(self):
+    full_name = models.CharField(max_length=100, blank=True)
+    email = models.EmailField(unique=True)
+    role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='staff')
+
+    def __str__(self):
         return self.username
 
 # Main model for storing schemes
