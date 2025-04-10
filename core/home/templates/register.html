@@ -19,6 +19,10 @@
                         <form method="post" action="{% url 'register' %}" class="needs-validation" novalidate>
                             {% csrf_token %}
                             <div class="mb-3">
+                                <label for="Full_name" class="form-label">Full Name:</label>
+                                <input type="text" id="Fname" name="Fname" class="form-control" placeholder="Enter your Full Name" required>
+                            </div>
+                            <div class="mb-3">
                                 <label for="username" class="form-label">Username:</label>
                                 <input type="text" id="username" name="username" class="form-control" placeholder="Enter your username" required>
                             </div>

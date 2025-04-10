@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .models import Scheme, CustomUser
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 
 
@@ -39,10 +39,10 @@ def scheme_detail(request, scheme_id):
     return render(request, 'scheme_detail.html', {'scheme': scheme, 'lang': lang})
 
 def is_admin(user):
-    return user.is_superuser
+    return user.is_superuser or user.role == 'admin'
 
 def is_staff_user(user):
-    return user.is_authenticated and user.is_staff_user
+    return user.role == 'staff'
 
 
 @login_required
@@ -92,22 +92,29 @@ def register(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-        full_name = request.POST.get('full_name')
+        full_name = request.POST.get('fname')
+        email = request.POST.get('email')
         role = request.POST.get('role')
 
-        if not all([username, password, full_name, role]):
+        # Ensure all required fields are provided; empty strings or None will trigger an error
+        if not all([username, password, full_name, role,email]):
             messages.error(request, "Please fill all required fields.")
-        else:
-            user = CustomUser.objects.create_user(
-                username=username,
-                password=password,
-                full_name=full_name,
-                role=role
-            )
-            messages.success(request, "User registered successfully!")
-            return redirect('index')
-
-    return render(request, 'register.html')
+            if CustomUser.objects.filter(username=username).exists():
+                messages.error(request, "Username already exists. Please choose a different username.")
+            else:
+                user = CustomUser.objects.create_user(
+                    username=username,
+                    password=password,
+                    full_name=full_name,
+                    Role=role,
+                    email=email,
+                )
+                messages.success(request, "User registered successfully!")
+                return redirect('login_view')  # Redirect to login page after registration
+            return redirect('login_view')  # Redirect to login page after registration
+    else:
+    # If GET request, render the registration form
+        return render(request, 'register.html')
 
 
 
@@ -120,8 +127,25 @@ def login_view(request):
         
         if user is not None:
             login(request, user)
-            return redirect('index')  
-        else:
-            messages.error(request, "Invalid username or password.")
-    
+            if hasattr(user, 'role') and user.role == 'admin':
+                return redirect('Admin-dashboard')  
+            if hasattr(user, 'role') and user.role == 'staff':
+                return redirect('Staff-dashboard')
+        messages.error(request, "Invalid username or password.")
     return render(request, 'login.html')
+    
+
+@login_required
+@user_passes_test(is_admin, login_url='login_view')
+def admin_user(request):
+    return render(request, 'admin_user.html')
+
+@login_required
+@user_passes_test(is_staff_user, login_url='login_view')
+def staff_user(request):
+    return render(request, 'staff_user.html')
+
+@login_required(login_url='/login/')
+def logout_user(request):
+    logout(request)
+    return redirect('index/')  # Redirect to the login page after logout
