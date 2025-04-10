@@ -43,21 +43,18 @@
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div class="bg-lightBlue p-8 rounded-lg shadow-md text-center hover:-translate-y-1 transition-transform">
           <div class="text-4xl text-saffron mb-4">₹</div>
-          <h3 class="text-xl text-navyBlue mb-2 font-medium">Loan Assistance</h3>
-          <p class="text-sm text-gray-600">Easy access to government-backed loans with low interest rates</p>
-          <p class="font-devanagari text-sm text-gray-600 mt-2">कमी व्याज दराने सरकारी कर्जांचा सहज प्रवेश</p>
+            <h3 class="text-xl text-navyBlue mb-2 font-medium">कर्ज सहाय्य</h3>
+          <p class="text-sm text-gray-600">कमी व्याज दराने सरकारी कर्जांचा सहज प्रवेश</p>
         </div>
         <div class="bg-lightBlue p-8 rounded-lg shadow-md text-center hover:-translate-y-1 transition-transform">
           <div class="text-4xl text-saffron mb-4">🛠</div>
-          <h3 class="text-xl text-navyBlue mb-2 font-medium">Skill Development</h3>
-          <p class="text-sm text-gray-600">Free training programs to enhance your professional skills</p>
-          <p class="font-devanagari text-sm text-gray-600 mt-2">आपल्या व्यावसायिक कौशल्यांना वाढविण्यासाठी मोफत प्रशिक्षण कार्यक्रम</p>
+            <h3 class="text-xl text-navyBlue mb-2 font-medium">कौशल्य विकास</h3>
+          <p class="text-sm text-gray-600">आपल्या व्यावसायिक कौशल्यांना वाढविण्यासाठी मोफत प्रशिक्षण कार्यक्रम</p>
         </div>
         <div class="bg-lightBlue p-8 rounded-lg shadow-md text-center hover:-translate-y-1 transition-transform">
           <div class="text-4xl text-saffron mb-4">🚀</div>
-          <h3 class="text-xl text-navyBlue mb-2 font-medium">Startup Funding</h3>
-          <p class="text-sm text-gray-600">Financial support for innovative business ideas and startups</p>
-          <p class="font-devanagari text-sm text-gray-600 mt-2">नवीन व्यवसाय कल्पना आणि स्टार्टअप्ससाठी आर्थिक सहाय्य</p>
+            <h3 class="text-xl text-navyBlue mb-2 font-medium">स्टार्टअप निधी</h3>
+          <p class="text-sm text-gray-600">नवीन व्यवसाय कल्पना आणि स्टार्टअप्ससाठी आर्थिक सहाय्य</p>
         </div>
       </div>
     </div>
@@ -75,8 +72,8 @@
           </div>
           <div class="p-6">
             <span class="inline-block bg-lightBlue text-navyBlue px-3 py-1 rounded-full text-xs mb-3">{{ scheme.sector }}</span>
-            <h3 class="text-xl text-navyBlue mb-1 font-medium">{{ scheme.name_en }}</h3>
-            <p class="font-devanagari text-gray-600 mb-4">{{ scheme.name_mr }}</p>
+            <h3 class="text-xl text-navyBlue mb-1 font-medium">{{ scheme.name_mr }}</h3>
+            <p class="font-devanagari text-gray-600 mb-4">{{ scheme.name_en }}</p>
             <p class="text-gray-700 text-sm mb-4">{{ scheme.summary }}</p>
             <a href="{% url 'scheme_detail' scheme.id %}" class="bg-saffron text-white py-2 px-4 rounded block text-center hover:bg-orange-500 transition-colors">View Details</a>
           </div>
