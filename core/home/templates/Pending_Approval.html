@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-12 relative">
+
+  <!-- Logout Button -->
+  <div class="absolute top-0 right-0 mt-4 mr-4">
+    <a href="{% url 'logout' %}"
+       class="py-2 px-4 rounded-lg text-sm font-semibold bg-navyBlue text-white transition duration-300 shadow-md hover:shadow-lg">
+      Logout
+    </a>
+  </div>
+
+  <!-- Page Header -->
+  <div class="flex justify-between items-center mb-8">
+    <h1 class="text-3xl font-bold text-gray800">User Approval</h1>
+    <input type="text" placeholder="Search user..."
+           class="border border-gray600 rounded-lg px-4 py-2 bg-gray100 text-gray800 focus:outline-none focus:ring-2 focus:ring-saffron w-64">
+  </div>
+
+  <!-- Approval Table -->
+  <div class="bg-white rounded-lg shadow-lg overflow-x-auto border border-gray600">
+    <table class="min-w-full divide-y divide-gray">
+      <thead class="bg-lightBlue">
+        <tr>
+          <th class="px-6 py-4 text-left text-sm font-semibold text-dark-gray">#</th>
+          <th class="px-6 py-4 text-left text-sm font-semibold text-dark-gray">Full Name</th>
+          <th class="px-6 py-4 text-left text-sm font-semibold text-dark-gray">Email</th>
+          <th class="px-6 py-4 text-left text-sm font-semibold text-dark-gray">Role</th>
+          <th class="px-6 py-4 text-left text-sm font-semibold text-dark-gray">Status</th>
+          <th class="px-6 py-4 text-left text-sm font-semibold text-dark-gray">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-light-gray">
+        {% for user in pending_users %}
+        <tr class="hover:bg-light-gray transition duration-200">
+          <td class="px-6 py-4 text-gray800">{{ forloop.counter }}</td>
+          <td class="px-6 py-4 text-gray800">{{ user.full_name }}</td>
+          <td class="px-6 py-4 text-gray800">{{ user.email }}</td>
+          <td class="px-6 py-4">
+            <span class="px-3 py-1 rounded-full text-sm bg-navyBlue text-white">
+              {{ user.get_role_display }}
+            </span>
+          </td>
+          <td class="px-6 py-4">
+            {% if user.is_active %}
+              <span class="text-green-600 font-medium">Active</span>
+            {% else %}
+              <span class="text-red-600 font-medium">Pending</span>
+            {% endif %}
+          </td>
+          <td class="px-6 py-4 flex gap-3">
+            {% if not user.is_active %}
+              <!-- Approve Button -->
+              <form method="post" action="{% url 'activate_user' user.id %}">
+            {% csrf_token %}
+            <button type="submit"
+                class="bg-saffron text-white text-sm font-medium px-4 py-2 rounded-lg shadow hover:shadow-lg transition">
+              Approve
+            </button>
+              </form>
+
+              <!-- Reject Button -->
+              <form method="post" action="{% url 'delete_user' user.id %}">
+            {% csrf_token %}
+            <button type="submit"
+                class="bg-red-600 text-white text-sm font-medium px-4 py-2 rounded-lg shadow hover:shadow-lg transition"
+                onclick="return confirm('Are you sure you want to reject and delete this user?');">
+              Reject
+            </button>
+              </form>
+            {% else %}
+              <span class="text-gray600 italic">Approved</span>
+            {% endif %}
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="6" class="px-6 py-8 text-center text-gray600">No users awaiting approval.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

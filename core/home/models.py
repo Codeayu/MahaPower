@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
+from simple_history.models import HistoricalRecords
+
 
 # Custom user model to handle admin and staff roles
 class CustomUser(AbstractUser):
@@ -12,6 +14,7 @@ class CustomUser(AbstractUser):
     full_name = models.CharField(max_length=100, blank=True)
     email = models.EmailField(unique=True)
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='staff')
+    history = HistoricalRecords()
 
     def __str__(self):
         return self.username
@@ -47,6 +50,7 @@ class Scheme(models.Model):
     eligibility_criteria_en = models.TextField(blank=True, null=True, default="")
     eligibility_criteria_mr = models.TextField(blank=True, null=True)
     created_by = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=True)
+    history = HistoricalRecords()
 
     def __str__(self):
         return self.name_en

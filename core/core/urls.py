@@ -41,10 +41,14 @@ urlpatterns = [
     path('admin_user/', admin_user, name='admin_user'),
     path('logout/', logout_user, name='logout'),
     path('staff_user/', staff_user, name='staff_user'), 
+    path('staff_user_approval/', staff_user_approval, name='staff_user_approval'),
     path('activate-user/<int:user_id>/', activate_user, name='activate_user'),  
+    path('delete_user/<int:user_id>/', delete_user, name='delete_user'),
     path('manage_scheme/', manage_scheme, name='manage_scheme'),
     path('update_scheme/<int:scheme_id>/', update_scheme, name='update_scheme'),
     path('delete_scheme/<int:scheme_id>/', delete_scheme, name='delete_scheme'),
+    path('scheme/<int:scheme_id>/history/', scheme_history_view, name='scheme_history'),
+
     
     #under contsruction pages
     path('under_construction/', views.under_construction, name='under_construction'),

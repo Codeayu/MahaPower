@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-12">
+  <h2 class="text-3xl font-semibold text-center mb-6 text-gray800">
+    Change History for "{{ scheme.name }}"
+  </h2>
+
+  <div class="overflow-x-auto border border-gray rounded-lg bg-white shadow">
+    <table class="min-w-full text-sm text-left">
+      <thead class="bg-lightBlue text-dark-gray">
+        <tr>
+          <th class="py-3 px-4 border-b">Date</th>
+          <th class="py-3 px-4 border-b">Changed By</th>
+          <th class="py-3 px-4 border-b">Type</th>
+          <th class="py-3 px-4 border-b">Changes</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for entry in history %}
+        <tr class="hover:bg-light-gray transition">
+          <td class="py-3 px-4 border-b">{{ entry.history_date|date:"Y-m-d H:i" }}</td>
+          <td class="py-3 px-4 border-b">
+            {{ entry.history_user.get_full_name|default:"System" }}
+          </td>
+          <td class="py-3 px-4 border-b">
+            {% if entry.history_type == '+' %}Created
+            {% elif entry.history_type == '~' %}Updated
+            {% elif entry.history_type == '-' %}Deleted
+            {% endif %}
+          </td>
+          <td class="py-3 px-4 border-b text-gray600">
+            You can add field-by-field diff here if needed.
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
