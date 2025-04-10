@@ -32,6 +32,18 @@ def index(request):
         'scheme_type': scheme_type,
         'sector': sector,
     })
+def about(request):
+    return render(request, 'About_Us.html')
+def contact(request):
+    return render(request, 'Contact_Us.html')
+def privacy_policy(request):
+    return render(request, 'under_construction.html')
+def terms_and_conditions(request):
+    return render(request, 'under_construction.html')
+def faqs(request):
+    return render(request, 'under_construction.html')   
+def team(request):
+    return render(request, 'Our_Team.html')
 
 def scheme_detail(request, scheme_id):
     scheme = get_object_or_404(Scheme, id=scheme_id)
@@ -46,7 +58,7 @@ def is_staff_user(user):
 
 
 @login_required
-@user_passes_test(lambda u: u.is_superuser or u.is_staff_user)
+# @user_passes_test(lambda u: u.is_superuser or u.is_staff)
 def add_scheme(request):
     if request.method == 'POST':
         name_en = request.POST.get('name_en')
@@ -148,4 +160,37 @@ def staff_user(request):
 @login_required(login_url='/login/')
 def logout_user(request):
     logout(request)
-    return redirect('index/')  # Redirect to the login page after logout
+    return redirect('login.html')  # Redirect to the login page after logout
+
+def manage_scheme(request):
+    schemes = Scheme.objects.all()
+    return render(request, 'manage_scheme.html', {'schemes': schemes})
+def update_scheme(request,scheme_id):
+    scheme = get_object_or_404(Scheme, id=scheme_id)
+    lang = request.GET.get('lang', 'en')
+    if request.method == 'POST':
+        scheme.name_en = request.POST.get('name_en', scheme.name_en)
+        scheme.name_mr = request.POST.get('name_mr', scheme.name_mr)
+        scheme.scheme_type = request.POST.get('scheme_type', scheme.scheme_type)
+        scheme.sector = request.POST.get('sector', scheme.sector)
+        scheme.summary_en = request.POST.get('summary_en', scheme.summary_en)
+        scheme.summary_mr = request.POST.get('summary_mr', scheme.summary_mr)
+        scheme.details_en = request.POST.get('details_en', scheme.details_en)
+        scheme.details_mr = request.POST.get('details_mr', scheme.details_mr)
+        scheme.website_link = request.POST.get('website_link', scheme.website_link)
+        scheme.is_active = request.POST.get('is_active') == 'on'
+        scheme.eligibility_criteria_en = request.POST.get('eligibility_criteria_en', scheme.eligibility_criteria_en)
+        scheme.eligibility_criteria_mr = request.POST.get('eligibility_criteria_mr', scheme.eligibility_criteria_mr)
+
+        if 'photo' in request.FILES:
+            scheme.photo = request.FILES['photo']
+
+        scheme.save()
+        messages.success(request, "Scheme updated successfully!")
+        return redirect('manage_scheme')
+    return render(request, 'update_scheme.html', {'scheme': scheme, 'lang': lang})
+
+def delete_scheme(request, scheme_id):
+    scheme = get_object_or_404(Scheme, id=scheme_id)
+    scheme.delete()
+    return redirect('manage_scheme')  # make sure this URL name exists in your urls.py

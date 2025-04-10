@@ -1,163 +1,71 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | Maharashtra Government Schemes Portal</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Noto+Sans:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        body {
-            font-family: 'Poppins', 'Noto Sans', 'Noto Sans Devanagari', sans-serif;
-        }
-        .marathi-text {
-            font-family: 'Noto Sans Devanagari', sans-serif;
-        }
-        .bg-scheme-blue {
-            background-color: #1e3a8a;
-        }
-        .text-scheme-blue {
-            color: #1e3a8a;
-        }
-        .border-scheme-blue {
-            border-color: #1e3a8a;
-        }
-    </style>
-</head>
-<body class="bg-gray-100">
-    <!-- Header Section -->
-    <header class="bg-scheme-blue text-white shadow-md">
-        <nav class="container mx-auto px-4 py-3">
-            <div class="flex justify-between items-center">
-                <div class="logo">
-                    <h1 class="text-xl font-bold">Maharashtra Government Schemes Portal</h1>
-                </div>
-                <div class="language-toggle">
-                    <button id="langToggle" class="px-3 py-1 bg-white text-scheme-blue rounded-md text-sm font-medium">English | मराठी</button>
-                </div>
-            </div>
-        </nav>
-    </header>
+{% extends "base.html" %}
 
-    <!-- Main Content -->
-    <main class="container mx-auto px-4 py-8">
-        {% if messages %}
-            <div class="max-w-md mx-auto mb-4">
-                {% for message in messages %}
-                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-                        <span class="block sm:inline">{{ message }}</span>
-                    </div>
-                {% endfor %}
-            </div>
-        {% endif %}
+{% block content %}
+<h1 class="sr-only">Login</h1>
 
-        <div class="max-w-md mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
-            <!-- Login Form Header -->
-            <div class="bg-scheme-blue text-white py-4 px-6">
-                <h2 class="text-xl font-bold">Login to Your Account</h2>
-                <p class="text-sm opacity-90">Access government schemes and services</p>
-            </div>
-            
-            <!-- Login Form -->
-            <form method="POST" action="{% url 'login' %}" class="p-6">
-                {% csrf_token %}
-                <div class="mb-4">
-                    <label for="username" class="block text-gray-700 text-sm font-medium mb-1">Username / Aadhaar Number</label>
-                    <input type="text" id="username" name="username" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-scheme-blue focus:border-transparent" placeholder="Enter your username or Aadhaar" required>
-                </div>
-                
-                <div class="mb-4">
-                    <label for="password" class="block text-gray-700 text-sm font-medium mb-1">Password</label>
-                    <input type="password" id="password" name="password" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-scheme-blue focus:border-transparent" placeholder="Enter your password" required>
-                </div>
-                
-                <div class="flex items-center justify-between mb-4">
-                    <div class="flex items-center">
-                        <input type="checkbox" id="remember" name="remember" class="h-4 w-4 text-scheme-blue focus:ring-scheme-blue border-gray-300 rounded">
-                        <label for="remember" class="ml-2 block text-sm text-gray-700">Remember me</label>
-                    </div>
-                    <a href="#" class="text-sm text-scheme-blue hover:underline">Forgot password?</a>
-                </div>
-                
-                <button type="submit" class="w-full bg-scheme-blue text-white py-2 px-4 rounded-md hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-150">
-                    Login
-                </button>
-                
-                <div class="mt-4 text-center">
-                    <p class="text-sm text-gray-600">Don't have an account? 
-                        <a href="#" class="text-scheme-blue hover:underline">Register here</a>
-                    </p>
-                </div>
-            </form>
-            
-            <!-- Alternative Login Options -->
-            <div class="px-6 pb-6">
-                <div class="relative">
-                    <div class="absolute inset-0 flex items-center">
-                        <div class="w-full border-t border-gray-300"></div>
-                    </div>
-                    <div class="relative flex justify-center text-sm">
-                        <span class="px-2 bg-white text-gray-500">Or login with</span>
-                    </div>
-                </div>
-                
-                <div class="mt-4 grid grid-cols-2 gap-2">
-                    <a href="#" class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-scheme-blue">
-                        <i class="fab fa-google text-red-500 mr-2"></i> Google
-                    </a>
-                    <a href="#" class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-scheme-blue">
-                        <i class="fas fa-mobile-alt text-blue-500 mr-2"></i> OTP
-                    </a>
-                </div>
-            </div>
+<!-- Alerts -->
+{% if messages %}
+<div class="fixed top-6 w-full px-4 z-50">
+    <div class="max-w-md mx-auto">
+        {% for message in messages %}
+        <div class="bg-orange-100 border border-orange-500 text-orange500 px-4 py-3 rounded-md shadow" role="alert">
+            <span class="block sm:inline">{{ message }}</span>
         </div>
-        
-        <!-- Additional Information -->
-        <div class="max-w-md mx-auto mt-6 bg-white rounded-lg shadow p-6">
-            <h3 class="text-lg font-medium text-scheme-blue mb-2">Why create an account?</h3>
-            <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
-                <li>Apply for government schemes online</li>
-                <li>Track your application status</li>
-                <li>Receive personalized scheme recommendations</li>
-                <li>Save your applications for future reference</li>
-            </ul>
-        </div>
-    </main>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
 
-    <!-- Footer Section -->
-    <footer class="bg-gray-800 text-white mt-12">
-        <div class="container mx-auto px-4 py-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="footer-contact">
-                    <h3 class="text-lg font-medium mb-3">Contact Us</h3>
-                    <p class="text-sm flex items-center mb-1"><i class="fas fa-envelope mr-2"></i> info@maharashtraschemes.gov.in</p>
-                    <p class="text-sm flex items-center"><i class="fas fa-phone mr-2"></i> 1800-123-4567</p>
-                </div>
-                <div class="footer-links">
-                    <h3 class="text-lg font-medium mb-3">Quick Links</h3>
-                    <ul class="space-y-1">
-                        <li><a href="#" class="text-sm hover:underline">About Us</a></li>
-                        <li><a href="#" class="text-sm hover:underline">Privacy Policy</a></li>
-                        <li><a href="#" class="text-sm hover:underline">Terms of Service</a></li>
-                        <li><a href="#" class="text-sm hover:underline">FAQ</a></li>
-                    </ul>
-                </div>
-                <div class="footer-logo flex flex-col items-center md:items-end">
-                    <img src="{% static 'images/govt_logo.png' %}" alt="Government of Maharashtra Logo" class="h-20 w-20 mb-2">
-                    <p class="text-xs text-gray-400">© {% now "Y" %} Government of Maharashtra. All Rights Reserved.</p>
-                </div>
+<!-- Login Box -->
+<div class="flex justify-center items-center min-h-screen">
+    <div class="max-w-md w-full bg-white rounded-2xl shadow-xl border border-gray100 overflow-hidden">
+        <!-- Header -->
+        <div class="bg-navyBlue text-white py-6 px-6 sm:px-8">
+            <h2 class="text-2xl font-bold">Login to Your Account</h2>
+            <p class="text-sm opacity-90 mt-1">Access government schemes and services</p>
+        </div>
+
+        <!-- Login Form -->
+        <form method="POST" action="{% url 'login' %}" class="p-6 sm:p-8">
+            {% csrf_token %}
+
+            <!-- Username -->
+            <div class="mb-5">
+                <label for="username" class="block text-gray600 text-sm font-medium mb-2">Username / Aadhaar Number</label>
+                <input type="text" id="username" name="username" placeholder="Enter your username or Aadhaar"
+                    class="w-full px-4 py-2 border border-gray400 rounded-md focus:outline-none focus:ring-2 focus:ring-navyBlue focus:border-transparent" required>
             </div>
-        </div>
-    </footer>
 
-    <script>
-        // Language toggle functionality
-        document.getElementById('langToggle').addEventListener('click', function() {
-            // This would toggle between English and Marathi in a real implementation
-            console.log('Language toggle clicked');
-        });
-    </script>
-</body>
-</html>
+            <!-- Password -->
+            <div class="mb-5">
+                <label for="password" class="block text-gray600 text-sm font-medium mb-2">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password"
+                    class="w-full px-4 py-2 border border-gray400 rounded-md focus:outline-none focus:ring-2 focus:ring-navyBlue focus:border-transparent" required>
+            </div>
+
+            <!-- Options -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-3 sm:gap-0">
+                <div class="flex items-center">
+                    <input type="checkbox" id="remember" name="remember" class="h-4 w-4 text-navyBlue focus:ring-navyBlue border-gray400 rounded">
+                    <label for="remember" class="ml-2 text-sm text-gray600">Remember me</label>
+                </div>
+                <a href="#" class="text-sm text-navyBlue hover:underline">Forgot password?</a>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit"
+                class="w-full bg-saffron hover:bg-orange-500 text-white font-semibold py-2 px-4 rounded-lg transition duration-200 focus:outline-none focus:ring-2 focus:ring-orange500 focus:ring-opacity-50">
+                Login
+            </button>
+
+            <!-- Register Link -->
+            <div class="mt-6 text-center">
+                <p class="text-sm text-gray600">Don't have an account?
+                    <a href="#" class="text-navyBlue font-medium hover:underline">Register here</a>
+                </p>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

@@ -3,39 +3,43 @@
 {% block title %}Add Scheme{% endblock %}
 
 {% block content %}
-<div class="flex flex-col min-h-screen bg-gray-100">
+ <!-- Header -->
+ <div class="flex flex-col min-h-screen bg-gray100">
   <!-- Header -->
-  <div class="bg-gradient-to-r from-blue-800 to-blue-600 shadow-md">
-    <div class="container px-4 py-6 mx-auto">
-      <h1 class="text-2xl font-bold text-center text-white md:text-3xl">Add New Scheme</h1>
+  <header class="bg-gradient-to-r from-navyBlue to-saffron shadow-md">
+    <div class="container mx-auto px-4 py-6 flex justify-between items-center">
+      <h1 class="text-2xl md:text-3xl font-bold text-white text-center w-full md:w-auto">Add New Scheme</h1>
+      <a href="{% url 'logout' %}" class="hidden md:inline-block bg-white text-navyBlue font-semibold px-4 py-2 rounded-md shadow hover:bg-gray100 transition duration-200 ml-auto">
+        Logout
+      </a>
     </div>
-  </div>
+  </header>
 
   <!-- Main Content -->
-  <div class="flex-grow container px-4 py-8 mx-auto">
-    <div class="max-w-3xl p-6 mx-auto bg-white rounded-lg shadow-md">
-      <h2 class="mb-6 text-xl font-semibold text-center text-gray-800">Scheme Details</h2>
-      
-      <form method="POST" class="space-y-5" enctype="multipart/form-data">
+  <main class="flex-grow container mx-auto px-4 py-8">
+    <div class="max-w-3xl mx-auto bg-white rounded-xl shadow-md p-6">
+      <h2 class="text-xl font-semibold text-center text-gray800 mb-6">Scheme Details</h2>
+
+      <form method="POST" enctype="multipart/form-data" class="space-y-5">
         {% csrf_token %}
-        
+
         <!-- Name Fields -->
-        <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div>
-            <label for="name_en" class="block mb-1 text-sm font-medium text-gray-700">Scheme Name (English)</label>
-            <input type="text" id="name_en" name="name_en" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter scheme name in English" required>
+            <label for="name_en" class="block mb-1 text-sm font-medium text-gray600">Scheme Name (English)</label>
+            <input type="text" id="name_en" name="name_en" class="w-full px-3 py-2 border border-gray400 rounded-md focus:ring-2 focus:ring-navyBlue focus:outline-none" placeholder="Enter scheme name in English" required>
           </div>
           <div>
-            <label for="name_mr" class="block mb-1 text-sm font-medium text-gray-700">Scheme Name (Marathi)</label>
-            <input type="text" id="name_mr" name="name_mr" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter scheme name in Marathi" required>
+            <label for="name_mr" class="block mb-1 text-sm font-medium text-gray600">Scheme Name (Marathi)</label>
+            <input type="text" id="name_mr" name="name_mr" class="w-full px-3 py-2 border border-gray400 rounded-md focus:ring-2 focus:ring-navyBlue focus:outline-none" placeholder="Enter scheme name in Marathi" required>
           </div>
         </div>
-        
+
         <!-- Type and Sector -->
-        <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div>
-            <label for="scheme_type" class="block mb-1 text-sm font-medium text-gray-700">Scheme Type</label>
-            <select id="scheme_type" name="scheme_type" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            <label for="scheme_type" class="block mb-1 text-sm font-medium text-gray600">Scheme Type</label>
+            <select id="scheme_type" name="scheme_type" class="w-full px-3 py-2 border border-gray400 rounded-md focus:ring-2 focus:ring-navyBlue focus:outline-none" required>
               <option value="" disabled selected>Select scheme type</option>
               <option value="Loan">Loan</option>
               <option value="Skill">Skill Development</option>
@@ -43,8 +47,8 @@
             </select>
           </div>
           <div>
-            <label for="sector" class="block mb-1 text-sm font-medium text-gray-700">Sector</label>
-            <select id="sector" name="sector" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            <label for="sector" class="block mb-1 text-sm font-medium text-gray600">Sector</label>
+            <select id="sector" name="sector" class="w-full px-3 py-2 border border-gray400 rounded-md focus:ring-2 focus:ring-navyBlue focus:outline-none" required>
               <option value="" disabled selected>Select sector</option>
               <option value="Agriculture">Agriculture</option>
               <option value="Manufacturing">Manufacturing</option>
@@ -53,57 +57,58 @@
             </select>
           </div>
         </div>
-        
+
         <!-- Summary Fields -->
         <div>
-          <label for="summary_en" class="block mb-1 text-sm font-medium text-gray-700">Summary (English)</label>
-          <textarea id="summary_en" name="summary_en" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter summary in English" required></textarea>
+          <label for="summary_en" class="block mb-1 text-sm font-medium text-gray600">Summary (English)</label>
+          <textarea id="summary_en" name="summary_en" rows="3" class="w-full px-3 py-2 border border-gray400 rounded-md focus:ring-2 focus:ring-navyBlue focus:outline-none" placeholder="Enter summary in English" required></textarea>
         </div>
         <div>
-          <label for="summary_mr" class="block mb-1 text-sm font-medium text-gray-700">Summary (Marathi)</label>
-          <textarea id="summary_mr" name="summary_mr" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter summary in Marathi" required></textarea>
+          <label for="summary_mr" class="block mb-1 text-sm font-medium text-gray600">Summary (Marathi)</label>
+          <textarea id="summary_mr" name="summary_mr" rows="3" class="w-full px-3 py-2 border border-gray400 rounded-md focus:ring-2 focus:ring-navyBlue focus:outline-none" placeholder="Enter summary in Marathi" required></textarea>
         </div>
-        
-        <!-- Details Fields -->
+
+        <!-- Details -->
         <div>
-          <label for="details_en" class="block mb-1 text-sm font-medium text-gray-700">Details (English)</label>
-          <textarea id="details_en" name="details_en" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter detailed information in English"></textarea>
-        </div>
-        <div>
-          <label for="details_mr" class="block mb-1 text-sm font-medium text-gray-700">Details (Marathi)</label>
-          <textarea id="details_mr" name="details_mr" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter detailed information in Marathi"></textarea>
-        </div>
-        
-        <!-- Eligibility Fields -->
-        <div>
-          <label for="eligibility_criteria_en" class="block mb-1 text-sm font-medium text-gray-700">Eligibility Criteria (English)</label>
-          <textarea id="eligibility_criteria_en" name="eligibility_criteria_en" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter eligibility criteria in English" required></textarea>
+          <label for="details_en" class="block mb-1 text-sm font-medium text-gray600">Details (English)</label>
+          <textarea id="details_en" name="details_en" rows="4" class="w-full px-3 py-2 border border-gray400 rounded-md focus:ring-2 focus:ring-navyBlue focus:outline-none" placeholder="Enter detailed information in English"></textarea>
         </div>
         <div>
-          <label for="eligibility_criteria_mr" class="block mb-1 text-sm font-medium text-gray-700">Eligibility Criteria (Marathi)</label>
-          <textarea id="eligibility_criteria_mr" name="eligibility_criteria_mr" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter eligibility criteria in Marathi" required></textarea>
+          <label for="details_mr" class="block mb-1 text-sm font-medium text-gray600">Details (Marathi)</label>
+          <textarea id="details_mr" name="details_mr" rows="4" class="w-full px-3 py-2 border border-gray400 rounded-md focus:ring-2 focus:ring-navyBlue focus:outline-none" placeholder="Enter detailed information in Marathi"></textarea>
         </div>
-        
-        <!-- Photo and Website -->
-        <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
+
+        <!-- Eligibility -->
+        <div>
+          <label for="eligibility_criteria_en" class="block mb-1 text-sm font-medium text-gray600">Eligibility Criteria (English)</label>
+          <textarea id="eligibility_criteria_en" name="eligibility_criteria_en" rows="3" class="w-full px-3 py-2 border border-gray400 rounded-md focus:ring-2 focus:ring-navyBlue focus:outline-none" placeholder="Enter eligibility criteria in English" required></textarea>
+        </div>
+        <div>
+          <label for="eligibility_criteria_mr" class="block mb-1 text-sm font-medium text-gray600">Eligibility Criteria (Marathi)</label>
+          <textarea id="eligibility_criteria_mr" name="eligibility_criteria_mr" rows="3" class="w-full px-3 py-2 border border-gray400 rounded-md focus:ring-2 focus:ring-navyBlue focus:outline-none" placeholder="Enter eligibility criteria in Marathi" required></textarea>
+        </div>
+
+        <!-- Upload & Website -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div>
-            <label for="photo" class="block mb-1 text-sm font-medium text-gray-700">Upload Photo</label>
-            <input type="file" id="photo" name="photo" accept="image/*" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <label for="photo" class="block mb-1 text-sm font-medium text-gray600">Upload Photo</label>
+            <input type="file" id="photo" name="photo" accept="image/*" class="w-full px-3 py-2 border border-gray400 rounded-md focus:ring-2 focus:ring-navyBlue focus:outline-none">
           </div>
           <div>
-            <label for="website_link" class="block mb-1 text-sm font-medium text-gray-700">Website Link</label>
-            <input type="url" id="website_link" name="website_link" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter website link">
+            <label for="website_link" class="block mb-1 text-sm font-medium text-gray600">Website Link</label>
+            <input type="url" id="website_link" name="website_link" class="w-full px-3 py-2 border border-gray400 rounded-md focus:ring-2 focus:ring-navyBlue focus:outline-none" placeholder="Enter website link">
           </div>
         </div>
-        
+
         <!-- Submit Button -->
-        <div class="pt-4 text-center">
-          <button type="submit" class="px-6 py-2 font-semibold text-white transition duration-200 bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+        <div class="text-center pt-4">
+          <button type="submit" class="bg-saffron text-white px-6 py-2 rounded-md font-semibold hover:bg-orange500 transition duration-200 focus:outline-none focus:ring-2 focus:ring-orange500 focus:ring-offset-2">
             Add Scheme
           </button>
         </div>
       </form>
     </div>
-  </div>
+  </main>
 </div>
+
 {% endblock %}

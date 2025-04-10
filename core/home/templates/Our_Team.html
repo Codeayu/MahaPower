@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Team Section -->
+<section class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-16 text-center">
+    <div class="container mx-auto px-4">
+        <h2 class="text-2xl font-medium mb-2">Our Team</h2>
+        <h1 class="text-4xl md:text-5xl font-extrabold mb-4">CodeHack</h1>
+        <p class="text-xl text-white/90">Building innovative solutions for Maharashtra's development</p>
+    </div>
+</section>
+
+<!-- Team Members -->
+<div class="container mx-auto px-4 py-16 max-w-6xl">
+    <h2 class="text-3xl font-bold text-center text-gray800 mb-2">Team Members</h2>
+    <p class="text-lg text-gray600 text-center mb-12">Meet the talented individuals behind this project</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        <!-- Karamveer -->
+        <div class="group bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-300">
+            <div class="h-64 overflow-hidden">
+                <img src="https://karamveer2648.github.io/mahaprojectimagerepo/Karamveer.png" alt="Karamveer Singh Oberoi"
+                    class="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-105">
+            </div>
+            <div class="p-6">
+                <h3 class="text-2xl font-bold text-gray800 mb-1">Karamveer Singh Oberoi</h3>
+                <p class="text-saffron font-semibold mb-3">Full Stack Developer</p>
+                <div class="flex gap-4 text-xl text-navyBlue">
+                    <i class="fas fa-envelope hover:text-saffron cursor-pointer"></i>
+                    <i class="fab fa-github hover:text-saffron cursor-pointer"></i>
+                    <i class="fab fa-linkedin hover:text-saffron cursor-pointer"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ayush -->
+        <div class="group bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-300">
+            <div class="h-64 overflow-hidden flex items-center justify-center">
+                <img src="https://karamveer2648.github.io/mahaprojectimagerepo/ayushchainani.jpg" alt="Ayush Chainani"
+                    class="h-full object-contain transform transition-transform duration-500 group-hover:scale-105" />
+            </div>
+            <div class="p-6">
+                <h3 class="text-2xl font-bold text-gray800 mb-1">Ayush Chainani</h3>
+                <p class="text-saffron font-semibold mb-3">Full Stack Developer</p>
+                <div class="flex gap-4 text-xl text-navyBlue">
+                    <i class="fas fa-envelope hover:text-saffron cursor-pointer"></i>
+                    <i class="fab fa-github hover:text-saffron cursor-pointer"></i>
+                    <i class="fab fa-linkedin hover:text-saffron cursor-pointer"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Atharv -->
+        <div class="group bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-300">
+            <div class="h-64 overflow-hidden">
+                <img src="https://via.placeholder.com/400x400?text=Atharv+Khawale" alt="Atharv Khawale"
+                    class="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-105">
+            </div>
+            <div class="p-6">
+                <h3 class="text-2xl font-bold text-gray800 mb-1">Atharv Khawale</h3>
+                <p class="text-saffron font-semibold mb-3">Front End Developer</p>
+                <div class="flex gap-4 text-xl text-navyBlue">
+                    <i class="fas fa-envelope hover:text-saffron cursor-pointer"></i>
+                    <i class="fab fa-github hover:text-saffron cursor-pointer"></i>
+                    <i class="fab fa-linkedin hover:text-saffron cursor-pointer"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Guide Section -->
+<div class="mt-24 text-center">
+    <h2 class="text-3xl font-bold text-gray800 mb-10">Our Guide</h2>
+    <div class="bg-white rounded-2xl shadow-xl max-w-4xl mx-auto overflow-hidden flex flex-col md:flex-row border border-gray600">
+        <div class="md:w-1/3 bg-gray100 flex items-center justify-center p-6">
+            <img src="https://via.placeholder.com/300x300?text=Dr.+Gadicha" alt="Dr. A. B. Gadicha"
+                class="w-40 h-40 rounded-full object-cover border-4 border-white shadow-md">
+        </div>
+        <div class="md:w-2/3 p-6 text-left">
+            <h3 class="text-2xl font-bold text-gray800 mb-2">Dr. A. B. Gadicha</h3>
+            <p class="text-saffron font-semibold mb-4">Project Guide & Mentor</p>
+            <div class="space-y-2 text-left">
+                <a href="mailto:ab.gadicha@example.edu" class="flex items-center text-gray700 hover:text-saffron transition">
+                    <i class="fas fa-envelope mr-3 text-saffron"></i> ab.gadicha@example.edu
+                </a>
+                <p class="flex items-center text-gray700">
+                    <i class="fas fa-university mr-3 text-saffron"></i> Professor at Example University
+                </p>
+                <a href="https://linkedin.com/in/abgadicha" target="_blank" class="flex items-center text-gray700 hover:text-saffron transition">
+                    <i class="fab fa-linkedin mr-3 text-saffron"></i> linkedin.com/in/abgadicha
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- College Logo & Info Section -->
+<div class="mt-24 text-center">
+    <h2 class="text-3xl font-bold text-gray800 mb-6">Our Institution</h2>
+    <div class="flex justify-center">
+        <div class="bg-white p-6 rounded-xl shadow-lg border-4 border-navyBlue hover:border-saffron transition-all duration-300 hover:scale-105">
+            <img src="https://karamveer2648.github.io/mahaprojectimagerepo/white text prpcem.png" alt="College Logo" class="w-48 h-32 object-contain">
+        </div>
+    </div>
+    <p class="mt-6 text-xl font-medium text-gray700">Proudly developed at</p>
+    <p class="text-2xl font-bold text-saffron">P. R. Pote Patil College Of Engineering And Management, Amravati</p>
+</div>
+
+{% endblock %}

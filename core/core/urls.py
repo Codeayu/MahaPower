@@ -25,17 +25,24 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('', index, name='index'),
+    path('about/', about, name='about'),
+    path('contact/', contact, name='contact'),
+    path('privacy_policy/', privacy_policy, name='privacy_policy'),
+    path('terms_and_conditions/', terms_and_conditions, name='terms_and_conditions'),
+    path('faqs/', faqs, name='faqs'),
+    path('our_team/', team, name='our_team'),
     path('admin/', admin.site.urls),
-    # path('about/', views.about, name='about'),
-    # path('contact/', views.contact, name='contact'),
     path('scheme/<int:scheme_id>/', scheme_detail, name='scheme_detail'),
-    path('add-scheme/', add_scheme, name='add_scheme'),
+    path('add_scheme/', add_scheme, name='add_scheme'),
     path('register/', register, name='register'),
     path('scheme_detail/<int:scheme_id>/', scheme_detail, name='scheme_detail'),
     path('login/', login_view, name='login'), 
     path('admin_user/', admin_user, name='admin_user'),
     path('logout/', logout_user, name='logout'),
     path('staff_user/', staff_user, name='staff_user'),    
+    path('manage_scheme/', manage_scheme, name='manage_scheme'),
+    path('update_scheme/<int:scheme_id>/', update_scheme, name='update_scheme'),
+    path('delete_scheme/<int:scheme_id>/', delete_scheme, name='delete_scheme'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

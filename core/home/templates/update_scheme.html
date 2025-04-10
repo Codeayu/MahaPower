@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-12 relative">
+        
+    <!-- Logout Button -->
+    <div class="absolute top-4 right-4">
+      <a href="{% url 'logout' %}" 
+         class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg shadow">
+        Logout
+      </a>
+    </div>
+  
+    <h1 class="text-4xl font-bold text-center mb-10 text-gray800">Update Scheme</h1>
+  
+    <div class="max-w-4xl mx-auto bg-white shadow-lg rounded-lg border border-gray600 p-8">
+      <form method="POST" action="{% url 'update_scheme' scheme.id %}">
+        {% csrf_token %}
+  
+        <!-- Scheme Name (EN) -->
+        <div class="mb-6">
+          <label class="block mb-2 font-semibold text-gray800">Scheme Name (EN)</label>
+          <input type="text" name="name_en" value="{{ scheme.name_en }}" required
+                 class="w-full px-4 py-3 rounded-lg border border-gray600 bg-gray100 text-gray800 focus:outline-none focus:ring-2 focus:ring-saffron">
+        </div>
+  
+        <!-- Scheme Name (MR) -->
+        <div class="mb-6">
+          <label class="block mb-2 font-semibold text-gray800">Scheme Name (MR)</label>
+          <input type="text" name="name_mr" value="{{ scheme.name_mr }}" required
+                 class="w-full px-4 py-3 rounded-lg border border-gray600 bg-gray100 text-gray800 focus:outline-none focus:ring-2 focus:ring-saffron">
+        </div>
+  
+        <!-- Type -->
+        <div class="mb-6">
+          <label class="block mb-2 font-semibold text-gray800">Type</label>
+          <input type="text" name="scheme_type" value="{{ scheme.scheme_type }}" required
+                 class="w-full px-4 py-3 rounded-lg border border-gray600 bg-gray100 text-gray800 focus:outline-none focus:ring-2 focus:ring-saffron">
+        </div>
+  
+        <!-- Sector -->
+        <div class="mb-6">
+          <label class="block mb-2 font-semibold text-gray800">Sector</label>
+          <input type="text" name="sector" value="{{ scheme.sector }}" required
+                 class="w-full px-4 py-3 rounded-lg border border-gray600 bg-gray100 text-gray800 focus:outline-none focus:ring-2 focus:ring-saffron">
+        </div>
+  
+        <!-- Summary EN -->
+        <div class="mb-6">
+          <label class="block mb-2 font-semibold text-gray800">Summary (EN)</label>
+          <textarea name="summary_en" rows="4" required
+                    class="w-full px-4 py-3 rounded-lg border border-gray600 bg-gray100 text-gray800 focus:outline-none focus:ring-2 focus:ring-saffron">{{ scheme.summary_en }}</textarea>
+        </div>
+  
+        <!-- Summary MR -->
+        <div class="mb-6">
+          <label class="block mb-2 font-semibold text-gray800">Summary (MR)</label>
+          <textarea name="summary_mr" rows="4" required
+                    class="w-full px-4 py-3 rounded-lg border border-gray600 bg-gray100 text-gray800 focus:outline-none focus:ring-2 focus:ring-saffron">{{ scheme.summary_mr }}</textarea>
+        </div>
+  
+        <!-- Details EN -->
+        <div class="mb-6">
+          <label class="block mb-2 font-semibold text-gray800">Details (EN)</label>
+          <textarea name="details_en" rows="4" required
+                    class="w-full px-4 py-3 rounded-lg border border-gray600 bg-gray100 text-gray800">{{ scheme.details_en }}</textarea>
+        </div>
+  
+        <!-- Details MR -->
+        <div class="mb-6">
+          <label class="block mb-2 font-semibold text-gray800">Details (MR)</label>
+          <textarea name="details_mr" rows="4" required
+                    class="w-full px-4 py-3 rounded-lg border border-gray600 bg-gray100 text-gray800">{{ scheme.details_mr }}</textarea>
+        </div>
+  
+        <!-- Website Link -->
+        <div class="mb-6">
+          <label class="block mb-2 font-semibold text-gray800">Website Link</label>
+          <input type="url" name="website_link" value="{{ scheme.website_link }}" required
+                 class="w-full px-4 py-3 rounded-lg border border-gray600 bg-gray100 text-gray800">
+        </div>
+  
+        <!-- Eligibility Criteria EN -->
+        <div class="mb-6">
+          <label class="block mb-2 font-semibold text-gray800">Eligibility Criteria (EN)</label>
+          <textarea name="eligibility_criteria_en" rows="3" required
+                    class="w-full px-4 py-3 rounded-lg border border-gray600 bg-gray100 text-gray800">{{ scheme.eligibility_criteria_en }}</textarea>
+        </div>
+  
+        <!-- Eligibility Criteria MR -->
+        <div class="mb-6">
+          <label class="block mb-2 font-semibold text-gray800">Eligibility Criteria (MR)</label>
+          <textarea name="eligibility_criteria_mr" rows="3" required
+                    class="w-full px-4 py-3 rounded-lg border border-gray600 bg-gray100 text-gray800">{{ scheme.eligibility_criteria_mr }}</textarea>
+        </div>
+  
+        <!-- Active Checkbox -->
+        <div class="mb-6 flex items-center">
+          <input type="checkbox" name="is_active" id="is_active" {% if scheme.is_active %}checked{% endif %}
+                 class="mr-2 h-5 w-5 text-saffron border-gray-300 rounded focus:ring-saffron">
+          <label for="is_active" class="font-semibold text-gray800">Active</label>
+        </div>
+  
+        <!-- Submit Button -->
+        <div class="flex justify-end">
+          <button type="submit"
+                  class="py-3 px-6 rounded-lg font-semibold bg-saffron text-white transition duration-300 shadow-md hover:shadow-lg">
+            Update Scheme
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+    
+{% endblock %}
