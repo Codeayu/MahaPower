@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main class="container mx-auto px-6 py-10">
+    <div class="bg-white shadow-lg rounded-lg p-8 border border-gray600 max-w-3xl mx-auto">
+
+      <h1 class="text-3xl font-extrabold text-navyBlue mb-6 text-center">संपर्क करा</h1>
+
+      <!-- Contact Information -->
+      <div class="mb-8 space-y-4">
+        <div>
+          <h2 class="text-lg font-semibold">पत्ता</h2>
+          <p class="text-gray600 mt-1">खादी व ग्रामोद्योग मंडळ, जिल्हा कार्यालय, अमरावती, महाराष्ट्र - ४४४६०१</p>
+        </div>
+        <div>
+          <h2 class="text-lg font-semibold">फोन</h2>
+          <p class="text-gray600 mt-1">+९१ ७१२ २५५००००</p>
+        </div>
+        <div>
+          <h2 class="text-lg font-semibold">ईमेल</h2>
+          <p class="text-gray600 mt-1">support@mahakhadi.gov.in</p>
+        </div>
+      </div>
+
+      <!-- Contact Form -->
+      <form class="space-y-6">
+        <div>
+          <label class="block text-gray800 font-medium mb-1" for="name">आपले नाव</label>
+          <input type="text" id="name" name="name" placeholder="आपले पूर्ण नाव" class="w-full px-4 py-2 rounded-lg border border-gray600 bg-gray100 focus:outline-none focus:ring-2 focus:ring-saffron">
+        </div>
+
+        <div>
+          <label class="block text-gray800 font-medium mb-1" for="email">ईमेल</label>
+          <input type="email" id="email" name="email" placeholder="आपला ईमेल पत्ता" class="w-full px-4 py-2 rounded-lg border border-gray600 bg-gray100 focus:outline-none focus:ring-2 focus:ring-saffron">
+        </div>
+
+        <div>
+          <label class="block text-gray800 font-medium mb-1" for="message">आपला संदेश</label>
+          <textarea id="message" name="message" rows="4" placeholder="संदेश येथे लिहा..." class="w-full px-4 py-2 rounded-lg border border-gray600 bg-gray100 focus:outline-none focus:ring-2 focus:ring-saffron"></textarea>
+        </div>
+
+        <button type="submit" class="bg-saffron text-white font-semibold px-6 py-2 rounded-lg hover:bg-opacity-90">
+          पाठवा
+        </button>
+      </form>
+
+    </div>
+  </main>
+
+{% endblock %}

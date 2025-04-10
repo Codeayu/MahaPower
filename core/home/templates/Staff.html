@@ -1,73 +1,82 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container mx-auto px-4 py-12">
-    <h1 class="text-4xl font-bold text-center mb-12" style="color: var(--dark-gray);">Staff Dashboard</h1>
-    
+<div class="container mx-auto px-4 py-12 relative">
+    <!-- Logout Button -->
+    <div class="absolute top-0 right-0 mt-4 mr-4">
+      <a href="{% url 'logout' %}"
+         class="py-2 px-4 rounded-lg text-sm font-semibold bg-navyBlue text-white transition duration-300 shadow-md hover:shadow-lg">
+        Logout
+      </a>
+    </div>
+  
+    <h1 class="text-4xl font-bold text-center mb-12 text-gray800">Staff Dashboard</h1>
+  
     <div class="grid grid-cols-1 md:grid-cols-12 gap-8 mb-12">
-        <!-- Staff Profile Card -->
-        <div class="md:col-span-4">
-            <div class="rounded-lg shadow-lg overflow-hidden border" style="border-color: var(--gray);">
-                <div class="p-5" style="background-color: var(--navy-blue); color: var(--white);">
-                    <h4 class="text-2xl font-semibold">Staff Profile</h4>
-                </div>
-                <div class="p-6">
-                    <ul class="divide-y" style="--tw-divide-color: var(--gray);">
-                        <li class="py-4 flex justify-between items-center">
-                            <span class="font-medium" style="color: var(--gray);">Full Name:</span>
-                            <span style="color: var(--dark-gray);">{{ user.full_name }}</span>
-                        </li>
-                        <li class="py-4 flex justify-between items-center">
-                            <span class="font-medium" style="color: var(--gray);">Email:</span>
-                            <span style="color: var(--dark-gray);">{{ user.email }}</span>
-                        </li>
-                        <li class="py-4 flex justify-between items-center">
-                            <span class="font-medium" style="color: var(--gray);">Role:</span>
-                            <span class="px-3 py-1 rounded-full text-sm" style="background-color: var(--navy-blue); color: var(--white);">
-                                {{ user.get_role_display }}
-                            </span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+      <!-- Staff Profile Card -->
+      <div class="md:col-span-4">
+        <div class="rounded-lg shadow-lg overflow-hidden border border-gray600">
+          <div class="p-5 bg-navyBlue text-white">
+            <h4 class="text-2xl font-semibold">Staff Profile</h4>
+          </div>
+          <div class="p-6">
+            <ul class="divide-y divide-gray600">
+              <li class="py-4 flex justify-between items-center">
+                <span class="font-medium text-gray600">Full Name:</span>
+                <span class="text-gray800">{{ user.full_name }}</span>
+              </li>
+              <li class="py-4 flex justify-between items-center">
+                <span class="font-medium text-gray600">Email:</span>
+                <span class="text-gray800">{{ user.email }}</span>
+              </li>
+              <li class="py-4 flex justify-between items-center">
+                <span class="font-medium text-gray600">Role:</span>
+                <span class="px-3 py-1 rounded-full text-sm bg-navyBlue text-white">
+                  {{ user.get_role_display }}
+                </span>
+              </li>
+            </ul>
+          </div>
         </div>
-        
-        <!-- Quick Actions Card -->
-        <div class="md:col-span-8">
-            <div class="rounded-lg shadow-lg overflow-hidden border" style="border-color: var(--gray);">
-                <div class="p-5" style="background-color: var(--saffron); color: var(--white);">
-                    <h4 class="text-2xl font-semibold">Quick Actions</h4>
-                </div>
-                <div class="p-6 flex items-center justify-center">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
-                        <a href="" class="py-4 px-6 rounded-lg flex items-center justify-center gap-2 transition duration-300 shadow-md hover:shadow-lg" style="background-color: var(--navy-blue); color: var(--white);">
-                            Manage Schemes
-                        </a>
-                        <a href="#" class="py-4 px-6 rounded-lg flex items-center justify-center gap-2 transition duration-300 shadow-md hover:shadow-lg font-medium border" style="background-color: var(--light-blue); color: var(--dark-gray); border-color: var(--navy-blue);">
-                            View Reports
-                        </a>
-                    </div>
-                </div>
+      </div>
+  
+      <!-- Quick Actions Card -->
+      <div class="md:col-span-8">
+        <div class="rounded-lg shadow-lg overflow-hidden border border-gray600">
+          <div class="p-5 bg-saffron text-white">
+            <h4 class="text-2xl font-semibold">Quick Actions</h4>
+          </div>
+          <div class="p-6 flex items-center justify-center">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+              <a href="/manage_scheme/"
+                 class="py-4 px-6 rounded-lg flex items-center justify-center gap-2 bg-navyBlue text-white transition duration-300 shadow-md hover:shadow-lg">
+                Manage Schemes
+              </a>
+              <a href="#"
+                 class="py-4 px-6 rounded-lg flex items-center justify-center gap-2 font-medium border border-navyBlue bg-lightBlue text-gray800 transition duration-300 shadow-md hover:shadow-lg">
+                View Reports
+              </a>
             </div>
+          </div>
         </div>
+      </div>
     </div>
-    
+  
     <!-- Recent Activities Card -->
-    <div class="rounded-lg shadow-lg overflow-hidden border" style="border-color: var(--gray);">
-        <div class="p-5" style="background-color: var(--navy-blue); color: var(--white);">
-            <h4 class="text-2xl font-semibold">Recent Activities</h4>
-        </div>
-        <div class="p-6">
-            <div class="p-5 rounded-lg" style="background-color: var(--light-gray);">
-                <div class="flex items-center">
-                    <div class="mr-4" style="color: var(--gray);">
-                        <i class="fas fa-info-circle text-2xl"></i>
-                    </div>
-                    <p class="font-medium" style="color: var(--dark-gray);">Your recent activities will appear here.</p>
-                </div>
+    <div class="rounded-lg shadow-lg overflow-hidden border border-gray600">
+      <div class="p-5 bg-navyBlue text-white">
+        <h4 class="text-2xl font-semibold">Recent Activities</h4>
+      </div>
+      <div class="p-6">
+        <div class="p-5 rounded-lg bg-gray100">
+          <div class="flex items-center">
+            <div class="mr-4 text-gray600">
+              <i class="fas fa-info-circle text-2xl"></i>
             </div>
+            <p class="font-medium text-gray800">Your recent activities will appear here.</p>
+          </div>
         </div>
+      </div>
     </div>
-</div>
-
+  </div>
 {% endblock %}
