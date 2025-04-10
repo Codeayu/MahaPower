@@ -4,6 +4,7 @@ from .models import Scheme, CustomUser
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
+from django.contrib.auth import get_user_model
 
 
 
@@ -88,6 +89,7 @@ def add_scheme(request):
 
     return render(request, 'add_scheme.html')
 
+# filepath: f:\MahaPower\MahaPower\core\home\views.py
 def register(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -109,9 +111,10 @@ def register(request):
                 password=password1,
                 full_name=full_name,
                 role=role,
-                email=email
+                email=email,
+                is_active=False  # Set is_active to False
             )
-            messages.success(request, "User registered successfully!")
+            messages.success(request, "User registered successfully! Awaiting admin approval.")
             return redirect('/login/')
     
     return render(request, 'register.html')
@@ -119,6 +122,7 @@ def register(request):
 
 
 
+# filepath: f:\MahaPower\MahaPower\core\home\views.py
 def login_view(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -126,6 +130,9 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         
         if user is not None:
+            if not user.is_active:
+                messages.error(request, "Your account is awaiting admin approval.")
+                return redirect('/login/')
             login(request, user)
             if hasattr(user, 'role') and user.role == 'admin':
                 return redirect('/admin_user/')  
@@ -138,7 +145,21 @@ def login_view(request):
 @login_required
 @user_passes_test(is_admin, login_url='login_view')
 def admin_user(request):
-    return render(request, 'admin_user.html')
+    pending_users = CustomUser.objects.filter(is_active=False, role='staff')
+    return render(request, 'admin_user.html', {'pending_users': pending_users})
+
+CustomUser = get_user_model()
+
+
+
+@login_required
+@user_passes_test(is_admin, login_url='login_view')
+def activate_user(request, user_id):
+    user = get_object_or_404(CustomUser, id=user_id)
+    user.is_active = True
+    user.save()
+    messages.success(request, f"User '{user.username}' has been activated.")
+    return redirect('approve_users')
 
 @login_required
 @user_passes_test(is_staff_user, login_url='login_view')

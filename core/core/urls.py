@@ -35,7 +35,9 @@ urlpatterns = [
     path('login/', login_view, name='login'), 
     path('admin_user/', admin_user, name='admin_user'),
     path('logout/', logout_user, name='logout'),
-    path('staff_user/', staff_user, name='staff_user'),    
+    path('staff_user/', staff_user, name='staff_user'), 
+    path('approve-users/', approve_users, name='approve_users'),
+    path('activate-user/<int:user_id>/', activate_user, name='activate_user')   
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
