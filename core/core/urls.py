@@ -45,6 +45,9 @@ urlpatterns = [
     path('manage_scheme/', manage_scheme, name='manage_scheme'),
     path('update_scheme/<int:scheme_id>/', update_scheme, name='update_scheme'),
     path('delete_scheme/<int:scheme_id>/', delete_scheme, name='delete_scheme'),
+    
+    #under contsruction pages
+    path('under_construction/', views.under_construction, name='under_construction'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

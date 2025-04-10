@@ -1,87 +1,86 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="admin-dashboard">
-    <h1>Admin Dashboard</h1>
-    <div class="dashboard-tabs">
-        <ul class="nav nav-tabs" id="adminDashboardTabs" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="welcome-tab" data-bs-toggle="tab" data-bs-target="#welcome" type="button" role="tab" aria-controls="welcome" aria-selected="true">Welcome</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="pending-approvals-tab" data-bs-toggle="tab" data-bs-target="#pending-approvals" type="button" role="tab" aria-controls="pending-approvals" aria-selected="false">Pending Approvals</button>
-            </li>
-        </ul>
-        <div class="tab-content mt-4" id="adminDashboardTabsContent">
-            <div class="tab-pane fade show active" id="welcome" role="tabpanel" aria-labelledby="welcome-tab">
-                <div class="container mt-5">
-                    <h2 class="mb-4">Welcome, Admin 👋</h2>
-                    {% if messages %}
-                        {% for message in messages %}
-                            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-                        {% endfor %}
-                    {% endif %}
-                </div>
-            </div>
-            <div class="tab-pane fade" id="pending-approvals" role="tabpanel" aria-labelledby="pending-approvals-tab">
-                <div class="container mt-5">
-                    <h4 class="mt-4">Pending Staff Approvals</h4>
-                    {% if pending_users %}
-                        <table class="table table-bordered bg-white shadow-sm">
-                            <thead class="table-primary">
-                                <tr>
-                                    <th>Username</th>
-                                    <th>Full Name</th>
-                                    <th>Email</th>
-                                    <th>Role</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for user in pending_users %}
-                                    <tr>
-                                        <td>{{ user.username }}</td>
-                                        <td>{{ user.full_name }}</td>
-                                        <td>{{ user.email }}</td>
-                                        <td>{{ user.get_role_display }}</td>
-                                        <td>
-                                            <a href="{% url 'activate_user' user.id %}" class="btn btn-success btn-sm">Activate</a>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    {% else %}
-                        <div class="alert alert-info mt-3">No pending users to approve 🎉</div>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<div class="container mx-auto px-4 py-12 relative">
+  <!-- Logout Button -->
+  <div class="absolute top-0 right-0 mt-4 mr-4">
+    <a href="{% url 'logout' %}"
+       class="py-2 px-4 rounded-lg text-sm font-semibold bg-navyBlue text-white transition duration-300 shadow-md hover:shadow-lg">
+      Logout
+    </a>
+  </div>
 
-<style>
-    .admin-dashboard {
-        padding: 20px;
-    }
-    .dashboard-tabs {
-        margin-bottom: 20px;
-    }
-    .tab-content {
-        display: flex;
-        flex-direction: column;
-    }
-    .table {
-        width: 100%;
-        overflow-x: auto;
-    }
-    @media (max-width: 768px) {
-        .dashboard-tabs ul {
-            flex-direction: column;
-        }
-        .btn {
-            width: 100%;
-        }
-    }
-</style>
+  <h1 class="text-4xl font-bold text-center mb-12 text-gray800">Admin Dashboard</h1>
+
+  <div class="grid grid-cols-1 md:grid-cols-12 gap-8 mb-12">
+    <!-- Admin Profile Card -->
+    <div class="md:col-span-4">
+      <div class="rounded-lg shadow-lg overflow-hidden border border-gray600">
+        <div class="p-5 bg-navyBlue text-white">
+          <h4 class="text-2xl font-semibold">Admin Profile</h4>
+        </div>
+        <div class="p-6">
+          <ul class="divide-y divide-gray600">
+            <li class="py-4 flex justify-between items-center">
+              <span class="font-medium text-gray600">Full Name:</span>
+              <span class="text-gray800">{{ user.full_name }}</span>
+            </li>
+            <li class="py-4 flex justify-between items-center">
+              <span class="font-medium text-gray600">Email:</span>
+              <span class="text-gray800">{{ user.email }}</span>
+            </li>
+            <li class="py-4 flex justify-between items-center">
+              <span class="font-medium text-gray600">Role:</span>
+              <span class="px-3 py-1 rounded-full text-sm bg-navyBlue text-white">
+                {{ user.get_role_display }}
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Actions Card -->
+    <div class="md:col-span-8">
+      <div class="rounded-lg shadow-lg overflow-hidden border border-gray600">
+        <div class="p-5 bg-saffron text-white">
+          <h4 class="text-2xl font-semibold">Quick Actions</h4>
+        </div>
+        <div class="p-6 flex items-center justify-center">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
+            <a href="/manage_scheme/"
+               class="py-4 px-6 rounded-lg flex items-center justify-center gap-2 bg-navyBlue text-white transition duration-300 shadow-md hover:shadow-lg">
+              Manage Schemes
+            </a>
+            <a href="#"
+               class="py-4 px-6 rounded-lg flex items-center justify-center gap-2 font-medium border border-navyBlue bg-lightBlue text-gray800 transition duration-300 shadow-md hover:shadow-lg">
+              View Reports
+            </a>
+            <a href="/staff_approval/"
+               class="py-4 px-6 rounded-lg flex items-center justify-center gap-2 bg-saffron text-white transition duration-300 shadow-md hover:shadow-lg">
+              Staff Approval
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Activities Card -->
+  <div class="rounded-lg shadow-lg overflow-hidden border border-gray600">
+    <div class="p-5 bg-navyBlue text-white">
+      <h4 class="text-2xl font-semibold">Recent Activities</h4>
+    </div>
+    <div class="p-6">
+      <div class="p-5 rounded-lg bg-gray100">
+        <div class="flex items-center">
+          <div class="mr-4 text-gray600">
+            <i class="fas fa-info-circle text-2xl"></i>
+          </div>
+          <p class="font-medium text-gray800">Your recent admin activities will appear here.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

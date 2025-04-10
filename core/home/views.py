@@ -46,6 +46,8 @@ def faqs(request):
     return render(request, 'under_construction.html')   
 def team(request):
     return render(request, 'Our_Team.html')
+def under_construction(request):
+    return render(request, 'under_construction.html')
 
 def scheme_detail(request, scheme_id):
     scheme = get_object_or_404(Scheme, id=scheme_id)
@@ -168,9 +170,11 @@ def login_view(request):
 @login_required
 @user_passes_test(is_admin, login_url='login_view')
 def admin_user(request):
-    pending_users = CustomUser.objects.filter(is_active=False, role='staff')
-    return render(request, 'Admin-dashboard.html', {'pending_users': pending_users})
+    return render(request, 'Admin-dashboard.html')
 
+def staff_user_approval(request):
+    pending_users = CustomUser.objects.filter(is_active=False, role='staff')
+    return render(request, 'Pending_Approval.html', {'pending_users': pending_users})
 
 @login_required
 @user_passes_test(is_admin, login_url='login_view')
