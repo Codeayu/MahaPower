@@ -89,7 +89,6 @@ def add_scheme(request):
 
     return render(request, 'add_scheme.html')
 
-# filepath: f:\MahaPower\MahaPower\core\home\views.py
 def register(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -105,51 +104,59 @@ def register(request):
             messages.error(request, "Passwords do not match.")
         elif CustomUser.objects.filter(username=username).exists():
             messages.error(request, "Username already exists.")
-        else:
+        elif role == 'staff':
             user = CustomUser.objects.create_user(
                 username=username,
                 password=password1,
                 full_name=full_name,
                 role=role,
                 email=email,
-                is_active=False  # Set is_active to False
+                is_active=False  # Awaiting approval
             )
             messages.success(request, "User registered successfully! Awaiting admin approval.")
             return redirect('/login/')
-    
+        elif role == 'admin':
+            user = CustomUser.objects.create_superuser(
+                username=username,
+                password=password1,
+                full_name=full_name,
+                role=role,
+                email=email
+            )
+            messages.success(request, "Admin registered successfully!")
+            return redirect('/login/')
+        else:
+            messages.error(request, "Invalid role selected.")
+
+
     return render(request, 'register.html')
 
 
-
-
-# filepath: f:\MahaPower\MahaPower\core\home\views.py
 def login_view(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
-        
+
         if user is not None:
             if not user.is_active:
                 messages.error(request, "Your account is awaiting admin approval.")
                 return redirect('/login/')
             login(request, user)
-            if hasattr(user, 'role') and user.role == 'admin':
-                return redirect('/admin_user/')  
-            if hasattr(user, 'role') and user.role == 'staff':
+            if user.role == 'admin':
+                return redirect('/admin_user/')
+            elif user.role == 'staff':
                 return redirect('/staff_user/')
-        messages.error(request, "Invalid username or password.")
+        else:
+            messages.error(request, "Invalid username or password.")
     return render(request, 'login.html')
-    
+
 
 @login_required
 @user_passes_test(is_admin, login_url='login_view')
 def admin_user(request):
     pending_users = CustomUser.objects.filter(is_active=False, role='staff')
-    return render(request, 'admin_user.html', {'pending_users': pending_users})
-
-CustomUser = get_user_model()
-
+    return render(request, 'Admin-dashboard.html', {'pending_users': pending_users})
 
 
 @login_required
@@ -159,7 +166,7 @@ def activate_user(request, user_id):
     user.is_active = True
     user.save()
     messages.success(request, f"User '{user.username}' has been activated.")
-    return redirect('approve_users')
+    return redirect('admin_user')
 
 @login_required
 @user_passes_test(is_staff_user, login_url='login_view')
@@ -169,4 +176,4 @@ def staff_user(request):
 @login_required(login_url='/login/')
 def logout_user(request):
     logout(request)
-    return redirect('index/')  # Redirect to the login page after logout
+    return redirect('/')  # Redirect to the login page after logout
