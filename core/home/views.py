@@ -182,16 +182,16 @@ def activate_user(request, user_id):
     user = get_object_or_404(CustomUser, id=user_id)
     user.is_active = True
     user.save()
-    messages.success(request, f"User '{user.username}' has been Approved.")
-    return redirect('staff_user_approval')
+    messages.success(request, f"User '{user.full_name}' has been Approved.")
+    return redirect('/staff_user_approval/')
 
 @login_required
 @user_passes_test(is_admin, login_url='login_view')
 def delete_user(request, user_id):
     user = get_object_or_404(CustomUser, id=user_id)
     user.delete()
-    messages.success(request, f"User '{user.username}' has been rejected")
-    return redirect('Pending_Approval.html')
+    messages.success(request, f"User '{user.full_name}' has been rejected")
+    return redirect('/staff_user_approval/')
 
 @login_required
 @user_passes_test(is_staff_user, login_url='login_view')
@@ -206,6 +206,7 @@ def logout_user(request):
 def manage_scheme(request):
     schemes = Scheme.objects.all()
     return render(request, 'manage_scheme.html', {'schemes': schemes})
+
 def update_scheme(request,scheme_id):
     scheme = get_object_or_404(Scheme, id=scheme_id)
     lang = request.GET.get('lang', 'en')
@@ -235,6 +236,7 @@ def delete_scheme(request, scheme_id):
     scheme = get_object_or_404(Scheme, id=scheme_id)
     scheme.delete()
     return redirect('manage_scheme')  # make sure this URL name exists in your urls.py
+
 @login_required
 @user_passes_test(is_admin)  # Your custom admin role checker
 def scheme_history_view(request, scheme_id):
