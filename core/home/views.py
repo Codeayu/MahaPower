@@ -5,6 +5,9 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from django.contrib.auth import get_user_model
+from django.core.mail import send_mail
+from django.conf import settings
+
 
 
 
@@ -128,8 +131,28 @@ def register(request):
                 email=email,
                 is_active=False  # Awaiting approval
             )
+
+            # ✅ Send Email
+            send_mail(
+                subject="Staff Registration Acknowledgment",
+                message=(
+                    f"Dear {full_name},\n\n"
+                    "Thank you for registering as a staff member with our platform.\n\n"
+                    "We have received your application and it is currently under review by our administrative team. "
+                    "You will be notified via email once your account has been approved or if further information is required.\n\n"
+                    "If you have any questions or need assistance in the meantime, please feel free to contact our support team.\n\n"
+                    "Thank you for your interest and we look forward to having you on board.\n\n"
+                    "Best regards,\n"
+                    "The Administration Team"
+                ),
+                from_email=None,  # Uses DEFAULT_FROM_EMAIL
+                recipient_list=[email],
+                fail_silently=False,
+            )
+
             messages.success(request, "User registered successfully! Awaiting admin approval.")
             return redirect('/login/')
+
         elif role == 'admin':
             user = CustomUser.objects.create_superuser(
                 username=username,
@@ -142,7 +165,6 @@ def register(request):
             return redirect('/login/')
         else:
             messages.error(request, "Invalid role selected.")
-
 
     return render(request, 'register.html')
 
@@ -182,6 +204,22 @@ def activate_user(request, user_id):
     user = get_object_or_404(CustomUser, id=user_id)
     user.is_active = True
     user.save()
+    
+    send_mail(
+        subject="Account Approval Notification",
+        message=(
+            f"Dear {user.full_name},\n\n"
+            "We are pleased to inform you that your staff account has been approved.\n\n"
+            "You can now log in to your account and access the platform using your credentials.\n\n"
+            "If you have any questions or require assistance, please do not hesitate to contact our support team.\n\n"
+            "Thank you for being a part of our team.\n\n"
+            "Best regards,\n"
+            "The Administration Team"
+        ),
+        from_email=None,
+        recipient_list=[user.email],
+        fail_silently=False,
+    )
     messages.success(request, f"User '{user.username}' has been Approved.")
     return redirect('staff_user_approval')
 
@@ -190,6 +228,20 @@ def activate_user(request, user_id):
 def delete_user(request, user_id):
     user = get_object_or_404(CustomUser, id=user_id)
     user.delete()
+    send_mail(
+        subject="Important: Staff Registration Rejected",
+        message=(
+            f"Dear {user.full_name},\n\n"
+            "We regret to inform you that your application for staff registration has not been approved at this time.\n\n"
+            "If you have any questions or require further clarification, please feel free to contact our support team.\n\n"
+            "Thank you for your understanding.\n\n"
+            "Best regards,\n"
+            "The Administration Team"
+        ),
+        from_email=None,
+        recipient_list=[user.email],
+        fail_silently=False,
+    )
     messages.success(request, f"User '{user.username}' has been rejected")
     return redirect('Pending_Approval.html')
 
@@ -245,3 +297,12 @@ def scheme_history_view(request, scheme_id):
         'scheme': scheme,
         'history': history,
     })
+    
+def send_test_email():
+    send_mail(
+        subject="Test Email",
+        message="This is a test email from Django using Anymail + Gmail!",
+        from_email="codehack584@gmail.com",
+        recipient_list=["karamoberoi19@gmail.com"],
+        fail_silently=False,
+    )

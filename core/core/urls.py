@@ -48,6 +48,7 @@ urlpatterns = [
     path('update_scheme/<int:scheme_id>/', update_scheme, name='update_scheme'),
     path('delete_scheme/<int:scheme_id>/', delete_scheme, name='delete_scheme'),
     path('scheme/<int:scheme_id>/history/', scheme_history_view, name='scheme_history'),
+    path('send_test_email/', send_test_email, name='send_email'),
 
     
     #under contsruction pages
