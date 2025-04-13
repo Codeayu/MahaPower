@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
-from .models import Scheme, CustomUser
+from .models import Scheme, CustomUser, UserActivity
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
@@ -51,7 +51,13 @@ def team(request):
     return render(request, 'Our_Team.html')
 def under_construction(request):
     return render(request, 'under_construction.html')
-
+def log_user_activity(user, activity_type, description, created_by=None):
+        UserActivity.objects.create(
+            user=user,
+            activity_type=activity_type,
+            description=description,
+            created_by=created_by or user
+        )
 def scheme_detail(request, scheme_id):
     scheme = get_object_or_404(Scheme, id=scheme_id)
     lang = request.GET.get('lang', 'en')
@@ -102,6 +108,13 @@ def add_scheme(request):
                 website_link=website_link,
                 created_by=request.user
             )
+            # Log user activity
+            log_user_activity(
+                user=request.user,
+                activity_type="Scheme Addition",
+                description=f"Scheme '{name_en}' has been added by '{request.user.username}'.",
+                created_by=request.user
+            )
             messages.success(request, "Scheme added successfully!")
             return redirect('index')
 
@@ -149,6 +162,23 @@ def register(request):
                 recipient_list=[email],
                 fail_silently=False,
             )
+            # if role == 'staff':
+            #     admin_users = CustomUser.objects.filter(role='admin')
+            #     admin_emails = [admin.email for admin in admin_users if admin.email]
+
+            #     send_mail(
+            #         subject="New Staff Registration Pending Approval",
+            #         message=(
+            #             f"Dear Admin,\n\n"
+            #             f"A new staff registration request has been submitted by {full_name}.\n\n"
+            #             "Please log in to the admin panel to review and approve the application.\n\n"
+            #             "Best regards,\n"
+            #             "The Administration Team"
+            #         ),
+            #         from_email=None,  # Uses DEFAULT_FROM_EMAIL
+            #         recipient_list=admin_emails,  # Send to all admin emails
+            #         fail_silently=False,
+            #     )
 
             messages.success(request, "User registered successfully! Awaiting admin approval.")
             return redirect('/login/')
@@ -192,7 +222,8 @@ def login_view(request):
 @login_required
 @user_passes_test(is_admin, login_url='login_view')
 def admin_user(request):
-    return render(request, 'Admin-dashboard.html')
+    user_activities = UserActivity.objects.filter(user=request.user).order_by('-timestamp')
+    return render(request, 'Admin-dashboard.html', {'user_activities': user_activities})
 
 def staff_user_approval(request):
     pending_users = CustomUser.objects.filter(is_active=False, role='staff')
@@ -204,6 +235,14 @@ def activate_user(request, user_id):
     user = get_object_or_404(CustomUser, id=user_id)
     user.is_active = True
     user.save()
+    
+    # Log user activity
+    log_user_activity(
+        user=user,
+        activity_type="Account Activation",
+        description=f"User '{user.username}' account has been activated by {request.user.username}.",
+        created_by=request.user
+    )
     
     send_mail(
         subject="Account Approval Notification",
@@ -228,6 +267,13 @@ def activate_user(request, user_id):
 def delete_user(request, user_id):
     user = get_object_or_404(CustomUser, id=user_id)
     user.delete()
+      # Log user activity
+    log_user_activity(
+        user=user,
+        activity_type="Account Deletion/ Rejection",
+        description=f"User '{user.username}' account has been deleted by '{request.user.username}'.",
+        created_by=request.user
+    )
     send_mail(
         subject="Important: Staff Registration Rejected",
         message=(
@@ -247,8 +293,9 @@ def delete_user(request, user_id):
 
 @login_required
 @user_passes_test(is_staff_user, login_url='login_view')
-def staff_user(request):
-    return render(request, 'Staff.html')
+def staff_user(request):        
+    user_activities = UserActivity.objects.filter(user=request.user).order_by('-timestamp')
+    return render(request, 'Staff.html', {'user_activities': user_activities})
 
 @login_required(login_url='/login/')
 def logout_user(request):
@@ -275,10 +322,19 @@ def update_scheme(request,scheme_id):
         scheme.eligibility_criteria_en = request.POST.get('eligibility_criteria_en', scheme.eligibility_criteria_en)
         scheme.eligibility_criteria_mr = request.POST.get('eligibility_criteria_mr', scheme.eligibility_criteria_mr)
 
+        
+        
         if 'photo' in request.FILES:
             scheme.photo = request.FILES['photo']
 
         scheme.save()
+          # Log user activity
+        log_user_activity(
+            user=request.user,
+            activity_type="Scheme Update",
+            description=f"Scheme '{scheme.name_en}' has been updated by '{request.user.username}'.",
+            created_by=request.user
+        )
         messages.success(request, "Scheme updated successfully!")
         return redirect('manage_scheme')
     return render(request, 'update_scheme.html', {'scheme': scheme, 'lang': lang})
@@ -286,6 +342,13 @@ def update_scheme(request,scheme_id):
 def delete_scheme(request, scheme_id):
     scheme = get_object_or_404(Scheme, id=scheme_id)
     scheme.delete()
+    # Log user activity
+    log_user_activity(
+        user=request.user,
+        activity_type="Scheme Deletion",
+        description=f"Scheme '{scheme.name_en}' has been deleted by '{request.user.username}'.",
+        created_by=request.user
+    )
     return redirect('manage_scheme')  # make sure this URL name exists in your urls.py
 @login_required
 @user_passes_test(is_admin)  # Your custom admin role checker
@@ -306,3 +369,23 @@ def send_test_email():
         recipient_list=["karamoberoi19@gmail.com"],
         fail_silently=False,
     )
+    
+def user_profile_edit(request):
+    user = request.user
+    if request.method == 'POST':
+        user.full_name = request.POST.get('full_name', user.full_name)
+        user.email = request.POST.get('email', user.email)
+        user.role = request.POST.get('role', user.role)
+
+        # # If the password is provided, update it
+        # if request.POST.get('password'):
+        #     user.set_password(request.POST.get('password'))
+
+        user.save()
+        messages.success(request, "Profile updated successfully!")
+        if user.role == 'staff':
+            return redirect('/staff_user/')
+        elif user.role == 'admin':
+            return redirect('/admin_user/')
+
+    return render(request,{'user': user})

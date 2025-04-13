@@ -12,12 +12,17 @@
 
   <h1 class="text-4xl font-bold text-center mb-12 text-gray800">Admin Dashboard</h1>
 
-  <div class="grid grid-cols-1 md:grid-cols-12 gap-8 mb-12">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
     <!-- Admin Profile Card -->
-    <div class="md:col-span-4">
+    <div>
       <div class="rounded-lg shadow-lg overflow-hidden border border-gray600">
-        <div class="p-5 bg-navyBlue text-white">
+        <div class="p-5 bg-navyBlue text-white flex justify-between items-center">
           <h4 class="text-2xl font-semibold">Admin Profile</h4>
+          <button 
+            class="py-2 px-4 rounded-lg text-sm font-semibold bg-saffron text-white transition duration-300 shadow-md hover:shadow-lg"
+            onclick="toggleModal('editProfileModal')">
+            Edit Profile
+          </button>
         </div>
         <div class="p-6">
           <ul class="divide-y divide-gray600">
@@ -41,7 +46,7 @@
     </div>
 
     <!-- Quick Actions Card -->
-    <div class="md:col-span-8">
+    <div>
       <div class="rounded-lg shadow-lg overflow-hidden border border-gray600">
         <div class="p-5 bg-saffron text-white">
           <h4 class="text-2xl font-semibold">Quick Actions</h4>
@@ -66,21 +71,79 @@
     </div>
   </div>
 
+  <!-- Edit Profile Modal -->
+  <div id="editProfileModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg shadow-lg w-96">
+      <div class="p-5 bg-navyBlue text-white flex justify-between items-center">
+        <h4 class="text-xl font-semibold">Edit Profile</h4>
+        <button class="text-white text-lg" onclick="toggleModal('editProfileModal')">&times;</button>
+      </div>
+      <form method="POST" action="{% url 'user_profile_edit' %}" class="p-6">
+        {% csrf_token %}
+        <div class="mb-4">
+          <label for="full_name" class="block text-sm font-medium text-gray600">Full Name</label>
+          <input type="text" id="full_name" name="full_name" value="{{ user.full_name }}" 
+                 class="w-full mt-1 px-3 py-2 border border-gray300 rounded-lg focus:outline-none focus:ring-2 focus:ring-navyBlue">
+        </div>
+        <div class="mb-4">
+          <label for="email" class="block text-sm font-medium text-gray600">Email</label>
+          <input type="email" id="email" name="email" value="{{ user.email }}" 
+                 class="w-full mt-1 px-3 py-2 border border-gray300 rounded-lg focus:outline-none focus:ring-2 focus:ring-navyBlue">
+        </div>
+        <div class="flex justify-end">
+          <button type="button" 
+                  class="py-2 px-4 rounded-lg text-sm font-semibold bg-gray300 text-gray800 mr-2"
+                  onclick="toggleModal('editProfileModal')">
+            Cancel
+          </button>
+          <button type="submit" 
+                  class="py-2 px-4 rounded-lg text-sm font-semibold bg-saffron text-white">
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function toggleModal(modalId) {
+      const modal = document.getElementById(modalId);
+      modal.classList.toggle('hidden');
+    }
+  </script>
+
   <!-- Recent Activities Card -->
   <div class="rounded-lg shadow-lg overflow-hidden border border-gray600">
     <div class="p-5 bg-navyBlue text-white">
       <h4 class="text-2xl font-semibold">Recent Activities</h4>
     </div>
     <div class="p-6">
-      <div class="p-5 rounded-lg bg-gray100">
-        <div class="flex items-center">
-          <div class="mr-4 text-gray600">
-            <i class="fas fa-info-circle text-2xl"></i>
+      {% if user_activities %}
+        <ul class="divide-y divide-gray600">
+          {% for activity in user_activities %}
+            <li class="py-4">
+              <div class="flex justify-between items-center">
+                <div>
+                  <p class="font-medium text-gray800">{{ activity.activity_type }}</p>
+                  <p class="text-sm text-gray600">{{ activity.description }}</p>
+                </div>
+                <span class="text-sm text-gray500">{{ activity.timestamp|date:"M d, Y H:i" }}</span>
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <div class="p-5 rounded-lg bg-gray100">
+          <div class="flex items-center">
+            <div class="mr-4 text-gray600">
+              <i class="fas fa-info-circle text-2xl"></i>
+            </div>
+            <p class="font-medium text-gray800">No recent activities found.</p>
           </div>
-          <p class="font-medium text-gray800">Your recent admin activities will appear here.</p>
         </div>
-      </div>
+      {% endif %}
     </div>
   </div>
 </div>
+
 {% endblock %}
