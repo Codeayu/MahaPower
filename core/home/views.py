@@ -390,10 +390,6 @@ def user_profile_edit(request):
             return redirect('/admin_user/')
 
     return render(request,{'user': user})
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 def password_reset_flow(request):
     step = request.POST.get('step', 'forgot')
     context = {'step': step}

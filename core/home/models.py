@@ -15,7 +15,6 @@ class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
     otp = models.CharField(max_length=6, null=True, blank=True)    
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='staff')
-    otp = models.CharField(max_length=6, null=True, blank=True)
     history = HistoricalRecords()
 
     def __str__(self):
