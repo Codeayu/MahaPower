@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'home',
     'simple_history',
+    'anymail',
 ]
 
 MIDDLEWARE = [
@@ -133,3 +134,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'home.CustomUser'
 MEDIA_URL = '/media/'  # URL to access media files
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Directory to store media files
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+EMAIL_HOST_USER = 'codehack584@gmail.com'          # your Gmail address
+EMAIL_HOST_PASSWORD = 'kbzbpphekwvgsclq'         # generated from Gmail App Passwords
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
