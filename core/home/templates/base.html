@@ -36,106 +36,56 @@
 </head>
 <body class="font-poppins text-gray-800 bg-gray-100">
 
-  <!-- Navbar with Solid Navy Blue -->
-  <nav class="bg-navyBlue text-white py-4 shadow-md">
+  <!-- Navbar -->
+  <nav class="bg-navyBlue text-white py-4">
     <div class="container mx-auto px-4 max-w-7xl flex justify-between items-center">
-      {% if user.is_authenticated %}
-        {% if user.role == 'admin' %}
-          <a href="{% url 'admin_user' %}" class="text-xl font-semibold font-devanagari hover:text-saffron transition-colors">
-            महाराष्ट्र राज्य खादी व ग्रामोद्योग मंडळ
-          </a>
-        {% elif user.role == 'staff' %}
-          <a href="{% url 'staff_user' %}" class="text-xl font-semibold font-devanagari hover:text-saffron transition-colors">
-            महाराष्ट्र राज्य खादी व ग्रामोद्योग मंडळ
-          </a>
-        {% endif %}
-      {% else %}
-        <a href="{% url 'index' %}" class="text-xl font-semibold font-devanagari hover:text-saffron transition-colors">
-          महाराष्ट्र राज्य खादी व ग्रामोद्योग मंडळ
-        </a>
+    {% comment %} <h1 class="text-xl font-semibold">महाराष्ट्र राज्य खादी व ग्रामोद्योग मंडळ</h1> {% endcomment %}
+    {% if user.is_authenticated %}
+      {% if user.role == 'admin' %}
+        <a href="{% url 'admin_user' %}" class="text-xl font-semibold">महाराष्ट्र राज्य खादी व ग्रामोद्योग मंडळ</a>
+      {% elif user.role == 'staff' %}
+        <a href="{% url 'staff_user' %}" class="text-xl font-semibold">महाराष्ट्र राज्य खादी व ग्रामोद्योग मंडळ</a>
       {% endif %}
-      <button class="border border-saffron bg-transparent text-white py-2 px-4 rounded text-sm hover:bg-saffron hover:text-navyBlue transition-all">
-        English | मराठी
-      </button>
+    {% else %}
+      <a href="{% url 'index' %}" class="text-xl font-semibold">महाराष्ट्र राज्य खादी व ग्रामोद्योग मंडळ</a>
+    {% endif %}
+      <button class="border border-white bg-transparent text-white py-2 px-4 rounded text-sm hover:bg-white hover:text-navyBlue transition-all">English | मराठी</button>
     </div>
   </nav>
 
-  {% block content %}{% endblock %}        
-
-  <!-- Footer with Saffron-Blue Gradient and Wave Pattern -->
-  <footer class="relative bg-gradient-to-r from-saffron to-navyBlue text-white pt-12 pb-6 overflow-hidden">
-    <!-- Wave Decoration -->
-    <div class="absolute top-0 left-0 right-0 h-12 -translate-y-1/2">
-      <svg viewBox="0 0 1440 68" class="w-full h-full" preserveAspectRatio="none">
-        <path d="M0,48L48,42C96,36,192,24,288,24C384,24,480,36,576,48C672,60,768,72,864,72C960,72,1056,60,1152,48C1248,36,1344,24,1392,18L1440,12L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z" fill="currentColor" class="text-saffron opacity-20"></path>
-      </svg>
-    </div>
-    
-    <div class="container mx-auto px-4 max-w-7xl relative z-10">
+        {% block content %}{% endblock %}        
+  <!-- Footer -->
+  <footer class="bg-gradient-to-t from-navyBlue to-gray text-white py-12">
+    <div class="container mx-auto px-4 max-w-7xl">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <!-- Contact Column -->
         <div>
-          <h3 class="text-xl font-semibold mb-4 pb-2 border-b border-white/30">संपर्क करा</h3>
-          <div class="space-y-3">
-            <p class="flex items-center">
-              <i class="fas fa-map-marker-alt text-saffron mr-3"></i>
-              जिल्हा कार्यालय, अमरावती - ४४४६०१
-            </p>
-            <p class="flex items-center">
-              <i class="fas fa-envelope text-saffron mr-3"></i>
-              khadigramodyog@maharashtra.gov.in
-            </p>
-            <p class="flex items-center">
-              <i class="fas fa-phone text-saffron mr-3"></i>
-              ०७२१-२५६३८९४
-            </p>
-          </div>
+          <h3 class="text-xl text-saffron mb-4">Contact Us</h3>
+          <p class="mb-2"><i class="fas fa-envelope text-saffron mr-2"></i> info@maharashtraschemes.gov.in</p>
+          <p><i class="fas fa-phone text-saffron mr-2"></i> 1800-123-4567</p>
         </div>
-        
-        <!-- Quick Links Column -->
         <div>
-          <h3 class="text-xl font-semibold mb-4 pb-2 border-b border-white/30">द्रुत लिंक</h3>
+          <h3 class="text-xl text-saffron mb-4">Quick Links</h3>
           <ul class="space-y-2">
-            <li><a href="/about/" class="hover:text-saffron transition-colors flex items-center">
-              <i class="fas fa-chevron-right text-xs text-saffron mr-2"></i> आमच्याबद्दल
-            </a></li>
-            <li><a href="/schemes/" class="hover:text-saffron transition-colors flex items-center">
-              <i class="fas fa-chevron-right text-xs text-saffron mr-2"></i> योजना
-            </a></li>
-            <li><a href="/gallery/" class="hover:text-saffron transition-colors flex items-center">
-              <i class="fas fa-chevron-right text-xs text-saffron mr-2"></i> गॅलरी
-            </a></li>
-            <li><a href="/our_team/" class="hover:text-saffron transition-colors flex items-center">
-              <i class="fas fa-chevron-right text-xs text-saffron mr-2"></i> आमची टीम
-            </a></li>
+            <li><a href="/about/" class="hover:text-saffron">About Us</a></li>
+            <li><a href="/contact/" class="hover:text-saffron">Contact Us</a></li>
+            <li><a href="/under_construction/" class="hover:text-saffron">Privacy Policy</a></li>
+            <li><a href="/under_construction/" class="hover:text-saffron">Terms of Service</a></li>
+            <li><a href="/under_construction/" class="hover:text-saffron">FAQ</a></li>
+            <li><a href="/our_team/" class="hover:text-saffron">Our Team</a></li>
           </ul>
         </div>
-        
-        <!-- Government Logos -->
-        <div class="flex flex-col items-center md:items-end">
-          <div class="flex space-x-4 mb-6">
-            <img src="https://karamveer2648.github.io/mahaprojectimagerepo/logoofministry.png" 
-                 alt="Ministry Logo" 
-                 class="h-16 w-auto bg-white p-2 rounded-lg shadow-md hover:scale-105 transition-transform">
-            <img src="https://karamveer2648.github.io/mahaprojectimagerepo/maha.png" 
-                 alt="Maharashtra Logo" 
-                 class="h-16 w-auto bg-white p-2 rounded-lg shadow-md hover:scale-105 transition-transform">
+        <div class="text-center">
+          <div class="flex justify-center mb-4">
+            <img src="https://karamveer2648.github.io/mahaprojectimagerepo/logoofministry.png" alt="Ministry Logo" class="h-20 w-auto bg-white p-2 rounded mr-2">
+            <img src="https://karamveer2648.github.io/mahaprojectimagerepo/maha.png" alt="Maharashtra Logo" class="h-20 w-auto bg-white p-2 rounded ml-2">
           </div>
-          <p class="text-sm text-center md:text-right mb-2">
-            © २०२५ महाराष्ट्र शासन. सर्व हक्क राखीव.
-          </p>
-          <p class="text-sm text-center md:text-right">
-            विकसित: <a href="/our_team/" class="font-medium hover:text-saffron underline">टीम कोडहॅक</a>
-          </p>
+          <p class="text-sm text-white">© 2025 Government of Maharashtra. All Rights Reserved.</p>
+          <p class="text-sm text-white mt-2">Developed by <a href="/our_team/" class="text-saffron hover:underline">Team CodeHack</a>.</p>
         </div>
-      </div>
-      
-      <!-- Copyright Bottom Bar -->
-      <div class="mt-8 pt-4 border-t border-white/20 text-center text-sm">
-        <p>This is the official portal of Maharashtra State Khadi & Village Industries Board, Amravati</p>
       </div>
     </div>
   </footer>
+
 
 </body>
 </html>

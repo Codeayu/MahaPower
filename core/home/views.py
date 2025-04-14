@@ -1,13 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
-from .models import Scheme, CustomUser, UserActivity
+from .models import Scheme, CustomUser
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from django.contrib.auth import get_user_model
-from django.core.mail import send_mail
-from django.conf import settings
-
 
 
 
@@ -51,13 +48,7 @@ def team(request):
     return render(request, 'Our_Team.html')
 def under_construction(request):
     return render(request, 'under_construction.html')
-def log_user_activity(user, activity_type, description, created_by=None):
-        UserActivity.objects.create(
-            user=user,
-            activity_type=activity_type,
-            description=description,
-            created_by=created_by or user
-        )
+
 def scheme_detail(request, scheme_id):
     scheme = get_object_or_404(Scheme, id=scheme_id)
     lang = request.GET.get('lang', 'en')
@@ -108,13 +99,6 @@ def add_scheme(request):
                 website_link=website_link,
                 created_by=request.user
             )
-            # Log user activity
-            log_user_activity(
-                user=request.user,
-                activity_type="Scheme Addition",
-                description=f"Scheme '{name_en}' has been added by '{request.user.username}'.",
-                created_by=request.user
-            )
             messages.success(request, "Scheme added successfully!")
             return redirect('index')
 
@@ -144,45 +128,8 @@ def register(request):
                 email=email,
                 is_active=False  # Awaiting approval
             )
-
-            # ✅ Send Email
-            send_mail(
-                subject="Staff Registration Acknowledgment",
-                message=(
-                    f"Dear {full_name},\n\n"
-                    "Thank you for registering as a staff member with our platform.\n\n"
-                    "We have received your application and it is currently under review by our administrative team. "
-                    "You will be notified via email once your account has been approved or if further information is required.\n\n"
-                    "If you have any questions or need assistance in the meantime, please feel free to contact our support team.\n\n"
-                    "Thank you for your interest and we look forward to having you on board.\n\n"
-                    "Best regards,\n"
-                    "The Administration Team"
-                ),
-                from_email=None,  # Uses DEFAULT_FROM_EMAIL
-                recipient_list=[email],
-                fail_silently=False,
-            )
-            # if role == 'staff':
-            #     admin_users = CustomUser.objects.filter(role='admin')
-            #     admin_emails = [admin.email for admin in admin_users if admin.email]
-
-            #     send_mail(
-            #         subject="New Staff Registration Pending Approval",
-            #         message=(
-            #             f"Dear Admin,\n\n"
-            #             f"A new staff registration request has been submitted by {full_name}.\n\n"
-            #             "Please log in to the admin panel to review and approve the application.\n\n"
-            #             "Best regards,\n"
-            #             "The Administration Team"
-            #         ),
-            #         from_email=None,  # Uses DEFAULT_FROM_EMAIL
-            #         recipient_list=admin_emails,  # Send to all admin emails
-            #         fail_silently=False,
-            #     )
-
             messages.success(request, "User registered successfully! Awaiting admin approval.")
             return redirect('/login/')
-
         elif role == 'admin':
             user = CustomUser.objects.create_superuser(
                 username=username,
@@ -195,6 +142,7 @@ def register(request):
             return redirect('/login/')
         else:
             messages.error(request, "Invalid role selected.")
+
 
     return render(request, 'register.html')
 
@@ -222,8 +170,7 @@ def login_view(request):
 @login_required
 @user_passes_test(is_admin, login_url='login_view')
 def admin_user(request):
-    user_activities = UserActivity.objects.filter(user=request.user).order_by('-timestamp')
-    return render(request, 'Admin-dashboard.html', {'user_activities': user_activities})
+    return render(request, 'Admin-dashboard.html')
 
 def staff_user_approval(request):
     pending_users = CustomUser.objects.filter(is_active=False, role='staff')
@@ -235,22 +182,21 @@ def activate_user(request, user_id):
     user = get_object_or_404(CustomUser, id=user_id)
     user.is_active = True
     user.save()
-    messages.success(request, f"User '{user.username}' has been Approved.")
-    return redirect('staff_user_approval')
+    messages.success(request, f"User '{user.full_name}' has been Approved.")
+    return redirect('/staff_user_approval/')
 
 @login_required
 @user_passes_test(is_admin, login_url='login_view')
 def delete_user(request, user_id):
     user = get_object_or_404(CustomUser, id=user_id)
     user.delete()
-    messages.success(request, f"User '{user.username}' has been rejected")
-    return redirect('Pending_Approval.html')
+    messages.success(request, f"User '{user.full_name}' has been rejected")
+    return redirect('/staff_user_approval/')
 
 @login_required
 @user_passes_test(is_staff_user, login_url='login_view')
-def staff_user(request):        
-    user_activities = UserActivity.objects.filter(user=request.user).order_by('-timestamp')
-    return render(request, 'Staff.html', {'user_activities': user_activities})
+def staff_user(request):
+    return render(request, 'Staff.html')
 
 @login_required(login_url='/login/')
 def logout_user(request):
@@ -278,19 +224,10 @@ def update_scheme(request,scheme_id):
         scheme.eligibility_criteria_en = request.POST.get('eligibility_criteria_en', scheme.eligibility_criteria_en)
         scheme.eligibility_criteria_mr = request.POST.get('eligibility_criteria_mr', scheme.eligibility_criteria_mr)
 
-        
-        
         if 'photo' in request.FILES:
             scheme.photo = request.FILES['photo']
 
         scheme.save()
-          # Log user activity
-        log_user_activity(
-            user=request.user,
-            activity_type="Scheme Update",
-            description=f"Scheme '{scheme.name_en}' has been updated by '{request.user.username}'.",
-            created_by=request.user
-        )
         messages.success(request, "Scheme updated successfully!")
         return redirect('manage_scheme')
     return render(request, 'update_scheme.html', {'scheme': scheme, 'lang': lang})
@@ -298,13 +235,6 @@ def update_scheme(request,scheme_id):
 def delete_scheme(request, scheme_id):
     scheme = get_object_or_404(Scheme, id=scheme_id)
     scheme.delete()
-    # Log user activity
-    log_user_activity(
-        user=request.user,
-        activity_type="Scheme Deletion",
-        description=f"Scheme '{scheme.name_en}' has been deleted by '{request.user.username}'.",
-        created_by=request.user
-    )
     return redirect('manage_scheme')  # make sure this URL name exists in your urls.py
 
 @login_required
@@ -317,32 +247,3 @@ def scheme_history_view(request, scheme_id):
         'scheme': scheme,
         'history': history,
     })
-    
-def send_test_email():
-    send_mail(
-        subject="Test Email",
-        message="This is a test email from Django using Anymail + Gmail!",
-        from_email="codehack584@gmail.com",
-        recipient_list=["karamoberoi19@gmail.com"],
-        fail_silently=False,
-    )
-    
-def user_profile_edit(request):
-    user = request.user
-    if request.method == 'POST':
-        user.full_name = request.POST.get('full_name', user.full_name)
-        user.email = request.POST.get('email', user.email)
-        user.role = request.POST.get('role', user.role)
-
-        # # If the password is provided, update it
-        # if request.POST.get('password'):
-        #     user.set_password(request.POST.get('password'))
-
-        user.save()
-        messages.success(request, "Profile updated successfully!")
-        if user.role == 'staff':
-            return redirect('/staff_user/')
-        elif user.role == 'admin':
-            return redirect('/admin_user/')
-
-    return render(request,{'user': user})

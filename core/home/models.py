@@ -54,17 +54,3 @@ class Scheme(models.Model):
 
     def __str__(self):
         return self.name_en
-        # Model to track user activities
-class UserActivity(models.Model):
-            user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-            activity_type = models.CharField(max_length=100)  # e.g., Login, Logout, Data Update
-            description = models.TextField(blank=True, null=True)  # Detailed description of the activity
-            # ip_address = models.GenericIPAddressField(blank=True, null=True)  # IP address of the user
-            # user_agent = models.TextField(blank=True, null=True)  # Browser or device details
-            # location = models.CharField(max_length=255, blank=True, null=True)  # Geographical location if available
-            timestamp = models.DateTimeField(default=timezone.now)  # When the activity occurred
-            created_by = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=True, related_name='activity_created_by')  # Who triggered the activity
-            updated_at = models.DateTimeField(auto_now=True)  # Last updated timestamp
-
-            def __str__(self):
-                return f"{self.user.username} - {self.activity_type} at {self.timestamp}"
