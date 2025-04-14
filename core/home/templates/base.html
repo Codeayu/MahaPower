@@ -41,22 +41,49 @@
     <div class="container mx-auto px-4 max-w-7xl flex justify-between items-center">
       {% if user.is_authenticated %}
         {% if user.role == 'admin' %}
-          <a href="{% url 'admin_user' %}" class="text-xl font-semibold font-devanagari hover:text-saffron transition-colors">
+          <a href="{% url 'admin_user' %}" class="text-xl font-semibold font-devanagari hover:text-saffron transition-colors english-text">
+            Maharashtra State Khadi & Village Industries Board
+          </a>
+          <a href="{% url 'admin_user' %}" class="text-xl font-semibold font-devanagari hover:text-saffron transition-colors marathi-text hidden">
             महाराष्ट्र राज्य खादी व ग्रामोद्योग मंडळ
           </a>
         {% elif user.role == 'staff' %}
-          <a href="{% url 'staff_user' %}" class="text-xl font-semibold font-devanagari hover:text-saffron transition-colors">
+          <a href="{% url 'staff_user' %}" class="text-xl font-semibold font-devanagari hover:text-saffron transition-colors english-text">
+            Maharashtra State Khadi & Village Industries Board
+          </a>
+          <a href="{% url 'staff_user' %}" class="text-xl font-semibold font-devanagari hover:text-saffron transition-colors marathi-text hidden">
             महाराष्ट्र राज्य खादी व ग्रामोद्योग मंडळ
           </a>
         {% endif %}
       {% else %}
-        <a href="{% url 'index' %}" class="text-xl font-semibold font-devanagari hover:text-saffron transition-colors">
+        <a href="{% url 'index' %}" class="text-xl font-semibold font-devanagari hover:text-saffron transition-colors english-text">
+          Maharashtra State Khadi & Village Industries Board
+        </a>
+        <a href="{% url 'index' %}" class="text-xl font-semibold font-devanagari hover:text-saffron transition-colors marathi-text hidden">
           महाराष्ट्र राज्य खादी व ग्रामोद्योग मंडळ
         </a>
       {% endif %}
-      <button class="border border-saffron bg-transparent text-white py-2 px-4 rounded text-sm hover:bg-saffron hover:text-navyBlue transition-all">
-        English | मराठी
-      </button>
+      <div class="flex items-center space-x-4">
+        <button id="languageToggle" class="border border-saffron bg-transparent text-white py-2 px-4 rounded text-sm hover:bg-saffron hover:text-navyBlue transition-all">
+          <span class="english-text">मराठी</span>
+          <span class="marathi-text hidden">English</span>
+        </button>
+        {% if user.is_authenticated %}
+          <a href="{% url 'logout' %}" class="text-sm border border-saffron bg-transparent text-white py-2 px-4 rounded hover:bg-saffron hover:text-navyBlue transition-all english-text">
+            Logout
+          </a>
+          <a href="{% url 'logout' %}" class="text-sm border border-saffron bg-transparent text-white py-2 px-4 rounded hover:bg-saffron hover:text-navyBlue transition-all marathi-text hidden">
+            लॉगआउट
+          </a>
+        {% else %}
+          <a href="{% url 'login' %}" class="text-sm border border-saffron bg-transparent text-white py-2 px-4 rounded hover:bg-saffron hover:text-navyBlue transition-all english-text">
+            Login
+          </a>
+          <a href="{% url 'login' %}" class="text-sm border border-saffron bg-transparent text-white py-2 px-4 rounded hover:bg-saffron hover:text-navyBlue transition-all marathi-text hidden">
+            लॉगिन
+          </a>
+        {% endif %}
+      </div>
     </div>
   </nav>
 
@@ -75,17 +102,30 @@
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         <!-- Contact Column -->
         <div>
-          <h3 class="text-xl font-semibold mb-4 pb-2 border-b border-white/30">संपर्क करा</h3>
+          <h3 class="text-xl font-semibold mb-4 pb-2 border-b border-white/30 english-text">Contact Us</h3>
+          <h3 class="text-xl font-semibold mb-4 pb-2 border-b border-white/30 marathi-text hidden">संपर्क करा</h3>
           <div class="space-y-3">
-            <p class="flex items-center">
+            <p class="flex items-center english-text">
+              <i class="fas fa-map-marker-alt text-saffron mr-3"></i>
+              District Office, Amravati - 444601
+            </p>
+            <p class="flex items-center marathi-text hidden">
               <i class="fas fa-map-marker-alt text-saffron mr-3"></i>
               जिल्हा कार्यालय, अमरावती - ४४४६०१
             </p>
-            <p class="flex items-center">
+            <p class="flex items-center english-text">
               <i class="fas fa-envelope text-saffron mr-3"></i>
               khadigramodyog@maharashtra.gov.in
             </p>
-            <p class="flex items-center">
+            <p class="flex items-center marathi-text hidden">
+              <i class="fas fa-envelope text-saffron mr-3"></i>
+              khadigramodyog@maharashtra.gov.in
+            </p>
+            <p class="flex items-center english-text">
+              <i class="fas fa-phone text-saffron mr-3"></i>
+              0721-2563894
+            </p>
+            <p class="flex items-center marathi-text hidden">
               <i class="fas fa-phone text-saffron mr-3"></i>
               ०७२१-२५६३८९४
             </p>
@@ -94,18 +134,31 @@
         
         <!-- Quick Links Column -->
         <div>
-          <h3 class="text-xl font-semibold mb-4 pb-2 border-b border-white/30">द्रुत लिंक</h3>
+          <h3 class="text-xl font-semibold mb-4 pb-2 border-b border-white/30 english-text">Quick Links</h3>
+          <h3 class="text-xl font-semibold mb-4 pb-2 border-b border-white/30 marathi-text hidden">द्रुत लिंक</h3>
           <ul class="space-y-2">
-            <li><a href="/about/" class="hover:text-saffron transition-colors flex items-center">
+            <li class="english-text"><a href="/about/" class="hover:text-saffron transition-colors flex items-center">
+              <i class="fas fa-chevron-right text-xs text-saffron mr-2"></i> About Us
+            </a></li>
+            <li class="marathi-text hidden"><a href="/about/" class="hover:text-saffron transition-colors flex items-center">
               <i class="fas fa-chevron-right text-xs text-saffron mr-2"></i> आमच्याबद्दल
             </a></li>
-            <li><a href="/schemes/" class="hover:text-saffron transition-colors flex items-center">
+            <li class="english-text"><a href="/schemes/" class="hover:text-saffron transition-colors flex items-center">
+              <i class="fas fa-chevron-right text-xs text-saffron mr-2"></i> Schemes
+            </a></li>
+            <li class="marathi-text hidden"><a href="/schemes/" class="hover:text-saffron transition-colors flex items-center">
               <i class="fas fa-chevron-right text-xs text-saffron mr-2"></i> योजना
             </a></li>
-            <li><a href="/gallery/" class="hover:text-saffron transition-colors flex items-center">
+            <li class="english-text"><a href="/gallery/" class="hover:text-saffron transition-colors flex items-center">
+              <i class="fas fa-chevron-right text-xs text-saffron mr-2"></i> Gallery
+            </a></li>
+            <li class="marathi-text hidden"><a href="/gallery/" class="hover:text-saffron transition-colors flex items-center">
               <i class="fas fa-chevron-right text-xs text-saffron mr-2"></i> गॅलरी
             </a></li>
-            <li><a href="/our_team/" class="hover:text-saffron transition-colors flex items-center">
+            <li class="english-text"><a href="/our_team/" class="hover:text-saffron transition-colors flex items-center">
+              <i class="fas fa-chevron-right text-xs text-saffron mr-2"></i> Our Team
+            </a></li>
+            <li class="marathi-text hidden"><a href="/our_team/" class="hover:text-saffron transition-colors flex items-center">
               <i class="fas fa-chevron-right text-xs text-saffron mr-2"></i> आमची टीम
             </a></li>
           </ul>
@@ -121,21 +174,102 @@
                  alt="Maharashtra Logo" 
                  class="h-16 w-auto bg-white p-2 rounded-lg shadow-md hover:scale-105 transition-transform">
           </div>
-          <p class="text-sm text-center md:text-right mb-2">
+          <p class="text-sm text-center md:text-right mb-2 english-text">
+            © 2025 Government of Maharashtra. All Rights Reserved.
+          </p>
+          <p class="text-sm text-center md:text-right mb-2 marathi-text hidden">
             © २०२५ महाराष्ट्र शासन. सर्व हक्क राखीव.
           </p>
-          <p class="text-sm text-center md:text-right">
+          <p class="text-sm text-center md:text-right english-text">
+            Developed by: <a href="/our_team/" class="font-medium hover:text-saffron underline">Team CodeHack</a>
+          </p>
+          <p class="text-sm text-center md:text-right marathi-text hidden">
             विकसित: <a href="/our_team/" class="font-medium hover:text-saffron underline">टीम कोडहॅक</a>
           </p>
         </div>
       </div>
       
       <!-- Copyright Bottom Bar -->
-      <div class="mt-8 pt-4 border-t border-white/20 text-center text-sm">
+      <div class="mt-8 pt-4 border-t border-white/20 text-center text-sm english-text">
         <p>This is the official portal of Maharashtra State Khadi & Village Industries Board, Amravati</p>
+      </div>
+      <div class="mt-8 pt-4 border-t border-white/20 text-center text-sm marathi-text hidden">
+        <p>महाराष्ट्र राज्य खादी व ग्रामोद्योग मंडळ, अमरावती यांचे हे अधिकृत संकेतस्थळ आहे</p>
       </div>
     </div>
   </footer>
+
+  <script>
+    // Language toggle functionality
+    document.getElementById('languageToggle').addEventListener('click', function() {
+      // Toggle all english-text elements
+      document.querySelectorAll('.english-text').forEach(element => {
+        element.classList.toggle('hidden');
+      });
+      
+      // Toggle all marathi-text elements
+      document.querySelectorAll('.marathi-text').forEach(element => {
+        element.classList.toggle('hidden');
+      });
+      
+      // Update the button text - CORRECTED LOGIC
+      const button = document.getElementById('languageToggle');
+      const isEnglishVisible = document.querySelector('.english-text:not(.hidden)') !== null;
+      
+      if (isEnglishVisible) {
+        // If English is visible, show "मराठी" on button (click to switch to Marathi)
+        button.querySelector('.english-text').classList.remove('hidden');
+        button.querySelector('.marathi-text').classList.add('hidden');
+      } else {
+        // If Marathi is visible, show "English" on button (click to switch to English)
+        button.querySelector('.english-text').classList.add('hidden');
+        button.querySelector('.marathi-text').classList.remove('hidden');
+      }
+    });
+
+    // Set initial language based on user preference or default to English
+    function setInitialLanguage() {
+      const langPreference = localStorage.getItem('languagePreference') || 'english';
+      
+      if (langPreference === 'marathi') {
+        // Hide English, show Marathi
+        document.querySelectorAll('.english-text').forEach(element => {
+          element.classList.add('hidden');
+        });
+        document.querySelectorAll('.marathi-text').forEach(element => {
+          element.classList.remove('hidden');
+        });
+        
+        // Update button text to show "English" (click to switch to English)
+        const button = document.getElementById('languageToggle');
+        button.querySelector('.english-text').classList.add('hidden');
+        button.querySelector('.marathi-text').classList.remove('hidden');
+      } else {
+        // Ensure English is visible (default)
+        document.querySelectorAll('.english-text').forEach(element => {
+          element.classList.remove('hidden');
+        });
+        document.querySelectorAll('.marathi-text').forEach(element => {
+          element.classList.add('hidden');
+        });
+        
+        // Update button text to show "मराठी" (click to switch to Marathi)
+        const button = document.getElementById('languageToggle');
+        button.querySelector('.english-text').classList.remove('hidden');
+        button.querySelector('.marathi-text').classList.add('hidden');
+      }
+    }
+
+    // Save language preference to localStorage
+    document.getElementById('languageToggle').addEventListener('click', function() {
+      const currentLang = document.querySelector('.english-text:not(.hidden)') ? 'english' : 'marathi';
+      const newLang = currentLang === 'english' ? 'marathi' : 'english';
+      localStorage.setItem('languagePreference', newLang);
+    });
+
+    // Initialize language on page load
+    window.addEventListener('DOMContentLoaded', setInitialLanguage);
+  </script>
 
 </body>
 </html>

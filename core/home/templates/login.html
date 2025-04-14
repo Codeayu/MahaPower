@@ -1,14 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 class="sr-only">Login</h1>
+<h1 class="sr-only english-text">Login</h1>
+<h1 class="sr-only marathi-text hidden">लॉगिन</h1>
 
 <!-- Alerts -->
 {% if messages %}
 <div class="fixed top-6 w-full px-4 z-50">
     <div class="max-w-md mx-auto">
         {% for message in messages %}
-        <div class="bg-orange-100 border border-orange-500 text-orange500 px-4 py-3 rounded-md shadow" role="alert">
+        <div class="bg-orange-100 border border-orange-500 text-orange-500 px-4 py-3 rounded-md shadow" role="alert">
             <span class="block sm:inline">{{ message }}</span>
         </div>
         {% endfor %}
@@ -18,11 +19,13 @@
 
 <!-- Login Box -->
 <div class="flex justify-center items-center min-h-screen">
-    <div class="max-w-md w-full bg-white rounded-2xl shadow-xl border border-gray100 overflow-hidden">
+    <div class="max-w-md w-full bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
         <!-- Header -->
         <div class="bg-navyBlue text-white py-6 px-6 sm:px-8">
-            <h2 class="text-2xl font-bold">Login to Your Account</h2>
-            <p class="text-sm opacity-90 mt-1">Access government schemes and services</p>
+            <h2 class="text-2xl font-bold english-text">Login to Your Account</h2>
+            <h2 class="text-2xl font-bold marathi-text hidden">तुमच्या खात्यात प्रवेश करा</h2>
+            <p class="text-sm opacity-90 mt-1 english-text">Access government schemes and services</p>
+            <p class="text-sm opacity-90 mt-1 marathi-text hidden">सरकारी योजना आणि सेवांमध्ये प्रवेश</p>
         </div>
 
         <!-- Login Form -->
@@ -31,37 +34,56 @@
 
             <!-- Username -->
             <div class="mb-5">
-                <label for="username" class="block text-gray600 text-sm font-medium mb-2">Username / Aadhaar Number</label>
-                <input type="text" id="username" name="username" placeholder="Enter your username or Aadhaar"
-                    class="w-full px-4 py-2 border border-gray400 rounded-md focus:outline-none focus:ring-2 focus:ring-navyBlue focus:border-transparent" required>
+                <label for="username" class="block text-gray-600 text-sm font-medium mb-2 english-text">Username / Aadhaar Number</label>
+                <label for="username" class="block text-gray-600 text-sm font-medium mb-2 marathi-text hidden">वापरकर्तानाव / आधार क्रमांक</label>
+                <input type="text" id="username" name="username" 
+                    placeholder="Enter your username or Aadhaar"
+                    class="w-full px-4 py-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-navyBlue focus:border-transparent english-text" 
+                    placeholder="तुमचे वापरकर्तानाव किंवा आधार क्रमांक टाका"
+                    class="w-full px-4 py-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-navyBlue focus:border-transparent marathi-text hidden" 
+                    required>
             </div>
 
             <!-- Password -->
             <div class="mb-5">
-                <label for="password" class="block text-gray600 text-sm font-medium mb-2">Password</label>
-                <input type="password" id="password" name="password" placeholder="Enter your password"
-                    class="w-full px-4 py-2 border border-gray400 rounded-md focus:outline-none focus:ring-2 focus:ring-navyBlue focus:border-transparent" required>
+                <label for="password" class="block text-gray-600 text-sm font-medium mb-2 english-text">Password</label>
+                <label for="password" class="block text-gray-600 text-sm font-medium mb-2 marathi-text hidden">पासवर्ड</label>
+                <input type="password" id="password" name="password" 
+                    placeholder="Enter your password"
+                    class="w-full px-4 py-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-navyBlue focus:border-transparent english-text"
+                    placeholder="तुमचा पासवर्ड टाका"
+                    class="w-full px-4 py-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-navyBlue focus:border-transparent marathi-text hidden"
+                    required>
             </div>
 
             <!-- Options -->
             <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-3 sm:gap-0">
                 <div class="flex items-center">
-                    <input type="checkbox" id="remember" name="remember" class="h-4 w-4 text-navyBlue focus:ring-navyBlue border-gray400 rounded">
-                    <label for="remember" class="ml-2 text-sm text-gray600">Remember me</label>
+                    <input type="checkbox" id="remember" name="remember" class="h-4 w-4 text-navyBlue focus:ring-navyBlue border-gray-400 rounded">
+                    <label for="remember" class="ml-2 text-sm text-gray-600 english-text">Remember me</label>
+                    <label for="remember" class="ml-2 text-sm text-gray-600 marathi-text hidden">मला लक्षात ठेवा</label>
                 </div>
-                <a href="#" class="text-sm text-navyBlue hover:underline">Forgot password?</a>
+                <a href="#" class="text-sm text-navyBlue hover:underline english-text">Forgot password?</a>
+                <a href="#" class="text-sm text-navyBlue hover:underline marathi-text hidden">पासवर्ड विसरलात?</a>
             </div>
 
             <!-- Submit Button -->
             <button type="submit"
-                class="w-full bg-saffron hover:bg-orange-500 text-white font-semibold py-2 px-4 rounded-lg transition duration-200 focus:outline-none focus:ring-2 focus:ring-orange500 focus:ring-opacity-50">
+                class="w-full bg-saffron hover:bg-orange-500 text-white font-semibold py-2 px-4 rounded-lg transition duration-200 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-50 english-text">
                 Login
+            </button>
+            <button type="submit"
+                class="w-full bg-saffron hover:bg-orange-500 text-white font-semibold py-2 px-4 rounded-lg transition duration-200 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-50 marathi-text hidden">
+                लॉगिन
             </button>
 
             <!-- Register Link -->
             <div class="mt-6 text-center">
-                <p class="text-sm text-gray600">Don't have an account?
+                <p class="text-sm text-gray-600 english-text">Don't have an account?
                     <a href="#" class="text-navyBlue font-medium hover:underline">Register here</a>
+                </p>
+                <p class="text-sm text-gray-600 marathi-text hidden">खाते नाही?
+                    <a href="#" class="text-navyBlue font-medium hover:underline">येथे नोंदणी करा</a>
                 </p>
             </div>
         </form>

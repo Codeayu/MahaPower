@@ -4,7 +4,6 @@
 
 {% block content %}
   <!-- Hero Section with Enhanced Saffron-Blue Design -->
-<!-- Hero Section with Saffron-Blue Gradient -->
 <section class="bg-gradient-to-r from-[#FF9933] to-[#000080] text-white py-12 relative overflow-hidden">
   <!-- Decorative wave effect -->
   <div class="absolute bottom-0 left-0 right-0">
@@ -25,11 +24,17 @@
            class="w-28 h-auto md:mr-8 mb-6 md:mb-0 bg-white p-2 rounded-lg shadow-lg hover:scale-105 transition-transform">
       
       <div class="mx-4">
-        <h2 class="text-3xl md:text-4xl font-bold font-devanagari mb-2 drop-shadow-md">
+        <h2 class="text-3xl md:text-4xl font-bold font-devanagari mb-2 drop-shadow-md marathi-text">
           महाराष्ट्र राज्य खादी व ग्रामोद्योग मंडळ
         </h2>
-        <h3 class="text-xl md:text-2xl text-white/90 font-medium">
+        <h2 class="text-3xl md:text-4xl font-bold font-devanagari mb-2 drop-shadow-md english-text hidden">
+          Maharashtra State Khadi & Village Industries Board
+        </h2>
+        <h3 class="text-xl md:text-2xl text-white/90 font-medium marathi-text">
           जिल्हा - कार्यालय अमरावती
+        </h3>
+        <h3 class="text-xl md:text-2xl text-white/90 font-medium english-text hidden">
+          District Office - Amravati
         </h3>
       </div>
       
@@ -44,8 +49,14 @@
       <div class="flex mb-6 shadow-lg rounded-md overflow-hidden">
         <input type="text" 
                placeholder="Search for schemes..." 
-               class="flex-1 py-3 px-6 text-base text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#FF9933]">
-        <button class="bg-[#000080] text-white px-8 hover:bg-[#000060] transition-colors">
+               class="flex-1 py-3 px-6 text-base text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#FF9933] english-text">
+        <input type="text" 
+               placeholder="योजनांसाठी शोधा..." 
+               class="flex-1 py-3 px-6 text-base text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#FF9933] marathi-text hidden">
+        <button class="bg-[#000080] text-white px-8 hover:bg-[#000060] transition-colors english-text">
+          <i class="fas fa-search mr-2"></i> Search
+        </button>
+        <button class="bg-[#000080] text-white px-8 hover:bg-[#000060] transition-colors marathi-text hidden">
           <i class="fas fa-search mr-2"></i> शोधा
         </button>
       </div>
@@ -53,11 +64,17 @@
       <!-- Filters -->
       <div class="flex flex-wrap justify-center gap-4">
         <div class="relative w-full sm:w-auto">
-          <select class="appearance-none py-3 pl-4 pr-10 rounded-md bg-white text-gray-800 w-full sm:w-48 focus:outline-none focus:ring-2 focus:ring-[#FF9933] shadow-md">
+          <select class="appearance-none py-3 pl-4 pr-10 rounded-md bg-white text-gray-800 w-full sm:w-48 focus:outline-none focus:ring-2 focus:ring-[#FF9933] shadow-md english-text">
             <option value="">Scheme Type</option>
             <option value="loan">Loan</option>
             <option value="skill">Skill</option>
             <option value="funding">Funding</option>
+          </select>
+          <select class="appearance-none py-3 pl-4 pr-10 rounded-md bg-white text-gray-800 w-full sm:w-48 focus:outline-none focus:ring-2 focus:ring-[#FF9933] shadow-md marathi-text hidden">
+            <option value="">योजना प्रकार</option>
+            <option value="loan">कर्ज</option>
+            <option value="skill">कौशल्य</option>
+            <option value="funding">निधी</option>
           </select>
           <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
             <i class="fas fa-chevron-down text-gray-500"></i>
@@ -65,44 +82,62 @@
         </div>
         
         <div class="relative w-full sm:w-auto">
-          <select class="appearance-none py-3 pl-4 pr-10 rounded-md bg-white text-gray-800 w-full sm:w-48 focus:outline-none focus:ring-2 focus:ring-[#FF9933] shadow-md">
+          <select class="appearance-none py-3 pl-4 pr-10 rounded-md bg-white text-gray-800 w-full sm:w-48 focus:outline-none focus:ring-2 focus:ring-[#FF9933] shadow-md english-text">
             <option value="">Sector</option>
             <option value="agriculture">Agriculture</option>
             <option value="manufacturing">Manufacturing</option>
             <option value="women">Women Empowerment</option>
             <option value="msme">MSME</option>
           </select>
+          <select class="appearance-none py-3 pl-4 pr-10 rounded-md bg-white text-gray-800 w-full sm:w-48 focus:outline-none focus:ring-2 focus:ring-[#FF9933] shadow-md marathi-text hidden">
+            <option value="">क्षेत्र</option>
+            <option value="agriculture">शेती</option>
+            <option value="manufacturing">उत्पादन</option>
+            <option value="women">महिला सक्षमीकरण</option>
+            <option value="msme">लघु उद्योग</option>
+          </select>
           <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
             <i class="fas fa-chevron-down text-gray-500"></i>
           </div>
         </div>
         
-        <button class="bg-[#FF9933] hover:bg-[#E68A00] text-white py-3 px-6 rounded-md shadow-md transition-colors flex items-center">
+        <button class="bg-[#FF9933] hover:bg-[#E68A00] text-white py-3 px-6 rounded-md shadow-md transition-colors flex items-center english-text">
           <i class="fas fa-filter mr-2"></i> Apply Filters
+        </button>
+        <button class="bg-[#FF9933] hover:bg-[#E68A00] text-white py-3 px-6 rounded-md shadow-md transition-colors flex items-center marathi-text hidden">
+          <i class="fas fa-filter mr-2"></i> फिल्टर लागू करा
         </button>
       </div>
     </div>
   </div>
 </section>
+
   <!-- Key Features -->
   <section class="py-16 bg-white">
     <div class="container mx-auto px-4 max-w-7xl">
-      <h2 class="text-3xl text-center text-navyBlue mb-8 font-bold relative pb-3 after:content-[''] after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-20 after:h-1 after:bg-saffron">Key Features</h2>
+      <h2 class="text-3xl text-center text-navyBlue mb-8 font-bold relative pb-3 after:content-[''] after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-20 after:h-1 after:bg-saffron english-text">Key Features</h2>
+      <h2 class="text-3xl text-center text-navyBlue mb-8 font-bold relative pb-3 after:content-[''] after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-20 after:h-1 after:bg-saffron marathi-text hidden">मुख्य वैशिष्ट्ये</h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div class="bg-lightBlue p-8 rounded-lg shadow-md text-center hover:-translate-y-1 transition-transform">
           <div class="text-4xl text-saffron mb-4">₹</div>
-            <h3 class="text-xl text-navyBlue mb-2 font-medium">कर्ज सहाय्य</h3>
-          <p class="text-sm text-gray-600">कमी व्याज दराने सरकारी कर्जांचा सहज प्रवेश</p>
+          <h3 class="text-xl text-navyBlue mb-2 font-medium english-text">Loan Assistance</h3>
+          <h3 class="text-xl text-navyBlue mb-2 font-medium marathi-text hidden">कर्ज सहाय्य</h3>
+          <p class="text-sm text-gray-600 english-text">Easy access to government loans at low interest rates</p>
+          <p class="text-sm text-gray-600 marathi-text hidden">कमी व्याज दराने सरकारी कर्जांचा सहज प्रवेश</p>
         </div>
         <div class="bg-lightBlue p-8 rounded-lg shadow-md text-center hover:-translate-y-1 transition-transform">
           <div class="text-4xl text-saffron mb-4">🛠</div>
-            <h3 class="text-xl text-navyBlue mb-2 font-medium">कौशल्य विकास</h3>
-          <p class="text-sm text-gray-600">आपल्या व्यावसायिक कौशल्यांना वाढविण्यासाठी मोफत प्रशिक्षण कार्यक्रम</p>
+          <h3 class="text-xl text-navyBlue mb-2 font-medium english-text">Skill Development</h3>
+          <h3 class="text-xl text-navyBlue mb-2 font-medium marathi-text hidden">कौशल्य विकास</h3>
+          <p class="text-sm text-gray-600 english-text">Free training programs to enhance your professional skills</p>
+          <p class="text-sm text-gray-600 marathi-text hidden">आपल्या व्यावसायिक कौशल्यांना वाढविण्यासाठी मोफत प्रशिक्षण कार्यक्रम</p>
         </div>
         <div class="bg-lightBlue p-8 rounded-lg shadow-md text-center hover:-translate-y-1 transition-transform">
           <div class="text-4xl text-saffron mb-4">🚀</div>
-            <h3 class="text-xl text-navyBlue mb-2 font-medium">स्टार्टअप निधी</h3>
-          <p class="text-sm text-gray-600">नवीन व्यवसाय कल्पना आणि स्टार्टअप्ससाठी आर्थिक सहाय्य</p>
+          <h3 class="text-xl text-navyBlue mb-2 font-medium english-text">Startup Funding</h3>
+          <h3 class="text-xl text-navyBlue mb-2 font-medium marathi-text hidden">स्टार्टअप निधी</h3>
+          <p class="text-sm text-gray-600 english-text">Financial assistance for new business ideas and startups</p>
+          <p class="text-sm text-gray-600 marathi-text hidden">नवीन व्यवसाय कल्पना आणि स्टार्टअप्ससाठी आर्थिक सहाय्य</p>
         </div>
       </div>
     </div>
@@ -111,7 +146,8 @@
   <!-- Featured Schemes -->
   <section class="py-16 bg-gray-100">
     <div class="container mx-auto px-4 max-w-7xl">
-      <h2 class="text-3xl text-center text-navyBlue mb-8 font-bold relative pb-3 after:content-[''] after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-20 after:h-1 after:bg-saffron">Featured Schemes</h2>
+      <h2 class="text-3xl text-center text-navyBlue mb-8 font-bold relative pb-3 after:content-[''] after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-20 after:h-1 after:bg-saffron english-text">Featured Schemes</h2>
+      <h2 class="text-3xl text-center text-navyBlue mb-8 font-bold relative pb-3 after:content-[''] after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-20 after:h-1 after:bg-saffron marathi-text hidden">प्रमुख योजना</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {% for scheme in schemes %}
         <div class="bg-white rounded-lg overflow-hidden shadow-md hover:-translate-y-1 transition-transform">
@@ -119,11 +155,22 @@
             <img src="{{ scheme.image.url }}" alt="{{ scheme.title }}" class="w-full h-full object-cover">
           </div>
           <div class="p-6">
-            <span class="inline-block bg-lightBlue text-navyBlue px-3 py-1 rounded-full text-xs mb-3">{{ scheme.sector }}</span>
-            <h3 class="text-xl text-navyBlue mb-1 font-medium">{{ scheme.name_mr }}</h3>
-            <p class="font-devanagari text-gray-600 mb-4">{{ scheme.name_en }}</p>
-            <p class="text-gray-700 text-sm mb-4">{{ scheme.summary }}</p>
-            <a href="{% url 'scheme_detail' scheme.id %}" class="bg-saffron text-white py-2 px-4 rounded block text-center hover:bg-orange-500 transition-colors">View Details</a>
+            <span class="inline-block bg-lightBlue text-navyBlue px-3 py-1 rounded-full text-xs mb-3 english-text">{{ scheme.sector }}</span>
+            <span class="inline-block bg-lightBlue text-navyBlue px-3 py-1 rounded-full text-xs mb-3 marathi-text hidden">
+              {% if scheme.sector == "Agriculture" %}शेती
+              {% elif scheme.sector == "Manufacturing" %}उत्पादन
+              {% elif scheme.sector == "Women Empowerment" %}महिला सक्षमीकरण
+              {% elif scheme.sector == "MSME" %}लघु उद्योग
+              {% else %}{{ scheme.sector }}{% endif %}
+            </span>
+            <h3 class="text-xl text-navyBlue mb-1 font-medium marathi-text">{{ scheme.name_mr }}</h3>
+            <h3 class="text-xl text-navyBlue mb-1 font-medium english-text hidden">{{ scheme.name_en }}</h3>
+            <p class="font-devanagari text-gray-600 mb-4 english-text">{{ scheme.name_en }}</p>
+            <p class="font-devanagari text-gray-600 mb-4 marathi-text hidden">{{ scheme.name_mr }}</p>
+            <p class="text-gray-700 text-sm mb-4 english-text">{{ scheme.summary }}</p>
+            <p class="text-gray-700 text-sm mb-4 marathi-text hidden">{{ scheme.summary_mr }}</p>
+            <a href="{% url 'scheme_detail' scheme.id %}" class="bg-saffron text-white py-2 px-4 rounded block text-center hover:bg-orange-500 transition-colors english-text">View Details</a>
+            <a href="{% url 'scheme_detail' scheme.id %}" class="bg-saffron text-white py-2 px-4 rounded block text-center hover:bg-orange-500 transition-colors marathi-text hidden">तपशील पहा</a>
           </div>
         </div>
         {% endfor %}
@@ -131,4 +178,4 @@
     </div>
   </section>
 
-  {% endblock %}
+{% endblock %}
