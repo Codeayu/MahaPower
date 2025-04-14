@@ -7,6 +7,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth import get_user_model
 from django.core.mail import send_mail
 from django.conf import settings
+from django.utils.crypto import get_random_string
 
 
 
@@ -389,6 +390,10 @@ def user_profile_edit(request):
             return redirect('/admin_user/')
 
     return render(request,{'user': user})
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 def password_reset_flow(request):
     step = request.POST.get('step', 'forgot')
     context = {'step': step}
