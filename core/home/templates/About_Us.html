@@ -1,13 +1,24 @@
 {% extends 'base.html' %}
 
 {% block content %}
- <!-- Hero Section -->
- <section class="bg-navyBlue text-white py-16">
-    <div class="container mx-auto px-4 text-center">
-      <h1 class="text-4xl font-bold mb-4">महाराष्ट्र राज्य खादी व ग्रामोद्योग मंडळ</h1>
-      <p class="text-xl opacity-90">जिल्हा कार्यालय अमरावती - १९६२ पासून ग्रामीण कारागिरांना सक्षम करणे</p>
-    </div>
-  </section>
+<!-- Hero Section with Saffron & Blue Colors -->
+<section class="bg-gradient-to-r from-[#FF9933] to-[#000080] text-white py-16 relative overflow-hidden">
+  <!-- Decorative wave effect -->
+  <div class="absolute bottom-0 left-0 right-0">
+      <svg viewBox="0 0 1440 120" class="w-full">
+          <path fill="white" fill-opacity="0.2" d="M0,64L48,80C96,96,192,128,288,128C384,128,480,96,576,85.3C672,75,768,85,864,112C960,139,1056,181,1152,181.3C1248,181,1344,139,1392,117.3L1440,96L1440,120L1392,120C1344,120,1248,120,1152,120C1056,120,960,120,864,120C768,120,672,120,576,120C480,120,384,120,288,120C192,120,96,120,48,120L0,120Z"></path>
+      </svg>
+  </div>
+  
+  <div class="container mx-auto px-4 text-center relative z-10">
+      <h1 class="text-3xl md:text-4xl font-bold mb-4 drop-shadow-md">महाराष्ट्र राज्य खादी व ग्रामोद्योग मंडळ</h1>
+      <p class="text-lg md:text-xl opacity-90 max-w-3xl mx-auto">जिल्हा कार्यालय अमरावती - १९६२ पासून ग्रामीण कारागिरांना सक्षम करणे</p>
+      
+      <!-- Decorative elements -->
+      <div class="absolute top-1/4 left-10 w-16 h-16 rounded-full bg-[#FF9933] opacity-20 mix-blend-multiply"></div>
+      <div class="absolute bottom-1/3 right-20 w-24 h-24 rounded-full bg-[#000080] opacity-20 mix-blend-multiply"></div>
+  </div>
+</section>
 
   <!-- About Section -->
   <section class="py-12">
