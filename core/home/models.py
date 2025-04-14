@@ -13,6 +13,7 @@ class CustomUser(AbstractUser):
 
     full_name = models.CharField(max_length=100, blank=True)
     email = models.EmailField(unique=True)
+    otp = models.CharField(max_length=6, null=True, blank=True)    
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='staff')
     history = HistoricalRecords()
 

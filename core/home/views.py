@@ -389,3 +389,60 @@ def user_profile_edit(request):
             return redirect('/admin_user/')
 
     return render(request,{'user': user})
+def password_reset_flow(request):
+    step = request.POST.get('step', 'forgot')
+    context = {'step': step}
+
+    if step == 'forgot':
+        if request.method == 'POST':
+            username = request.POST.get('username')
+            try:
+                user = CustomUser.objects.get(username=username)
+                otp = get_random_string(length=6, allowed_chars='0123456789')
+                user.otp = otp
+                user.save()
+
+                send_mail(
+                    subject="Password Reset OTP",
+                    message=f"Your OTP for password reset is: {otp}",
+                    from_email=None,
+                    recipient_list=[user.email],
+                    fail_silently=False,
+                )
+                messages.success(request, "OTP sent to your email.")
+                context = {'step': 'verify', 'user_id': user.id}
+            except CustomUser.DoesNotExist:
+                messages.error(request, "User not found.")
+                context = {'step': 'forgot'}
+        else:
+            context = {'step': 'forgot'}
+
+    elif step == 'verify':
+        user_id = request.POST.get('user_id')
+        user = get_object_or_404(CustomUser, id=user_id)
+        context['user_id'] = user_id
+        if request.method == 'POST':
+            entered_otp = request.POST.get('otp')
+            if entered_otp == user.otp:
+                messages.success(request, "OTP verified.")
+                context['step'] = 'reset'
+            else:
+                messages.error(request, "Invalid OTP.")
+
+    elif step == 'reset':
+        user_id = request.POST.get('user_id')
+        user = get_object_or_404(CustomUser, id=user_id)
+        context['user_id'] = user_id
+        if request.method == 'POST':
+            password1 = request.POST.get('password1')
+            password2 = request.POST.get('password2')
+            if password1 != password2:
+                messages.error(request, "Passwords do not match.")
+            else:
+                user.set_password(password1)
+                user.otp = None
+                user.save()
+                messages.success(request, "Password reset successfully. Please log in.")
+                return redirect('/login/')
+
+    return render(request, 'password_reset_flow.html', context)

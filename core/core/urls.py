@@ -51,6 +51,7 @@ urlpatterns = [
     path('send_test_email/', send_test_email, name='send_email'),
     
     path('user_profile_edit/', user_profile_edit, name='user_profile_edit'),
+    path('password_reset_flow/', password_reset_flow, name='password_reset_flow'),
 
     
     #under contsruction pages
