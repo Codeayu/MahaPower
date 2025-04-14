@@ -2,97 +2,190 @@
 
 {% block content %}
 <div class="container mx-auto px-4 py-12 relative">
-    <!-- Logout Button -->
-    <div class="absolute top-0 right-0 mt-4 mr-4">
-      <a href="{% url 'logout' %}"
-         class="py-2 px-4 rounded-lg text-sm font-semibold bg-navyBlue text-white transition duration-300 shadow-md hover:shadow-lg">
-        Logout
-      </a>
-    </div>
-  
-    <h1 class="text-4xl font-bold text-center mb-12 text-gray800">Staff Dashboard</h1>
-  
-    <div class="grid grid-cols-1 md:grid-cols-12 gap-8 mb-12">
-      <!-- Staff Profile Card -->
-      <div class="md:col-span-4">
-        <div class="rounded-lg shadow-lg overflow-hidden border border-gray600">
-          <div class="p-5 bg-navyBlue text-white">
-            <h4 class="text-2xl font-semibold">Staff Profile</h4>
-          </div>
-          <div class="p-6">
-            <ul class="divide-y divide-gray600">
-              <li class="py-4 flex justify-between items-center">
-                <span class="font-medium text-gray600">Full Name:</span>
-                <span class="text-gray800">{{ user.full_name }}</span>
-              </li>
-              <li class="py-4 flex justify-between items-center">
-                <span class="font-medium text-gray600">Email:</span>
-                <span class="text-gray800">{{ user.email }}</span>
-              </li>
-              <li class="py-4 flex justify-between items-center">
-                <span class="font-medium text-gray600">Role:</span>
-                <span class="px-3 py-1 rounded-full text-sm bg-navyBlue text-white">
-                  {{ user.get_role_display }}
+  <!-- Logout Button -->
+  <div class="absolute top-0 right-0 mt-4 mr-4">
+    <a href="{% url 'logout' %}"
+       class="py-2 px-4 rounded-lg text-sm font-semibold bg-navyBlue text-white transition duration-300 shadow-md hover:shadow-lg english-text">
+      Logout
+    </a>
+    <a href="{% url 'logout' %}"
+       class="py-2 px-4 rounded-lg text-sm font-semibold bg-navyBlue text-white transition duration-300 shadow-md hover:shadow-lg marathi-text hidden">
+      लॉगआउट
+    </a>
+  </div>
+
+  <h1 class="text-4xl font-bold text-center mb-12 text-gray-800 english-text">Staff Dashboard</h1>
+  <h1 class="text-4xl font-bold text-center mb-12 text-gray-800 marathi-text hidden">कर्मचारी डॅशबोर्ड</h1>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+    <!-- Staff Profile Card -->
+    <div>
+      <div class="rounded-lg shadow-lg overflow-hidden border border-gray-200">
+        <div class="p-5 bg-navyBlue text-white flex justify-between items-center">
+          <h4 class="text-2xl font-semibold english-text">Staff Profile</h4>
+          <h4 class="text-2xl font-semibold marathi-text hidden">कर्मचारी प्रोफाइल</h4>
+          <button 
+            class="py-2 px-4 rounded-lg text-sm font-semibold bg-saffron text-white transition duration-300 shadow-md hover:shadow-lg english-text"
+            onclick="toggleModal('editProfileModal')">
+            Edit Profile
+          </button>
+          <button 
+            class="py-2 px-4 rounded-lg text-sm font-semibold bg-saffron text-white transition duration-300 shadow-md hover:shadow-lg marathi-text hidden"
+            onclick="toggleModal('editProfileModal')">
+            प्रोफाइल संपादित करा
+          </button>
+        </div>
+        <div class="p-6">
+          <ul class="divide-y divide-gray-200">
+            <li class="py-4 flex justify-between items-center">
+              <span class="font-medium text-gray-600 english-text">Full Name:</span>
+              <span class="font-medium text-gray-600 marathi-text hidden">पूर्ण नाव:</span>
+              <span class="text-gray-800">{{ user.full_name }}</span>
+            </li>
+            <li class="py-4 flex justify-between items-center">
+              <span class="font-medium text-gray-600 english-text">Email:</span>
+              <span class="font-medium text-gray-600 marathi-text hidden">ईमेल:</span>
+              <span class="text-gray-800">{{ user.email }}</span>
+            </li>
+            <li class="py-4 flex justify-between items-center">
+              <span class="font-medium text-gray-600 english-text">Role:</span>
+              <span class="font-medium text-gray-600 marathi-text hidden">भूमिका:</span>
+              <span class="px-3 py-1 rounded-full text-sm bg-navyBlue text-white">
+                <span class="english-text">{{ user.get_role_display }}</span>
+                <span class="marathi-text hidden">
+                  {% if user.get_role_display == "Staff" %}कर्मचारी{% else %}{{ user.get_role_display }}{% endif %}
                 </span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-  
-      <!-- Quick Actions Card -->
-      <div class="md:col-span-8">
-        <div class="rounded-lg shadow-lg overflow-hidden border border-gray600">
-          <div class="p-5 bg-saffron text-white">
-            <h4 class="text-2xl font-semibold">Quick Actions</h4>
-          </div>
-          <div class="p-6 flex items-center justify-center">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
-              <a href="/manage_scheme/"
-                 class="py-4 px-6 rounded-lg flex items-center justify-center gap-2 bg-navyBlue text-white transition duration-300 shadow-md hover:shadow-lg">
-                Manage Schemes
-              </a>
-              <a href="#"
-                 class="py-4 px-6 rounded-lg flex items-center justify-center gap-2 font-medium border border-navyBlue bg-lightBlue text-gray800 transition duration-300 shadow-md hover:shadow-lg">
-                View Reports
-              </a>
-            </div>
-          </div>
+              </span>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
-  
-    <!-- Recent Activities Card -->
-    <div class="rounded-lg shadow-lg overflow-hidden border border-gray600">
-      <div class="p-5 bg-navyBlue text-white">
-      <h4 class="text-2xl font-semibold">Recent Activities</h4>
-      </div>
-      <div class="p-6">
-      {% if recent_activities %}
-        <ul class="divide-y divide-gray600">
-        {% for activity in recent_activities %}
-          <li class="py-4">
-          <div class="flex justify-between items-center">
-            <div>
-            <p class="font-medium text-gray800">{{ activity.activity_type }}</p>
-            <p class="text-sm text-gray600">{{ activity.description }}</p>
-            </div>
-            <span class="text-sm text-gray500">{{ activity.timestamp|date:"M d, Y H:i" }}</span>
-          </div>
-          </li>
-        {% endfor %}
-        </ul>
-      {% else %}
-        <div class="p-5 rounded-lg bg-gray100">
-        <div class="flex items-center">
-          <div class="mr-4 text-gray600">
-          <i class="fas fa-info-circle text-2xl"></i>
-          </div>
-          <p class="font-medium text-gray800">No recent activities found.</p>
+
+    <!-- Quick Actions Card -->
+    <div>
+      <div class="rounded-lg shadow-lg overflow-hidden border border-gray-600">
+        <div class="p-5 bg-saffron text-white">
+          <h4 class="text-2xl font-semibold english-text">Quick Actions</h4>
+          <h4 class="text-2xl font-semibold marathi-text hidden">द्रुत क्रिया</h4>
         </div>
+        <div class="p-6 flex items-center justify-center">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+            <a href="/manage_scheme/"
+              class="py-4 px-6 rounded-lg flex items-center justify-center gap-2 bg-navyBlue text-white transition duration-300 shadow-md hover:shadow-lg english-text">
+              Manage Schemes
+            </a>
+            <a href="/manage_scheme/"
+              class="py-4 px-6 rounded-lg flex items-center justify-center gap-2 bg-navyBlue text-white transition duration-300 shadow-md hover:shadow-lg marathi-text hidden">
+              योजना व्यवस्थापित करा
+            </a>
+            <a href="#"
+              class="py-4 px-6 rounded-lg flex items-center justify-center gap-2 font-medium border border-navyBlue bg-lightBlue text-gray-800 transition duration-300 shadow-md hover:shadow-lg english-text">
+              View Reports
+            </a>
+            <a href="#"
+              class="py-4 px-6 rounded-lg flex items-center justify-center gap-2 font-medium border border-navyBlue bg-lightBlue text-gray-800 transition duration-300 shadow-md hover:shadow-lg marathi-text hidden">
+              अहवाल पहा
+            </a>
+          </div>
         </div>
-      {% endif %}
       </div>
     </div>
   </div>
+
+  <!-- Edit Profile Modal -->
+  <div id="editProfileModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg shadow-lg w-96">
+      <div class="p-5 bg-navyBlue text-white flex justify-between items-center">
+        <h4 class="text-xl font-semibold english-text">Edit Profile</h4>
+        <h4 class="text-xl font-semibold marathi-text hidden">प्रोफाइल संपादित करा</h4>
+        <button class="text-white text-lg" onclick="toggleModal('editProfileModal')">&times;</button>
+      </div>
+      <form method="POST" action="{% url 'user_profile_edit' %}" class="p-6">
+        {% csrf_token %}
+        <div class="mb-4">
+          <label for="full_name" class="block text-sm font-medium text-gray-600 english-text">Full Name</label>
+          <label for="full_name" class="block text-sm font-medium text-gray-600 marathi-text hidden">पूर्ण नाव</label>
+          <input type="text" id="full_name" name="full_name" value="{{ user.full_name }}" 
+                 class="w-full mt-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-navyBlue">
+        </div>
+        <div class="mb-4">
+          <label for="email" class="block text-sm font-medium text-gray-600 english-text">Email</label>
+          <label for="email" class="block text-sm font-medium text-gray-600 marathi-text hidden">ईमेल</label>
+          <input type="email" id="email" name="email" value="{{ user.email }}" 
+                 class="w-full mt-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-navyBlue">
+        </div>
+        <div class="flex justify-end">
+          <button type="button" 
+                  class="py-2 px-4 rounded-lg text-sm font-semibold bg-gray-300 text-gray-800 mr-2 english-text"
+                  onclick="toggleModal('editProfileModal')">
+            Cancel
+          </button>
+          <button type="button" 
+                  class="py-2 px-4 rounded-lg text-sm font-semibold bg-gray-300 text-gray-800 mr-2 marathi-text hidden"
+                  onclick="toggleModal('editProfileModal')">
+            रद्द करा
+          </button>
+          <button type="submit" 
+                  class="py-2 px-4 rounded-lg text-sm font-semibold bg-saffron text-white english-text">
+            Save
+          </button>
+          <button type="submit" 
+                  class="py-2 px-4 rounded-lg text-sm font-semibold bg-saffron text-white marathi-text hidden">
+            जतन करा
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function toggleModal(modalId) {
+      const modal = document.getElementById(modalId);
+      modal.classList.toggle('hidden');
+    }
+  </script>
+
+  <!-- Recent Activities Card -->
+  <div class="rounded-lg shadow-lg overflow-hidden border border-gray-200">
+    <div class="p-5 bg-navyBlue text-white">
+      <h4 class="text-2xl font-semibold english-text">Recent Activities</h4>
+      <h4 class="text-2xl font-semibold marathi-text hidden">अलीकडील क्रियाकलाप</h4>
+    </div>
+    <div class="p-6">
+      {% if user_activities %}
+        <ul class="divide-y divide-gray-200">
+          {% for activity in user_activities %}
+            <li class="py-4">
+              <div class="flex justify-between items-center">
+                <div>
+                  <p class="font-medium text-gray-800 english-text">{{ activity.activity_type }}</p>
+                  <p class="font-medium text-gray-800 marathi-text hidden">
+                    {% if activity.activity_type == "Login" %}लॉगिन
+                    {% elif activity.activity_type == "Profile Update" %}प्रोफाइल अद्यतन
+                    {% elif activity.activity_type == "Scheme Created" %}योजना तयार केली
+                    {% else %}{{ activity.activity_type }}{% endif %}
+                  </p>
+                  <p class="text-sm text-gray-600">{{ activity.description }}</p>
+                </div>
+                <span class="text-sm text-gray-500">{{ activity.timestamp|date:"M d, Y H:i" }}</span>
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <div class="p-5 rounded-lg bg-gray-100">
+          <div class="flex items-center">
+            <div class="mr-4 text-gray-600">
+              <i class="fas fa-info-circle text-2xl"></i>
+            </div>
+            <p class="font-medium text-gray-800 english-text">No recent activities found.</p>
+            <p class="font-medium text-gray-800 marathi-text hidden">कोणतेही अलीकडील क्रियाकलाप सापडले नाहीत.</p>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
 {% endblock %}

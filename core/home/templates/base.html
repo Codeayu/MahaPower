@@ -200,76 +200,110 @@
   </footer>
 
   <script>
+
     // Language toggle functionality
-    document.getElementById('languageToggle').addEventListener('click', function() {
-      // Toggle all english-text elements
+    document.getElementById('languageToggle').addEventListener('click', function () {
+      // Toggle visibility of all English text elements
       document.querySelectorAll('.english-text').forEach(element => {
-        element.classList.toggle('hidden');
+      element.classList.toggle('hidden');
       });
-      
-      // Toggle all marathi-text elements
+
+      // Toggle visibility of all Marathi text elements
       document.querySelectorAll('.marathi-text').forEach(element => {
-        element.classList.toggle('hidden');
+      element.classList.toggle('hidden');
       });
-      
-      // Update the button text - CORRECTED LOGIC
+
+      // Update the button text based on the current language
       const button = document.getElementById('languageToggle');
       const isEnglishVisible = document.querySelector('.english-text:not(.hidden)') !== null;
-      
+
       if (isEnglishVisible) {
-        // If English is visible, show "मराठी" on button (click to switch to Marathi)
-        button.querySelector('.english-text').classList.remove('hidden');
-        button.querySelector('.marathi-text').classList.add('hidden');
+      // Show English text on the button
+      button.querySelector('.english-text').classList.remove('hidden');
+      button.querySelector('.marathi-text').classList.add('hidden');
       } else {
-        // If Marathi is visible, show "English" on button (click to switch to English)
-        button.querySelector('.english-text').classList.add('hidden');
-        button.querySelector('.marathi-text').classList.remove('hidden');
+      // Show Marathi text on the button
+      button.querySelector('.english-text').classList.add('hidden');
+      button.querySelector('.marathi-text').classList.remove('hidden');
       }
+
+      // Save the new language preference in localStorage
+      const currentLang = isEnglishVisible ? 'english' : 'marathi';
+      localStorage.setItem('languagePreference', currentLang);
     });
 
-    // Set initial language based on user preference or default to English
+    // Force Marathi as the default language on page load
     function setInitialLanguage() {
-      const langPreference = localStorage.getItem('languagePreference') || 'english';
-      
-      if (langPreference === 'marathi') {
-        // Hide English, show Marathi
-        document.querySelectorAll('.english-text').forEach(element => {
-          element.classList.add('hidden');
-        });
-        document.querySelectorAll('.marathi-text').forEach(element => {
-          element.classList.remove('hidden');
-        });
-        
-        // Update button text to show "English" (click to switch to English)
-        const button = document.getElementById('languageToggle');
-        button.querySelector('.english-text').classList.add('hidden');
-        button.querySelector('.marathi-text').classList.remove('hidden');
-      } else {
-        // Ensure English is visible (default)
-        document.querySelectorAll('.english-text').forEach(element => {
-          element.classList.remove('hidden');
-        });
-        document.querySelectorAll('.marathi-text').forEach(element => {
-          element.classList.add('hidden');
-        });
-        
-        // Update button text to show "मराठी" (click to switch to Marathi)
-        const button = document.getElementById('languageToggle');
-        button.querySelector('.english-text').classList.remove('hidden');
-        button.querySelector('.marathi-text').classList.add('hidden');
-      }
+      // Hide all English text elements
+      document.querySelectorAll('.english-text').forEach(element => {
+      element.classList.add('hidden');
+      });
+
+      // Show all Marathi text elements
+      document.querySelectorAll('.marathi-text').forEach(element => {
+      element.classList.remove('hidden');
+      });
+
+      // Update the button to show Marathi as the active language
+      const button = document.getElementById('languageToggle');
+      button.querySelector('.english-text').classList.add('hidden');
+      button.querySelector('.marathi-text').classList.remove('hidden');
+
+      // Set Marathi as the default language in localStorage
+      localStorage.setItem('languagePreference', 'marathi');
     }
 
-    // Save language preference to localStorage
-    document.getElementById('languageToggle').addEventListener('click', function() {
-      const currentLang = document.querySelector('.english-text:not(.hidden)') ? 'english' : 'marathi';
-      const newLang = currentLang === 'english' ? 'marathi' : 'english';
-      localStorage.setItem('languagePreference', newLang);
-    });
-
-    // Initialize language on page load
+    // Initialize the language settings on page load
     window.addEventListener('DOMContentLoaded', setInitialLanguage);
-  </script>
 
+    function updatePlaceholders(lang) {
+      // Login Page fields
+      const loginUsernameInput = document.getElementById('username');
+      const loginPasswordInput = document.getElementById('password');
+  
+      if (loginUsernameInput && loginPasswordInput) {
+        if (lang === 'marathi') {
+          loginUsernameInput.placeholder = 'तुमचे वापरकर्तानाव किंवा आधार क्रमांक टाका';
+          loginPasswordInput.placeholder = 'तुमचा पासवर्ड टाका';
+        } else {
+          loginUsernameInput.placeholder = 'Enter your username or Aadhaar';
+          loginPasswordInput.placeholder = 'Enter your password';
+        }
+      }
+  
+      // Reset Password Flow fields
+      const resetUsername = document.getElementById('username-field');
+      const otpField = document.getElementById('otp-field');
+      const newPassword = document.getElementById('new-password');
+      const confirmPassword = document.getElementById('confirm-password');
+  
+      if (resetUsername) {
+        resetUsername.placeholder = lang === 'marathi' ? 'तुमचे वापरकर्तानाव टाका' : 'Enter your username';
+      }
+      if (otpField) {
+        otpField.placeholder = lang === 'marathi' ? 'ओटीपी टाका' : 'Enter OTP';
+      }
+      if (newPassword) {
+        newPassword.placeholder = lang === 'marathi' ? 'नवीन पासवर्ड टाका' : 'Enter new password';
+      }
+      if (confirmPassword) {
+        confirmPassword.placeholder = lang === 'marathi' ? 'पासवर्डची पुष्टी करा' : 'Re-enter new password';
+      }
+    }
+  
+    // Handle language toggle and update placeholders accordingly
+    const langToggle = document.getElementById('languageToggle');
+    langToggle?.addEventListener('click', () => {
+      const isMarathi = !document.querySelector('.marathi-text').classList.contains('hidden');
+      updatePlaceholders(isMarathi ? 'english' : 'marathi');
+    });
+  
+    // Set placeholders on initial load based on the active language
+    window.addEventListener('DOMContentLoaded', () => {
+      const isMarathi = !document.querySelector('.marathi-text').classList.contains('hidden');
+      updatePlaceholders(isMarathi ? 'marathi' : 'english');
+    });
+    </script>
+  
 </body>
 </html>

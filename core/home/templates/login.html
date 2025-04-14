@@ -32,57 +32,49 @@
         <form method="POST" action="{% url 'login' %}" class="p-6 sm:p-8">
             {% csrf_token %}
 
-            <!-- Username -->
             <div class="mb-5">
-                <label for="username" class="block text-gray-600 text-sm font-medium mb-2 english-text">Username / Aadhaar Number</label>
-                <label for="username" class="block text-gray-600 text-sm font-medium mb-2 marathi-text hidden">वापरकर्तानाव / आधार क्रमांक</label>
-                <input type="text" id="username" name="username" 
-                    placeholder="Enter your username or Aadhaar"
-                    class="w-full px-4 py-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-navyBlue focus:border-transparent english-text" 
-                    placeholder="तुमचे वापरकर्तानाव किंवा आधार क्रमांक टाका"
-                    class="w-full px-4 py-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-navyBlue focus:border-transparent marathi-text hidden" 
-                    required>
+                <label for="username" class="block text-gray-600 text-sm font-medium mb-2">
+                    <span class="english-text">Username / Aadhaar Number</span>
+                    <span class="marathi-text hidden">वापरकर्तानाव / आधार क्रमांक</span>
+                </label>
+                <input type="text" id="username" name="username"
+                    class="w-full px-4 py-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-navyBlue focus:border-transparent"
+                    placeholder="Enter your username or Aadhaar" required>
             </div>
-
+            
             <!-- Password -->
             <div class="mb-5">
-                <label for="password" class="block text-gray-600 text-sm font-medium mb-2 english-text">Password</label>
-                <label for="password" class="block text-gray-600 text-sm font-medium mb-2 marathi-text hidden">पासवर्ड</label>
-                <input type="password" id="password" name="password" 
-                    placeholder="Enter your password"
-                    class="w-full px-4 py-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-navyBlue focus:border-transparent english-text"
-                    placeholder="तुमचा पासवर्ड टाका"
-                    class="w-full px-4 py-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-navyBlue focus:border-transparent marathi-text hidden"
-                    required>
+                <label for="password" class="block text-gray-600 text-sm font-medium mb-2">
+                    <span class="english-text">Password</span>
+                    <span class="marathi-text hidden">पासवर्ड</span>
+                </label>
+                <input type="password" id="password" name="password"
+                    class="w-full px-4 py-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-navyBlue focus:border-transparent"
+                    placeholder="Enter your password" required>
             </div>
-
             <!-- Options -->
             <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-3 sm:gap-0">
                 <div class="flex items-center">
                     <input type="checkbox" id="remember" name="remember" class="h-4 w-4 text-navyBlue focus:ring-navyBlue border-gray-400 rounded">
-                    <label for="remember" class="ml-2 text-sm text-gray-600 english-text">Remember me</label>
-                    <label for="remember" class="ml-2 text-sm text-gray-600 marathi-text hidden">मला लक्षात ठेवा</label>
+                    <label for="remember" class="ml-2 text-sm text-gray-600">
+                        <span class="english-text">Remember me</span>
+                        <span class="marathi-text hidden">मला लक्षात ठेवा</span>
+                    </label>
                 </div>
                 <a href="/password_reset_flow/" class="text-sm text-navyBlue hover:underline">Forgot password?</a>
             </div>
 
             <!-- Submit Button -->
-            <button type="submit"
-                class="w-full bg-saffron hover:bg-orange-500 text-white font-semibold py-2 px-4 rounded-lg transition duration-200 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-50 english-text">
-                Login
-            </button>
-            <button type="submit"
-                class="w-full bg-saffron hover:bg-orange-500 text-white font-semibold py-2 px-4 rounded-lg transition duration-200 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-50 marathi-text hidden">
-                लॉगिन
+            <button type="submit" class="w-full bg-saffron hover:bg-orange-500 text-white font-semibold py-2 px-4 rounded-lg transition duration-200 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-50">
+                <span class="english-text">Login</span>
+                <span class="marathi-text hidden">लॉगिन</span>
             </button>
 
             <!-- Register Link -->
             <div class="mt-6 text-center">
-                <p class="text-sm text-gray-600 english-text">Don't have an account?
-                    <a href="#" class="text-navyBlue font-medium hover:underline">Register here</a>
-                </p>
-                <p class="text-sm text-gray-600 marathi-text hidden">खाते नाही?
-                    <a href="#" class="text-navyBlue font-medium hover:underline">येथे नोंदणी करा</a>
+                <p class="text-sm text-gray-600">
+                    <span class="english-text">Don't have an account? <a href="/register/" class="text-navyBlue font-medium hover:underline">Register here</a></span>
+                    <span class="marathi-text hidden">खाते नाही? <a href="/register/" class="text-navyBlue font-medium hover:underline">येथे नोंदणी करा</a></span>
                 </p>
             </div>
         </form>
