@@ -1,93 +1,192 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container mx-auto px-4 py-12 relative">
-  <!-- Logout Button -->
-  <div class="absolute top-0 right-0 mt-4 mr-4">
-    <a href="{% url 'logout' %}"
-       class="py-2 px-4 rounded-lg text-sm font-semibold bg-navyBlue text-white transition duration-300 shadow-md hover:shadow-lg english-text">
-      Logout
-    </a>
-    <a href="{% url 'logout' %}"
-       class="py-2 px-4 rounded-lg text-sm font-semibold bg-navyBlue text-white transition duration-300 shadow-md hover:shadow-lg marathi-text hidden">
-      लॉगआउट
-    </a>
+<div class="container mx-auto px-4 py-8 relative">
+  <!-- Top Navigation Bar -->
+  <div class="flex justify-between items-center mb-8 bg-white rounded-xl shadow-md p-4">
+    <div class="flex items-center gap-3">
+      <div class="w-12 h-12 bg-navyBlue rounded-full flex items-center justify-center text-white text-xl font-bold">
+        {{ user.full_name|slice:":1" }}
+      </div>
+      <div>
+        <h2 class="text-xl font-semibold english-text">Welcome, {{ user.full_name }}</h2>
+        <h2 class="text-xl font-semibold marathi-text hidden">स्वागत आहे, {{ user.full_name }}</h2>
+      </div>
+    </div>
+    
+    <div class="flex items-center gap-3">
+      <!-- Language Toggle -->
+      <button id="languageToggle" class="flex items-center gap-2 py-2 px-4 rounded-lg bg-gray-100 hover:bg-gray-200 transition-all">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+        </svg>
+        <span class="english-text">English</span>
+        <span class="marathi-text hidden">मराठी</span>
+      </button>
+      
+      <!-- Logout Button -->
+      <a href="{% url 'logout' %}" class="flex items-center gap-2 py-2 px-4 rounded-lg text-sm font-medium bg-navyBlue text-white hover:bg-blue-800 transition-all duration-300 shadow-md hover:shadow-lg">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+        </svg>
+        <span class="english-text">Logout</span>
+        <span class="marathi-text hidden">लॉगआउट</span>
+      </a>
+    </div>
   </div>
 
-  <h1 class="text-4xl font-bold text-center mb-12 text-gray-800 english-text">Staff Dashboard</h1>
-  <h1 class="text-4xl font-bold text-center mb-12 text-gray-800 marathi-text hidden">कर्मचारी डॅशबोर्ड</h1>
+  <!-- Page Header -->
+  <div class="bg-gradient-to-r from-navyBlue to-blue-700 rounded-xl shadow-lg p-6 mb-8 text-white">
+    <h1 class="text-3xl font-bold english-text">Staff Dashboard</h1>
+    <h1 class="text-3xl font-bold marathi-text hidden">कर्मचारी डॅशबोर्ड</h1>
+    <p class="text-blue-100 mt-2 english-text">Manage schemes and monitor activities</p>
+    <p class="text-blue-100 mt-2 marathi-text hidden">योजना व्यवस्थापित करा आणि क्रियाकलाप निरीक्षण करा</p>
+  </div>
 
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
     <!-- Staff Profile Card -->
-    <div>
-      <div class="rounded-lg shadow-lg overflow-hidden border border-gray-200">
-        <div class="p-5 bg-navyBlue text-white flex justify-between items-center">
-          <h4 class="text-2xl font-semibold english-text">Staff Profile</h4>
-          <h4 class="text-2xl font-semibold marathi-text hidden">कर्मचारी प्रोफाइल</h4>
+    <div class="lg:col-span-1">
+      <div class="rounded-xl shadow-lg overflow-hidden border border-gray-200 bg-white hover:shadow-xl transition-all duration-300">
+        <div class="p-5 bg-gradient-to-r from-navyBlue to-blue-700 text-white flex justify-between items-center">
+          <h4 class="text-xl font-semibold english-text">Staff Profile</h4>
+          <h4 class="text-xl font-semibold marathi-text hidden">कर्मचारी प्रोफाइल</h4>
           <button 
-            class="py-2 px-4 rounded-lg text-sm font-semibold bg-saffron text-white transition duration-300 shadow-md hover:shadow-lg english-text"
+            class="py-2 px-4 rounded-lg text-sm font-medium bg-white bg-opacity-20 hover:bg-opacity-30 text-white transition-all duration-300"
             onclick="toggleModal('editProfileModal')">
-            Edit Profile
-          </button>
-          <button 
-            class="py-2 px-4 rounded-lg text-sm font-semibold bg-saffron text-white transition duration-300 shadow-md hover:shadow-lg marathi-text hidden"
-            onclick="toggleModal('editProfileModal')">
-            प्रोफाइल संपादित करा
+            <span class="english-text">Edit</span>
+            <span class="marathi-text hidden">संपादित करा</span>
           </button>
         </div>
         <div class="p-6">
-          <ul class="divide-y divide-gray-200">
-            <li class="py-4 flex justify-between items-center">
-              <span class="font-medium text-gray-600 english-text">Full Name:</span>
-              <span class="font-medium text-gray-600 marathi-text hidden">पूर्ण नाव:</span>
-              <span class="text-gray-800">{{ user.full_name }}</span>
-            </li>
-            <li class="py-4 flex justify-between items-center">
-              <span class="font-medium text-gray-600 english-text">Email:</span>
-              <span class="font-medium text-gray-600 marathi-text hidden">ईमेल:</span>
-              <span class="text-gray-800">{{ user.email }}</span>
-            </li>
-            <li class="py-4 flex justify-between items-center">
-              <span class="font-medium text-gray-600 english-text">Role:</span>
-              <span class="font-medium text-gray-600 marathi-text hidden">भूमिका:</span>
-              <span class="px-3 py-1 rounded-full text-sm bg-navyBlue text-white">
-                <span class="english-text">{{ user.get_role_display }}</span>
-                <span class="marathi-text hidden">
-                  {% if user.get_role_display == "Staff" %}कर्मचारी{% else %}{{ user.get_role_display }}{% endif %}
-                </span>
+          <div class="flex flex-col items-center mb-6">
+            <div class="w-20 h-20 bg-navyBlue rounded-full flex items-center justify-center text-white text-2xl font-bold mb-4">
+              {{ user.full_name|slice:":1" }}
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800">{{ user.full_name }}</h3>
+            <p class="text-gray-500">{{ user.email }}</p>
+            <span class="mt-2 px-3 py-1 rounded-full text-sm bg-navyBlue text-white">
+              <span class="english-text">{{ user.get_role_display }}</span>
+              <span class="marathi-text hidden">
+                {% if user.get_role_display == "Staff" %}कर्मचारी{% else %}{{ user.get_role_display }}{% endif %}
               </span>
-            </li>
-          </ul>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Actions Card -->
+      <div class="rounded-xl shadow-lg overflow-hidden border border-gray-200 bg-white mt-6 hover:shadow-xl transition-all duration-300">
+        <div class="p-5 bg-gradient-to-r from-saffron to-yellow-500 text-white">
+          <h4 class="text-xl font-semibold english-text">Quick Actions</h4>
+          <h4 class="text-xl font-semibold marathi-text hidden">द्रुत क्रिया</h4>
+        </div>
+        <div class="p-6 flex flex-col gap-4">
+          <a href="/manage_scheme/" class="group flex items-center justify-between p-4 bg-gray-50 hover:bg-navyBlue hover:text-white rounded-lg transition-all duration-300">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-navyBlue group-hover:bg-white flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white group-hover:text-navyBlue" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                  <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5z" clip-rule="evenodd" />
+                </svg>
+              </div>
+              <div>
+                <span class="font-medium block english-text">Manage Schemes</span>
+                <span class="font-medium block marathi-text hidden">योजना व्यवस्थापित करा</span>
+                <span class="text-sm text-gray-500 group-hover:text-blue-100 english-text">Create and modify schemes</span>
+                <span class="text-sm text-gray-500 group-hover:text-blue-100 marathi-text hidden">योजना तयार आणि बदला</span>
+              </div>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+            </svg>
+          </a>
+          
+          <a href="#" class="group flex items-center justify-between p-4 bg-gray-50 hover:bg-lightBlue hover:text-gray-900 rounded-lg transition-all duration-300">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-lightBlue text-gray-800 group-hover:bg-navyBlue group-hover:text-white flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm2 10a1 1 0 10-2 0v3a1 1 0 102 0v-3zm2-3a1 1 0 011 1v5a1 1 0 11-2 0v-5a1 1 0 011-1zm4-1a1 1 0 10-2 0v7a1 1 0 102 0V8z" clip-rule="evenodd" />
+                </svg>
+              </div>
+              <div>
+                <span class="font-medium block english-text">View Reports</span>
+                <span class="font-medium block marathi-text hidden">अहवाल पहा</span>
+                <span class="text-sm text-gray-500 english-text">Check analytics and statistics</span>
+                <span class="text-sm text-gray-500 marathi-text hidden">विश्लेषण आणि आकडेवारी तपासा</span>
+              </div>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+            </svg>
+          </a>
         </div>
       </div>
     </div>
 
-    <!-- Quick Actions Card -->
-    <div>
-      <div class="rounded-lg shadow-lg overflow-hidden border border-gray-600">
-        <div class="p-5 bg-saffron text-white">
-          <h4 class="text-2xl font-semibold english-text">Quick Actions</h4>
-          <h4 class="text-2xl font-semibold marathi-text hidden">द्रुत क्रिया</h4>
+    <!-- Recent Activities Card -->
+    <div class="lg:col-span-2">
+      <div class="rounded-xl shadow-lg overflow-hidden border border-gray-200 bg-white hover:shadow-xl transition-all duration-300 h-full">
+        <div class="p-5 bg-gradient-to-r from-navyBlue to-blue-700 text-white">
+          <h4 class="text-xl font-semibold english-text">Recent Activities</h4>
+          <h4 class="text-xl font-semibold marathi-text hidden">अलीकडील क्रियाकलाप</h4>
         </div>
-        <div class="p-6 flex items-center justify-center">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
-            <a href="/manage_scheme/"
-              class="py-4 px-6 rounded-lg flex items-center justify-center gap-2 bg-navyBlue text-white transition duration-300 shadow-md hover:shadow-lg english-text">
-              Manage Schemes
-            </a>
-            <a href="/manage_scheme/"
-              class="py-4 px-6 rounded-lg flex items-center justify-center gap-2 bg-navyBlue text-white transition duration-300 shadow-md hover:shadow-lg marathi-text hidden">
-              योजना व्यवस्थापित करा
-            </a>
-            <a href="#"
-              class="py-4 px-6 rounded-lg flex items-center justify-center gap-2 font-medium border border-navyBlue bg-lightBlue text-gray-800 transition duration-300 shadow-md hover:shadow-lg english-text">
-              View Reports
-            </a>
-            <a href="#"
-              class="py-4 px-6 rounded-lg flex items-center justify-center gap-2 font-medium border border-navyBlue bg-lightBlue text-gray-800 transition duration-300 shadow-md hover:shadow-lg marathi-text hidden">
-              अहवाल पहा
-            </a>
-          </div>
+        <div class="p-6 overflow-auto max-h-[calc(100vh-24rem)]">
+          {% if user_activities %}
+            <div class="space-y-4">
+              {% for activity in user_activities %}
+                <div class="p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-all">
+                  <div class="flex items-start gap-3">
+                    <div class="w-10 h-10 rounded-full flex-shrink-0 {% if activity.activity_type == 'Login' %}bg-green-100{% elif activity.activity_type == 'Profile Update' %}bg-blue-100{% elif activity.activity_type == 'Scheme Created' %}bg-purple-100{% else %}bg-gray-100{% endif %} flex items-center justify-center">
+                      {% if activity.activity_type == "Login" %}
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-600" viewBox="0 0 20 20" fill="currentColor">
+                          <path fill-rule="evenodd" d="M3 3a1 1 0 011 1v12a1 1 0 11-2 0V4a1 1 0 011-1zm7.707 3.293a1 1 0 010 1.414L9.414 9H17a1 1 0 110 2H9.414l1.293 1.293a1 1 0 01-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0z" clip-rule="evenodd" />
+                        </svg>
+                      {% elif activity.activity_type == "Profile Update" %}
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600" viewBox="0 0 20 20" fill="currentColor">
+                          <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                        </svg>
+                      {% elif activity.activity_type == "Scheme Created" %}
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-600" viewBox="0 0 20 20" fill="currentColor">
+                          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
+                        </svg>
+                      {% else %}
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" viewBox="0 0 20 20" fill="currentColor">
+                          <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                        </svg>
+                      {% endif %}
+                    </div>
+                    <div class="flex-1">
+                      <div class="flex justify-between">
+                        <p class="font-medium text-gray-800 english-text">{{ activity.activity_type }}</p>
+                        <p class="font-medium text-gray-800 marathi-text hidden">
+                          {% if activity.activity_type == "Login" %}लॉगिन
+                          {% elif activity.activity_type == "Profile Update" %}प्रोफाइल अद्यतन
+                          {% elif activity.activity_type == "Scheme Created" %}योजना तयार केली
+                          {% else %}{{ activity.activity_type }}{% endif %}
+                        </p>
+                        <span class="text-sm text-gray-500">{{ activity.timestamp|date:"M d, Y H:i" }}</span>
+                      </div>
+                      <p class="text-sm text-gray-600 mt-1">{{ activity.description }}</p>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          {% else %}
+            <div class="p-5 rounded-lg bg-gray-50 border border-gray-200">
+              <div class="flex items-center gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <div>
+                  <p class="font-medium text-gray-800 english-text">No recent activities found</p>
+                  <p class="font-medium text-gray-800 marathi-text hidden">कोणतेही अलीकडील क्रियाकलाप सापडले नाहीत</p>
+                  <p class="text-sm text-gray-500 english-text">Your activities will appear here</p>
+                  <p class="text-sm text-gray-500 marathi-text hidden">आपले क्रियाकलाप येथे दिसतील</p>
+                </div>
+              </div>
+            </div>
+          {% endif %}
         </div>
       </div>
     </div>
@@ -95,43 +194,47 @@
 
   <!-- Edit Profile Modal -->
   <div id="editProfileModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
-    <div class="bg-white rounded-lg shadow-lg w-96">
-      <div class="p-5 bg-navyBlue text-white flex justify-between items-center">
+    <div class="bg-white rounded-xl shadow-xl w-96 max-w-full transform transition-all duration-300">
+      <div class="p-5 bg-gradient-to-r from-navyBlue to-blue-700 text-white flex justify-between items-center rounded-t-xl">
         <h4 class="text-xl font-semibold english-text">Edit Profile</h4>
         <h4 class="text-xl font-semibold marathi-text hidden">प्रोफाइल संपादित करा</h4>
-        <button class="text-white text-lg" onclick="toggleModal('editProfileModal')">&times;</button>
+        <button class="text-white hover:bg-white hover:bg-opacity-20 rounded-full p-1" onclick="toggleModal('editProfileModal')">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
       </div>
       <form method="POST" action="{% url 'user_profile_edit' %}" class="p-6">
         {% csrf_token %}
         <div class="mb-4">
-          <label for="full_name" class="block text-sm font-medium text-gray-600 english-text">Full Name</label>
-          <label for="full_name" class="block text-sm font-medium text-gray-600 marathi-text hidden">पूर्ण नाव</label>
+          <label for="full_name" class="block text-sm font-medium text-gray-700 english-text">Full Name</label>
+          <label for="full_name" class="block text-sm font-medium text-gray-700 marathi-text hidden">पूर्ण नाव</label>
           <input type="text" id="full_name" name="full_name" value="{{ user.full_name }}" 
                  class="w-full mt-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-navyBlue">
         </div>
-        <div class="mb-4">
-          <label for="email" class="block text-sm font-medium text-gray-600 english-text">Email</label>
-          <label for="email" class="block text-sm font-medium text-gray-600 marathi-text hidden">ईमेल</label>
+        <div class="mb-6">
+          <label for="email" class="block text-sm font-medium text-gray-700 english-text">Email</label>
+          <label for="email" class="block text-sm font-medium text-gray-700 marathi-text hidden">ईमेल</label>
           <input type="email" id="email" name="email" value="{{ user.email }}" 
                  class="w-full mt-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-navyBlue">
         </div>
         <div class="flex justify-end">
           <button type="button" 
-                  class="py-2 px-4 rounded-lg text-sm font-semibold bg-gray-300 text-gray-800 mr-2 english-text"
+                  class="py-2 px-4 rounded-lg text-sm font-medium bg-gray-200 hover:bg-gray-300 text-gray-800 mr-2 transition-colors english-text"
                   onclick="toggleModal('editProfileModal')">
             Cancel
           </button>
           <button type="button" 
-                  class="py-2 px-4 rounded-lg text-sm font-semibold bg-gray-300 text-gray-800 mr-2 marathi-text hidden"
+                  class="py-2 px-4 rounded-lg text-sm font-medium bg-gray-200 hover:bg-gray-300 text-gray-800 mr-2 transition-colors marathi-text hidden"
                   onclick="toggleModal('editProfileModal')">
             रद्द करा
           </button>
           <button type="submit" 
-                  class="py-2 px-4 rounded-lg text-sm font-semibold bg-saffron text-white english-text">
-            Save
+                  class="py-2 px-4 rounded-lg text-sm font-medium bg-gradient-to-r from-saffron to-yellow-500 hover:from-yellow-600 hover:to-saffron text-white transition-colors english-text">
+            Save Changes
           </button>
           <button type="submit" 
-                  class="py-2 px-4 rounded-lg text-sm font-semibold bg-saffron text-white marathi-text hidden">
+                  class="py-2 px-4 rounded-lg text-sm font-medium bg-gradient-to-r from-saffron to-yellow-500 hover:from-yellow-600 hover:to-saffron text-white transition-colors marathi-text hidden">
             जतन करा
           </button>
         </div>
@@ -142,50 +245,31 @@
   <script>
     function toggleModal(modalId) {
       const modal = document.getElementById(modalId);
-      modal.classList.toggle('hidden');
+      if (modal.classList.contains('hidden')) {
+        modal.classList.remove('hidden');
+        setTimeout(() => {
+          const modalContent = modal.querySelector('div');
+          modalContent.classList.add('scale-100', 'opacity-100');
+          modalContent.classList.remove('scale-95', 'opacity-0');
+        }, 10);
+      } else {
+        const modalContent = modal.querySelector('div');
+        modalContent.classList.remove('scale-100', 'opacity-100');
+        modalContent.classList.add('scale-95', 'opacity-0');
+        setTimeout(() => {
+          modal.classList.add('hidden');
+        }, 300);
+      }
     }
+
+    // Language toggle functionality
+    document.getElementById('languageToggle').addEventListener('click', function() {
+      const englishElements = document.querySelectorAll('.english-text');
+      const marathiElements = document.querySelectorAll('.marathi-text');
+      
+      englishElements.forEach(el => el.classList.toggle('hidden'));
+      marathiElements.forEach(el => el.classList.toggle('hidden'));
+    });
   </script>
-
-  <!-- Recent Activities Card -->
-  <div class="rounded-lg shadow-lg overflow-hidden border border-gray-200">
-    <div class="p-5 bg-navyBlue text-white">
-      <h4 class="text-2xl font-semibold english-text">Recent Activities</h4>
-      <h4 class="text-2xl font-semibold marathi-text hidden">अलीकडील क्रियाकलाप</h4>
-    </div>
-    <div class="p-6">
-      {% if user_activities %}
-        <ul class="divide-y divide-gray-200">
-          {% for activity in user_activities %}
-            <li class="py-4">
-              <div class="flex justify-between items-center">
-                <div>
-                  <p class="font-medium text-gray-800 english-text">{{ activity.activity_type }}</p>
-                  <p class="font-medium text-gray-800 marathi-text hidden">
-                    {% if activity.activity_type == "Login" %}लॉगिन
-                    {% elif activity.activity_type == "Profile Update" %}प्रोफाइल अद्यतन
-                    {% elif activity.activity_type == "Scheme Created" %}योजना तयार केली
-                    {% else %}{{ activity.activity_type }}{% endif %}
-                  </p>
-                  <p class="text-sm text-gray-600">{{ activity.description }}</p>
-                </div>
-                <span class="text-sm text-gray-500">{{ activity.timestamp|date:"M d, Y H:i" }}</span>
-              </div>
-            </li>
-          {% endfor %}
-        </ul>
-      {% else %}
-        <div class="p-5 rounded-lg bg-gray-100">
-          <div class="flex items-center">
-            <div class="mr-4 text-gray-600">
-              <i class="fas fa-info-circle text-2xl"></i>
-            </div>
-            <p class="font-medium text-gray-800 english-text">No recent activities found.</p>
-            <p class="font-medium text-gray-800 marathi-text hidden">कोणतेही अलीकडील क्रियाकलाप सापडले नाहीत.</p>
-          </div>
-        </div>
-      {% endif %}
-    </div>
-  </div>
 </div>
-
 {% endblock %}

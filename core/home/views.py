@@ -8,6 +8,8 @@ from django.contrib.auth import get_user_model
 from django.core.mail import send_mail
 from django.conf import settings
 from django.utils.crypto import get_random_string
+from django.http import JsonResponse
+from .models import District, Taluka, GramPanchayat, WorkSuggestion, WorkType
 
 
 
@@ -447,3 +449,40 @@ def password_reset_flow(request):
                 return redirect('/login/')
 
     return render(request, 'password_reset_flow.html', context)
+def get_work_suggestions(request):
+    districts = District.objects.all()
+    sectors = WorkType.objects.values_list('sector', flat=True).distinct().exclude(sector__isnull=True)
+
+    selected_district = request.GET.get('district')
+    selected_taluka = request.GET.get('taluka')
+    selected_gp = request.GET.get('gram_panchayat')
+    selected_sector = request.GET.get('sector')
+
+    suggestions = None
+    if selected_gp:
+        suggestions = WorkSuggestion.objects.filter(
+            gram_panchayat_id=selected_gp
+        ).select_related('work_type')
+
+        if selected_sector:
+            suggestions = suggestions.filter(work_type__sector=selected_sector)
+
+    context = {
+        'districts': districts,
+        'sectors': sectors,
+        'suggestions': suggestions,
+        'selected_district': selected_district,
+        'selected_taluka': selected_taluka,
+        'selected_gp': selected_gp,
+        'selected_sector': selected_sector,
+    }
+    return render(request, 'work_suggest.html', context)
+def get_talukas(request):
+    district_id = request.GET.get('district_id')
+    talukas = Taluka.objects.filter(district_id=district_id).values('id', 'name')
+    return JsonResponse(list(talukas), safe=False)
+
+def get_gram_panchayats(request):
+    taluka_id = request.GET.get('taluka_id')
+    gps = GramPanchayat.objects.filter(taluka_id=taluka_id).values('id', 'name')
+    return JsonResponse(list(gps), safe=False)
