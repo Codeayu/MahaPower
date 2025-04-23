@@ -85,7 +85,9 @@ DATABASES = {
         'PASSWORD': 'PcknwznKiEe9JZh6MHnL',
         'HOST': 'bzrbejr4xxkgybr6g9ok-mysql.services.clever-cloud.com',
         'PORT': '3306',
-        'CONN_MAX_AGE': 60,
+        'init_command': "SET SESSION wait_timeout=28800",
+        'CONN_MAX_AGE': 600,
+        'connect_timeout': 60,
     }
 }
 
