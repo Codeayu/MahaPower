@@ -294,8 +294,8 @@ def delete_user(request, user_id):
     messages.success(request, f"User '{user.username}' has been rejected")
     return redirect('Pending_Approval.html')
 
-@login_required
-@user_passes_test(is_staff_user, login_url='login_view')
+@login_required(login_url='/login/')
+@user_passes_test(is_staff_user)
 def staff_user(request):        
     user_activities = UserActivity.objects.filter(user=request.user).order_by('-timestamp')
     return render(request, 'Staff.html', {'user_activities': user_activities})
@@ -449,6 +449,8 @@ def password_reset_flow(request):
                 return redirect('/login/')
 
     return render(request, 'password_reset_flow.html', context)
+
+
 def get_work_suggestions(request):
     districts = District.objects.all()
     sectors = WorkType.objects.values_list('sector', flat=True).distinct().exclude(sector__isnull=True)
@@ -477,10 +479,38 @@ def get_work_suggestions(request):
         'selected_sector': selected_sector,
     }
     return render(request, 'work_suggest.html', context)
+
+def get_suggestions(request):
+    selected_gp = request.GET.get('gram_panchayat')
+    selected_sector = request.GET.get('sector')
+    
+    suggestions = []
+    if selected_gp:
+        query = WorkSuggestion.objects.filter(
+            gram_panchayat_id=selected_gp
+        ).select_related('work_type')
+        
+        if selected_sector:
+            query = query.filter(work_type__sector=selected_sector)
+            
+        suggestions = [
+            {
+                'id': suggestion.id,
+                'work_type_name': suggestion.work_type.name_en,
+                'sector': suggestion.work_type.sector,
+                #'description': suggestion.work_type.description_en
+            }
+            for suggestion in query
+        ]
+    
+    return JsonResponse({'suggestions': suggestions})
+
+
 def get_talukas(request):
     district_id = request.GET.get('district_id')
     talukas = Taluka.objects.filter(district_id=district_id).values('id', 'name')
     return JsonResponse(list(talukas), safe=False)
+
 
 def get_gram_panchayats(request):
     taluka_id = request.GET.get('taluka_id')

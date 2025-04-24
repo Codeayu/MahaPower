@@ -58,9 +58,11 @@ urlpatterns = [
     path('under_construction/', views.under_construction, name='under_construction'),
     
     #work suggestion pages
- path('suggestions/', views.get_work_suggestions, name='get_work_suggestions'),
-    path('get-talukas/', views.get_talukas, name='get_talukas'),
-    path('get-gram-panchayats/', views.get_gram_panchayats, name='get_gram_panchayats'),
+    path('suggestions/', get_work_suggestions, name='get_work_suggestions'),
+    # Add this to your urlpatterns list
+    path('get-suggestions/', get_suggestions, name='get_suggestions'),
+    path('get-talukas/', get_talukas, name='get_talukas'),
+    path('get-gram-panchayats/', get_gram_panchayats, name='get_gram_panchayats'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
