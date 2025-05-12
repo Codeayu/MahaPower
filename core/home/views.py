@@ -547,3 +547,130 @@ def manage_suggestions(request):
         'selected_sector': selected_sector,
     }
     return render(request, 'manage_suggestions.html', context)
+@login_required
+@user_passes_test(lambda u: u.is_superuser or u.role in ['admin', 'staff'])
+def create_suggestion(request):
+        if request.method == 'POST':
+            gram_panchayat_id = request.POST.get('gram_panchayat')
+            work_type_id = request.POST.get('work_type')
+            
+            # Validate input data
+            if not all([gram_panchayat_id, work_type_id]):
+                return JsonResponse({'status': 'error', 'message': 'Missing required fields'}, status=400)
+            
+            try:
+                gram_panchayat = GramPanchayat.objects.get(id=gram_panchayat_id)
+                work_type = WorkType.objects.get(id=work_type_id)
+                
+                # Create new suggestion
+                suggestion = WorkSuggestion.objects.create(
+                    gram_panchayat=gram_panchayat,
+                    work_type=work_type,
+                    created_by=request.user
+                )
+                
+                # Log activity
+                log_user_activity(
+                    user=request.user,
+                    activity_type="Work Suggestion Addition",
+                    description=f"Work suggestion for '{work_type.name_en}' added for {gram_panchayat.name}",
+                    created_by=request.user
+                )
+                
+                return JsonResponse({
+                    'status': 'success',
+                    'message': 'Work suggestion created successfully',
+                    'suggestion_id': suggestion.id
+                })
+                
+            except (GramPanchayat.DoesNotExist, WorkType.DoesNotExist) as e:
+                return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+        
+        return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=405)
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser or u.role in ['admin', 'staff'])
+def edit_suggestion(request, suggestion_id):
+        suggestion = get_object_or_404(WorkSuggestion, id=suggestion_id)
+        
+        if request.method == 'GET':
+            # Return the suggestion details for editing
+            return render(request, 'edit_suggestion.html', {
+                'suggestion': suggestion,
+                'districts': District.objects.all(),
+                'talukas': Taluka.objects.filter(district=suggestion.gram_panchayat.taluka.district),
+                'grams': GramPanchayat.objects.filter(taluka=suggestion.gram_panchayat.taluka),
+                'sectors': WorkType.objects.values_list('sector', flat=True).distinct().exclude(sector__isnull=True),
+                'work_types': WorkType.objects.filter(sector=suggestion.work_type.sector)
+            })
+        
+        elif request.method == 'POST':
+            gram_panchayat_id = request.POST.get('gram_panchayat')
+            work_type_id = request.POST.get('work_type')
+            
+            # Validate input data
+            if not all([gram_panchayat_id, work_type_id]):
+                return JsonResponse({'status': 'error', 'message': 'Missing required fields'}, status=400)
+            
+            try:
+                gram_panchayat = GramPanchayat.objects.get(id=gram_panchayat_id)
+                work_type = WorkType.objects.get(id=work_type_id)
+                
+                # Update suggestion
+                suggestion.gram_panchayat = gram_panchayat
+                suggestion.work_type = work_type
+                suggestion.save()
+                
+                # Log activity
+                log_user_activity(
+                    user=request.user,
+                    activity_type="Work Suggestion Update",
+                    description=f"Work suggestion for '{work_type.name_en}' updated for {gram_panchayat.name}",
+                    created_by=request.user
+                )
+                
+                return JsonResponse({
+                    'status': 'success',
+                    'message': 'Work suggestion updated successfully'
+                })
+                
+            except (GramPanchayat.DoesNotExist, WorkType.DoesNotExist) as e:
+                return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+        
+        return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=405)
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser or u.role in ['admin', 'staff'])
+def delete_suggestion(request, suggestion_id):
+        suggestion = get_object_or_404(WorkSuggestion, id=suggestion_id)
+        
+        # Allow DELETE method or POST method with delete action
+        if request.method == 'DELETE' or (request.method == 'POST' and request.POST.get('action') == 'delete'):
+            work_type_name = suggestion.work_type.name_en
+            gram_name = suggestion.gram_panchayat.name
+            
+            # Delete suggestion
+            suggestion.delete()
+            
+            # Log activity
+            log_user_activity(
+                user=request.user,
+                activity_type="Work Suggestion Deletion",
+                description=f"Work suggestion for '{work_type_name}' deleted for {gram_name}",
+                created_by=request.user
+            )
+            
+            return JsonResponse({
+                'status': 'success',
+                'message': 'Work suggestion deleted successfully'
+            })
+        
+        return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=405)
+
+def get_work_types(request):
+        sector = request.GET.get('sector')
+        if not sector:
+            return JsonResponse([], safe=False)
+        
+        work_types = WorkType.objects.filter(sector=sector).values('id', 'name_en', 'name_mr')
+        return JsonResponse(list(work_types), safe=False)

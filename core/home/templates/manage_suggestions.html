@@ -296,16 +296,63 @@
                                 <label for="modal-work-type" class="block text-sm font-medium text-gray-700 english-text">Work Type</label>
                                 <label for="modal-work-type" class="block text-sm font-medium text-gray-700 marathi-text hidden">कामाचा प्रकार</label>
                                 <select id="modal-work-type" name="work_type" required class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-saffron focus:border-saffron sm:text-sm rounded-md">
-                                    <option value="">Select Work Type</option>
+                                    <option value="">
+                                        <span class="english-text">Select Work Type</span>
+                                        <span class="marathi-text hidden">कामाचा प्रकार निवडा</span>
+                                    </option>
+                                    <option value="100">
+                                        <span class="english-text">Commercial Beekeeping Unit (100 Apis Mellifera Bee Colonies)</span>
+                                        <span class="marathi-text hidden">व्यावसायिक मधमाशी पालन युनिट (ॲपिस मेलिफेराच्या 100 मधमाशी वसाहती)</span>
+                                    </option>
+                                    <option value="101">
+                                        <span class="english-text">Commercial Beekeeping Unit (100 Apis Cerana Bee Colonies)</span>
+                                        <span class="marathi-text hidden">व्यावसायिक मधमाशी पालन युनिट (ॲपिस सेरानाच्या 100 मधमाशी वसाहती)</span>
+                                    </option>
+                                    <option value="102">
+                                        <span class="english-text">Honey and Jam Production</span>
+                                        <span class="marathi-text hidden">मध आणि जाम उत्पादन</span>
+                                    </option>
+                                    <option value="103">
+                                        <span class="english-text">Honey Processing Project and Honey House</span>
+                                        <span class="marathi-text hidden">मध प्रक्रिया प्रकल्प आणि मध घर</span>
+                                    </option>
+                                    <option value="104">
+                                        <span class="english-text">Ayurvedic Asava, Arishta, Kwatha, Syrup Production</span>
+                                        <span class="marathi-text hidden">आयुर्वेदिक आसव, अरिष्ट, क्वाथ, सिरप उत्पादन</span>
+                                    </option>
+                                    <!-- More options following the same pattern -->
+                                    <!-- Add all remaining options here -->
                                 </select>
                             </div>
 
+                            <script>
+                                // Work Type language toggle handler
+                                function updateWorkTypeOptions() {
+                                    const isEnglish = !document.querySelector('.english-text').classList.contains('hidden');
+                                    const workTypeSelect = document.getElementById('modal-work-type');
+                                    
+                                    // Update the display text for each option based on language
+                                    Array.from(workTypeSelect.options).forEach(option => {
+                                        if (isEnglish) {
+                                            option.text = option.querySelector('.english-text') ? 
+                                                option.querySelector('.english-text').textContent : option.text;
+                                        } else {
+                                            option.text = option.querySelector('.marathi-text') ? 
+                                                option.querySelector('.marathi-text').textContent : option.text;
+                                        }
+                                    });
+                                }
+                                
+                                // Add this to existing language toggle events
+                                document.getElementById('englishBtn').addEventListener('click', updateWorkTypeOptions);
+                                document.getElementById('marathiBtn').addEventListener('click', updateWorkTypeOptions);
+                                
+                                // Initialize options text based on current language
+                                document.addEventListener('DOMContentLoaded', updateWorkTypeOptions);
+                            </script>
+
                             <!-- Description -->
-                            <div class="col-span-2">
-                                <label for="modal-description" class="block text-sm font-medium text-gray-700 english-text">Description (Optional)</label>
-                                <label for="modal-description" class="block text-sm font-medium text-gray-700 marathi-text hidden">वर्णन (पर्यायी)</label>
-                                <textarea id="modal-description" name="description" rows="3" class="mt-1 block w-full shadow-sm sm:text-sm focus:ring-saffron focus:border-saffron border border-gray-300 rounded-md"></textarea>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -318,11 +365,9 @@
                     <button type="submit" id="submitCreateForm" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm marathi-text hidden">
                         सूचना तयार करा
                     </button>
-                    <button type="button" id="cancelCreateModal" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-saffron sm:mt-0 sm:w-auto sm:text-sm english-text">
-                        Cancel
-                    </button>
-                    <button type="button" id="cancelCreateModal" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-saffron sm:mt-0 sm:w-auto sm:text-sm marathi-text hidden">
-                        रद्द करा
+                    <button type="button" id="cancelCreateModal" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-saffron sm:mt-0 sm:w-auto sm:text-sm">
+                        <span class="english-text">Cancel</span>
+                        <span class="marathi-text hidden">रद्द करा</span>
                     </button>
                 </div>
             </form>
