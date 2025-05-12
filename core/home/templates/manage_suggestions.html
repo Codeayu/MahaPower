@@ -1,0 +1,1077 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Work Suggestion Management Portal{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <!-- Header Section -->
+    <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-gray-800 mb-2 english-text">Work Suggestion Management Portal</h2>
+        <h2 class="text-3xl font-bold text-gray-800 mb-2 marathi-text hidden">कामाच्या सूचना व्यवस्थापन पोर्टल</h2>
+        <div class="w-20 h-1 bg-saffron mx-auto mb-4"></div>
+        <p class="text-gray-600 max-w-2xl mx-auto english-text">Manage and review work suggestions for different locations and sectors.</p>
+        <p class="text-gray-600 max-w-2xl mx-auto marathi-text hidden">विविध ठिकाणे आणि क्षेत्रांसाठी कामाच्या सूचना व्यवस्थापित आणि पुनरावलोकन करा.</p>
+    </div>
+
+    <!-- Action Buttons Section -->
+    <div class="flex justify-between items-center mb-6">
+        <div class="flex items-center space-x-2">
+            <h3 class="text-xl font-semibold text-gray-700 english-text">Work Suggestions</h3>
+            <h3 class="text-xl font-semibold text-gray-700 marathi-text hidden">कामाच्या सूचना</h3>
+        </div>
+        <button id="openCreateModal" class="px-4 py-2 bg-gradient-to-r from-green-600 to-green-500 text-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 flex items-center">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+            </svg>
+            <span class="english-text">Create Suggestion</span>
+            <span class="marathi-text hidden">नवीन सूचना तयार करा</span>
+        </button>
+    </div>
+
+    <!-- Form Section with improved UI -->
+    <div class="rounded-xl shadow-lg overflow-hidden border border-gray-200 mb-10 transform transition-all duration-300 hover:shadow-xl">
+        <div class="p-5 bg-gradient-to-r from-navyBlue to-blue-700 text-white">
+            <div class="flex flex-wrap justify-between items-center">
+                <h4 class="text-2xl font-semibold english-text mb-2 md:mb-0">Work Suggestions Form</h4>
+                <h4 class="text-2xl font-semibold marathi-text hidden mb-2 md:mb-0">कामाच्या सूचना फॉर्म</h4>
+                
+                <!-- Language Toggle with improved styling -->
+                <div class="flex bg-white rounded-full p-1 shadow-sm">
+                    <button type="button" id="englishBtn" class="px-4 py-1.5 rounded-full bg-saffron text-white text-sm font-medium transition-all duration-200">English</button>
+                    <button type="button" id="marathiBtn" class="px-4 py-1.5 rounded-full text-gray-700 text-sm font-medium transition-all duration-200">मराठी</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="p-6 bg-white">
+            <form method="get" class="grid grid-cols-1 md:grid-cols-2 gap-6" id="suggestionForm">
+                <!-- District Dropdown with improved styling -->
+                <div class="relative">
+                    <label for="district" class="block text-sm font-medium text-gray-600 mb-1.5 english-text">District</label>
+                    <label for="district" class="block text-sm font-medium text-gray-600 mb-1.5 marathi-text hidden">जिल्हा</label>
+                    <select id="district" name="district" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-saffron focus:border-transparent appearance-none bg-white">
+                        <option value="">Select District</option>
+                        {% for district in districts %}
+                            <option value="{{ district.id }}" {% if district.id|stringformat:"s" == selected_district %}selected{% endif %}>{{ district.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 pt-6">
+                        <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <!-- Taluka Dropdown with improved styling -->
+                <div class="relative">
+                    <label for="taluka" class="block text-sm font-medium text-gray-600 mb-1.5 english-text">Taluka</label>
+                    <label for="taluka" class="block text-sm font-medium text-gray-600 mb-1.5 marathi-text hidden">तालुका</label>
+                    <select id="taluka" name="taluka" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-saffron focus:border-transparent appearance-none bg-white">
+                        <option value="">Select Taluka</option>
+                        {% for taluka in talukas %}
+                            <option value="{{ taluka.id }}" {% if taluka.id|stringformat:"s" == selected_taluka %}selected{% endif %}>{{ taluka.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 pt-6">
+                        <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"></path>
+                        </svg>
+                    </div>
+                    <div id="taluka-loading" class="hidden absolute right-10 top-1/2 transform -translate-y-1/3">
+                        <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-saffron"></div>
+                    </div>
+                </div>
+
+                <!-- Gram Panchayat Dropdown with improved styling -->
+                <div class="relative">
+                    <label for="gram_panchayat" class="block text-sm font-medium text-gray-600 mb-1.5 english-text">Gram Panchayat</label>
+                    <label for="gram_panchayat" class="block text-sm font-medium text-gray-600 mb-1.5 marathi-text hidden">ग्रामपंचायत</label>
+                    <select id="gram_panchayat" name="gram_panchayat" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-saffron focus:border-transparent appearance-none bg-white">
+                        <option value="">Select Gram Panchayat</option>
+                    </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 pt-6">
+                        <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"></path>
+                        </svg>
+                    </div>
+                    <div id="gp-loading" class="hidden absolute right-10 top-1/2 transform -translate-y-1/3">
+                        <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-saffron"></div>
+                    </div>
+                </div>
+
+                <!-- Sector Dropdown with improved styling -->
+                <div class="relative">
+                    <label for="sector" class="block text-sm font-medium text-gray-600 mb-1.5 english-text">Sector</label>
+                    <label for="sector" class="block text-sm font-medium text-gray-600 mb-1.5 marathi-text hidden">क्षेत्र</label>
+                    <select id="sector" name="sector" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-saffron focus:border-transparent appearance-none bg-white required">
+                        <option value="">Select Sector</option>
+                        {% for sec in sectors %}
+                            <option value="{{ sec }}" {% if sec == selected_sector %}selected{% endif %}>{{ sec }}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 pt-6">
+                        <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <!-- Reset Button -->
+                <!-- Button row with improved layout -->
+                <div class="col-span-1 md:col-span-2 flex justify-between items-center">
+                    <!-- Reset Button - Changed to button type for proper form reset -->
+                    <button type="reset" class="py-2.5 px-8 rounded-lg text-sm font-semibold bg-gray-200 text-gray-700 hover:bg-gray-300 hover:shadow-md transition-all duration-300 transform hover:-translate-y-0.5 flex items-center">
+                        <span class="english-text flex items-center">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                            </svg>
+                            Reset Form
+                        </span>
+                        <span class="marathi-text hidden flex items-center">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                            </svg>
+                            फॉर्म रीसेट करा
+                        </span>
+                    </button>
+
+                    <!-- Submit Button -->
+                    <button type="submit" id="submitBtn" class="py-2.5 px-8 rounded-lg text-sm font-semibold bg-gradient-to-r from-saffron to-yellow-500 text-white hover:shadow-md transition-all duration-300 transform hover:-translate-y-0.5">
+                        <span class="english-text flex items-center">
+                            Get Work Suggestions
+                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </span>
+                        <span class="marathi-text hidden flex items-center">
+                            कामाच्या सूचना मिळवा
+                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Suggestions Section with sector-based grouping -->
+    <div id="suggestions-container" class="space-y-6">
+        <div class="p-5 bg-gradient-to-r from-navyBlue to-blue-700 text-white rounded-t-xl shadow-lg">
+            <h4 class="text-2xl font-semibold english-text">Work Suggestions</h4>
+            <h4 class="text-2xl font-semibold marathi-text hidden">कामाच्या सूचना</h4>
+        </div>
+
+        {% if suggestions %}
+            {% regroup suggestions by work_type.sector as sector_list %}
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for sector in sector_list %}
+                    <div class="rounded-xl shadow-lg overflow-hidden border border-gray-200 transition-all duration-300 hover:shadow-xl">
+                        <div class="p-4 bg-gradient-to-r from-blue-600 to-blue-500 text-white">
+                            <h4 class="text-xl font-semibold">{{ sector.grouper }}</h4>
+                        </div>
+                        <div class="p-4 bg-white">
+                            <ul class="divide-y divide-gray-200">
+                                {% for suggestion in sector.list %}
+                                    <li class="py-3 hover:bg-gray-50 transition-colors duration-150 rounded-lg px-2">
+                                        <div class="flex flex-wrap justify-between items-center">
+                                            <div class="flex-grow">
+                                                <p class="font-medium text-gray-800">{{ suggestion.work_type.name_en }}</p>
+                                            </div>
+                                            <div class="flex space-x-2">
+                                                <!-- Edit Button -->
+                                                <button type="button" class="px-3 py-1.5 text-xs rounded-md bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white transition-colors duration-200 flex items-center border border-blue-200 hover:border-blue-600">
+                                                    <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                                    </svg>
+                                                    <span class="english-text">Edit</span>
+                                                    <span class="marathi-text hidden">संपादित करा</span>
+                                                </button>
+                                                
+                                                <!-- Delete Button -->
+                                                <button type="button" class="px-3 py-1.5 text-xs rounded-md bg-red-50 text-red-600 hover:bg-red-600 hover:text-white transition-colors duration-200 flex items-center border border-red-200 hover:border-red-600">
+                                                    <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                                    </svg>
+                                                    <span class="english-text">Delete</span>
+                                                    <span class="marathi-text hidden">हटवा</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            
+        {% else %}
+            <div class="p-6 bg-white rounded-b-xl shadow-lg border border-gray-200 border-t-0">
+                <div class="p-8 rounded-lg bg-gray-50 border border-gray-200 text-center">
+                    <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                    </svg>
+                    <h5 class="font-semibold text-gray-700 mb-2 english-text">No Work Suggestions Available</h5>
+                    <h5 class="font-semibold text-gray-700 mb-2 marathi-text hidden">कोणत्याही कामाच्या सूचना उपलब्ध नाहीत</h5>
+                    <p class="text-gray-600 english-text">Please select different location details to find available work suggestions.</p>
+                    <p class="text-gray-600 marathi-text hidden">कृपया उपलब्ध कामाच्या सूचना शोधण्यासाठी वेगळे स्थान तपशील निवडा.</p>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Create Suggestion Modal -->
+<div id="createSuggestionModal" class="fixed inset-0 z-50 hidden overflow-y-auto">
+    <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <!-- Background overlay -->
+        <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+            <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+        </div>
+
+        <!-- Modal container -->
+        <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
+            <form id="createSuggestionForm" method="post" class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                {% csrf_token %}
+                <div class="sm:flex sm:items-start">
+                    <div class="mt-3 text-center sm:mt-0 sm:text-left w-full">
+                        <!-- Modal header -->
+                        <div class="flex justify-between items-center pb-3 border-b">
+                            <h3 class="text-xl leading-6 font-medium text-gray-900 english-text">Create New Work Suggestion</h3>
+                            <h3 class="text-xl leading-6 font-medium text-gray-900 marathi-text hidden">नवीन कामाची सूचना तयार करा</h3>
+                            <button type="button" id="closeCreateModal" class="text-gray-400 hover:text-gray-500 focus:outline-none">
+                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- District -->
+                            <div class="col-span-1">
+                                <label for="modal-district" class="block text-sm font-medium text-gray-700 english-text">District</label>
+                                <label for="modal-district" class="block text-sm font-medium text-gray-700 marathi-text hidden">जिल्हा</label>
+                                <select id="modal-district" name="district" required class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-saffron focus:border-saffron sm:text-sm rounded-md">
+                                    <option value="">Select District</option>
+                                    {% for district in districts %}
+                                        <option value="{{ district.id }}">{{ district.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <!-- Taluka -->
+                            <div class="col-span-1">
+                                <label for="modal-taluka" class="block text-sm font-medium text-gray-700 english-text">Taluka</label>
+                                <label for="modal-taluka" class="block text-sm font-medium text-gray-700 marathi-text hidden">तालुका</label>
+                                <select id="modal-taluka" name="taluka" required class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-saffron focus:border-saffron sm:text-sm rounded-md">
+                                    <option value="">Select Taluka</option>
+                                </select>
+                            </div>
+
+                            <!-- Gram Panchayat -->
+                            <div class="col-span-1">
+                                <label for="modal-gram-panchayat" class="block text-sm font-medium text-gray-700 english-text">Gram Panchayat</label>
+                                <label for="modal-gram-panchayat" class="block text-sm font-medium text-gray-700 marathi-text hidden">ग्रामपंचायत</label>
+                                <select id="modal-gram-panchayat" name="gram_panchayat" required class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-saffron focus:border-saffron sm:text-sm rounded-md">
+                                    <option value="">Select Gram Panchayat</option>
+                                </select>
+                            </div>
+
+                            <!-- Sector -->
+                            <div class="col-span-1">
+                                <label for="modal-sector" class="block text-sm font-medium text-gray-700 english-text">Sector</label>
+                                <label for="modal-sector" class="block text-sm font-medium text-gray-700 marathi-text hidden">क्षेत्र</label>
+                                <select id="modal-sector" name="sector" required class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-saffron focus:border-saffron sm:text-sm rounded-md">
+                                    <option value="">Select Sector</option>
+                                    {% for sec in sectors %}
+                                        <option value="{{ sec }}">{{ sec }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <!-- Work Type -->
+                            <div class="col-span-2">
+                                <label for="modal-work-type" class="block text-sm font-medium text-gray-700 english-text">Work Type</label>
+                                <label for="modal-work-type" class="block text-sm font-medium text-gray-700 marathi-text hidden">कामाचा प्रकार</label>
+                                <select id="modal-work-type" name="work_type" required class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-saffron focus:border-saffron sm:text-sm rounded-md">
+                                    <option value="">Select Work Type</option>
+                                </select>
+                            </div>
+
+                            <!-- Description -->
+                            <div class="col-span-2">
+                                <label for="modal-description" class="block text-sm font-medium text-gray-700 english-text">Description (Optional)</label>
+                                <label for="modal-description" class="block text-sm font-medium text-gray-700 marathi-text hidden">वर्णन (पर्यायी)</label>
+                                <textarea id="modal-description" name="description" rows="3" class="mt-1 block w-full shadow-sm sm:text-sm focus:ring-saffron focus:border-saffron border border-gray-300 rounded-md"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse border-t pt-4">
+                    <button type="submit" id="submitCreateForm" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm english-text">
+                        Create Suggestion
+                    </button>
+                    <button type="submit" id="submitCreateForm" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm marathi-text hidden">
+                        सूचना तयार करा
+                    </button>
+                    <button type="button" id="cancelCreateModal" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-saffron sm:mt-0 sm:w-auto sm:text-sm english-text">
+                        Cancel
+                    </button>
+                    <button type="button" id="cancelCreateModal" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-saffron sm:mt-0 sm:w-auto sm:text-sm marathi-text hidden">
+                        रद्द करा
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+// Language toggle with smooth transitions
+document.getElementById('englishBtn').addEventListener('click', function() {
+    document.querySelectorAll('.english-text').forEach(el => el.classList.remove('hidden'));
+    document.querySelectorAll('.marathi-text').forEach(el => el.classList.add('hidden'));
+    this.classList.add('bg-saffron', 'text-white');
+    document.getElementById('marathiBtn').classList.remove('bg-saffron', 'text-white');
+    
+    // Update modal language
+    document.querySelectorAll('#createSuggestionModal .english-text').forEach(el => el.classList.remove('hidden'));
+    document.querySelectorAll('#createSuggestionModal .marathi-text').forEach(el => el.classList.add('hidden'));
+});
+
+document.getElementById('marathiBtn').addEventListener('click', function() {
+    document.querySelectorAll('.english-text').forEach(el => el.classList.add('hidden'));
+    document.querySelectorAll('.marathi-text').forEach(el => el.classList.remove('hidden'));
+    this.classList.add('bg-saffron', 'text-white');
+    document.getElementById('englishBtn').classList.remove('bg-saffron', 'text-white');
+    
+    // Update modal language
+    document.querySelectorAll('#createSuggestionModal .english-text').forEach(el => el.classList.add('hidden'));
+    document.querySelectorAll('#createSuggestionModal .marathi-text').forEach(el => el.classList.remove('hidden'));
+});
+
+// District dropdown with loading state
+document.getElementById('district').addEventListener('change', function () {
+    const talukaSelect = document.getElementById('taluka');
+    const loading = document.getElementById('taluka-loading');
+    
+    if (!this.value) {
+        talukaSelect.innerHTML = '<option value="">Select Taluka</option>';
+        return;
+    }
+    
+    talukaSelect.disabled = true;
+    loading.classList.remove('hidden');
+    
+    fetch(`/get-talukas/?district_id=${this.value}`)
+        .then(res => res.json())
+        .then(data => {
+            talukaSelect.innerHTML = '<option value="">Select Taluka</option>';
+            data.forEach(t => {
+                talukaSelect.innerHTML += `<option value="${t.id}">${t.name}</option>`;
+            });
+        })
+        .catch(err => {
+            console.error('Error loading talukas:', err);
+        })
+        .finally(() => {
+            talukaSelect.disabled = false;
+            loading.classList.add('hidden');
+        });
+});
+
+// Taluka dropdown with loading state
+document.getElementById('taluka').addEventListener('change', function () {
+    const gpSelect = document.getElementById('gram_panchayat');
+    const loading = document.getElementById('gp-loading');
+    
+    if (!this.value) {
+        gpSelect.innerHTML = '<option value="">Select Gram Panchayat</option>';
+        return;
+    }
+    
+    gpSelect.disabled = true;
+    loading.classList.remove('hidden');
+    
+    fetch(`/get-gram-panchayats/?taluka_id=${this.value}`)
+        .then(res => res.json())
+        .then(data => {
+            gpSelect.innerHTML = '<option value="">Select Gram Panchayat</option>';
+            data.forEach(gp => {
+                gpSelect.innerHTML += `<option value="${gp.id}">${gp.name}</option>`;
+            });
+        })
+        .catch(err => {
+            console.error('Error loading gram panchayats:', err);
+        })
+        .finally(() => {
+            gpSelect.disabled = false;
+            loading.classList.add('hidden');
+        });
+});
+
+// Form submission loading state
+document.getElementById('suggestionForm').addEventListener('submit', function(e) {
+    const submitBtn = document.getElementById('submitBtn');
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span class="flex items-center"><div class="animate-spin mr-2 h-4 w-4 border-2 border-white rounded-full border-t-transparent"></div>Loading...</span>';
+});
+
+// AJAX form submission for dynamic loading of work suggestions
+document.getElementById('suggestionForm').addEventListener('submit', function(e) {
+    e.preventDefault(); // Prevent regular form submission
+    
+    const submitBtn = document.getElementById('submitBtn');
+    const suggestionsContainer = document.getElementById('suggestions-container');
+    
+    // Show loading state
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span class="flex items-center"><div class="animate-spin mr-2 h-4 w-4 border-2 border-white rounded-full border-t-transparent"></div>Loading...</span>';
+    
+    // Get form data
+    const district = document.getElementById('district').value;
+    const taluka = document.getElementById('taluka').value;
+    const gramPanchayat = document.getElementById('gram_panchayat').value;
+    const sector = document.getElementById('sector').value;
+    
+    // Build query string
+    const queryString = new URLSearchParams({
+        district: district,
+        taluka: taluka,
+        gram_panchayat: gramPanchayat,
+        sector: sector,
+        format: 'json' // Request JSON response
+    }).toString();
+    
+    // Make AJAX request
+    fetch(`/get-suggestions/?${queryString}`)
+        .then(response => response.json())
+        .then(data => {
+            // Update the suggestions container with new results
+            updateSuggestionsUI(data.suggestions);
+        })
+        .catch(error => {
+            console.error('Error fetching suggestions:', error);
+            suggestionsContainer.innerHTML = `
+                <div class="p-6 bg-white">
+                    <div class="p-8 rounded-lg bg-red-50 border border-red-200 text-center">
+                        <p class="text-red-600">Error loading suggestions. Please try again.</p>
+                    </div>
+                </div>
+            `;
+        })
+        .finally(() => {
+            // Reset button state
+            submitBtn.disabled = false;
+            const isEnglish = !document.querySelector('.english-text').classList.contains('hidden');
+            submitBtn.innerHTML = isEnglish ? 
+                '<span class="english-text flex items-center">Get Work Suggestions<svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></span>' : 
+                '<span class="marathi-text flex items-center">कामाच्या सूचना मिळवा<svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></span>';
+            
+            if (isEnglish) {
+                document.querySelector('.english-text').classList.remove('hidden');
+                document.querySelector('.marathi-text').classList.add('hidden');
+            } else {
+                document.querySelector('.english-text').classList.add('hidden');
+                document.querySelector('.marathi-text').classList.remove('hidden');
+            }
+        });
+});
+
+// Create Suggestion Modal Logic
+const createModal = document.getElementById('createSuggestionModal');
+const openCreateModalBtn = document.getElementById('openCreateModal');
+const closeCreateModalBtn = document.getElementById('closeCreateModal');
+const cancelCreateModalBtn = document.getElementById('cancelCreateModal');
+
+// Open modal
+openCreateModalBtn.addEventListener('click', () => {
+    createModal.classList.remove('hidden');
+    document.body.classList.add('overflow-hidden');
+});
+
+// Close modal
+function closeCreateModal() {
+    createModal.classList.add('hidden');
+    document.body.classList.remove('overflow-hidden');
+}
+
+closeCreateModalBtn.addEventListener('click', closeCreateModal);
+cancelCreateModalBtn.addEventListener('click', closeCreateModal);
+
+// Close modal when clicking outside
+createModal.addEventListener('click', (e) => {
+    if (e.target === createModal) {
+        closeCreateModal();
+    }
+});
+
+// Modal district change handler
+document.getElementById('modal-district').addEventListener('change', function() {
+    const talukaSelect = document.getElementById('modal-taluka');
+    
+    if (!this.value) {
+        talukaSelect.innerHTML = '<option value="">Select Taluka</option>';
+        document.getElementById('modal-gram-panchayat').innerHTML = '<option value="">Select Gram Panchayat</option>';
+        return;
+    }
+    
+    talukaSelect.disabled = true;
+    
+    fetch(`/get-talukas/?district_id=${this.value}`)
+        .then(res => res.json())
+        .then(data => {
+            talukaSelect.innerHTML = '<option value="">Select Taluka</option>';
+            data.forEach(t => {
+                talukaSelect.innerHTML += `<option value="${t.id}">${t.name}</option>`;
+            });
+        })
+        .catch(err => {
+            console.error('Error loading talukas:', err);
+        })
+        .finally(() => {
+            talukaSelect.disabled = false;
+        });
+});
+
+// Modal taluka change handler
+document.getElementById('modal-taluka').addEventListener('change', function() {
+    const gpSelect = document.getElementById('modal-gram-panchayat');
+    
+    if (!this.value) {
+        gpSelect.innerHTML = '<option value="">Select Gram Panchayat</option>';
+        return;
+    }
+    
+    gpSelect.disabled = true;
+    
+    fetch(`/get-gram-panchayats/?taluka_id=${this.value}`)
+        .then(res => res.json())
+        .then(data => {
+            gpSelect.innerHTML = '<option value="">Select Gram Panchayat</option>';
+            data.forEach(gp => {
+                gpSelect.innerHTML += `<option value="${gp.id}">${gp.name}</option>`;
+            });
+        })
+        .catch(err => {
+            console.error('Error loading gram panchayats:', err);
+        })
+        .finally(() => {
+            gpSelect.disabled = false;
+        });
+});
+
+// Modal sector change handler - load work types
+document.getElementById('modal-sector').addEventListener('change', function() {
+    const workTypeSelect = document.getElementById('modal-work-type');
+    
+    if (!this.value) {
+        workTypeSelect.innerHTML = '<option value="">Select Work Type</option>';
+        return;
+    }
+    
+    workTypeSelect.disabled = true;
+    
+    fetch(`/get-work-types/?sector=${this.value}`)
+        .then(res => res.json())
+        .then(data => {
+            workTypeSelect.innerHTML = '<option value="">Select Work Type</option>';
+            data.forEach(wt => {
+                workTypeSelect.innerHTML += `<option value="${wt.id}">${wt.name_en}</option>`;
+            });
+        })
+        .catch(err => {
+            console.error('Error loading work types:', err);
+        })
+        .finally(() => {
+            workTypeSelect.disabled = false;
+        });
+});
+
+// Form submission for creating new suggestion
+document.getElementById('createSuggestionForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const submitBtn = document.getElementById('submitCreateForm');
+    const originalBtnText = submitBtn.innerHTML;
+    
+    // Show loading state
+    submitBtn.disabled = true;
+    const isEnglish = !document.querySelector('.english-text').classList.contains('hidden');
+    submitBtn.innerHTML = isEnglish ? 
+        '<div class="animate-spin h-4 w-4 border-2 border-white rounded-full border-t-transparent mr-2"></div> Creating...' : 
+        '<div class="animate-spin h-4 w-4 border-2 border-white rounded-full border-t-transparent mr-2"></div> तयार करत आहे...';
+    
+    // Get form data
+    const formData = new FormData(this);
+    
+    // Send data to server
+    fetch('/create-suggestion/', {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-CSRFToken': getCsrfToken(),
+        }
+    })
+    .then(response => {
+        if (!response.ok) throw new Error('Creation failed');
+        return response.json();
+    })
+    .then(data => {
+        // Close modal
+        closeCreateModal();
+        
+        // Show success notification
+        showNotification(
+            isEnglish ? 'Suggestion created successfully' : 'सूचना यशस्वीरित्या तयार केली',
+            'success'
+        );
+        
+        // Reset form
+        this.reset();
+        document.getElementById('modal-work-type').innerHTML = '<option value="">Select Work Type</option>';
+        
+        // Refresh suggestions list
+        document.getElementById('suggestionForm').dispatchEvent(new Event('submit'));
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showNotification(
+            isEnglish ? 'Failed to create suggestion' : 'सूचना तयार करण्यात अयशस्वी',
+            'error'
+        );
+    })
+    .finally(() => {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalBtnText;
+    });
+});
+
+// Function to update the UI with suggestions with unique design
+function updateSuggestionsUI(suggestions) {
+    const suggestionsContainer = document.getElementById('suggestions-container');
+    const isEnglish = !document.querySelector('.english-text').classList.contains('hidden');
+    
+    // Generate a unique theme color for this session
+    const themeHue = Math.floor(Math.random() * 40) + 10; // Warm colors range
+    const accentHue = (themeHue + 180) % 360; // Complementary color
+    
+    // Add style tag with CSS variables for our theme
+    document.head.insertAdjacentHTML('beforeend', `
+        <style>
+            :root {
+                --theme-primary: ${themeHue}, 80%, 45%;
+                --theme-secondary: ${themeHue+20}, 90%, 55%;
+                --theme-accent: ${accentHue}, 80%, 97%;
+                --theme-light: ${themeHue}, 80%, 97%;
+                --theme-border: ${themeHue}, 60%, 85%;
+            }
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            .animate-fade-in {
+                animation: fadeIn 0.5s ease-out forwards;
+            }
+            .theme-gradient {
+                background-image: linear-gradient(to right, hsl(var(--theme-primary)), hsl(var(--theme-secondary)));
+            }
+            .theme-hover-text:hover {
+                color: hsl(var(--theme-primary));
+            }
+            .theme-hover-bg:hover {
+                background-color: hsl(var(--theme-accent));
+            }
+            .theme-border {
+                border-color: hsl(var(--theme-border));
+            }
+        </style>
+    `);
+    
+    // Custom sector icon mapping
+    const sectorIcons = {
+        'Textile/Services': '<path d="M21 8v12a1 1 0 01-1 1H4a1 1 0 01-1-1V4a1 1 0 011-1h9m4 0l4 4m-4-4v4h4m-6-2H7m10 6H7m0 4h4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>',
+        'Engineering & Tools': '<path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>',
+        'Paper & Fiber': '<path d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>',
+        'Mineral-Based': '<path d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>',
+        'Polymer/Chemical': '<path d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>',
+        'Agriculture/Food': '<path d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>',
+        'default': '<path d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>'
+    };
+    
+    function getIconForSector(sector) {
+        return sectorIcons[sector] || sectorIcons.default;
+    }
+    
+    let content;
+    
+    if (suggestions && suggestions.length > 0) {
+        // Group suggestions by sector
+        const sectorMap = {};
+        suggestions.forEach(suggestion => {
+            if (!sectorMap[suggestion.sector]) {
+                sectorMap[suggestion.sector] = [];
+            }
+            sectorMap[suggestion.sector].push(suggestion);
+        });
+        
+        // Create hexagon pattern background
+        const hexPattern = `<svg width="100%" height="100%" class="absolute inset-0 opacity-5 pointer-events-none" xmlns="http://www.w3.org/2000/svg">
+            <pattern id="hexagons" width="50" height="43.4" patternUnits="userSpaceOnUse" patternTransform="scale(2) rotate(5)">
+                <polygon points="24.8,22 37.3,29.2 37.3,43.7 24.8,50.9 12.4,43.7 12.4,29.2" fill="currentColor"/>
+            </pattern>
+            <rect width="100%" height="100%" fill="url(#hexagons)"/>
+        </svg>`;
+        
+        // Create HTML for sector-grouped suggestions with unique styling
+        let sectorsHTML = '';
+        let delay = 0;
+        
+        for (const [sector, sectorSuggestions] of Object.entries(sectorMap)) {
+            delay += 0.1; // Staggered animation delay
+            const randomRotate = Math.floor(Math.random() * 3) - 1;
+            const sectorIcon = getIconForSector(sector);
+            
+            sectorsHTML += `
+                <div class="transform transition-all duration-700 hover:scale-102 hover:-rotate-${randomRotate} opacity-0 animate-fade-in" 
+                         style="animation-delay: ${delay}s; animation-fill-mode: forwards; box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+                    <div class="rounded-xl overflow-hidden border border-gray-200 relative group">
+                        <div class="absolute inset-0 bg-gradient-to-br from-white/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-10"></div>
+                        
+                        <div class="p-5 theme-gradient relative overflow-hidden">
+                            ${hexPattern}
+                            <div class="flex items-center space-x-3 relative z-10">
+                                <div class="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        ${sectorIcon}
+                                    </svg>
+                                </div>
+                                <h4 class="text-xl font-bold text-white">${sector}</h4>
+                            </div>
+                            <div class="absolute -right-4 -bottom-4 w-24 h-24 bg-white/10 rounded-full blur-2xl"></div>
+                        </div>
+                        
+                        <div class="bg-gradient-to-b from-white to-gray-50 p-0">
+                            <ul class="divide-y divide-dashed divide-gray-200">
+                                ${sectorSuggestions.map((suggestion, idx) => `
+                                    <li class="transition-all duration-300 theme-hover-bg group/item"
+                                            style="animation-delay: ${delay + 0.05 * idx}s">
+                                        <div class="p-4">
+                                            <div class="flex flex-wrap justify-between items-center">
+                                                <div class="flex-grow pr-4">
+                                                    <p class="font-medium text-gray-800">${suggestion.work_type_name}</p>
+                                                    <div class="w-0 group-hover/item:w-full h-0.5 mt-1 bg-gradient-to-r from-orange-500 to-transparent transition-all duration-300"></div>
+                                                </div>
+                                                <div class="flex space-x-2 mt-2 sm:mt-0">
+                                                    <!-- Edit Button -->
+                                                    <button type="button" data-id="${suggestion.id}" class="edit-suggestion px-3 py-1.5 rounded-md bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white transition-all duration-200 flex items-center text-xs border border-blue-200 hover:border-blue-600 hover:shadow-md">
+                                                        <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                                        </svg>
+                                                        <span class="english-text ${isEnglish ? '' : 'hidden'}">Edit</span>
+                                                        <span class="marathi-text ${!isEnglish ? '' : 'hidden'}">संपादित करा</span>
+                                                    </button>
+                                                    
+                                                    <!-- Delete Button -->
+                                                    <button type="button" data-id="${suggestion.id}" class="delete-suggestion px-3 py-1.5 rounded-md bg-red-50 text-red-600 hover:bg-red-600 hover:text-white transition-all duration-200 flex items-center text-xs border border-red-200 hover:border-red-600 hover:shadow-md">
+                                                        <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                                        </svg>
+                                                        <span class="english-text ${isEnglish ? '' : 'hidden'}">Delete</span>
+                                                        <span class="marathi-text ${!isEnglish ? '' : 'hidden'}">हटवा</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        content = `
+            <div class="mb-8 relative overflow-hidden rounded-xl">
+                <div class="p-5 bg-gradient-to-r from-navyBlue to-blue-700 text-white relative">
+                    ${hexPattern}
+                    <div class="flex items-center justify-between relative z-10">
+                        <div>
+                            <h4 class="text-2xl font-bold english-text ${isEnglish ? '' : 'hidden'} flex items-center">
+                                <span class="bg-white/20 p-1.5 rounded mr-3">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
+                                    </svg>
+                                </span>
+                                Work Suggestions
+                            </h4>
+                            <h4 class="text-2xl font-bold marathi-text ${!isEnglish ? '' : 'hidden'} flex items-center">
+                                <span class="bg-white/20 p-1.5 rounded mr-3">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
+                                    </svg>
+                                </span>
+                                कामाच्या सूचना
+                            </h4>
+                        </div>
+                        <div class="hidden md:block">
+                            <div class="px-3 py-1.5 bg-white/20 rounded-lg backdrop-blur-sm text-xs">
+                                ${Object.keys(sectorMap).length} Sectors • ${suggestions.length} Work Items
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6 bg-gradient-to-b from-gray-50 to-white">
+                    ${sectorsHTML}
+                </div>
+            </div>
+        `;
+    } else {
+        content = `
+            <div class="mb-8 relative overflow-hidden rounded-xl">
+                <div class="p-5 bg-gradient-to-r from-navyBlue to-blue-700 text-white">
+                    <h4 class="text-2xl font-bold english-text ${isEnglish ? '' : 'hidden'} flex items-center">
+                        <span class="bg-white/20 p-1.5 rounded mr-3">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
+                            </svg>
+                        </span>
+                        Work Suggestions
+                    </h4>
+                    <h4 class="text-2xl font-bold marathi-text ${!isEnglish ? '' : 'hidden'} flex items-center">
+                        <span class="bg-white/20 p-1.5 rounded mr-3">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
+                            </svg>
+                        </span>
+                        कामाच्या सूचना
+                    </h4>
+                </div>
+                
+                <div class="p-10 bg-gradient-to-b from-gray-50 to-white">
+                    <div class="relative overflow-hidden rounded-2xl bg-pattern-dots border border-dashed border-gray-300 p-8 text-center">
+                        <div class="absolute inset-0 bg-gradient-to-b from-white/60 via-transparent to-white/60"></div>
+                        <div class="relative z-10">
+                            <div class="inline-flex items-center justify-center p-4 bg-gray-50 rounded-full mb-4 shadow-inner">
+                                <svg class="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                                </svg>
+                            </div>
+                            <h5 class="font-bold text-xl text-gray-700 mb-3 english-text ${isEnglish ? '' : 'hidden'}">No Work Suggestions Available</h5>
+                            <h5 class="font-bold text-xl text-gray-700 mb-3 marathi-text ${!isEnglish ? '' : 'hidden'}">कोणत्याही कामाच्या सूचना उपलब्ध नाहीत</h5>
+                            
+                            <p class="text-gray-600 max-w-md mx-auto mb-6 english-text ${isEnglish ? '' : 'hidden'}">Please select different location details to find available work suggestions.</p>
+                            <p class="text-gray-600 max-w-md mx-auto mb-6 marathi-text ${!isEnglish ? '' : 'hidden'}">कृपया उपलब्ध कामाच्या सूचना शोधण्यासाठी वेगळे स्थान तपशील निवडा.</p>
+                            
+                            <button type="button" onclick="document.getElementById('district').focus()" class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-saffron to-yellow-500 text-white font-medium rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5">
+                                <span class="english-text ${isEnglish ? '' : 'hidden'}">
+                                    <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                                    </svg>
+                                    Return to Form
+                                </span>
+                                <span class="marathi-text ${!isEnglish ? '' : 'hidden'}">
+                                    <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                                    </svg>
+                                    फॉर्मवर परत जा
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+    
+    suggestionsContainer.innerHTML = content;
+    
+    // Add event listeners to edit and delete buttons
+    setTimeout(() => {
+        // Edit button event listeners
+        document.querySelectorAll('.edit-suggestion').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const suggestionId = this.getAttribute('data-id');
+                editSuggestion(suggestionId);
+            });
+        });
+        
+        // Delete button event listeners with confirmation
+        document.querySelectorAll('.delete-suggestion').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const suggestionId = this.getAttribute('data-id');
+                confirmDelete(suggestionId);
+            });
+        });
+    }, 500);
+}
+
+// Function to handle suggestion editing
+function editSuggestion(id) {
+    // Redirect to edit page or show modal
+    window.location.href = `/edit-suggestion/${id}/`;
+}
+
+// Function to show delete confirmation dialog
+function confirmDelete(id) {
+    const isEnglish = !document.querySelector('.english-text').classList.contains('hidden');
+    
+    // Create modal overlay
+    const overlay = document.createElement('div');
+    overlay.className = 'fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center';
+    overlay.id = 'deleteModal';
+    
+    // Create modal content
+    overlay.innerHTML = `
+        <div class="bg-white rounded-lg shadow-xl max-w-md w-full mx-4 transform transition-all animate-fade-in">
+            <div class="p-5 bg-gradient-to-r from-red-600 to-red-500 rounded-t-lg text-white">
+                <h3 class="text-xl font-bold flex items-center">
+                    <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                    </svg>
+                    <span class="english-text ${isEnglish ? '' : 'hidden'}">Confirm Deletion</span>
+                    <span class="marathi-text ${!isEnglish ? '' : 'hidden'}">हटविण्याची पुष्टी करा</span>
+                </h3>
+            </div>
+            <div class="p-6">
+                <p class="text-gray-700 mb-6 english-text ${isEnglish ? '' : 'hidden'}">Are you sure you want to delete this work suggestion? This action cannot be undone.</p>
+                <p class="text-gray-700 mb-6 marathi-text ${!isEnglish ? '' : 'hidden'}">तुम्हाला खात्री आहे की तुम्ही ही कामाची सूचना हटवू इच्छिता? हे कृती पूर्ववत केली जाऊ शकत नाही.</p>
+                <div class="flex justify-end space-x-3">
+                    <button type="button" id="cancelDelete" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg text-gray-800 transition-colors">
+                        <span class="english-text ${isEnglish ? '' : 'hidden'}">Cancel</span>
+                        <span class="marathi-text ${!isEnglish ? '' : 'hidden'}">रद्द करा</span>
+                    </button>
+                    <button type="button" id="confirmDelete" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors flex items-center">
+                        <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                        </svg>
+                        <span class="english-text ${isEnglish ? '' : 'hidden'}">Delete</span>
+                        <span class="marathi-text ${!isEnglish ? '' : 'hidden'}">हटवा</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Add to DOM
+    document.body.appendChild(overlay);
+    
+    // Add event listeners for modal actions
+    document.getElementById('cancelDelete').addEventListener('click', () => {
+        document.getElementById('deleteModal').remove();
+    });
+    
+    document.getElementById('confirmDelete').addEventListener('click', () => {
+        // Show loading state
+        document.getElementById('confirmDelete').innerHTML = `
+            <div class="animate-spin h-4 w-4 border-2 border-white rounded-full border-t-transparent mr-2"></div>
+            <span class="english-text ${isEnglish ? '' : 'hidden'}">Deleting...</span>
+            <span class="marathi-text ${!isEnglish ? '' : 'hidden'}">हटवत आहे...</span>
+        `;
+        document.getElementById('confirmDelete').disabled = true;
+        
+        // Send delete request to server
+        fetch(`/delete-suggestion/${id}/`, {
+            method: 'DELETE',
+            headers: {
+                'X-CSRFToken': getCsrfToken(), // Function to get CSRF token from cookies
+            },
+        })
+        .then(response => {
+            if (!response.ok) throw new Error('Delete failed');
+            return response.json();
+        })
+        .then(data => {
+            // Close modal
+            document.getElementById('deleteModal').remove();
+            
+            // Show success notification
+            showNotification(
+                isEnglish ? 'Suggestion deleted successfully' : 'सूचना यशस्वीरित्या हटवली',
+                'success'
+            );
+            
+            // Refresh suggestions list
+            document.getElementById('suggestionForm').dispatchEvent(new Event('submit'));
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            
+            // Show error notification
+            document.getElementById('deleteModal').remove();
+            showNotification(
+                isEnglish ? 'Failed to delete suggestion' : 'सूचना हटवण्यात अयशस्वी',
+                'error'
+            );
+        });
+    });
+}
+
+// Helper function to get CSRF token from cookies
+function getCsrfToken() {
+    const name = 'csrftoken';
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+// Function to show notification
+function showNotification(message, type = 'success') {
+    // Remove any existing notification
+    const existingNotification = document.getElementById('notification');
+    if (existingNotification) {
+        existingNotification.remove();
+    }
+    
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.id = 'notification';
+    notification.className = `fixed bottom-4 right-4 px-6 py-3 rounded-lg shadow-lg flex items-center z-50 ${
+        type === 'success' ? 'bg-green-50 text-green-700 border-l-4 border-green-500' : 
+        'bg-red-50 text-red-700 border-l-4 border-red-500'
+    } transform transition-all duration-500 translate-y-20 opacity-0`;
+    
+    // Create notification content
+    notification.innerHTML = `
+        <div class="mr-3 bg-white bg-opacity-25 rounded-full p-1">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                ${type === 'success' 
+                    ? '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>' 
+                    : '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>'
+                }
+            </svg>
+        </div>
+        <p class="font-medium">${message}</p>
+    `;
+    
+    // Add to DOM
+    document.body.appendChild(notification);
+    
+    // Animate in
+    setTimeout(() => {
+        notification.classList.remove('translate-y-20', 'opacity-0');
+    }, 10);
+    
+    // Automatically remove after 5 seconds
+    setTimeout(() => {
+        notification.classList.add('translate-y-20', 'opacity-0');
+        setTimeout(() => notification.remove(), 500);
+    }, 5000);
+}
+</script>
+{% endblock %}
