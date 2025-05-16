@@ -1,0 +1,185 @@
+// Update this function in your JavaScript
+function updateSuggestionsUI(suggestions) {
+  const suggestionsContainer = document.getElementById('suggestions-container');
+  const isEnglish = !document.querySelector('.english-text').classList.contains('hidden');
+  
+  // Generate a unique theme color for this session
+  const themeHue = Math.floor(Math.random() * 40) + 10; // Warm colors range
+  const accentHue = (themeHue + 180) % 360; // Complementary color
+  
+  // Add style tag with CSS variables for our theme
+  document.head.insertAdjacentHTML('beforeend', `
+    <style>
+      :root {
+        --theme-primary: ${themeHue}, 80%, 45%;
+        --theme-secondary: ${themeHue+20}, 90%, 55%;
+        --theme-accent: ${accentHue}, 80%, 97%;
+        --theme-light: ${themeHue}, 80%, 97%;
+        --theme-border: ${themeHue}, 60%, 85%;
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .animate-fade-in {
+        animation: fadeIn 0.5s ease-out forwards;
+      }
+      .theme-gradient {
+        background-image: linear-gradient(to right, hsl(var(--theme-primary)), hsl(var(--theme-secondary)));
+      }
+      .theme-hover-text:hover {
+        color: hsl(var(--theme-primary));
+      }
+      .theme-hover-bg:hover {
+        background-color: hsl(var(--theme-accent));
+      }
+      .theme-border {
+        border-color: hsl(var(--theme-border));
+      }
+    </style>
+  `);
+  
+  // Custom sector icon mapping
+  const sectorIcons = {
+    'Agriculture': '<path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>',
+    'Water': '<path d="M12 14l9-5-9-5-9 5 9 5z"/><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"/>',
+    'default': '<path d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>'
+  };
+  
+  function getIconForSector(sector) {
+    return sectorIcons[sector] || sectorIcons.default;
+  }
+  
+  let content;
+  
+  if (suggestions && suggestions.length > 0) {
+    // Group suggestions by sector
+    const sectorMap = {};
+    suggestions.forEach(suggestion => {
+      if (!sectorMap[suggestion.sector]) {
+        sectorMap[suggestion.sector] = [];
+      }
+      sectorMap[suggestion.sector].push(suggestion);
+    });
+    
+    // Create hexagon pattern background
+    const hexPattern = `<svg width="100%" height="100%" class="absolute inset-0 opacity-5 pointer-events-none" xmlns="http://www.w3.org/2000/svg">
+      <pattern id="hexagons" width="50" height="43.4" patternUnits="userSpaceOnUse" patternTransform="scale(2) rotate(5)">
+        <polygon points="24.8,22 37.3,29.2 37.3,43.7 24.8,50.9 12.4,43.7 12.4,29.2" fill="currentColor"/>
+      </pattern>
+      <rect width="100%" height="100%" fill="url(#hexagons)"/>
+    </svg>`;
+    
+    // Create HTML for sector-grouped suggestions with unique styling
+    let sectorsHTML = '';
+    let delay = 0;
+    
+    for (const [sector, sectorSuggestions] of Object.entries(sectorMap)) {
+      delay += 0.1; // Staggered animation delay
+      const randomRotate = Math.floor(Math.random() * 3) - 1;
+      const sectorIcon = getIconForSector(sector);
+      
+      sectorsHTML += `
+        <div class="transform transition-all duration-700 hover:scale-102 hover:-rotate-${randomRotate} opacity-0 animate-fade-in" 
+             style="animation-delay: ${delay}s; animation-fill-mode: forwards; box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;">
+          <div class="rounded-xl overflow-hidden border border-gray-200 relative group">
+            <div class="absolute inset-0 bg-gradient-to-br from-white/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-10"></div>
+            
+            <div class="p-5 theme-gradient relative overflow-hidden">
+              ${hexPattern}
+              <div class="flex items-center space-x-3 relative z-10">
+                <div class="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                  <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    ${sectorIcon}
+                  </svg>
+                </div>
+                <h4 class="text-xl font-bold text-white">${sector}</h4>
+              </div>
+              <div class="absolute -right-4 -bottom-4 w-24 h-24 bg-white/10 rounded-full blur-2xl"></div>
+            </div>
+            
+            <div class="bg-gradient-to-b from-white to-gray-50 p-0">
+              <ul class="divide-y divide-dashed divide-gray-200">
+                ${sectorSuggestions.map((suggestion, idx) => `
+                  <li class="transition-all duration-300 theme-hover-bg group/item"
+                      style="animation-delay: ${delay + 0.05 * idx}s">
+                    <div class="p-4">
+                      <div class="flex justify-between items-center">
+                        <div class="flex-grow pr-4">
+                          <p class="font-medium text-gray-800">${suggestion.work_type_name}</p>
+                          ${suggestion.is_specialty ? '<span class="inline-block px-2 py-1 text-xs bg-yellow-100 text-yellow-800 rounded-full mt-1">Specialty</span>' : ''}
+                          <div class="w-0 group-hover/item:w-full h-0.5 mt-1 bg-gradient-to-r from-orange-500 to-transparent transition-all duration-300"></div>
+                        </div>
+                        <button type="button" class="flex items-center space-x-1 px-3 py-1.5 rounded-full 
+                                bg-orange-50 hover:bg-orange-500
+                                text-orange-600 hover:text-white
+                                transition-all duration-300 text-xs font-medium border theme-border
+                                hover:border-transparent shadow-sm group/btn">
+                          <span class="english-text ${isEnglish ? '' : 'hidden'}">
+                            Details
+                            <svg class="w-3.5 h-3.5 inline-block ml-1 transition-transform duration-300 group-hover/btn:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                          </span>
+                          <span class="marathi-text ${!isEnglish ? '' : 'hidden'}">
+                            तपशील
+                            <svg class="w-3.5 h-3.5 inline-block ml-1 transition-transform duration-300 group-hover/btn:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+                  </li>
+                `).join('')}
+              </ul>
+            </div>
+            
+            <div class="h-1.5 bg-gradient-to-r from-orange-400 via-saffron to-amber-500"></div>
+          </div>
+        </div>
+      `;
+    }
+    
+    content = `
+      <div class="mb-8 relative overflow-hidden rounded-xl">
+        <div class="p-5 bg-gradient-to-r from-navyBlue to-blue-700 text-white relative">
+          ${hexPattern}
+          <div class="flex items-center justify-between relative z-10">
+            <div>
+              <h4 class="text-2xl font-bold english-text ${isEnglish ? '' : 'hidden'} flex items-center">
+                <span class="bg-white/20 p-1.5 rounded mr-3">
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
+                  </svg>
+                </span>
+                Work Suggestions
+              </h4>
+              <h4 class="text-2xl font-bold marathi-text ${!isEnglish ? '' : 'hidden'} flex items-center">
+                <span class="bg-white/20 p-1.5 rounded mr-3">
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
+                  </svg>
+                </span>
+                कामाच्या सूचना
+              </h4>
+            </div>
+            <div class="hidden md:block">
+              <div class="px-3 py-1.5 bg-white/20 rounded-lg backdrop-blur-sm text-xs">
+                ${Object.keys(sectorMap).length} Sectors • ${suggestions.length} Work Items
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6 bg-gradient-to-b from-gray-50 to-white">
+          ${sectorsHTML}
+        </div>
+      </div>
+    `;
+  } else {
+    // Empty state content remains the same
+  }
+  
+  suggestionsContainer.innerHTML = content;
+}

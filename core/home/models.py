@@ -76,47 +76,61 @@ class UserActivity(models.Model):
 
 # distric model for storing district information
 class District(models.Model):
-    name = models.CharField(max_length=100)
+    name_en = models.CharField(max_length=100)
+    name_mr = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.name
+        return self.name_en
     
 #taluka model for storing taluka information
 class Taluka(models.Model):
-    name = models.CharField(max_length=100)
+    name_en = models.CharField(max_length=100)
+    name_mr = models.CharField(max_length=100)
     district = models.ForeignKey(District, on_delete=models.CASCADE, related_name='talukas')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.name
+        return self.name_en
 
 #panchayat model for storing panchayat information
 class GramPanchayat(models.Model):
-    name = models.CharField(max_length=100)
+    name_en = models.CharField(max_length=100)
+    name_mr = models.CharField(max_length=100)
     taluka = models.ForeignKey(Taluka, on_delete=models.CASCADE, related_name='grampanchayats')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.name
-    
-
-# worktype model for storing worktype information
-class WorkType(models.Model):
-    name_en = models.CharField(max_length=255)
-    sector = models.CharField(max_length=100, blank=True, null=True)  # e.g., Agriculture, Forest, Manufacturing
+        return self.name_en
+class Sector(models.Model):
+    name_en = models.CharField(max_length=100)
+    name_mr = models.CharField(max_length=100)
+    created_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.name_en
-    
+            return self.name_en
+
+    # worktype model for storing worktype information
+class WorkType(models.Model):
+    name_en = models.CharField(max_length=255)
+    name_mr = models.CharField(max_length=255)
+    sector = models.ForeignKey(Sector, on_delete=models.CASCADE, related_name='work_types')
+    created_at = models.DateTimeField(default=timezone.now)                                    
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+            return self.name_en
 # worksuggestions model for storing work suggestions
 # Work suggestions assigned to each GP
 class WorkSuggestion(models.Model):
     gram_panchayat = models.ForeignKey(GramPanchayat, on_delete=models.CASCADE)
     work_type = models.ForeignKey(WorkType, on_delete=models.CASCADE)
-
+    is_specialty = models.BooleanField(default=False)  # Indicates if this work type is a specialty for this GP
+    
     def __str__(self):
-        return f"{self.gram_panchayat.name} → {self.work_type.name_en}"
+        specialty_indicator = " (Specialty)" if self.is_specialty else ""
+        return f"{self.gram_panchayat.name} → {self.work_type.name_en}{specialty_indicator}"

@@ -63,13 +63,15 @@ urlpatterns = [
     path('get-suggestions/', get_suggestions, name='get_suggestions'),
     path('get-talukas/', get_talukas, name='get_talukas'),
     path('get-gram-panchayats/', get_gram_panchayats, name='get_gram_panchayats'),
+    path('get-work-types/', get_work_types, name='get_work_types'),
     
     #managing suggestions
     # Managing work suggestions
     path('manage_suggestions/', manage_suggestions, name='manage_suggestions'),
-    # path('create_suggestion/', create_suggestion, name='create_suggestion'),
-    # path('update_suggestion/<int:suggestion_id>/', update_suggestion, name='update_suggestion'),
-    # path('delete_suggestion/<int:suggestion_id>/', delete_suggestion, name='delete_suggestion'),
+    path('create-suggestion/', create_suggestion, name='create_suggestion'),
+    
+    path('edit-suggestion/<int:suggestion_id>/', edit_suggestion, name='edit_suggestion'),
+    path('delete-suggestion/<int:suggestion_id>/', delete_suggestion, name='delete_suggestion'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

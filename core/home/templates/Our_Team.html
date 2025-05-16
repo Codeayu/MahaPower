@@ -1,138 +1,199 @@
 {% extends 'base.html' %}
+{% block title %}Our Team | CodeHack{% endblock %}
 
 {% block content %}
 
-<!-- Hero Section -->
-<section class="bg-gradient-to-r from-[#FF9933] to-[#000080] text-white py-16 text-center relative overflow-hidden">
-    <!-- Decorative wave effect at bottom -->
-    <div class="absolute bottom-0 left-0 right-0">
-        <svg viewBox="0 0 1440 120" class="w-full">
-            <path fill="white" fill-opacity="0.2" d="M0,64L48,80C96,96,192,128,288,128C384,128,480,96,576,85.3C672,75,768,85,864,112C960,139,1056,181,1152,181.3C1248,181,1344,139,1392,117.3L1440,96L1440,120L1392,120C1344,120,1248,120,1152,120C1056,120,960,120,864,120C768,120,672,120,576,120C480,120,384,120,288,120C192,120,96,120,48,120L0,120Z"></path>
-        </svg>
+<!-- Hero Section with Geometric Elements -->
+<section class="bg-gradient-to-br from-[#FF9933] to-[#000080] text-white py-20 relative overflow-hidden">
+    <!-- Abstract Decorative Elements -->
+    <div class="absolute inset-0 opacity-10">
+        <div class="absolute top-10 left-10 w-32 h-32 rounded-full border-4 border-white"></div>
+        <div class="absolute bottom-20 right-20 w-40 h-40 rounded-tr-3xl border-4 border-white"></div>
+        <div class="absolute top-1/3 right-1/4 w-16 h-16 rotate-45 border-4 border-white"></div>
     </div>
     
-    <div class="container mx-auto px-4 relative z-10">
-        <h2 class="text-2xl font-medium mb-2 english-text">Our Team</h2>
-        <h2 class="text-2xl font-medium mb-2 marathi-text hidden">आमची टीम</h2>
-        <h1 class="text-4xl md:text-5xl font-extrabold mb-4 drop-shadow-md english-text">CodeHack</h1>
-        <h1 class="text-4xl md:text-5xl font-extrabold mb-4 drop-shadow-md marathi-text hidden">कोडहॅक</h1>
-        <p class="text-xl text-white/90 max-w-2xl mx-auto english-text">Building innovative solutions for Maharashtra's development</p>
-        <p class="text-xl text-white/90 max-w-2xl mx-auto marathi-text hidden">महाराष्ट्राच्या विकासासाठी नावीन्यपूर्ण उपाययोजना तयार करणे</p>
-        
-        <!-- Decorative elements -->
-        <div class="absolute top-1/4 left-10 w-16 h-16 rounded-full bg-[#FF9933] opacity-20 mix-blend-multiply"></div>
-        <div class="absolute bottom-1/3 right-20 w-24 h-24 rounded-full bg-[#000080] opacity-20 mix-blend-multiply"></div>
+    <div class="container mx-auto px-4 relative z-10 text-center">
+        <h2 class="inline-block text-2xl font-medium mb-2 bg-white/20 px-4 py-1 rounded-lg english-text">Our Team</h2>
+        <h2 class="inline-block text-2xl font-medium mb-2 bg-white/20 px-4 py-1 rounded-lg marathi-text hidden">आमची टीम</h2>
+        <h1 class="text-5xl md:text-7xl font-extrabold mt-6 mb-6 text-transparent bg-clip-text bg-gradient-to-r from-white to-yellow-200 english-text">CodeHack</h1>
+        <h1 class="text-5xl md:text-7xl font-extrabold mt-6 mb-6 text-transparent bg-clip-text bg-gradient-to-r from-white to-yellow-200 marathi-text hidden">कोडहॅक</h1>
+        <p class="text-xl text-white max-w-2xl mx-auto english-text font-light tracking-wide">Building innovative solutions for Maharashtra's development</p>
+        <p class="text-xl text-white max-w-2xl mx-auto marathi-text hidden font-light tracking-wide">महाराष्ट्राच्या विकासासाठी नावीन्यपूर्ण उपाययोजना तयार करणे</p>
+    </div>
+    
+    <!-- Creative Wave Divider -->
+    <div class="absolute bottom-0 left-0 right-0">
+        <svg viewBox="0 0 1440 120" class="w-full">
+            <path fill="white" d="M0,96L48,85.3C96,75,192,53,288,53.3C384,53,480,75,576,96C672,117,768,139,864,133.3C960,128,1056,96,1152,74.7C1248,53,1344,43,1392,37.3L1440,32L1440,120L1392,120C1344,120,1248,120,1152,120C1056,120,960,120,864,120C768,120,672,120,576,120C480,120,384,120,288,120C192,120,96,120,48,120L0,120Z"></path>
+        </svg>
     </div>
 </section>
 
-<!-- Team Members -->
-<div class="container mx-auto px-4 py-16 max-w-6xl">
-    <h2 class="text-3xl font-bold text-center text-gray-800 mb-2 english-text">Team Members</h2>
-    <h2 class="text-3xl font-bold text-center text-gray-800 mb-2 marathi-text hidden">संघ सदस्य</h2>
-    <p class="text-lg text-gray-600 text-center mb-12 english-text">Meet the talented individuals behind this project</p>
-    <p class="text-lg text-gray-600 text-center mb-12 marathi-text hidden">या प्रकल्पामागील प्रतिभावान व्यक्तींना भेट द्या</p>
+<!-- Team Members Section with Hexagonal Layout -->
+<div class="container mx-auto px-4 py-20 max-w-6xl">
+    <div class="relative mb-16">
+        <h2 class="text-4xl font-bold text-center text-gray-800 mb-2 english-text relative z-10">The Innovators</h2>
+        <h2 class="text-4xl font-bold text-center text-gray-800 mb-2 marathi-text hidden relative z-10">नवकल्पक</h2>
+        <div class="w-24 h-2 bg-gradient-to-r from-[#FF9933] to-[#000080] mx-auto rounded-full"></div>
+        <p class="text-xl text-gray-600 text-center mt-4 max-w-xl mx-auto english-text">Meet the talented individuals behind this project</p>
+        <p class="text-xl text-gray-600 text-center mt-4 max-w-xl mx-auto marathi-text hidden">या प्रकल्पामागील प्रतिभावान व्यक्तींना भेट द्या</p>
+    </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+    <!-- Team Members Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
         <!-- Karamveer -->
-        <div class="group bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-300">
-            <div class="h-64 overflow-hidden">
-                <img src="https://karamveer2648.github.io/mahaprojectimagerepo/Karamveer.png" alt="Karamveer Singh Oberoi"
-                    class="h-full object-contain transform transition-transform duration-500 group-hover:scale-105" />
-            </div>
-            <div class="p-6">
-                <h3 class="text-2xl font-bold text-gray-800 mb-1">Karamveer Singh Oberoi</h3>
-                <p class="text-saffron font-semibold mb-3 english-text">Full Stack Developer</p>
-                <p class="text-saffron font-semibold mb-3 marathi-text hidden">संपूर्ण स्टॅक विकसक</p>
-                <div class="flex gap-4 text-xl text-navyBlue">
-                    <i class="fas fa-envelope hover:text-saffron cursor-pointer"></i>
-                    <i class="fab fa-github hover:text-saffron cursor-pointer"></i>
-                    <i class="fab fa-linkedin hover:text-saffron cursor-pointer"></i>
+        <div class="group">
+            <div class="bg-gradient-to-br from-[#FF9933] to-[#000080] p-1 rounded-xl shadow-lg transition-all duration-300 hover:shadow-2xl transform hover:-translate-y-2">
+                <div class="bg-white rounded-lg overflow-hidden">
+                    <div class="aspect-square overflow-hidden bg-gray-50 flex items-center justify-center">
+                        <img src="https://karamveer2648.github.io/MahaPowerImagesStoring/Karamveer.png" alt="Karamveer Singh Oberoi"
+                            class="object-contain w-full h-full transition-all duration-500" />
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-1">Karamveer Singh Oberoi</h3>
+                        <div class="flex items-center mb-3">
+                            <div class="w-3 h-3 bg-[#FF9933] rounded-full mr-2"></div>
+                            <p class="font-semibold text-gray-700 english-text">Full Stack Developer</p>
+                            <p class="font-semibold text-gray-700 marathi-text hidden">संपूर्ण स्टॅक विकसक</p>
+                        </div>
+                        <div class="flex gap-4 text-xl">
+                            <i class="fas fa-envelope p-2 rounded-full bg-[#000080]/10 text-[#000080] hover:bg-[#FF9933]/20 transition-colors duration-300 cursor-pointer"></i>
+                            <i class="fab fa-github p-2 rounded-full bg-[#000080]/10 text-[#000080] hover:bg-[#FF9933]/20 transition-colors duration-300 cursor-pointer"></i>
+                            <i class="fab fa-linkedin p-2 rounded-full bg-[#000080]/10 text-[#000080] hover:bg-[#FF9933]/20 transition-colors duration-300 cursor-pointer"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Ayush -->
-        <div class="group bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-300">
-            <div class="h-64 overflow-hidden flex items-center justify-center"> 
-                <img src="  " alt="Ayush Chainani"
-                    class="h-full object-contain transform transition-transform duration-500 group-hover:scale-105" />
-            </div>
-            <div class="p-6">
-                <h3 class="text-2xl font-bold text-gray-800 mb-1">Ayush Chainani</h3>
-                <p class="text-saffron font-semibold mb-3 english-text">Full Stack Developer</p>
-                <p class="text-saffron font-semibold mb-3 marathi-text hidden">संपूर्ण स्टॅक विकसक</p>
-                <div class="flex gap-4 text-xl text-navyBlue">
-                    <i class="fas fa-envelope hover:text-saffron cursor-pointer"></i>
-                    <i class="fab fa-github hover:text-saffron cursor-pointer"></i>
-                    <i class="fab fa-linkedin hover:text-saffron cursor-pointer"></i>
+        <div class="group">
+            <div class="bg-gradient-to-br from-[#000080] to-[#FF9933] p-1 rounded-xl shadow-lg transition-all duration-300 hover:shadow-2xl transform hover:-translate-y-2">
+                <div class="bg-white rounded-lg overflow-hidden">
+                    <div class="aspect-square overflow-hidden bg-gray-50 flex items-center justify-center">
+                        <img src="https://karamveer2648.github.io/MahaPowerImagesStoring/ayushchainani.jpg" alt="Ayush Chainani"
+                            class="object-contain w-full h-full transition-all duration-500" />
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-1">Ayush Chainani</h3>
+                        <div class="flex items-center mb-3">
+                            <div class="w-3 h-3 bg-[#000080] rounded-full mr-2"></div>
+                            <p class="font-semibold text-gray-700 english-text">Full Stack Developer</p>
+                            <p class="font-semibold text-gray-700 marathi-text hidden">संपूर्ण स्टॅक विकसक</p>
+                        </div>
+                        <div class="flex gap-4 text-xl">
+                            <i class="fas fa-envelope p-2 rounded-full bg-[#000080]/10 text-[#000080] hover:bg-[#FF9933]/20 transition-colors duration-300 cursor-pointer"></i>
+                            <i class="fab fa-github p-2 rounded-full bg-[#000080]/10 text-[#000080] hover:bg-[#FF9933]/20 transition-colors duration-300 cursor-pointer"></i>
+                            <i class="fab fa-linkedin p-2 rounded-full bg-[#000080]/10 text-[#000080] hover:bg-[#FF9933]/20 transition-colors duration-300 cursor-pointer"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Atharv -->
-        <div class="group bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-300">
-            <div class="h-64 overflow-hidden">
-                <img src="https://karamveer2648.github.io/mahaprojectimagerepo/atharv.jpg" alt="Atharv Khawale"
-                    class="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-105">
-            </div>
-            <div class="p-6">
-                <h3 class="text-2xl font-bold text-gray-800 mb-1">Atharv Khawale</h3>
-                <p class="text-saffron font-semibold mb-3 english-text">Front End Developer</p>
-                <p class="text-saffron font-semibold mb-3 marathi-text hidden">फ्रंट एंड विकसक</p>
-                <div class="flex gap-4 text-xl text-navyBlue">
-                    <i class="fas fa-envelope hover:text-saffron cursor-pointer"></i>
-                    <i class="fab fa-github hover:text-saffron cursor-pointer"></i>
-                    <i class="fab fa-linkedin hover:text-saffron cursor-pointer"></i>
+        <div class="group">
+            <div class="bg-gradient-to-br from-[#FF9933] to-[#000080] p-1 rounded-xl shadow-lg transition-all duration-300 hover:shadow-2xl transform hover:-translate-y-2">
+                <div class="bg-white rounded-lg overflow-hidden">
+                    <div class="aspect-square overflow-hidden bg-gray-50 flex items-center justify-center">
+                        <img src="https://karamveer2648.github.io/MahaPowerImagesStoring/atharv.jpg" alt="Atharv Khawale"
+                            class="object-cover w-full h-full transition-all duration-500">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-1">Atharv Khawale</h3>
+                        <div class="flex items-center mb-3">
+                            <div class="w-3 h-3 bg-[#FF9933] rounded-full mr-2"></div>
+                            <p class="font-semibold text-gray-700 english-text">Front End Developer</p>
+                            <p class="font-semibold text-gray-700 marathi-text hidden">फ्रंट एंड विकसक</p>
+                        </div>
+                        <div class="flex gap-4 text-xl">
+                            <i class="fas fa-envelope p-2 rounded-full bg-[#000080]/10 text-[#000080] hover:bg-[#FF9933]/20 transition-colors duration-300 cursor-pointer"></i>
+                            <i class="fab fa-github p-2 rounded-full bg-[#000080]/10 text-[#000080] hover:bg-[#FF9933]/20 transition-colors duration-300 cursor-pointer"></i>
+                            <i class="fab fa-linkedin p-2 rounded-full bg-[#000080]/10 text-[#000080] hover:bg-[#FF9933]/20 transition-colors duration-300 cursor-pointer"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Guide Section -->
-<div class="mt-24 text-center">
-    <h2 class="text-3xl font-bold text-gray-800 mb-10 english-text">Our Guide</h2>
-    <h2 class="text-3xl font-bold text-gray-800 mb-10 marathi-text hidden">आमचे मार्गदर्शक</h2>
-    <div class="bg-white rounded-2xl shadow-xl max-w-4xl mx-auto overflow-hidden flex flex-col md:flex-row border border-gray-200">
-        <div class="md:w-1/3 bg-gray-100 flex items-center justify-center p-6">
-            <img src="https://karamveer2648.github.io/mahaprojectimagerepo/ajaygadichasir.png" alt="Dr. A. B. Gadicha"
-                class="w-40 h-40 rounded-full object-cover border-4 border-white shadow-md">
+<!-- Guide Section with Angled Design -->
+<div class="py-24 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-[#000080]/5 to-[#FF9933]/5 skew-y-3"></div>
+    <div class="container mx-auto px-4 relative">
+        <div class="text-center mb-12">
+            <span class="px-4 py-1 bg-[#FF9933]/10 text-[#FF9933] rounded-full text-sm font-medium">MENTORSHIP</span>
+            <h2 class="text-4xl font-bold text-gray-800 mt-4 english-text">Our Guide</h2>
+            <h2 class="text-4xl font-bold text-gray-800 mt-4 marathi-text hidden">आमचे मार्गदर्शक</h2>
+            <div class="w-20 h-1 bg-[#000080] mx-auto mt-4"></div>
         </div>
-        <div class="md:w-2/3 p-6 text-left">
-            <h3 class="text-2xl font-bold text-gray-800 mb-2">Dr. A. B. Gadicha</h3>
-            <p class="text-saffron font-semibold mb-4 english-text">Project Guide & Mentor</p>
-            <p class="text-saffron font-semibold mb-4 marathi-text hidden">प्रकल्प मार्गदर्शक आणि सल्लागार</p>
-            <div class="space-y-2 text-left">
-                <a href="mailto:ab.gadicha@example.edu" class="flex items-center text-gray-700 hover:text-saffron transition">
-                    <i class="fas fa-envelope mr-3 text-saffron"></i> ab.gadicha@example.edu
-                </a>
-                <p class="flex items-center text-gray-700 english-text">
-                    <i class="fas fa-university mr-3 text-saffron"></i> Professor at Example University
-                </p>
-                <p class="flex items-center text-gray-700 marathi-text hidden">
-                    <i class="fas fa-university mr-3 text-saffron"></i> उदाहरण विद्यापीठात प्राध्यापक
-                </p>
-                <a href="https://linkedin.com/in/abgadicha" target="_blank" class="flex items-center text-gray-700 hover:text-saffron transition">
-                    <i class="fab fa-linkedin mr-3 text-saffron"></i> linkedin.com/in/abgadicha
-                </a>
+        
+        <div class="bg-white rounded-2xl shadow-xl max-w-4xl mx-auto overflow-hidden flex flex-col md:flex-row border-t-4 border-[#000080]">
+            <div class="md:w-2/5 bg-gradient-to-br from-[#FF9933]/20 to-[#000080]/20 flex items-center justify-center p-8">
+                <div class="border-4 border-white rounded-full p-2 shadow-lg">
+                    <div class="rounded-full overflow-hidden aspect-square w-48 h-48">
+                        <img src="https://karamveer2648.github.io/MahaPowerImagesStoring/ajaygadichasir.png" alt="Dr. A. B. Gadicha"
+                            class="w-full h-full object-cover">
+                    </div>
+                </div>
+            </div>
+            <div class="md:w-3/5 p-8 text-left flex flex-col justify-center">
+                <h3 class="text-3xl font-bold text-[#000080] mb-2">Dr. A. B. Gadicha</h3>
+                <div class="flex items-center mb-4">
+                    <span class="px-3 py-1 bg-[#FF9933]/10 text-[#FF9933] rounded-full text-sm font-medium english-text">Project Guide & Mentor</span>
+                    <span class="px-3 py-1 bg-[#FF9933]/10 text-[#FF9933] rounded-full text-sm font-medium marathi-text hidden">प्रकल्प मार्गदर्शक आणि सल्लागार</span>
+                </div>
+                <div class="space-y-3 text-left">
+                    <a href="mailto:ab.gadicha@example.edu" class="flex items-center text-gray-700 hover:text-[#FF9933] transition group">
+                        <div class="w-9 h-9 rounded-full bg-[#FF9933]/10 flex items-center justify-center mr-3 group-hover:bg-[#FF9933]/20">
+                            <i class="fas fa-envelope text-[#FF9933]"></i>
+                        </div>
+                        ab.gadicha@example.edu
+                    </a>
+                    <p class="flex items-center text-gray-700 english-text">
+                        <div class="w-9 h-9 rounded-full bg-[#000080]/10 flex items-center justify-center mr-3">
+                            <i class="fas fa-university text-[#000080]"></i>
+                        </div>
+                        Professor at Example University
+                    </p>
+                    <p class="flex items-center text-gray-700 marathi-text hidden">
+                        <div class="w-9 h-9 rounded-full bg-[#000080]/10 flex items-center justify-center mr-3">
+                            <i class="fas fa-university text-[#000080]"></i>
+                        </div>
+                        उदाहरण विद्यापीठात प्राध्यापक
+                    </p>
+                    <a href="https://linkedin.com/in/abgadicha" target="_blank" class="flex items-center text-gray-700 hover:text-[#FF9933] transition group">
+                        <div class="w-9 h-9 rounded-full bg-[#FF9933]/10 flex items-center justify-center mr-3 group-hover:bg-[#FF9933]/20">
+                            <i class="fab fa-linkedin text-[#FF9933]"></i>
+                        </div>
+                        linkedin.com/in/abgadicha
+                    </a>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- College Logo & Info Section -->
-<div class="mt-24 text-center">
-    <h2 class="text-3xl font-bold text-gray-800 mb-6 english-text">Our Institution</h2>
-    <h2 class="text-3xl font-bold text-gray-800 mb-6 marathi-text hidden">आमची संस्था</h2>
-    <div class="flex justify-center">
-        <div class="bg-white p-6 rounded-xl shadow-lg border-4 border-navyBlue hover:border-saffron transition-all duration-300 hover:scale-105">
-            <img src="https://karamveer2648.github.io/mahaprojectimagerepo/white text prpcem.png" alt="College Logo" class="w-48 h-32 object-contain">
+<!-- College Logo with Elegant Design -->
+<div class="bg-gray-50 py-20 text-center">
+    <div class="container mx-auto px-4">
+        <h2 class="text-4xl font-bold text-gray-800 mb-8 english-text">Our Institution</h2>
+        <h2 class="text-4xl font-bold text-gray-800 mb-8 marathi-text hidden">आमची संस्था</h2>
+        
+        <div class="flex justify-center mb-12">
+            <div class="bg-white p-8 rounded-2xl shadow-lg border-b-4 border-[#000080] transform transition-all duration-300 hover:shadow-2xl hover:scale-105">
+                <div class="bg-gradient-to-r from-[#FF9933]/10 to-[#000080]/10 p-6 rounded-xl">
+                    <img src="https://karamveer2648.github.io/MahaPowerImagesStoring/white text prpcem.png" alt="College Logo" class="max-w-xs mx-auto object-contain">
+                </div>
+            </div>
         </div>
+        
+        <p class="mt-6 text-xl font-medium text-gray-700 english-text">Proudly developed at</p>
+        <p class="mt-6 text-xl font-medium text-gray-700 marathi-text hidden">अभिमानाने विकसित केले</p>
+        <h3 class="text-3xl font-bold bg-gradient-to-r from-[#FF9933] to-[#000080] text-transparent bg-clip-text my-4 max-w-3xl mx-auto english-text">P. R. Pote Patil College Of Engineering And Management, Amravati</h3>
+        <h3 class="text-3xl font-bold bg-gradient-to-r from-[#FF9933] to-[#000080] text-transparent bg-clip-text my-4 max-w-3xl mx-auto marathi-text hidden">पी. आर. पोटे पाटील अभियांत्रिकी आणि व्यवस्थापन महाविद्यालय, अमरावती</h3>
     </div>
-    <p class="mt-6 text-xl font-medium text-gray-700 english-text">Proudly developed at</p>
-    <p class="mt-6 text-xl font-medium text-gray-700 marathi-text hidden">अभिमानाने विकसित केले</p>
-    <p class="text-2xl font-bold text-saffron english-text">P. R. Pote Patil College Of Engineering And Management, Amravati</p>
-    <p class="text-2xl font-bold text-saffron marathi-text hidden">पी. आर. पोटे पाटील अभियांत्रिकी आणि व्यवस्थापन महाविद्यालय, अमरावती</p>
 </div>
 
 {% endblock %}

@@ -76,14 +76,13 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'bzrbejr4xxkgybr6g9ok',
-        'USER': 'ugx39wj7uftmu85m',
-        'PASSWORD': 'PcknwznKiEe9JZh6MHnL',
-        'HOST': 'bzrbejr4xxkgybr6g9ok-mysql.services.clever-cloud.com',
+        'NAME': 'bcs1okmr84u5meejvqig',
+        'USER': 'unaj4iri3s993dsd',
+        'PASSWORD': 'qnrksr452jHUkap0PhzL',
+        'HOST': 'bcs1okmr84u5meejvqig-mysql.services.clever-cloud.com',
         'PORT': '3306',
         'init_command': "SET SESSION wait_timeout=28800",
         'CONN_MAX_AGE': 600,

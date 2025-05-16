@@ -9,7 +9,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.utils.crypto import get_random_string
 from django.http import JsonResponse
-from .models import District, Taluka, GramPanchayat, WorkSuggestion, WorkType
+from .models import District, Taluka, GramPanchayat, WorkSuggestion, WorkType, Sector
 
 
 
@@ -450,10 +450,9 @@ def password_reset_flow(request):
 
     return render(request, 'password_reset_flow.html', context)
 
-
 def get_work_suggestions(request):
     districts = District.objects.all()
-    sectors = WorkType.objects.values_list('sector', flat=True).distinct().exclude(sector__isnull=True)
+    sectors = Sector.objects.all()  # Changed from WorkType to Sector
 
     selected_district = request.GET.get('district')
     selected_taluka = request.GET.get('taluka')
@@ -464,64 +463,74 @@ def get_work_suggestions(request):
     if selected_gp:
         suggestions = WorkSuggestion.objects.filter(
             gram_panchayat_id=selected_gp
-        ).select_related('work_type')
+        ).select_related('work_type', 'work_type__sector')
 
         if selected_sector:
-            suggestions = suggestions.filter(work_type__sector=selected_sector)
+            suggestions = suggestions.filter(work_type__sector_id=selected_sector)
 
     context = {
         'districts': districts,
-        'sectors': sectors,
+        'sectors': sectors,  # Now passing Sector objects instead of strings
         'suggestions': suggestions,
         'selected_district': selected_district,
         'selected_taluka': selected_taluka,
         'selected_gp': selected_gp,
         'selected_sector': selected_sector,
+        'is_english': request.GET.get('lang', 'en') == 'en'  # Add language context
     }
     return render(request, 'work_suggest.html', context)
 
 def get_suggestions(request):
-    selected_gp = request.GET.get('gram_panchayat')
-    selected_sector = request.GET.get('sector')
-    
-    suggestions = []
-    if selected_gp:
-        query = WorkSuggestion.objects.filter(
-            gram_panchayat_id=selected_gp
-        ).select_related('work_type')
+    try:
+        gram_panchayat = request.GET.get('gram_panchayat')
+        sector = request.GET.get('sector')
         
-        if selected_sector:
-            query = query.filter(work_type__sector=selected_sector)
+        suggestions = WorkSuggestion.objects.filter(
+            gram_panchayat_id=gram_panchayat
+        ).select_related('work_type', 'work_type__sector')
+        
+        if sector:
+            suggestions = suggestions.filter(work_type__sector_id=sector)
             
-        suggestions = [
-            {
-                'id': suggestion.id,
-                'work_type_name': suggestion.work_type.name_en,
-                'sector': suggestion.work_type.sector,
-                #'description': suggestion.work_type.description_en
-            }
-            for suggestion in query
-        ]
-    
-    return JsonResponse({'suggestions': suggestions})
-
+        data = {
+            'suggestions': [
+                {
+                    'id': s.id,
+                    'is_specialty': s.is_specialty,
+                    'work_type': {
+                        'id': s.work_type.id,
+                        'name_en': s.work_type.name_en,
+                        'name_mr': s.work_type.name_mr,
+                        'sector': {
+                            'id': s.work_type.sector.id,
+                            'name_en': s.work_type.sector.name_en,
+                            'name_mr': s.work_type.sector.name_mr
+                        }
+                    }
+                } for s in suggestions
+            ]
+        }
+        return JsonResponse(data)
+        
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
 
 def get_talukas(request):
     district_id = request.GET.get('district_id')
-    talukas = Taluka.objects.filter(district_id=district_id).values('id', 'name')
+    talukas = Taluka.objects.filter(district_id=district_id).values('id', 'name_en', 'name_mr')
     return JsonResponse(list(talukas), safe=False)
-
 
 def get_gram_panchayats(request):
     taluka_id = request.GET.get('taluka_id')
-    gps = GramPanchayat.objects.filter(taluka_id=taluka_id).values('id', 'name')
+    gps = GramPanchayat.objects.filter(taluka_id=taluka_id).values('id', 'name_en', 'name_mr')
     return JsonResponse(list(gps), safe=False)
 
 
-
+@login_required
+@user_passes_test(lambda u: u.is_superuser or u.role in ['admin', 'staff'])
 def manage_suggestions(request):
     districts = District.objects.all()
-    sectors = WorkType.objects.values_list('sector', flat=True).distinct().exclude(sector__isnull=True)
+    sectors = Sector.objects.all()  # Changed from WorkType values to Sector objects
 
     selected_district = request.GET.get('district')
     selected_taluka = request.GET.get('taluka')
@@ -532,10 +541,10 @@ def manage_suggestions(request):
     if selected_gp:
         suggestions = WorkSuggestion.objects.filter(
             gram_panchayat_id=selected_gp
-        ).select_related('work_type')
+        ).select_related('work_type', 'work_type__sector')
 
         if selected_sector:
-            suggestions = suggestions.filter(work_type__sector=selected_sector)
+            suggestions = suggestions.filter(work_type__sector_id=selected_sector)
 
     context = {
         'districts': districts,
@@ -545,132 +554,182 @@ def manage_suggestions(request):
         'selected_taluka': selected_taluka,
         'selected_gp': selected_gp,
         'selected_sector': selected_sector,
+        'is_english': request.GET.get('lang', 'en') == 'en'  # Added language context
     }
     return render(request, 'manage_suggestions.html', context)
+
 @login_required
 @user_passes_test(lambda u: u.is_superuser or u.role in ['admin', 'staff'])
 def create_suggestion(request):
-        if request.method == 'POST':
-            gram_panchayat_id = request.POST.get('gram_panchayat')
-            work_type_id = request.POST.get('work_type')
-            
-            # Validate input data
-            if not all([gram_panchayat_id, work_type_id]):
-                return JsonResponse({'status': 'error', 'message': 'Missing required fields'}, status=400)
-            
-            try:
-                gram_panchayat = GramPanchayat.objects.get(id=gram_panchayat_id)
-                work_type = WorkType.objects.get(id=work_type_id)
-                
-                # Create new suggestion
-                suggestion = WorkSuggestion.objects.create(
-                    gram_panchayat=gram_panchayat,
-                    work_type=work_type,
-                    created_by=request.user
-                )
-                
-                # Log activity
-                log_user_activity(
-                    user=request.user,
-                    activity_type="Work Suggestion Addition",
-                    description=f"Work suggestion for '{work_type.name_en}' added for {gram_panchayat.name}",
-                    created_by=request.user
-                )
-                
-                return JsonResponse({
-                    'status': 'success',
-                    'message': 'Work suggestion created successfully',
-                    'suggestion_id': suggestion.id
-                })
-                
-            except (GramPanchayat.DoesNotExist, WorkType.DoesNotExist) as e:
-                return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+    if request.method == 'POST':
+        # Extract form data from the POST request
+        gram_panchayat_id = request.POST.get('gram_panchayat')
+        work_type_id = request.POST.get('work_type')
+        is_specialty = request.POST.get('is_specialty')  # Checkbox value handling
         
-        return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=405)
+        # Validate required fields are present
+        if not all([gram_panchayat_id, work_type_id]):
+            messages.error(request, "Please fill all required fields.")
+            return redirect('create_suggestion')
+        
+        try:
+            # Retrieve related objects from database using provided IDs
+            gram_panchayat = GramPanchayat.objects.get(id=gram_panchayat_id)
+            work_type = WorkType.objects.get(id=work_type_id)
+            
+            # Convert checkbox input to proper boolean value
+            is_specialty = is_specialty in ['true', 'on', 'True', '1', 'yes']
+            
+            # Check if this suggestion already exists
+            if WorkSuggestion.objects.filter(gram_panchayat=gram_panchayat, work_type=work_type).exists():
+                messages.error(request, "This work suggestion already exists for the selected location.")
+                return redirect('create_suggestion')
+            
+            # Create new work suggestion record in the database
+            suggestion = WorkSuggestion.objects.create(
+                gram_panchayat=gram_panchayat,
+                work_type=work_type,
+                is_specialty=is_specialty
+            )
+            
+            # Record this activity for audit/tracking purposes
+            log_user_activity(
+                user=request.user,
+                activity_type="Work Suggestion Addition",
+                description=f"Work suggestion for '{work_type.name_en}' added for {gram_panchayat.name_en}",
+                created_by=request.user
+            )
+            
+            # Show success message and redirect to management page
+            messages.success(request, "Work suggestion created successfully!")
+            return redirect('manage_suggestions')
+            
+        except (GramPanchayat.DoesNotExist, WorkType.DoesNotExist) as e:
+            # Handle case where referenced objects don't exist
+            messages.error(request, f"Error: {str(e)}")
+            return redirect('create_suggestion')
+    
+    # For GET request, prepare data needed for the form
+    districts = District.objects.all()
+    sectors = Sector.objects.all()
+    
+    # Get any pre-selected values from query parameters
+    selected_district = request.GET.get('district')
+    selected_taluka = request.GET.get('taluka')
+    selected_gp = request.GET.get('gram_panchayat')
+    selected_sector = request.GET.get('sector')
+    
+    # Prepare initial dropdown data if selections exist
+    talukas = Taluka.objects.filter(district_id=selected_district) if selected_district else []
+    gram_panchayats = GramPanchayat.objects.filter(taluka_id=selected_taluka) if selected_taluka else []
+    work_types = WorkType.objects.filter(sector_id=selected_sector) if selected_sector else []
+    
+    # Create context dictionary with data for the template
+    context = {
+        'districts': districts,
+        'sectors': sectors,
+        'talukas': talukas,
+        'gram_panchayats': gram_panchayats,
+        'work_types': work_types,
+        'selected_district': selected_district,
+        'selected_taluka': selected_taluka,
+        'selected_gp': selected_gp,
+        'selected_sector': selected_sector,
+        'is_english': request.GET.get('lang', 'en') == 'en'  # Language preference check
+    }
+    return render(request, 'create_suggestion.html', context)
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser or u.role in ['admin', 'staff'])
 def edit_suggestion(request, suggestion_id):
-        suggestion = get_object_or_404(WorkSuggestion, id=suggestion_id)
+    suggestion = get_object_or_404(WorkSuggestion, id=suggestion_id)
+    
+    if request.method == 'GET':
+        # Return the suggestion details for editing
+        return render(request, 'edit_suggestion.html', {
+            'suggestion': suggestion,
+            'districts': District.objects.all(),
+            'talukas': Taluka.objects.filter(district=suggestion.gram_panchayat.taluka.district),
+            'grams': GramPanchayat.objects.filter(taluka=suggestion.gram_panchayat.taluka),
+            'sectors': Sector.objects.all(),
+            'work_types': WorkType.objects.filter(sector=suggestion.work_type.sector)
+        })
+    
+    elif request.method == 'POST':
+        gram_panchayat_id = request.POST.get('gram_panchayat')
+        work_type_id = request.POST.get('work_type')
+        is_specialty = request.POST.get('is_specialty')  # Checkbox value handling
         
-        if request.method == 'GET':
-            # Return the suggestion details for editing
-            return render(request, 'edit_suggestion.html', {
-                'suggestion': suggestion,
-                'districts': District.objects.all(),
-                'talukas': Taluka.objects.filter(district=suggestion.gram_panchayat.taluka.district),
-                'grams': GramPanchayat.objects.filter(taluka=suggestion.gram_panchayat.taluka),
-                'sectors': WorkType.objects.values_list('sector', flat=True).distinct().exclude(sector__isnull=True),
-                'work_types': WorkType.objects.filter(sector=suggestion.work_type.sector)
-            })
+        # Validate input data
+        if not all([gram_panchayat_id, work_type_id]):
+            return JsonResponse({'status': 'error', 'message': 'Missing required fields'}, status=400)
         
-        elif request.method == 'POST':
-            gram_panchayat_id = request.POST.get('gram_panchayat')
-            work_type_id = request.POST.get('work_type')
+        try:
+            gram_panchayat = GramPanchayat.objects.get(id=gram_panchayat_id)
+            work_type = WorkType.objects.get(id=work_type_id)
             
-            # Validate input data
-            if not all([gram_panchayat_id, work_type_id]):
-                return JsonResponse({'status': 'error', 'message': 'Missing required fields'}, status=400)
+            # Convert is_specialty to boolean value
+            is_specialty = is_specialty in ['true', 'on', 'True', '1', 'yes']
             
-            try:
-                gram_panchayat = GramPanchayat.objects.get(id=gram_panchayat_id)
-                work_type = WorkType.objects.get(id=work_type_id)
-                
-                # Update suggestion
-                suggestion.gram_panchayat = gram_panchayat
-                suggestion.work_type = work_type
-                suggestion.save()
-                
-                # Log activity
-                log_user_activity(
-                    user=request.user,
-                    activity_type="Work Suggestion Update",
-                    description=f"Work suggestion for '{work_type.name_en}' updated for {gram_panchayat.name}",
-                    created_by=request.user
-                )
-                
-                return JsonResponse({
-                    'status': 'success',
-                    'message': 'Work suggestion updated successfully'
-                })
-                
-            except (GramPanchayat.DoesNotExist, WorkType.DoesNotExist) as e:
-                return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
-        
-        return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=405)
-
-@login_required
-@user_passes_test(lambda u: u.is_superuser or u.role in ['admin', 'staff'])
-def delete_suggestion(request, suggestion_id):
-        suggestion = get_object_or_404(WorkSuggestion, id=suggestion_id)
-        
-        # Allow DELETE method or POST method with delete action
-        if request.method == 'DELETE' or (request.method == 'POST' and request.POST.get('action') == 'delete'):
-            work_type_name = suggestion.work_type.name_en
-            gram_name = suggestion.gram_panchayat.name
-            
-            # Delete suggestion
-            suggestion.delete()
+            # Update suggestion with properly converted boolean
+            suggestion.gram_panchayat = gram_panchayat
+            suggestion.work_type = work_type
+            suggestion.is_specialty = is_specialty
+            print("is_specialty", is_specialty)
+            suggestion.save()
             
             # Log activity
             log_user_activity(
                 user=request.user,
-                activity_type="Work Suggestion Deletion",
-                description=f"Work suggestion for '{work_type_name}' deleted for {gram_name}",
+                activity_type="Work Suggestion Update",
+                description=f"Work suggestion for '{work_type.name_en}' updated for {gram_panchayat.name_en}",
                 created_by=request.user
             )
             
             return JsonResponse({
                 'status': 'success',
-                'message': 'Work suggestion deleted successfully'
+                'message': 'Work suggestion updated successfully'
             })
-        
-        return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=405)
+            
+        except (GramPanchayat.DoesNotExist, WorkType.DoesNotExist) as e:
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+    
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=405)
 
-def get_work_types(request):
-        sector = request.GET.get('sector')
-        if not sector:
-            return JsonResponse([], safe=False)
+@login_required
+@user_passes_test(lambda u: u.is_superuser or u.role in ['admin', 'staff'])
+def delete_suggestion(request, suggestion_id):
+    suggestion = get_object_or_404(WorkSuggestion, id=suggestion_id)
+    
+    # Allow DELETE method or POST method with delete action
+    if request.method == 'DELETE' or (request.method == 'POST' and request.POST.get('action') == 'delete'):
+        work_type_name = suggestion.work_type.name_en
+        gram_name = suggestion.gram_panchayat.name_en
         
-        work_types = WorkType.objects.filter(sector=sector).values('id', 'name_en', 'name_mr')
-        return JsonResponse(list(work_types), safe=False)
+        # Delete suggestion
+        suggestion.delete()
+        
+        # Log activity
+        log_user_activity(
+            user=request.user,
+            activity_type="Work Suggestion Deletion",
+            description=f"Work suggestion for '{work_type_name}' deleted for {gram_name}",
+            created_by=request.user
+        )
+        
+        return JsonResponse({
+            'status': 'success',
+            'message': 'Work suggestion deleted successfully'
+        })
+    
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=405)
+def get_sectors(request):
+    sectors = Sector.objects.all().values('id', 'name_en', 'name_mr')
+    return JsonResponse(list(sectors), safe=False)
+def get_work_types(request):
+    sector_id = request.GET.get('sector')
+    if not sector_id:
+        return JsonResponse([], safe=False)
+    
+    work_types = WorkType.objects.filter(sector_id=sector_id).values('id', 'name_en', 'name_mr')
+    return JsonResponse(list(work_types), safe=False)

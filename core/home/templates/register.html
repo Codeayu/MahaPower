@@ -1,142 +1,230 @@
 {% extends "base.html" %}
+{% block title %}Register | Maharashtra State Khadi & Village Industries Board{% endblock %}
 
 {% block content %}
 <h1 class="sr-only english-text">Register</h1>
 <h1 class="sr-only marathi-text hidden">नोंदणी</h1>
 
-<!-- Alerts -->
+<!-- Toast Messages -->
 {% if messages %}
-<div class="fixed top-6 w-full px-4 z-50">
-    <div class="max-w-md mx-auto">
-        {% for message in messages %}
-        <div class="bg-orange-100 border border-orange-500 text-orange-500 px-4 py-3 rounded-md shadow" role="alert">
-            <span class="block sm:inline">{{ message }}</span>
+<div id="toast-container" class="fixed top-6 right-6 z-50 space-y-4">
+    {% for message in messages %}
+    <div class="transform transition-all duration-300 ease-out toast-message flex items-center p-4 bg-white border-l-4 border-orange-500 rounded-lg shadow-lg max-w-xs" role="alert">
+        <div class="text-orange-500 mr-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
         </div>
-        {% endfor %}
+        <div>{{ message }}</div>
+        <button class="ml-auto text-gray-400 hover:text-gray-500" onclick="this.parentElement.remove()">
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
     </div>
+    {% endfor %}
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+            document.querySelectorAll('.toast-message').forEach(toast => {
+                toast.classList.add('opacity-0');
+                setTimeout(() => toast.remove(), 500);
+            });
+        }, 5000);
+    });
+</script>
 {% endif %}
 
-<!-- Register Box -->
-<div class="flex justify-center items-center min-h-screen">
-    <div class="max-w-md w-full bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+<!-- Registration Container with Background Pattern -->
+<div class="flex justify-center items-center min-h-screen bg-gray-50 relative overflow-hidden">
+    <div class="absolute inset-0 z-0 opacity-10">
+        <div class="absolute transform rotate-45 -left-20 -top-20 h-64 w-64 rounded-full bg-navyBlue"></div>
+        <div class="absolute transform -right-20 top-1/4 h-96 w-96 rounded-full bg-saffron"></div>
+        <div class="absolute transform -bottom-20 -left-20 h-80 w-80 rounded-full bg-navyBlue"></div>
+    </div>
 
-        <!-- Header -->
-        <div class="bg-navyBlue text-white py-6 px-6 sm:px-8">
-            <h2 class="text-2xl font-bold english-text">Create Your Account</h2>
-            <h2 class="text-2xl font-bold marathi-text hidden">तुमचे खाते तयार करा</h2>
-            <p class="text-sm opacity-90 mt-1 english-text">Sign up to access services</p>
-            <p class="text-sm opacity-90 mt-1 marathi-text hidden">सेवांसाठी साइन अप करा</p>
+    <div class="max-w-md w-full bg-white rounded-3xl shadow-xl border-2 border-gray-200 overflow-hidden z-10 transform transition-all duration-300 hover:shadow-2xl">
+        <!-- Header with gradient background -->
+        <div class="bg-gradient-to-r from-blue-700 to-navyBlue text-white py-10 px-8 relative">
+            <div class="absolute right-0 top-0 h-20 w-20 bg-yellow-400 opacity-30 rounded-full -mr-6 -mt-6"></div>
+            <div class="absolute left-0 top-0 h-12 w-12 bg-orange-500 opacity-20 rounded-full -ml-4 -mt-4"></div>
+            <h2 class="text-3xl font-bold english-text mb-2 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                </svg>
+                Create Account
+            </h2>
+            <h2 class="text-3xl font-bold marathi-text hidden mb-2">खाते तयार करा</h2>
+            <p class="text-sm opacity-90 mt-2 english-text">Register for secure access to government services</p>
+            <p class="text-sm opacity-90 mt-2 marathi-text hidden">सरकारी सेवांसाठी सुरक्षित प्रवेश नोंदणी करा</p>
         </div>
 
-        <!-- Form -->
-        <form method="POST" action="{% url 'register' %}" class="p-6 sm:p-8">
+        <!-- Registration Form with improved styling -->
+        <form method="POST" action="{% url 'register' %}" class="p-8">
             {% csrf_token %}
 
-            <!-- Full Name -->
-            <div class="mb-5">
-                <label class="block text-gray-600 text-sm font-medium mb-2 english-text">Full Name</label>
-                <label class="block text-gray-600 text-sm font-medium mb-2 marathi-text hidden">पूर्ण नाव</label>
-                <input type="text" name="Fname"
-                    placeholder="Enter your full name"
-                    class="w-full px-4 py-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-navyBlue focus:border-transparent english-text"
-                    required>
-                <input type="text" name="Fname"
-                    placeholder="तुमचे पूर्ण नाव टाका"
-                    class="w-full px-4 py-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-navyBlue focus:border-transparent marathi-text hidden"
-                    required>
+            <div class="mb-6 group">
+                <label for="username" class="block text-gray-600 text-sm font-medium mb-2 transition-all group-focus-within:text-navyBlue">
+                    <span class="english-text flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                        </svg>
+                        Username
+                    </span>
+                    <span class="marathi-text hidden">वापरकर्तानाव</span>
+                </label>
+                <input type="text" id="username" name="username"
+                    class="w-full px-5 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-navyBlue focus:border-transparent transition-all"
+                    placeholder="Enter your username" required>
             </div>
-
-            <!-- Username -->
-            <div class="mb-5">
-                <label class="block text-gray-600 text-sm font-medium mb-2 english-text">Username</label>
-                <label class="block text-gray-600 text-sm font-medium mb-2 marathi-text hidden">वापरकर्तानाव</label>
-                <input type="text" name="username"
-                    placeholder="Enter your username"
-                    class="w-full px-4 py-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-navyBlue focus:border-transparent english-text"
-                    required>
-                <input type="text" name="username"
-                    placeholder="तुमचे वापरकर्तानाव टाका"
-                    class="w-full px-4 py-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-navyBlue focus:border-transparent marathi-text hidden"
-                    required>
+            
+            <div class="mb-6 group">
+                <label for="Fname" class="block text-gray-600 text-sm font-medium mb-2 transition-all group-focus-within:text-navyBlue">
+                    <span class="english-text flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                        </svg>
+                        Full Name
+                    </span>
+                    <span class="marathi-text hidden">पूर्ण नाव</span>
+                </label>
+                <input type="text" id="Fname" name="Fname"
+                    class="w-full px-5 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-navyBlue focus:border-transparent transition-all"
+                    placeholder="Enter your full name" required>
             </div>
-
-            <!-- Email -->
-            <div class="mb-5">
-                <label class="block text-gray-600 text-sm font-medium mb-2 english-text">Email</label>
-                <label class="block text-gray-600 text-sm font-medium mb-2 marathi-text hidden">ईमेल</label>
-                <input type="email" name="email"
-                    placeholder="Enter your email"
-                    class="w-full px-4 py-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-navyBlue focus:border-transparent english-text"
-                    required>
-                <input type="email" name="email"
-                    placeholder="तुमचा ईमेल टाका"
-                    class="w-full px-4 py-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-navyBlue focus:border-transparent marathi-text hidden"
-                    required>
+            
+            <div class="mb-6 group">
+                <label for="email" class="block text-gray-600 text-sm font-medium mb-2 transition-all group-focus-within:text-navyBlue">
+                    <span class="english-text flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                        </svg>
+                        Email
+                    </span>
+                    <span class="marathi-text hidden">ईमेल</span>
+                </label>
+                <input type="email" id="email" name="email"
+                    class="w-full px-5 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-navyBlue focus:border-transparent transition-all"
+                    placeholder="Enter your email address" required>
             </div>
-
-            <!-- Password -->
-            <div class="mb-5">
-                <label class="block text-gray-600 text-sm font-medium mb-2 english-text">Password</label>
-                <label class="block text-gray-600 text-sm font-medium mb-2 marathi-text hidden">पासवर्ड</label>
-                <input type="password" name="password1"
-                    placeholder="Enter your password"
-                    class="w-full px-4 py-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-navyBlue focus:border-transparent english-text"
-                    required>
-                <input type="password" name="password1"
-                    placeholder="तुमचा पासवर्ड टाका"
-                    class="w-full px-4 py-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-navyBlue focus:border-transparent marathi-text hidden"
-                    required>
+            
+            <div class="mb-6 group">
+                <label for="password1" class="block text-gray-600 text-sm font-medium mb-2 transition-all group-focus-within:text-navyBlue">
+                    <span class="english-text flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+                        </svg>
+                        Password
+                    </span>
+                    <span class="marathi-text hidden">पासवर्ड</span>
+                </label>
+                <div class="relative">
+                    <input type="password" id="password1" name="password1"
+                        class="w-full px-5 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-navyBlue focus:border-transparent transition-all"
+                        placeholder="Enter your password" required>
+                    <button type="button" id="togglePassword1" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                            <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                </div>
             </div>
-
-            <!-- Confirm Password -->
-            <div class="mb-5">
-                <label class="block text-gray-600 text-sm font-medium mb-2 english-text">Confirm Password</label>
-                <label class="block text-gray-600 text-sm font-medium mb-2 marathi-text hidden">पासवर्ड पुन्हा टाका</label>
-                <input type="password" name="password2"
-                    placeholder="Confirm your password"
-                    class="w-full px-4 py-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-navyBlue focus:border-transparent english-text"
-                    required>
-                <input type="password" name="password2"
-                    placeholder="तुमचा पासवर्ड पुन्हा टाका"
-                    class="w-full px-4 py-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-navyBlue focus:border-transparent marathi-text hidden"
-                    required>
+            
+            <div class="mb-6 group">
+                <label for="password2" class="block text-gray-600 text-sm font-medium mb-2 transition-all group-focus-within:text-navyBlue">
+                    <span class="english-text flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+                        </svg>
+                        Confirm Password
+                    </span>
+                    <span class="marathi-text hidden">पासवर्ड पुष्टी</span>
+                </label>
+                <div class="relative">
+                    <input type="password" id="password2" name="password2"
+                        class="w-full px-5 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-navyBlue focus:border-transparent transition-all"
+                        placeholder="Confirm your password" required>
+                    <button type="button" id="togglePassword2" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                            <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                </div>
             </div>
-
-            <!-- Role Selection -->
-            <div class="mb-5">
-                <label class="block text-gray-600 text-sm font-medium mb-2 english-text">Select Role</label>
-                <label class="block text-gray-600 text-sm font-medium mb-2 marathi-text hidden">भूमिका निवडा</label>
-                <select name="role"
-                    class="w-full px-4 py-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-navyBlue focus:border-transparent"
-                    required>
-                    <option value="" disabled selected class="english-text">Choose role</option>
-                    <option value="" disabled selected class="marathi-text hidden">भूमिका निवडा</option>
-                    <option value="staff">Staff</option>
+            
+            <div class="mb-6 group">
+                <label for="role" class="block text-gray-600 text-sm font-medium mb-2 transition-all group-focus-within:text-navyBlue">
+                    <span class="english-text flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
+                        </svg>
+                        Role
+                    </span>
+                    <span class="marathi-text hidden">भूमिका</span>
+                </label>
+                <select id="role" name="role" 
+                    class="w-full px-5 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-navyBlue focus:border-transparent transition-all">
+                    <option value="staff" selected>Staff</option>
                     <option value="admin">Admin</option>
                 </select>
             </div>
 
-            <!-- Submit -->
-            <button type="submit"
-                class="w-full bg-saffron hover:bg-orange-500 text-white font-semibold py-2 px-4 rounded-lg transition duration-200 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-50 english-text">
-                Register
-            </button>
-            <button type="submit"
-                class="w-full bg-saffron hover:bg-orange-500 text-white font-semibold py-2 px-4 rounded-lg transition duration-200 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-50 marathi-text hidden">
-                नोंदणी करा
+            <button type="submit" class="w-full bg-saffron hover:bg-orange-500 text-white font-semibold py-3 px-6 rounded-xl transition duration-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-50 shadow-lg hover:shadow-xl flex items-center justify-center">
+                <span class="english-text">Register Account</span>
+                <span class="marathi-text hidden">खाते नोंदवा</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
             </button>
 
-            <!-- Login Link -->
+            <div class="mt-8 text-center relative">
+                <div class="absolute inset-0 flex items-center">
+                    <div class="w-full border-t border-gray-200"></div>
+                </div>
+                <div class="relative flex justify-center">
+                    <span class="px-4 bg-white text-sm text-gray-500">or</span>
+                </div>
+            </div>
+
             <div class="mt-6 text-center">
-                <p class="text-sm text-gray-600 english-text">Already have an account?
-                    <a href="/login/" class="text-navyBlue font-medium hover:underline">Login here</a>
-                </p>
-                <p class="text-sm text-gray-600 marathi-text hidden">आधीच खाते आहे?
-                    <a href="/login/" class="text-navyBlue font-medium hover:underline">येथे लॉगिन करा</a>
+                <p class="text-sm text-gray-600">
+                    <span class="english-text">Already have an account? <a href="/login/" class="text-navyBlue font-medium hover:underline transition">Login here</a></span>
+                    <span class="marathi-text hidden">आपल्याकडे आधीपासून खाते आहे? <a href="/login/" class="text-navyBlue font-medium hover:underline transition">येथे लॉगिन करा</a></span>
                 </p>
             </div>
         </form>
     </div>
 </div>
+
+<script>
+    // Password visibility toggle
+    document.getElementById('togglePassword1')?.addEventListener('click', function() {
+        togglePasswordVisibility('password1', this);
+    });
+    
+    document.getElementById('togglePassword2')?.addEventListener('click', function() {
+        togglePasswordVisibility('password2', this);
+    });
+    
+    function togglePasswordVisibility(inputId, buttonElement) {
+        const passwordInput = document.getElementById(inputId);
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            buttonElement.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M3.707 2.293a1 1 0 00-1.414 1.414l14 14a1 1 0 001.414-1.414l-1.473-1.473A10.014 10.014 0 0019.542 10C18.268 5.943 14.478 3 10 3a9.958 9.958 0 00-4.512 1.074l-1.78-1.781zm4.261 4.26l1.514 1.515a2.003 2.003 0 012.45 2.45l1.514 1.514a4 4 0 00-5.478-5.478z" clip-rule="evenodd" />
+                <path d="M12.454 16.697L9.75 13.992a4 4 0 01-3.742-3.741L2.335 6.578A9.98 9.98 0 00.458 10c1.274 4.057 5.065 7 9.542 7 .847 0 1.669-.105 2.454-.303z" />
+            </svg>`;
+        } else {
+            passwordInput.type = 'password';
+            buttonElement.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
+            </svg>`;
+        }
+    }
+</script>
 {% endblock %}

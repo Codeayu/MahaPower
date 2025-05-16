@@ -1,0 +1,821 @@
+{% extends 'base.html' %}
+{% block title %}Create Work Suggestion | Maharashtra State Khadi & Village Industries Board{% endblock %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <!-- Header Section -->
+    <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-gray-800 mb-2 english-text">Create Work Suggestion</h2>
+        <h2 class="text-3xl font-bold text-gray-800 mb-2 marathi-text hidden">सूचना तयार करा</h2>
+        <div class="w-20 h-1 bg-saffron mx-auto mb-4"></div>
+        <p class="text-gray-600 max-w-2xl mx-auto english-text">Create new work suggestions for different locations and sectors</p>
+        <p class="text-gray-600 max-w-2xl mx-auto marathi-text hidden">विविध ठिकाणे आणि क्षेत्रांसाठी नवीन कामाच्या सूचना तयार करा</p>
+    </div>
+
+    <!-- Form Section with improved UI -->
+    <div class="rounded-xl shadow-lg overflow-hidden border border-gray-200 mb-10 transform transition-all duration-300 hover:shadow-xl">
+        <div class="p-5 bg-gradient-to-r from-navyBlue to-blue-700 text-white">
+            <div class="flex flex-wrap justify-between items-center">
+                <h4 class="text-2xl font-semibold english-text mb-2 md:mb-0">Work Suggestion Form</h4>
+                <h4 class="text-2xl font-semibold marathi-text hidden mb-2 md:mb-0">कामाच्या सूचना फॉर्म</h4>
+                
+                <!-- Language Toggle with improved styling -->
+                <div class="flex bg-white rounded-full p-1 shadow-sm">
+                    <button type="button" id="englishBtn" class="px-4 py-1.5 rounded-full bg-saffron text-white text-sm font-medium transition-all duration-200">English</button>
+                    <button type="button" id="marathiBtn" class="px-4 py-1.5 rounded-full text-gray-700 text-sm font-medium transition-all duration-200">मराठी</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="p-6 bg-white">
+            <form method="post" class="grid grid-cols-1 md:grid-cols-2 gap-6" enctype="multipart/form-data" id="suggestionForm">
+                {% csrf_token %}
+                
+                <!-- District Dropdown with improved styling -->
+                <div class="relative">
+                    <label for="district" class="block text-sm font-medium text-gray-600 mb-1.5 english-text">District</label>
+                    <label for="district" class="block text-sm font-medium text-gray-600 mb-1.5 marathi-text hidden">जिल्हा</label>
+                    <select id="district" name="district" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-saffron focus:border-transparent appearance-none bg-white" required>
+                        <option value="">Select District</option>
+                        {% for district in districts %}
+                            <option value="{{ district.id }}" 
+                                data-name-en="{{ district.name_en }}" 
+                                data-name-mr="{{ district.name_mr }}"
+                                {% if form.district.value == district.id %}selected{% endif %}>
+                                {{ district.name_en }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 pt-6">
+                        <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"></path>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Taluka Dropdown with improved styling -->
+                <div class="relative">
+                    <label for="taluka" class="block text-sm font-medium text-gray-600 mb-1.5 english-text">Taluka</label>
+                    <label for="taluka" class="block text-sm font-medium text-gray-600 mb-1.5 marathi-text hidden">तालुका</label>
+                    <select id="taluka" name="taluka" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-saffron focus:border-transparent appearance-none bg-white" required>
+                        <option value="">Select Taluka</option>
+                        {% if form.taluka.value %}
+                            <!-- Will be populated by JavaScript -->
+                        {% endif %}
+                    </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 pt-6">
+                        <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"></path>
+                        </svg>
+                    </div>
+                    <div id="taluka-loading" class="hidden absolute right-10 top-1/2 transform -translate-y-1/3">
+                        <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-saffron"></div>
+                    </div>
+                </div>
+
+                <!-- Gram Panchayat Dropdown with improved styling -->
+                <div class="relative">
+                    <label for="gram_panchayat" class="block text-sm font-medium text-gray-600 mb-1.5 english-text">Gram Panchayat</label>
+                    <label for="gram_panchayat" class="block text-sm font-medium text-gray-600 mb-1.5 marathi-text hidden">ग्रामपंचायत</label>
+                    <select id="gram_panchayat" name="gram_panchayat" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-saffron focus:border-transparent appearance-none bg-white" required>
+                        <option value="">Select Gram Panchayat</option>
+                        {% if form.gram_panchayat.value %}
+                            <!-- Will be populated by JavaScript -->
+                        {% endif %}
+                    </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 pt-6">
+                        <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"></path>
+                        </svg>
+                    </div>
+                    <div id="gp-loading" class="hidden absolute right-10 top-1/2 transform -translate-y-1/3">
+                        <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-saffron"></div>
+                    </div>
+                </div>
+
+                <!-- Sector Dropdown with improved styling -->
+                <div class="relative">
+                    <label for="sector" class="block text-sm font-medium text-gray-600 mb-1.5 english-text">Sector</label>
+                    <label for="sector" class="block text-sm font-medium text-gray-600 mb-1.5 marathi-text hidden">क्षेत्र</label>
+                    <select id="sector" name="sector" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-saffron focus:border-transparent appearance-none bg-white" required>
+                        <option value="">Select Sector</option>
+                        {% for sector in sectors %}
+                            <option value="{{ sector.id }}" 
+                                data-name-en="{{ sector.name_en }}" 
+                                data-name-mr="{{ sector.name_mr }}"
+                                {% if form.sector.value == sector.id %}selected{% endif %}>
+                                {{ sector.name_en }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 pt-6">
+                        <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"></path>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Work Type Dropdown -->
+                <div class="relative">
+                    <label for="work_type" class="block text-sm font-medium text-gray-600 mb-1.5 english-text">Work Type</label>
+                    <label for="work_type" class="block text-sm font-medium text-gray-600 mb-1.5 marathi-text hidden">कार्य प्रकार</label>
+                    <select id="work_type" name="work_type" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-saffron focus:border-transparent appearance-none bg-white" required>
+                        <option value="">Select Work Type</option>
+                        {% if form.work_type.value %}
+                            <!-- Will be populated by JavaScript -->
+                        {% endif %}
+                    </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 pt-6">
+                        <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"></path>
+                        </svg>
+                    </div>
+                    <div id="worktype-loading" class="hidden absolute right-10 top-1/2 transform -translate-y-1/3">
+                        <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-saffron"></div>
+                    </div>
+                </div>
+
+                <!-- Is Specialty Checkbox with improved styling -->
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center">
+                        <input id="isspeciality" name="isspeciality" type="checkbox" class="h-5 w-5 text-saffron border-gray-300 rounded focus:ring-saffron focus:ring-2" 
+                            {% if form.isspeciality.value %}checked{% endif %}>
+                        <label for="isspeciality" class="ml-2 block text-sm text-gray-700 english-text">Mark as specialty work for this Gram Panchayat</label>
+                        <label for="isspeciality" class="ml-2 block text-sm text-gray-700 marathi-text hidden">या ग्रामपंचायतीसाठी विशेष काम म्हणून चिन्हांकित करा</label>
+                    </div>
+                    <p class="mt-1 text-xs text-gray-500 english-text">Specialty works are prioritized for the gram panchayat</p>
+                    <p class="mt-1 text-xs text-gray-500 marathi-text hidden">विशेष कामांना ग्रामपंचायतीसाठी प्राधान्य दिले जाते</p>
+                </div>
+
+                <!-- Form buttons with modern design -->
+                <div class="col-span-1 md:col-span-2 flex justify-between items-center mt-4">
+                    <!-- Reset Button -->
+                    <button type="reset" class="py-2.5 px-8 rounded-lg text-sm font-semibold bg-gray-200 text-gray-700 hover:bg-gray-300 hover:shadow-md transition-all duration-300 transform hover:-translate-y-0.5 flex items-center">
+                        <span class="english-text flex items-center">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                            </svg>
+                            Reset Form
+                        </span>
+                        <span class="marathi-text hidden flex items-center">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                            </svg>
+                            फॉर्म रीसेट करा
+                        </span>
+                    </button>
+
+                    <!-- Submit Button -->
+                    <button type="submit" id="submitBtn" class="py-2.5 px-8 rounded-lg text-sm font-semibold bg-gradient-to-r from-saffron to-yellow-500 text-white hover:shadow-md transition-all duration-300 transform hover:-translate-y-0.5">
+                        <span class="english-text flex items-center">
+                            Submit
+                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </span>
+                        <span class="marathi-text hidden flex items-center">
+                            सबमिट करा
+                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Toast notification component -->
+<div id="toast" class="fixed bottom-4 right-4 z-50 transform transition-all duration-300 translate-y-16 opacity-0 hidden">
+    <div class="flex items-center p-4 mb-4 text-sm rounded-lg shadow-lg max-w-xs" role="alert">
+        <div id="toast-icon-success" class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 rounded-lg bg-green-100 text-green-500">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+            </svg>
+        </div>
+        <div id="toast-icon-error" class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 rounded-lg bg-red-100 text-red-500 hidden">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+            </svg>
+        </div>
+        <div id="toast-icon-warning" class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 rounded-lg bg-yellow-100 text-yellow-500 hidden">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+            </svg>
+        </div>
+        <div id="toast-icon-info" class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 rounded-lg bg-blue-100 text-blue-500 hidden">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2h-1V9a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+            </svg>
+        </div>
+        <div id="toast-message" class="ml-3 text-sm font-normal"></div>
+        <button type="button" class="ml-auto -mx-1.5 -my-1.5 rounded-lg p-1.5 hover:bg-gray-100 inline-flex h-8 w-8" onclick="hideToast()">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+            </svg>
+        </button>
+    </div>
+</div>
+
+<!-- Django Messages Handler -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Process Django messages if they exist
+        {% if messages %}
+            {% for message in messages %}
+                // Map Django message tags to our toast types
+                let messageType = 'info';
+                {% if message.tags %}
+                    // Convert Django message tags to our toast types
+                    switch('{{ message.tags }}') {
+                        case 'success':
+                            messageType = 'success';
+                            break;
+                        case 'error':
+                            messageType = 'error';
+                            break;
+                        case 'warning':
+                            messageType = 'warning';
+                            break;
+                        case 'info':
+                            messageType = 'info';
+                            break;
+                        default:
+                            messageType = 'info';
+                    }
+                {% endif %}
+                
+                // Show toast with Django message
+                setTimeout(function() {
+                    showToast('{{ message|escapejs }}', messageType);
+                }, 300); // Small delay for better UX
+            {% endfor %}
+        {% endif %}
+        
+        // Also display form errors as toasts if they exist
+        {% if form.errors %}
+            setTimeout(function() {
+                showToast('{{ form.errors|striptags|escapejs }}', 'error');
+            }, 300);
+        {% endif %}
+        
+        {% if form.non_field_errors %}
+            setTimeout(function() {
+                showToast('{{ form.non_field_errors|striptags|escapejs }}', 'error');
+            }, 300);
+        {% endif %}
+    });
+    
+    // Update the showToast function to handle more message types
+    function showToast(message, type = 'success') {
+        const toast = document.getElementById('toast');
+        const toastMessage = document.getElementById('toast-message');
+        
+        // Hide all icons first
+        document.getElementById('toast-icon-success').classList.add('hidden');
+        document.getElementById('toast-icon-error').classList.add('hidden');
+        document.getElementById('toast-icon-warning').classList.add('hidden');
+        document.getElementById('toast-icon-info').classList.add('hidden');
+        
+        // Remove all background classes
+        toast.classList.remove('bg-green-50', 'text-green-800', 'bg-red-50', 'text-red-800', 
+                              'bg-yellow-50', 'text-yellow-800', 'bg-blue-50', 'text-blue-800');
+        
+        // Set message
+        toastMessage.textContent = message;
+        
+        // Set correct type styling
+        switch(type) {
+            case 'success':
+                toast.classList.add('bg-green-50', 'text-green-800');
+                document.getElementById('toast-icon-success').classList.remove('hidden');
+                break;
+            case 'error':
+                toast.classList.add('bg-red-50', 'text-red-800');
+                document.getElementById('toast-icon-error').classList.remove('hidden');
+                break;
+            case 'warning':
+                toast.classList.add('bg-yellow-50', 'text-yellow-800');
+                document.getElementById('toast-icon-warning').classList.remove('hidden');
+                break;
+            case 'info':
+                toast.classList.add('bg-blue-50', 'text-blue-800');
+                document.getElementById('toast-icon-info').classList.remove('hidden');
+                break;
+            default:
+                toast.classList.add('bg-blue-50', 'text-blue-800');
+                document.getElementById('toast-icon-info').classList.remove('hidden');
+        }
+        
+        // Show toast
+        toast.classList.remove('hidden');
+        setTimeout(() => {
+            toast.classList.remove('translate-y-16', 'opacity-0');
+        }, 10);
+        
+        // Hide after 5 seconds
+        setTimeout(hideToast, 5000);
+    }
+</script>
+
+<!-- JavaScript for dynamic dropdowns and UI interactions -->
+<script>
+    // Track language state
+    let isEnglish = true;
+    
+    // Initialize when DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        // Set English as default language
+        document.getElementById('englishBtn').classList.add('bg-saffron', 'text-white');
+        document.getElementById('marathiBtn').classList.remove('bg-saffron', 'text-white');
+        
+        // Initialize dropdowns with proper data attributes
+        initializeDropdowns();
+        
+        // Setup event listeners
+        setupEventListeners();
+        
+        // Add ripple effect to buttons
+        addRippleEffect();
+        
+        // Initialize previously selected values if form was submitted with errors
+        if (document.getElementById('district').value) {
+            loadTalukas();
+        }
+        
+        if (document.getElementById('taluka').value) {
+            loadGramPanchayats();
+        }
+        
+        if (document.getElementById('sector').value) {
+            loadWorkTypes();
+        }
+    });
+    
+    function initializeDropdowns() {
+        // Setup district dropdown with data attributes
+        const districtSelect = document.getElementById('district');
+        Array.from(districtSelect.options).forEach(option => {
+            if (option.value) {
+                option.textContent = isEnglish ? option.dataset.nameEn : option.dataset.nameMr;
+            }
+        });
+        
+        // Setup sector dropdown with data attributes
+        const sectorSelect = document.getElementById('sector');
+        Array.from(sectorSelect.options).forEach(option => {
+            if (option.value) {
+                option.textContent = isEnglish ? option.dataset.nameEn : option.dataset.nameMr;
+            }
+        });
+    }
+    
+    function setupEventListeners() {
+        // Language toggle buttons
+        document.getElementById('englishBtn').addEventListener('click', function() {
+            isEnglish = true;
+            updateLanguageUI();
+        });
+        
+        document.getElementById('marathiBtn').addEventListener('click', function() {
+            isEnglish = false;
+            updateLanguageUI();
+        });
+
+        // District dropdown change event
+        document.getElementById('district').addEventListener('change', loadTalukas);
+        
+        // Taluka dropdown change event
+        document.getElementById('taluka').addEventListener('change', loadGramPanchayats);
+        
+        // Sector dropdown change event
+        document.getElementById('sector').addEventListener('change', loadWorkTypes);
+        
+        // Form submission handling
+        document.getElementById('suggestionForm').addEventListener('submit', function(e) {
+            // Reset any previous error states
+            resetErrorStates();
+            
+            // Validate form 
+            if (!validateForm()) {
+                e.preventDefault();
+                return false;
+            }
+            
+            // Show loading state on submit button
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            
+            if (isEnglish) {
+                submitBtn.innerHTML = '<span class="flex items-center"><div class="animate-spin h-4 w-4 border-2 border-white rounded-full border-t-transparent mr-2"></div>Submitting...</span>';
+            } else {
+                submitBtn.innerHTML = '<span class="flex items-center"><div class="animate-spin h-4 w-4 border-2 border-white rounded-full border-t-transparent mr-2"></div>सबमिट करत आहे...</span>';
+            }
+        });
+        
+        // Form reset handling with animation
+        document.querySelector('button[type="reset"]').addEventListener('click', function() {
+            resetForm();
+        });
+    }
+    
+    function updateLanguageUI() {
+        const englishBtn = document.getElementById('englishBtn');
+        const marathiBtn = document.getElementById('marathiBtn');
+        
+        if (isEnglish) {
+            document.querySelectorAll('.english-text').forEach(el => el.classList.remove('hidden'));
+            document.querySelectorAll('.marathi-text').forEach(el => el.classList.add('hidden'));
+            englishBtn.classList.add('bg-saffron', 'text-white');
+            marathiBtn.classList.remove('bg-saffron', 'text-white');
+        } else {
+            document.querySelectorAll('.english-text').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.marathi-text').forEach(el => el.classList.remove('hidden'));
+            englishBtn.classList.remove('bg-saffron', 'text-white');
+            marathiBtn.classList.add('bg-saffron', 'text-white');
+        }
+        
+        // Update dropdown text based on language
+        updateDropdownLabels();
+    }
+    
+    function updateDropdownLabels() {
+        // Update district dropdown
+        const districtSelect = document.getElementById('district');
+        Array.from(districtSelect.options).forEach(option => {
+            if (option.value && option.dataset.nameEn && option.dataset.nameMr) {
+                option.textContent = isEnglish ? option.dataset.nameEn : option.dataset.nameMr;
+            }
+        });
+        
+        if (districtSelect.options.length > 0 && districtSelect.options[0].value === "") {
+            districtSelect.options[0].text = isEnglish ? 'Select District' : 'जिल्हा निवडा';
+        }
+        
+        // Update sector dropdown
+        const sectorSelect = document.getElementById('sector');
+        Array.from(sectorSelect.options).forEach(option => {
+            if (option.value && option.dataset.nameEn && option.dataset.nameMr) {
+                option.textContent = isEnglish ? option.dataset.nameEn : option.dataset.nameMr;
+            }
+        });
+        
+        if (sectorSelect.options.length > 0 && sectorSelect.options[0].value === "") {
+            sectorSelect.options[0].text = isEnglish ? 'Select Sector' : 'क्षेत्र निवडा';
+        }
+        
+        // Update taluka dropdown
+        const talukaSelect = document.getElementById('taluka');
+        if (talukaSelect.options.length > 0 && talukaSelect.options[0].value === "") {
+            talukaSelect.options[0].text = isEnglish ? 'Select Taluka' : 'तालुका निवडा';
+        }
+        Array.from(talukaSelect.options).forEach(option => {
+            if (option.value && option.dataset.nameEn && option.dataset.nameMr) {
+                option.textContent = isEnglish ? option.dataset.nameEn : option.dataset.nameMr;
+            }
+        });
+        
+        // Update gram_panchayat dropdown
+        const gpSelect = document.getElementById('gram_panchayat');
+        if (gpSelect.options.length > 0 && gpSelect.options[0].value === "") {
+            gpSelect.options[0].text = isEnglish ? 'Select Gram Panchayat' : 'ग्रामपंचायत निवडा';
+        }
+        Array.from(gpSelect.options).forEach(option => {
+            if (option.value && option.dataset.nameEn && option.dataset.nameMr) {
+                option.textContent = isEnglish ? option.dataset.nameEn : option.dataset.nameMr;
+            }
+        });
+        
+        // Update work_type dropdown
+        const workTypeSelect = document.getElementById('work_type');
+        if (workTypeSelect.options.length > 0 && workTypeSelect.options[0].value === "") {
+            workTypeSelect.options[0].text = isEnglish ? 'Select Work Type' : 'कार्य प्रकार निवडा';
+        }
+        Array.from(workTypeSelect.options).forEach(option => {
+            if (option.value && option.dataset.nameEn && option.dataset.nameMr) {
+                option.textContent = isEnglish ? option.dataset.nameEn : option.dataset.nameMr;
+            }
+        });
+    }
+    
+    function loadTalukas() {
+        const districtId = document.getElementById('district').value;
+        const talukaSelect = document.getElementById('taluka');
+        const loadingIndicator = document.getElementById('taluka-loading');
+        
+        // Clear dependent dropdowns
+        talukaSelect.innerHTML = '<option value="">' + (isEnglish ? 'Select Taluka' : 'तालुका निवडा') + '</option>';
+        document.getElementById('gram_panchayat').innerHTML = '<option value="">' + (isEnglish ? 'Select Gram Panchayat' : 'ग्रामपंचायत निवडा') + '</option>';
+        
+        if (!districtId) return;
+        
+        // Show loading indicator
+        loadingIndicator.classList.remove('hidden');
+        talukaSelect.disabled = true;
+        
+        fetch(`/get-talukas/?district_id=${districtId}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                data.forEach(taluka => {
+                    const option = document.createElement('option');
+                    option.value = taluka.id;
+                    option.dataset.nameEn = taluka.name_en;
+                    option.dataset.nameMr = taluka.name_mr;
+                    option.textContent = isEnglish ? taluka.name_en : taluka.name_mr;
+                    talukaSelect.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading talukas:', error);
+                showToast(isEnglish ? 'Failed to load talukas' : 'तालुका लोड करण्यात अयशस्वी', 'error');
+            })
+            .finally(() => {
+                // Hide loading indicator
+                loadingIndicator.classList.add('hidden');
+                talukaSelect.disabled = false;
+            });
+    }
+
+    function loadGramPanchayats() {
+        const talukaId = document.getElementById('taluka').value;
+        const gpSelect = document.getElementById('gram_panchayat');
+        const loadingIndicator = document.getElementById('gp-loading');
+        
+        // Clear dependent dropdown
+        gpSelect.innerHTML = '<option value="">' + (isEnglish ? 'Select Gram Panchayat' : 'ग्रामपंचायत निवडा') + '</option>';
+        
+        if (!talukaId) return;
+        
+        // Show loading indicator
+        loadingIndicator.classList.remove('hidden');
+        gpSelect.disabled = true;
+        
+        fetch(`/get-gram-panchayats/?taluka_id=${talukaId}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                data.forEach(gp => {
+                    const option = document.createElement('option');
+                    option.value = gp.id;
+                    option.dataset.nameEn = gp.name_en;
+                    option.dataset.nameMr = gp.name_mr;
+                    option.textContent = isEnglish ? gp.name_en : gp.name_mr;
+                    gpSelect.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading gram panchayats:', error);
+                showToast(isEnglish ? 'Failed to load gram panchayats' : 'ग्रामपंचायती लोड करण्यात अयशस्वी', 'error');
+            })
+            .finally(() => {
+                // Hide loading indicator
+                loadingIndicator.classList.add('hidden');
+                gpSelect.disabled = false;
+            });
+    }
+
+    function loadWorkTypes() {
+        const sectorId = document.getElementById('sector').value;
+        const workTypeSelect = document.getElementById('work_type');
+        const loadingIndicator = document.getElementById('worktype-loading');
+        
+        // Clear dependent dropdown
+        workTypeSelect.innerHTML = '<option value="">' + (isEnglish ? 'Select Work Type' : 'कार्य प्रकार निवडा') + '</option>';
+        
+        if (!sectorId) return;
+        
+        // Show loading indicator
+        loadingIndicator.classList.remove('hidden');
+        workTypeSelect.disabled = true;
+        
+        fetch(`/get-work-types/?sector=${sectorId}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                data.forEach(workType => {
+                    const option = document.createElement('option');
+                    option.value = workType.id;
+                    option.dataset.nameEn = workType.name_en;
+                    option.dataset.nameMr = workType.name_mr;
+                    option.textContent = isEnglish ? workType.name_en : workType.name_mr;
+                    workTypeSelect.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading work types:', error);
+                showToast(isEnglish ? 'Failed to load work types' : 'कार्य प्रकार लोड करण्यात अयशस्वी', 'error');
+            })
+            .finally(() => {
+                // Hide loading indicator
+                loadingIndicator.classList.add('hidden');
+                workTypeSelect.disabled = false;
+            });
+    }
+    
+    function validateForm() {
+        const district = document.getElementById('district');
+        const taluka = document.getElementById('taluka');
+        const gramPanchayat = document.getElementById('gram_panchayat');
+        const sector = document.getElementById('sector');
+        const workType = document.getElementById('work_type');
+        
+        let isValid = true;
+        
+        // Check district
+        if (!district.value) {
+            markInvalid(district);
+            showToast(isEnglish ? 'Please select a district' : 'कृपया जिल्हा निवडा', 'error');
+            isValid = false;
+        }
+        
+        // Check taluka
+        if (!taluka.value) {
+            markInvalid(taluka);
+            if (isValid) showToast(isEnglish ? 'Please select a taluka' : 'कृपया तालुका निवडा', 'error');
+            isValid = false;
+        }
+        
+        // Check gram panchayat
+        if (!gramPanchayat.value) {
+            markInvalid(gramPanchayat);
+            if (isValid) showToast(isEnglish ? 'Please select a gram panchayat' : 'कृपया ग्रामपंचायत निवडा', 'error');
+            isValid = false;
+        }
+        
+        // Check sector
+        if (!sector.value) {
+            markInvalid(sector);
+            if (isValid) showToast(isEnglish ? 'Please select a sector' : 'कृपया क्षेत्र निवडा', 'error');
+            isValid = false;
+        }
+        
+        // Check work type
+        if (!workType.value) {
+            markInvalid(workType);
+            if (isValid) showToast(isEnglish ? 'Please select a work type' : 'कृपया कार्य प्रकार निवडा', 'error');
+            isValid = false;
+        }
+        
+        return isValid;
+    }
+    
+    function markInvalid(element) {
+        element.classList.add('border-red-500', 'ring-1', 'ring-red-500');
+        
+        // Add shake animation
+        element.classList.add('animate-shake');
+        setTimeout(() => {
+            element.classList.remove('animate-shake');
+        }, 600);
+        
+        // Add event listener to remove error state on change
+        element.addEventListener('change', function onChangeHandler() {
+            element.classList.remove('border-red-500', 'ring-1', 'ring-red-500');
+            element.removeEventListener('change', onChangeHandler);
+        });
+    }
+    
+    function resetErrorStates() {
+        const formInputs = document.querySelectorAll('#suggestionForm select');
+        formInputs.forEach(input => {
+            input.classList.remove('border-red-500', 'ring-1', 'ring-red-500');
+        });
+    }
+    
+    function resetForm() {
+        // Reset all selects
+        document.getElementById('taluka').innerHTML = '<option value="">' + (isEnglish ? 'Select Taluka' : 'तालुका निवडा') + '</option>';
+        document.getElementById('gram_panchayat').innerHTML = '<option value="">' + (isEnglish ? 'Select Gram Panchayat' : 'ग्रामपंचायत निवडा') + '</option>';
+        document.getElementById('work_type').innerHTML = '<option value="">' + (isEnglish ? 'Select Work Type' : 'कार्य प्रकार निवडा') + '</option>';
+        
+        // Reset checkbox
+        document.getElementById('isspeciality').checked = false;
+        
+        // Remove any error states
+        resetErrorStates();
+        
+        // Add a subtle shake animation to the form
+        const form = document.getElementById('suggestionForm');
+        form.classList.add('animate-shake');
+        setTimeout(() => {
+            form.classList.remove('animate-shake');
+        }, 600);
+    }
+    
+    // Toast notification functions
+    function showToast(message, type = 'success') {
+        const toast = document.getElementById('toast');
+        const toastMessage = document.getElementById('toast-message');
+        const successIcon = document.getElementById('toast-icon-success');
+        const errorIcon = document.getElementById('toast-icon-error');
+        
+        // Set message
+        toastMessage.textContent = message;
+        
+        // Set correct type styling
+        if (type === 'success') {
+            toast.classList.remove('bg-red-50', 'text-red-800');
+            toast.classList.add('bg-green-50', 'text-green-800');
+            successIcon.classList.remove('hidden');
+            errorIcon.classList.add('hidden');
+        } else {
+            toast.classList.remove('bg-green-50', 'text-green-800');
+            toast.classList.add('bg-red-50', 'text-red-800');
+            successIcon.classList.add('hidden');
+            errorIcon.classList.remove('hidden');
+        }
+        
+        // Show toast
+        toast.classList.remove('hidden');
+        setTimeout(() => {
+            toast.classList.remove('translate-y-16', 'opacity-0');
+        }, 10);
+        
+        // Hide after 5 seconds
+        setTimeout(hideToast, 5000);
+    }
+    
+    function hideToast() {
+        const toast = document.getElementById('toast');
+        toast.classList.add('translate-y-16', 'opacity-0');
+        setTimeout(() => {
+            toast.classList.add('hidden');
+        }, 300);
+    }
+    
+    function addRippleEffect() {
+        const buttons = document.querySelectorAll('button');
+        
+        buttons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                const x = e.clientX - e.target.getBoundingClientRect().left;
+                const y = e.clientY - e.target.getBoundingClientRect().top;
+                
+                const ripple = document.createElement('span');
+                ripple.classList.add('ripple-effect');
+                ripple.style.left = `${x}px`;
+                ripple.style.top = `${y}px`;
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+        
+        // Add the ripple effect CSS
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+            
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                25% { transform: translateX(-5px); }
+                75% { transform: translateX(5px); }
+            }
+            
+            .animate-shake {
+                animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+            }
+            
+            .ripple-effect {
+                position: absolute;
+                background: rgba(255, 255, 255, 0.4);
+                border-radius: 50%;
+                transform: scale(0);
+                animation: ripple 0.6s linear;
+                width: 100px;
+                height: 100px;
+                pointer-events: none;
+            }
+            
+            button {
+                position: relative;
+                overflow: hidden;
+            }
+        `;
+        document.head.appendChild(style);
+    }
+</script>
+{% endblock %}

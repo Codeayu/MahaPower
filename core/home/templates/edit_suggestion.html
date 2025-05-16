@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Edit Work Suggestion{% endblock %}
+{% block title %}Edit Work Suggestion | Maharashtra State Khadi & Village Industries Board{% endblock %}
 
 {% block content %}
 <div class="container mx-auto px-4 py-8">
@@ -10,15 +10,31 @@
         <h2 class="text-3xl font-bold text-gray-800 mb-2 english-text">Edit Work Suggestion</h2>
         <h2 class="text-3xl font-bold text-gray-800 mb-2 marathi-text hidden">कामाच्या सूचना संपादित करा</h2>
         <div class="w-20 h-1 bg-saffron mx-auto mb-4"></div>
-        <p class="text-gray-600 max-w-2xl mx-auto english-text">Update the location or work type for this suggestion.</p>
-        <p class="text-gray-600 max-w-2xl mx-auto marathi-text hidden">या सूचनेसाठी स्थान किंवा कामाचा प्रकार अपडेट करा.</p>
+        <p class="text-gray-600 max-w-2xl mx-auto english-text">Update the details for this work suggestion</p>
+        <p class="text-gray-600 max-w-2xl mx-auto marathi-text hidden">या कामाच्या सूचनेसाठी तपशील अद्यतनित करा</p>
     </div>
 
-    <!-- Language Toggle Section -->
-    <div class="flex justify-end mb-6">
-        <div class="flex bg-white rounded-full p-1 shadow-sm">
-            <button type="button" id="englishBtn" class="px-4 py-1.5 rounded-full bg-saffron text-white text-sm font-medium transition-all duration-200">English</button>
-            <button type="button" id="marathiBtn" class="px-4 py-1.5 rounded-full text-gray-700 text-sm font-medium transition-all duration-200">मराठी</button>
+    <!-- Current Information -->
+    <div class="rounded-xl shadow-lg overflow-hidden border border-gray-200 mb-6">
+        <div class="p-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white">
+            <h4 class="text-xl font-semibold english-text">Current Information</h4>
+            <h4 class="text-xl font-semibold marathi-text hidden">सध्याची माहिती</h4>
+        </div>
+        <div class="p-5 bg-blue-50">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <p class="text-sm text-gray-500 mb-1 english-text">Current Location</p>
+                    <p class="text-sm text-gray-500 mb-1 marathi-text hidden">वर्तमान स्थान</p>
+                    <p class="font-medium text-gray-800 english-text">{{ suggestion.gram_panchayat.name_en }}, {{ suggestion.gram_panchayat.taluka.name_en }}, {{ suggestion.gram_panchayat.taluka.district.name_en }}</p>
+                    <p class="font-medium text-gray-800 marathi-text hidden">{{ suggestion.gram_panchayat.name_mr }}, {{ suggestion.gram_panchayat.taluka.name_mr }}, {{ suggestion.gram_panchayat.taluka.district.name_mr }}</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-500 mb-1 english-text">Current Work Type</p>
+                    <p class="text-sm text-gray-500 mb-1 marathi-text hidden">वर्तमान कामाचा प्रकार</p>
+                    <p class="font-medium text-gray-800 english-text">{{ suggestion.work_type.name_en }} ({{ suggestion.work_type.sector.name_en }})</p>
+                    <p class="font-medium text-gray-800 marathi-text hidden">{{ suggestion.work_type.name_mr }} ({{ suggestion.work_type.sector.name_mr }})</p>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -32,36 +48,22 @@
         </div>
         
         <div class="p-6 bg-white">
-            <form method="post" class="grid grid-cols-1 md:grid-cols-2 gap-6" id="editSuggestionForm">
+            <form method="post" id="editSuggestionForm" action="{% url 'edit_suggestion' suggestion.id %}" class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {% csrf_token %}
-                
-                <!-- Current Information Box -->
-                <div class="col-span-1 md:col-span-2 bg-blue-50 p-4 rounded-lg border border-blue-100 mb-2">
-                    <h5 class="font-semibold text-blue-800 mb-3 english-text">Current Information</h5>
-                    <h5 class="font-semibold text-blue-800 mb-3 marathi-text hidden">सध्याची माहिती</h5>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <p class="text-sm text-gray-600 english-text">Current Location</p>
-                            <p class="text-sm text-gray-600 marathi-text hidden">वर्तमान स्थान</p>
-                            <p class="font-medium text-gray-800">{{ suggestion.gram_panchayat.name }}, {{ suggestion.gram_panchayat.taluka.name }}, {{ suggestion.gram_panchayat.taluka.district.name }}</p>
-                        </div>
-                        <div>
-                            <p class="text-sm text-gray-600 english-text">Current Work Type</p>
-                            <p class="text-sm text-gray-600 marathi-text hidden">वर्तमान कामाचा प्रकार</p>
-                            <p class="font-medium text-gray-800">{{ suggestion.work_type.name_en }} ({{ suggestion.work_type.sector }})</p>
-                        </div>
-                    </div>
-                </div>
                 
                 <!-- District Dropdown -->
                 <div class="relative">
                     <label for="district" class="block text-sm font-medium text-gray-600 mb-1.5 english-text">District</label>
                     <label for="district" class="block text-sm font-medium text-gray-600 mb-1.5 marathi-text hidden">जिल्हा</label>
-                    <select id="district" name="district" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-saffron focus:border-transparent appearance-none bg-white">
+                    <select id="district" name="district" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-saffron focus:border-transparent appearance-none bg-white" required>
                         <option value="">Select District</option>
                         {% for district in districts %}
-                            <option value="{{ district.id }}" {% if district.id == suggestion.gram_panchayat.taluka.district.id %}selected{% endif %}>{{ district.name }}</option>
+                            <option value="{{ district.id }}" 
+                                data-name-en="{{ district.name_en }}" 
+                                data-name-mr="{{ district.name_mr }}"
+                                {% if district.id == suggestion.gram_panchayat.taluka.district.id %}selected{% endif %}>
+                                {{ district.name_en }}
+                            </option>
                         {% endfor %}
                     </select>
                     <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 pt-6">
@@ -69,16 +71,24 @@
                             <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"></path>
                         </svg>
                     </div>
+                    <div id="district-loading" class="hidden absolute right-10 top-1/2 transform -translate-y-1/3">
+                        <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-saffron"></div>
+                    </div>
                 </div>
                 
                 <!-- Taluka Dropdown -->
                 <div class="relative">
                     <label for="taluka" class="block text-sm font-medium text-gray-600 mb-1.5 english-text">Taluka</label>
                     <label for="taluka" class="block text-sm font-medium text-gray-600 mb-1.5 marathi-text hidden">तालुका</label>
-                    <select id="taluka" name="taluka" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-saffron focus:border-transparent appearance-none bg-white">
+                    <select id="taluka" name="taluka" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-saffron focus:border-transparent appearance-none bg-white" required>
                         <option value="">Select Taluka</option>
                         {% for taluka in talukas %}
-                            <option value="{{ taluka.id }}" {% if taluka.id == suggestion.gram_panchayat.taluka.id %}selected{% endif %}>{{ taluka.name }}</option>
+                            <option value="{{ taluka.id }}"
+                                data-name-en="{{ taluka.name_en }}" 
+                                data-name-mr="{{ taluka.name_mr }}"
+                                {% if taluka.id == suggestion.gram_panchayat.taluka.id %}selected{% endif %}>
+                                {{ taluka.name_en }}
+                            </option>
                         {% endfor %}
                     </select>
                     <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 pt-6">
@@ -90,15 +100,20 @@
                         <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-saffron"></div>
                     </div>
                 </div>
-
+                
                 <!-- Gram Panchayat Dropdown -->
                 <div class="relative">
                     <label for="gram_panchayat" class="block text-sm font-medium text-gray-600 mb-1.5 english-text">Gram Panchayat</label>
                     <label for="gram_panchayat" class="block text-sm font-medium text-gray-600 mb-1.5 marathi-text hidden">ग्रामपंचायत</label>
-                    <select id="gram_panchayat" name="gram_panchayat" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-saffron focus:border-transparent appearance-none bg-white">
+                    <select id="gram_panchayat" name="gram_panchayat" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-saffron focus:border-transparent appearance-none bg-white" required>
                         <option value="">Select Gram Panchayat</option>
                         {% for gram in grams %}
-                            <option value="{{ gram.id }}" {% if gram.id == suggestion.gram_panchayat.id %}selected{% endif %}>{{ gram.name }}</option>
+                            <option value="{{ gram.id }}" 
+                                data-name-en="{{ gram.name_en }}" 
+                                data-name-mr="{{ gram.name_mr }}"
+                                {% if gram.id == suggestion.gram_panchayat.id %}selected{% endif %}>
+                                {{ gram.name_en }}
+                            </option>
                         {% endfor %}
                     </select>
                     <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 pt-6">
@@ -115,10 +130,15 @@
                 <div class="relative">
                     <label for="sector" class="block text-sm font-medium text-gray-600 mb-1.5 english-text">Sector</label>
                     <label for="sector" class="block text-sm font-medium text-gray-600 mb-1.5 marathi-text hidden">क्षेत्र</label>
-                    <select id="sector" name="sector" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-saffron focus:border-transparent appearance-none bg-white">
+                    <select id="sector" name="sector" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-saffron focus:border-transparent appearance-none bg-white" required>
                         <option value="">Select Sector</option>
-                        {% for sec in sectors %}
-                            <option value="{{ sec }}" {% if sec == suggestion.work_type.sector %}selected{% endif %}>{{ sec }}</option>
+                        {% for sector in sectors %}
+                            <option value="{{ sector.id }}" 
+                                data-name-en="{{ sector.name_en }}" 
+                                data-name-mr="{{ sector.name_mr }}"
+                                {% if sector.id == suggestion.work_type.sector.id %}selected{% endif %}>
+                                {{ sector.name_en }}
+                            </option>
                         {% endfor %}
                     </select>
                     <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 pt-6">
@@ -126,16 +146,24 @@
                             <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"></path>
                         </svg>
                     </div>
+                    <div id="sector-loading" class="hidden absolute right-10 top-1/2 transform -translate-y-1/3">
+                        <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-saffron"></div>
+                    </div>
                 </div>
                 
                 <!-- Work Type Dropdown -->
-                <div class="relative col-span-1 md:col-span-2">
+                <div class="col-span-1 md:col-span-2 relative">
                     <label for="work_type" class="block text-sm font-medium text-gray-600 mb-1.5 english-text">Work Type</label>
                     <label for="work_type" class="block text-sm font-medium text-gray-600 mb-1.5 marathi-text hidden">कामाचा प्रकार</label>
-                    <select id="work_type" name="work_type" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-saffron focus:border-transparent appearance-none bg-white">
+                    <select id="work_type" name="work_type" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-saffron focus:border-transparent appearance-none bg-white" required>
                         <option value="">Select Work Type</option>
                         {% for work_type in work_types %}
-                            <option value="{{ work_type.id }}" {% if work_type.id == suggestion.work_type.id %}selected{% endif %}>{{ work_type.name_en }}</option>
+                            <option value="{{ work_type.id }}" 
+                                data-name-en="{{ work_type.name_en }}" 
+                                data-name-mr="{{ work_type.name_mr }}"
+                                {% if work_type.id == suggestion.work_type.id %}selected{% endif %}>
+                                {{ work_type.name_en }}
+                            </option>
                         {% endfor %}
                     </select>
                     <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 pt-6">
@@ -147,20 +175,36 @@
                         <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-saffron"></div>
                     </div>
                 </div>
+                
+                <!-- Is Specialty Checkbox -->
+                <div class="col-span-1 md:col-span-2 mt-2">
+                    <div class="flex items-center">
+                        <input class="h-5 w-5 text-saffron border-gray-300 rounded focus:ring-saffron" type="checkbox" id="is_specialty" name="is_specialty" {% if suggestion.is_specialty %}checked{% endif %}>
+                        <label class="ml-2 text-gray-700 english-text" for="is_specialty">Specialty Work</label>
+                        <label class="ml-2 text-gray-700 marathi-text hidden" for="is_specialty">विशेष काम</label>
+                    </div>
+                </div>
 
                 <!-- Button Row -->
-                <div class="col-span-1 md:col-span-2 flex justify-between items-center mt-4">
+                <div class="col-span-1 md:col-span-2 flex justify-between items-center mt-4 pt-4 border-t border-gray-200">
                     <!-- Cancel Button -->
-                    <a href="{% url 'suggestion_management' %}" class="py-2.5 px-8 rounded-lg text-sm font-semibold bg-gray-200 text-gray-700 hover:bg-gray-300 hover:shadow-md transition-all duration-300 transform hover:-translate-y-0.5 flex items-center">
-                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                        </svg>
-                        <span class="english-text">Cancel</span>
-                        <span class="marathi-text hidden">रद्द करा</span>
+                    <a href="{% url 'manage_suggestions' %}" class="py-2.5 px-8 rounded-lg text-sm font-semibold bg-gray-200 text-gray-700 hover:bg-gray-300 hover:shadow-md transition-all duration-300 transform hover:-translate-y-0.5 flex items-center">
+                        <span class="english-text flex items-center">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                            </svg>
+                            Cancel
+                        </span>
+                        <span class="marathi-text hidden flex items-center">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                            </svg>
+                            रद्द करा
+                        </span>
                     </a>
 
                     <!-- Submit Button -->
-                    <button type="submit" id="submitBtn" class="py-2.5 px-8 rounded-lg text-sm font-semibold bg-gradient-to-r from-green-600 to-green-500 text-white hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5">
+                    <button type="submit" id="submitBtn" class="py-2.5 px-8 rounded-lg text-sm font-semibold bg-gradient-to-r from-saffron to-yellow-500 text-white hover:shadow-md transition-all duration-300 transform hover:-translate-y-0.5">
                         <span class="english-text flex items-center">
                             Save Changes
                             <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -181,185 +225,270 @@
 </div>
 
 <script>
-// Language toggle functionality
-document.getElementById('englishBtn').addEventListener('click', function() {
-    document.querySelectorAll('.english-text').forEach(el => el.classList.remove('hidden'));
-    document.querySelectorAll('.marathi-text').forEach(el => el.classList.add('hidden'));
-    this.classList.add('bg-saffron', 'text-white');
-    document.getElementById('marathiBtn').classList.remove('bg-saffron', 'text-white');
-});
+// Language state variable
+let isEnglish = false;
 
-document.getElementById('marathiBtn').addEventListener('click', function() {
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Marathi as active by default as per manage_suggestions.html
     document.querySelectorAll('.english-text').forEach(el => el.classList.add('hidden'));
     document.querySelectorAll('.marathi-text').forEach(el => el.classList.remove('hidden'));
-    this.classList.add('bg-saffron', 'text-white');
-    document.getElementById('englishBtn').classList.remove('bg-saffron', 'text-white');
+    
+    // Initialize dropdowns with proper data attributes
+    initializeDropdowns();
+    
+    // Setup event listeners
+    setupEventListeners();
 });
 
-// District dropdown change handler
-document.getElementById('district').addEventListener('change', function () {
-    const talukaSelect = document.getElementById('taluka');
-    const gpSelect = document.getElementById('gram_panchayat');
-    const loading = document.getElementById('taluka-loading');
-    
-    // Reset subsequent dropdowns
-    talukaSelect.innerHTML = '<option value="">Select Taluka</option>';
-    gpSelect.innerHTML = '<option value="">Select Gram Panchayat</option>';
-    
-    if (!this.value) {
-        return;
-    }
-    
-    // Show loading indicator
-    talukaSelect.disabled = true;
-    loading.classList.remove('hidden');
-    
-    // Fetch talukas for the selected district
-    fetch(`/get-talukas/?district_id=${this.value}`)
-        .then(res => res.json())
-        .then(data => {
-            talukaSelect.innerHTML = '<option value="">Select Taluka</option>';
-            data.forEach(t => {
-                talukaSelect.innerHTML += `<option value="${t.id}">${t.name}</option>`;
-            });
-        })
-        .catch(err => {
-            console.error('Error loading talukas:', err);
-        })
-        .finally(() => {
-            talukaSelect.disabled = false;
-            loading.classList.add('hidden');
+// Initialize all dropdowns
+function initializeDropdowns() {
+    ['district', 'taluka', 'gram_panchayat', 'sector', 'work_type'].forEach(id => {
+        const dropdown = document.getElementById(id);
+        if (!dropdown) return;
+        
+        Array.from(dropdown.options).forEach(option => {
+            if (option.value) {
+                // Set the display text based on current language
+                option.text = isEnglish ? option.dataset.nameEn : option.dataset.nameMr;
+            }
         });
-});
-
-// Taluka dropdown change handler
-document.getElementById('taluka').addEventListener('change', function () {
-    const gpSelect = document.getElementById('gram_panchayat');
-    const loading = document.getElementById('gp-loading');
-    
-    // Reset gram panchayat dropdown
-    gpSelect.innerHTML = '<option value="">Select Gram Panchayat</option>';
-    
-    if (!this.value) {
-        return;
-    }
-    
-    // Show loading indicator
-    gpSelect.disabled = true;
-    loading.classList.remove('hidden');
-    
-    // Fetch gram panchayats for the selected taluka
-    fetch(`/get-gram-panchayats/?taluka_id=${this.value}`)
-        .then(res => res.json())
-        .then(data => {
-            gpSelect.innerHTML = '<option value="">Select Gram Panchayat</option>';
-            data.forEach(gp => {
-                gpSelect.innerHTML += `<option value="${gp.id}">${gp.name}</option>`;
-            });
-        })
-        .catch(err => {
-            console.error('Error loading gram panchayats:', err);
-        })
-        .finally(() => {
-            gpSelect.disabled = false;
-            loading.classList.add('hidden');
-        });
-});
-
-// Sector dropdown change handler
-document.getElementById('sector').addEventListener('change', function () {
-    const workTypeSelect = document.getElementById('work_type');
-    const loading = document.getElementById('work-type-loading');
-    
-    // Reset work type dropdown
-    workTypeSelect.innerHTML = '<option value="">Select Work Type</option>';
-    
-    if (!this.value) {
-        return;
-    }
-    
-    // Show loading indicator
-    workTypeSelect.disabled = true;
-    if (loading) loading.classList.remove('hidden');
-    
-    // Fetch work types for the selected sector
-    fetch(`/get-work-types/?sector=${this.value}`)
-        .then(res => res.json())
-        .then(data => {
-            workTypeSelect.innerHTML = '<option value="">Select Work Type</option>';
-            data.forEach(wt => {
-                workTypeSelect.innerHTML += `<option value="${wt.id}">${wt.name_en}</option>`;
-            });
-        })
-        .catch(err => {
-            console.error('Error loading work types:', err);
-        })
-        .finally(() => {
-            workTypeSelect.disabled = false;
-            if (loading) loading.classList.add('hidden');
-        });
-});
-
-// Form submission with AJAX
-document.getElementById('editSuggestionForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const submitBtn = document.getElementById('submitBtn');
-    const originalBtnText = submitBtn.innerHTML;
-    
-    // Show loading state
-    submitBtn.disabled = true;
-    const isEnglish = !document.querySelector('.english-text').classList.contains('hidden');
-    submitBtn.innerHTML = `<div class="flex items-center justify-center">
-                              <div class="animate-spin h-5 w-5 border-2 border-white rounded-full border-t-transparent mr-2"></div>
-                              <span>${isEnglish ? 'Saving...' : 'जतन करत आहे...'}</span>
-                           </div>`;
-    
-    // Prepare form data
-    const formData = new FormData(this);
-    
-    // Send AJAX request
-    fetch('', {
-        method: 'POST',
-        body: formData,
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest',
+        
+        if (dropdown.options.length > 0 && dropdown.options[0].value === "") {
+            dropdown.options[0].text = isEnglish ? 
+                (id === 'district' ? 'Select District' : 
+                id === 'taluka' ? 'Select Taluka' : 
+                id === 'gram_panchayat' ? 'Select Gram Panchayat' : 
+                id === 'sector' ? 'Select Sector' : 'Select Work Type') :
+                (id === 'district' ? 'जिल्हा निवडा' : 
+                id === 'taluka' ? 'तालुका निवडा' : 
+                id === 'gram_panchayat' ? 'ग्रामपंचायत निवडा' : 
+                id === 'sector' ? 'क्षेत्र निवडा' : 'कामाचा प्रकार निवडा');
         }
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.status === 'success') {
-            // Show success message
-            showNotification(data.message, 'success');
-            
-            // Redirect after a short delay
-            setTimeout(() => {
-                window.location.href = "{% url 'suggestion_management' %}";
-            }, 1500);
-        } else {
-            // Show error message
-            showNotification(data.message, 'error');
+    });
+}
+
+function setupEventListeners() {
+    // District dropdown change handler
+    document.getElementById('district').addEventListener('change', function() {
+        const talukaSelect = document.getElementById('taluka');
+        const gpSelect = document.getElementById('gram_panchayat');
+        const loading = document.getElementById('taluka-loading');
+        
+        // Reset subsequent dropdowns
+        talukaSelect.innerHTML = '<option value="">' + (isEnglish ? 'Select Taluka' : 'तालुका निवडा') + '</option>';
+        gpSelect.innerHTML = '<option value="">' + (isEnglish ? 'Select Gram Panchayat' : 'ग्रामपंचायत निवडा') + '</option>';
+        
+        if (!this.value) {
+            return;
+        }
+        
+        // Show loading indicator
+        talukaSelect.disabled = true;
+        loading.classList.remove('hidden');
+        
+        // Fetch talukas for the selected district
+        fetch(`/get-talukas/?district_id=${this.value}`)
+            .then(res => res.json())
+            .then(data => {
+                talukaSelect.innerHTML = '<option value="">' + (isEnglish ? 'Select Taluka' : 'तालुका निवडा') + '</option>';
+                data.forEach(t => {
+                    const option = document.createElement('option');
+                    option.value = t.id;
+                    option.dataset.nameEn = t.name_en;
+                    option.dataset.nameMr = t.name_mr;
+                    option.text = isEnglish ? t.name_en : t.name_mr;
+                    talukaSelect.appendChild(option);
+                });
+            })
+            .catch(err => {
+                console.error('Error loading talukas:', err);
+            })
+            .finally(() => {
+                talukaSelect.disabled = false;
+                loading.classList.add('hidden');
+            });
+    });
+
+    // Taluka dropdown change handler
+    document.getElementById('taluka').addEventListener('change', function() {
+        const gpSelect = document.getElementById('gram_panchayat');
+        const loading = document.getElementById('gp-loading');
+        
+        // Reset gram panchayat dropdown
+        gpSelect.innerHTML = '<option value="">' + (isEnglish ? 'Select Gram Panchayat' : 'ग्रामपंचायत निवडा') + '</option>';
+        
+        if (!this.value) {
+            return;
+        }
+        
+        // Show loading indicator
+        gpSelect.disabled = true;
+        loading.classList.remove('hidden');
+        
+        // Fetch gram panchayats for the selected taluka
+        fetch(`/get-gram-panchayats/?taluka_id=${this.value}`)
+            .then(res => res.json())
+            .then(data => {
+                gpSelect.innerHTML = '<option value="">' + (isEnglish ? 'Select Gram Panchayat' : 'ग्रामपंचायत निवडा') + '</option>';
+                data.forEach(gp => {
+                    const option = document.createElement('option');
+                    option.value = gp.id;
+                    option.dataset.nameEn = gp.name_en;
+                    option.dataset.nameMr = gp.name_mr;
+                    option.text = isEnglish ? gp.name_en : gp.name_mr;
+                    gpSelect.appendChild(option);
+                });
+            })
+            .catch(err => {
+                console.error('Error loading gram panchayats:', err);
+            })
+            .finally(() => {
+                gpSelect.disabled = false;
+                loading.classList.add('hidden');
+            });
+    });
+
+    // Sector dropdown change handler
+    document.getElementById('sector').addEventListener('change', function() {
+        const workTypeSelect = document.getElementById('work_type');
+        const loading = document.getElementById('work-type-loading');
+        
+        // Reset work type dropdown
+        workTypeSelect.innerHTML = '<option value="">' + (isEnglish ? 'Select Work Type' : 'कामाचा प्रकार निवडा') + '</option>';
+        
+        if (!this.value) {
+            return;
+        }
+        
+        // Show loading indicator
+        workTypeSelect.disabled = true;
+        loading.classList.remove('hidden');
+        
+        // Fetch work types for the selected sector
+        fetch(`/get-work-types/?sector_id=${this.value}`)
+            .then(res => res.json())
+            .then(data => {
+                workTypeSelect.innerHTML = '<option value="">' + (isEnglish ? 'Select Work Type' : 'कामाचा प्रकार निवडा') + '</option>';
+                data.forEach(wt => {
+                    const option = document.createElement('option');
+                    option.value = wt.id;
+                    option.dataset.nameEn = wt.name_en;
+                    option.dataset.nameMr = wt.name_mr;
+                    option.text = isEnglish ? wt.name_en : wt.name_mr;
+                    workTypeSelect.appendChild(option);
+                });
+            })
+            .catch(err => {
+                console.error('Error loading work types:', err);
+            })
+            .finally(() => {
+                workTypeSelect.disabled = false;
+                loading.classList.add('hidden');
+            });
+    });
+
+    // Form validation and AJAX submission
+    document.getElementById('editSuggestionForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Basic form validation
+        const requiredFields = ['district', 'taluka', 'gram_panchayat', 'sector', 'work_type'];
+        let isValid = true;
+        
+        requiredFields.forEach(field => {
+            const element = document.getElementById(field);
+            if (!element.value) {
+                element.classList.add('border-red-500', 'ring-1', 'ring-red-500');
+                isValid = false;
+            } else {
+                element.classList.remove('border-red-500', 'ring-1', 'ring-red-500');
+            }
+        });
+        
+        if (!isValid) {
+            showNotification(isEnglish ? 'Please fill all required fields' : 'कृपया सर्व आवश्यक फील्ड भरा', 'error');
+            return;
+        }
+        
+        const submitBtn = document.getElementById('submitBtn');
+        const originalBtnText = submitBtn.innerHTML;
+        
+        // Show loading state
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `
+            <span class="flex items-center">
+                <div class="animate-spin h-4 w-4 border-2 border-white rounded-full border-t-transparent mr-2"></div>
+                <span class="english-text ${isEnglish ? '' : 'hidden'}">Saving...</span>
+                <span class="marathi-text ${!isEnglish ? '' : 'hidden'}">जतन करत आहे...</span>
+            </span>
+        `;
+        
+        // Prepare form data
+        const formData = new FormData(this);
+        
+        // Add checkbox value explicitly
+        formData.set('is_specialty', document.getElementById('is_specialty').checked ? 'true' : 'false');
+        
+        // Send AJAX request
+        fetch(this.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRFToken': getCsrfToken()
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                // Show success message
+                showNotification(data.message, 'success');
+                
+                // Redirect after a short delay
+                setTimeout(() => {
+                    window.location.href = "{% url 'manage_suggestions' %}";
+                }, 1500);
+            } else {
+                // Show error message
+                showNotification(data.message, 'error');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnText;
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showNotification(isEnglish ? 'An error occurred while processing your request' : 'आपली विनंती प्रक्रिया करताना त्रुटी आली', 'error');
             submitBtn.disabled = false;
             submitBtn.innerHTML = originalBtnText;
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        showNotification(isEnglish ? 'An error occurred while processing your request' : 'आपली विनंती प्रक्रिया करताना त्रुटी आली', 'error');
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = originalBtnText;
+        });
     });
-});
+}
+
+// Helper function to get CSRF token
+function getCsrfToken() {
+    const name = 'csrftoken';
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
 
 // Function to display notifications
 function showNotification(message, type = 'success') {
-    // Remove any existing notifications
     const existingNotification = document.getElementById('notification');
     if (existingNotification) {
         existingNotification.remove();
     }
     
-    // Create notification element
     const notification = document.createElement('div');
     notification.id = 'notification';
     notification.className = `fixed bottom-4 right-4 px-6 py-3 rounded-lg shadow-lg flex items-center z-50 ${
@@ -367,7 +496,6 @@ function showNotification(message, type = 'success') {
         'bg-red-50 text-red-700 border-l-4 border-red-500'
     } transform transition-all duration-500 translate-y-20 opacity-0`;
     
-    // Add notification content
     notification.innerHTML = `
         <div class="mr-3 bg-white bg-opacity-25 rounded-full p-1">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -380,15 +508,12 @@ function showNotification(message, type = 'success') {
         <p class="font-medium">${message}</p>
     `;
     
-    // Add to DOM
     document.body.appendChild(notification);
     
-    // Animate in
     setTimeout(() => {
         notification.classList.remove('translate-y-20', 'opacity-0');
     }, 10);
     
-    // Automatically remove after 5 seconds
     setTimeout(() => {
         notification.classList.add('translate-y-20', 'opacity-0');
         setTimeout(() => notification.remove(), 500);
