@@ -28,15 +28,18 @@ DEBUG = False
 
 #ALLOWED_HOSTS = []
 ALLOWED_HOSTS = ['maha-power.onrender.com',
-                 '127.0.0.1:8000',]
+                 '127.0.0.1',]
 
 """
 
-SECRET_KEY = os.environ.get('SECRET_KEY', 'unsafe-dev-key')  # fallback only for local testing
+# Production Settings
+SECRET_KEY = os.environ.get('SECRET_KEY', 'unsafe-dev-key')
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = ['maha-power.onrender.com', '127.0.0.1:8000']
-
+RENDER_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+ALLOWED_HOSTS = ['127.0.0.1']
+if RENDER_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_HOSTNAME)
 # Application definition
 
 INSTALLED_APPS = [
