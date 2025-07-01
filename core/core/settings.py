@@ -19,7 +19,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
-
+"""
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-x64ie1(gaw85p6_0&iuksx)3tz9w23q_(=lb5hx8=iufcfr^wo'
 
@@ -30,6 +30,12 @@ DEBUG = False
 ALLOWED_HOSTS = ['maha-power.onrender.com',
                  '127.0.0.1:8000',]
 
+"""
+
+SECRET_KEY = os.environ.get('SECRET_KEY', 'unsafe-dev-key')  # fallback only for local testing
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+
+ALLOWED_HOSTS = ['maha-power.onrender.com', '127.0.0.1:8000']
 
 # Application definition
 
@@ -148,3 +154,4 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'codehack584@gmail.com'          # your Gmail address
 EMAIL_HOST_PASSWORD = 'kbzbpphekwvgsclq'         # generated from Gmail App Passwords
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
