@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if district %}Edit District{% else %}Add District{% endif %} - UdyogSetu
+{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <!-- Header -->
+    <div class="bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-2xl p-8 mb-8 shadow-xl">
+        <h1 class="text-4xl font-bold mb-2">
+            <i class="fas fa-city mr-3"></i>
+            {% if district %}Edit District{% else %}Add New District{% endif %}
+        </h1>
+        <p class="text-xl opacity-90">
+            {% if district %}
+                Update district information for {{ district.name_en }}
+            {% else %}
+                Add a new district to the system
+            {% endif %}
+        </p>
+    </div>
+
+    <div class="max-w-2xl mx-auto">
+        <div class="bg-white rounded-2xl shadow-xl p-8 mb-8">
+            <form method="POST" novalidate>
+                {% csrf_token %}
+                
+                <!-- English Name -->
+                <div class="mb-6">
+                    <label for="name_en" class="block text-sm font-semibold text-gray-700 mb-2">
+                        District Name (English) <span class="text-red-500">*</span>
+                    </label>
+                    <input type="text" class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300" 
+                           id="name_en" name="name_en" 
+                           value="{% if district %}{{ district.name_en }}{% endif %}"
+                           placeholder="Enter district name in English" required>
+                    <p class="text-sm text-gray-600 mt-2">
+                        Enter the official district name in English
+                    </p>
+                </div>
+
+                <!-- Marathi Name -->
+                <div class="mb-8">
+                    <label for="name_mr" class="block text-sm font-semibold text-gray-700 mb-2">
+                        District Name (Marathi)
+                    </label>
+                    <input type="text" class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300" 
+                           id="name_mr" name="name_mr" 
+                           value="{% if district %}{{ district.name_mr }}{% endif %}"
+                           placeholder="जिल्ह्याचे नाव मराठीत">
+                    <p class="text-sm text-gray-600 mt-2">
+                        Enter the district name in Marathi (optional)
+                    </p>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="flex justify-center gap-4">
+                    <button type="submit" class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-full font-semibold hover:from-blue-700 hover:to-purple-700 transform hover:-translate-y-1 transition-all duration-300 shadow-lg">
+                        <i class="fas fa-save mr-2"></i>
+                        {% if district %}Update District{% else %}Create District{% endif %}
+                    </button>
+                    <a href="{% url 'manage_districts' %}" class="bg-gray-200 text-gray-700 px-8 py-3 rounded-full font-semibold hover:bg-gray-300 transition-colors duration-300">
+                        <i class="fas fa-times mr-2"></i> Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Information Card -->
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card border-info">
+                <div class="card-header bg-info text-white">
+                    <h6 class="mb-0"><i class="fas fa-info-circle"></i> Information</h6>
+                </div>
+                <div class="card-body">
+                    <ul class="mb-0">
+                        <li>District name in English is required</li>
+                        <li>Marathi name is optional but recommended for better user experience</li>
+                        <li>District names should be unique across the system</li>
+                        {% if district %}
+                        <li>This district currently has {{ district.talukas.count }} taluka(s)</li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block custom_js %}
+<script>
+// Form validation
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+    const nameEn = document.getElementById('name_en');
+    
+    // Real-time validation
+    nameEn.addEventListener('input', function() {
+        if (this.value.trim().length < 2) {
+            this.setCustomValidity('District name must be at least 2 characters long');
+            this.classList.add('is-invalid');
+        } else {
+            this.setCustomValidity('');
+            this.classList.remove('is-invalid');
+            this.classList.add('is-valid');
+        }
+    });
+    
+    // Form submission validation
+    form.addEventListener('submit', function(e) {
+        if (!nameEn.value.trim()) {
+            e.preventDefault();
+            nameEn.focus();
+            alert('Please enter district name in English');
+            return false;
+        }
+        
+        if (nameEn.value.trim().length < 2) {
+            e.preventDefault();
+            nameEn.focus();
+            alert('District name must be at least 2 characters long');
+            return false;
+        }
+    });
+});
+</script>
+{% endblock %}

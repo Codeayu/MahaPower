@@ -1,0 +1,455 @@
+{% extends 'base.html' %}
+
+{% block title %}Work Type Management | Maharashtra State Khadi & Village Industries Board{% endblock %}
+
+{% block content %}
+<style>
+/* Ensure buttons are always visible */
+.work-type-form button[type="submit"] {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 44px !important;
+  min-width: 120px !important;
+}
+
+.work-type-form .english-text,
+.work-type-form .marathi-text {
+  display: inline-flex !important;
+}
+
+.work-type-form .marathi-text.hidden {
+  display: none !important;
+}
+
+/* Ensure modal buttons are always visible */
+#editWorkTypeModal button {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 40px !important;
+  min-width: 80px !important;
+}
+
+#editWorkTypeModal .english-text,
+#editWorkTypeModal .marathi-text {
+  display: inline !important;
+}
+
+#editWorkTypeModal .marathi-text.hidden {
+  display: none !important;
+}
+
+/* Make sure modal is properly positioned */
+#editWorkTypeModal {
+  z-index: 9999 !important;
+}
+</style>
+<div class="container mx-auto px-4 py-12">
+  <!-- Header Section -->
+  <div class="mb-8 text-center">  
+    <h1 class="text-4xl font-bold text-gray-800 mb-2 english-text">Work Type Management</h1>
+    <h1 class="text-4xl font-bold text-gray-800 mb-2 marathi-text hidden">कार्य प्रकार व्यवस्थापन</h1>
+    <div class="w-20 h-1 bg-saffron mx-auto mb-4"></div>
+    <p class="text-gray-600 max-w-2xl mx-auto english-text">Add and manage different types of work categories for various sectors.</p>
+    <p class="text-gray-600 max-w-2xl mx-auto marathi-text hidden">विविध क्षेत्रांसाठी विविध प्रकारचे कार्य श्रेणी जोडा आणि व्यवस्थापित करा.</p>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <!-- Add Work Type Form -->
+    <div class="rounded-lg shadow-lg overflow-hidden border border-gray-200">
+      <div class="p-5 bg-navyBlue text-white">
+        <h4 class="text-2xl font-semibold english-text">Add New Work Type</h4>
+        <h4 class="text-2xl font-semibold marathi-text hidden">नवीन कार्य प्रकार जोडा</h4>
+      </div>
+      
+      <div class="p-6">
+        <form method="post" class="work-type-form space-y-6">
+          {% csrf_token %}
+          
+          <!-- Name Fields -->
+          <div class="space-y-4">
+            <div>
+              <label for="name_en" class="block text-sm font-medium text-gray-600 mb-2 english-text">Work Type Name (English)</label>
+              <label for="name_en" class="block text-sm font-medium text-gray-600 mb-2 marathi-text hidden">कार्य प्रकाराचे नाव (इंग्रजी)</label>
+              <input type="text" 
+                     id="name_en" 
+                     name="name_en" 
+                     class="w-full py-3 px-4 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-saffron shadow-sm"
+                     placeholder="Enter work type name in English"
+                     required>
+            </div>
+            
+            <div>
+              <label for="name_mr" class="block text-sm font-medium text-gray-600 mb-2 english-text">Work Type Name (Marathi)</label>
+              <label for="name_mr" class="block text-sm font-medium text-gray-600 mb-2 marathi-text hidden">कार्य प्रकाराचे नाव (मराठी)</label>
+              <input type="text" 
+                     id="name_mr" 
+                     name="name_mr" 
+                     class="w-full py-3 px-4 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-saffron shadow-sm"
+                     placeholder="मराठीत कार्य प्रकाराचे नाव प्रविष्ट करा"
+                     required>
+            </div>
+          </div>
+          
+          <!-- Description Fields -->
+          <div class="space-y-4">
+            <div>
+              <label for="description_en" class="block text-sm font-medium text-gray-600 mb-2 english-text">Description (English)</label>
+              <label for="description_en" class="block text-sm font-medium text-gray-600 mb-2 marathi-text hidden">वर्णन (इंग्रजी)</label>
+              <textarea id="description_en" 
+                        name="description_en" 
+                        rows="3"
+                        class="w-full py-3 px-4 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-saffron shadow-sm"
+                        placeholder="Enter detailed description of the work type in English"></textarea>
+            </div>
+            
+            <div>
+              <label for="description_mr" class="block text-sm font-medium text-gray-600 mb-2 english-text">Description (Marathi)</label>
+              <label for="description_mr" class="block text-sm font-medium text-gray-600 mb-2 marathi-text hidden">वर्णन (मराठी)</label>
+              <textarea id="description_mr" 
+                        name="description_mr" 
+                        rows="3"
+                        class="w-full py-3 px-4 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-saffron shadow-sm"
+                        placeholder="मराठीत कार्य प्रकाराचे तपशीलवार वर्णन प्रविष्ट करा"></textarea>
+            </div>
+          </div>
+          
+          <!-- Sector Selection -->
+          <div>
+            <label for="sector" class="block text-sm font-medium text-gray-600 mb-2 english-text">Sector</label>
+            <label for="sector" class="block text-sm font-medium text-gray-600 mb-2 marathi-text hidden">क्षेत्र</label>
+            <div class="relative">
+              <select id="sector" 
+                      name="sector" 
+                      class="appearance-none w-full py-3 px-4 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-saffron shadow-sm"
+                      required>
+                <option value="" class="english-text">Select Sector</option>
+                <option value="" class="marathi-text hidden">क्षेत्र निवडा</option>
+                {% for sector in sectors %}
+                  <option value="{{ sector.id }}">
+                    <span class="english-text">{{ sector.name_en }}</span>
+                    <span class="marathi-text hidden">{{ sector.name_mr }}</span>
+                  </option>
+                {% endfor %}
+              </select>
+              <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                <i class="fas fa-chevron-down text-gray-500"></i>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Submit Button -->
+          <div class="flex justify-center pt-4">
+            <button type="submit" 
+                    class="py-3 px-8 rounded-lg text-base font-semibold bg-saffron text-white transition duration-300 shadow-md hover:bg-[#E68A00] english-text">
+              <i class="fas fa-plus mr-2"></i> Add Work Type
+            </button>
+            <button type="submit" 
+                    class="py-3 px-8 rounded-lg text-base font-semibold bg-saffron text-white transition duration-300 shadow-md hover:bg-[#E68A00] marathi-text hidden">
+              <i class="fas fa-plus mr-2"></i> कार्य प्रकार जोडा
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Work Types List -->
+    <div class="rounded-lg shadow-lg overflow-hidden border border-gray-200">
+      <div class="p-5 bg-saffron text-white flex justify-between items-center">
+        <h4 class="text-2xl font-semibold english-text">Existing Work Types</h4>
+        <h4 class="text-2xl font-semibold marathi-text hidden">विद्यमान कार्य प्रकार</h4>
+        <span class="px-3 py-1 rounded-full text-sm bg-navyBlue text-white">
+          <span class="english-text">{{ work_types.count }} Types</span>
+          <span class="marathi-text hidden">{{ work_types.count }} प्रकार</span>
+        </span>
+      </div>
+      
+      <div class="p-6 max-h-96 overflow-y-auto">
+        {% if work_types %}
+          <div class="space-y-3">
+            {% for work_type in work_types %}
+            <div class="p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow bg-gray-50">
+              <div class="flex items-start justify-between">
+                <div class="flex-1">
+                  <div class="flex items-center mb-2">
+                    <div class="p-2 rounded-full bg-lightBlue mr-3 text-navyBlue">
+                      <i class="fas fa-tools text-sm"></i>
+                    </div>
+                    <div>
+                      <h5 class="font-semibold text-gray-800 english-text">{{ work_type.name_en }}</h5>
+                      <h5 class="font-semibold text-gray-800 marathi-text hidden">{{ work_type.name_mr }}</h5>
+                      <p class="text-sm text-gray-600 english-text">{{ work_type.name_mr }}</p>
+                      <p class="text-sm text-gray-600 marathi-text hidden">{{ work_type.name_en }}</p>
+                    </div>
+                  </div>
+                  <div class="ml-11">
+                    <span class="inline-block bg-navyBlue text-white text-xs px-2 py-1 rounded-full english-text">
+                      {{ work_type.sector.name_en }}
+                    </span>
+                    <span class="inline-block bg-navyBlue text-white text-xs px-2 py-1 rounded-full marathi-text hidden">
+                      {{ work_type.sector.name_mr }}
+                    </span>
+                  </div>
+                </div>
+                <div class="flex space-x-2 ml-4">
+                  <button class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors" 
+                          onclick="editWorkType({{ work_type.id }}, '{{ work_type.name_en|escapejs }}', '{{ work_type.name_mr|escapejs }}', '{{ work_type.description_en|escapejs }}', '{{ work_type.description_mr|escapejs }}', {{ work_type.sector.id }})"
+                          title="Edit">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                  <button class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors" 
+                          onclick="deleteWorkType({{ work_type.id }})"
+                          title="Delete">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        {% else %}
+          <div class="text-center py-8">
+            <div class="text-gray-400 mb-4">
+              <i class="fas fa-tools text-4xl"></i>
+            </div>
+            <p class="text-gray-600 english-text">No work types found. Add your first work type to get started.</p>
+            <p class="text-gray-600 marathi-text hidden">कोणतेही कार्य प्रकार आढळले नाहीत. प्रारंभ करण्यासाठी आपला पहिला कार्य प्रकार जोडा.</p>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Work Type Modal -->
+<div id="editWorkTypeModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+  <div class="flex items-center justify-center min-h-screen p-4">
+    <div class="bg-white rounded-lg shadow-xl max-w-md w-full">
+      <div class="p-5 bg-navyBlue text-white rounded-t-lg">
+        <div class="flex justify-between items-center">
+          <div>
+            <h4 class="text-xl font-semibold english-text">Edit Work Type</h4>
+            <h4 class="text-xl font-semibold marathi-text hidden">कार्य प्रकार संपादित करा</h4>
+          </div>
+          <button onclick="closeEditModal()" class="text-white hover:text-gray-300 transition-colors" type="button">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <form id="editWorkTypeForm" class="p-6 space-y-4">
+        {% csrf_token %}
+        <input type="hidden" id="editWorkTypeId" name="work_type_id">
+        
+        <div>
+          <label for="editNameEn" class="block text-sm font-medium text-gray-600 mb-2 english-text">Work Type Name (English)</label>
+          <input type="text" id="editNameEn" name="name_en" class="w-full py-2 px-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-saffron" required>
+        </div>
+        
+        <div>
+          <label for="editNameMr" class="block text-sm font-medium text-gray-600 mb-2 english-text">Work Type Name (Marathi)</label>
+          <input type="text" id="editNameMr" name="name_mr" class="w-full py-2 px-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-saffron" required>
+        </div>
+        
+        <div>
+          <label for="editDescriptionEn" class="block text-sm font-medium text-gray-600 mb-2 english-text">Description (English)</label>
+          <textarea id="editDescriptionEn" name="description_en" rows="3" class="w-full py-2 px-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-saffron"></textarea>
+        </div>
+        
+        <div>
+          <label for="editDescriptionMr" class="block text-sm font-medium text-gray-600 mb-2 english-text">Description (Marathi)</label>
+          <textarea id="editDescriptionMr" name="description_mr" rows="3" class="w-full py-2 px-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-saffron"></textarea>
+        </div>
+        
+        <div>
+          <label for="editSector" class="block text-sm font-medium text-gray-600 mb-2 english-text">Sector</label>
+          <select id="editSector" name="sector" class="w-full py-2 px-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-saffron" required>
+            {% for sector in sectors %}
+              <option value="{{ sector.id }}">{{ sector.name_en }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        
+        <div class="flex justify-end space-x-3 pt-4">
+          <button type="button" onclick="closeEditModal()" class="py-2 px-4 rounded-lg text-gray-600 border border-gray-300 hover:bg-gray-50 transition-colors">
+            <span class="english-text">Cancel</span>
+            <span class="marathi-text hidden">रद्द करा</span>
+          </button>
+          <button type="submit" class="py-2 px-4 rounded-lg bg-saffron text-white hover:bg-[#E68A00] transition-colors">
+            <span class="english-text">Update</span>
+            <span class="marathi-text hidden">अपडेट करा</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+function editWorkType(id, nameEn, nameMr, descriptionEn, descriptionMr, sectorId) {
+  document.getElementById('editWorkTypeId').value = id;
+  document.getElementById('editNameEn').value = nameEn;
+  document.getElementById('editNameMr').value = nameMr;
+  document.getElementById('editDescriptionEn').value = descriptionEn;
+  document.getElementById('editDescriptionMr').value = descriptionMr;
+  document.getElementById('editSector').value = sectorId;
+  document.getElementById('editWorkTypeModal').classList.remove('hidden');
+}
+
+function closeEditModal() {
+  document.getElementById('editWorkTypeModal').classList.add('hidden');
+}
+
+function deleteWorkType(id) {
+  if (confirm('Are you sure you want to delete this work type?')) {
+    // Create a form and submit it for deletion
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = `/delete_work_type/${id}/`;
+    
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    const csrfInput = document.createElement('input');
+    csrfInput.type = 'hidden';
+    csrfInput.name = 'csrfmiddlewaretoken';
+    csrfInput.value = csrfToken;
+    
+    form.appendChild(csrfInput);
+    document.body.appendChild(form);
+    form.submit();
+  }
+}
+
+// Handle edit form submission
+document.addEventListener('DOMContentLoaded', function() {
+  const editForm = document.getElementById('editWorkTypeForm');
+  if (editForm) {
+    editForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Debug: Log form data
+      const formData = new FormData(this);
+      console.log('Form data:');
+      for (let [key, value] of formData.entries()) {
+        console.log(key, value);
+      }
+      
+      const workTypeId = formData.get('work_type_id');
+      const nameEn = formData.get('name_en');
+      const nameMr = formData.get('name_mr');
+      const sector = formData.get('sector');
+      
+      // Validate required fields
+      if (!workTypeId) {
+        alert('Work type ID is missing. Please close and reopen the modal.');
+        return;
+      }
+      
+      if (!nameEn || !nameMr || !sector) {
+        alert('Please fill in all required fields (Name English, Name Marathi, and Sector).');
+        return;
+      }
+      
+      // Get CSRF token
+      let csrfToken = formData.get('csrfmiddlewaretoken');
+      if (!csrfToken) {
+        const csrfInput = document.querySelector('input[name="csrfmiddlewaretoken"]');
+        if (csrfInput) {
+          csrfToken = csrfInput.value;
+          formData.set('csrfmiddlewaretoken', csrfToken);
+        }
+      }
+      
+      if (!csrfToken) {
+        alert('Security token is missing. Please refresh the page and try again.');
+        return;
+      }
+      
+      // Show loading state
+      const submitButton = this.querySelector('button[type="submit"]');
+      const originalText = submitButton.innerHTML;
+      submitButton.disabled = true;
+      submitButton.innerHTML = '<span class="english-text">Updating...</span><span class="marathi-text hidden">अपडेट करत आहे...</span>';
+      
+      // Make the request
+      fetch(`/edit-work-type/${workTypeId}/`, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'X-CSRFToken': csrfToken
+        }
+      })
+      .then(response => {
+        console.log('Response status:', response.status);
+        if (!response.ok) {
+          throw new Error(`Server error: ${response.status} ${response.statusText}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Response data:', data);
+        if (data.success) {
+          alert('Work type updated successfully!');
+          closeEditModal();
+          location.reload();
+        } else {
+          throw new Error(data.message || 'Update failed');
+        }
+      })
+      .catch(error => {
+        console.error('Error details:', error);
+        alert('Error updating work type: ' + error.message);
+      })
+      .finally(() => {
+        // Restore button state
+        submitButton.disabled = false;
+        submitButton.innerHTML = originalText;
+      });
+    });
+  }
+});
+
+// Close modal when clicking outside
+document.getElementById('editWorkTypeModal').addEventListener('click', function(e) {
+  if (e.target === this) {
+    closeEditModal();
+  }
+});
+</script>
+
+<!-- Display Messages -->
+{% if messages %}
+  <div class="fixed top-4 right-4 z-50">
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }} mb-3 p-4 rounded-lg shadow-lg max-w-sm {% if message.tags == 'success' %}bg-green-100 text-green-800 border border-green-200{% elif message.tags == 'error' %}bg-red-100 text-red-800 border border-red-200{% else %}bg-blue-100 text-blue-800 border border-blue-200{% endif %} transform transition-all duration-300 ease-in-out">
+        <div class="flex items-center">
+          {% if message.tags == 'success' %}
+            <i class="fas fa-check-circle mr-2"></i>
+          {% elif message.tags == 'error' %}
+            <i class="fas fa-exclamation-circle mr-2"></i>
+          {% else %}
+            <i class="fas fa-info-circle mr-2"></i>
+          {% endif %}
+          {{ message }}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  
+  <script>
+    // Auto-hide messages after 5 seconds
+    setTimeout(function() {
+      const alerts = document.querySelectorAll('.alert');
+      alerts.forEach(function(alert) {
+        alert.style.opacity = '0';
+        alert.style.transform = 'translateX(100%)';
+        setTimeout(function() {
+          alert.style.display = 'none';
+        }, 300);
+      });
+    }, 5000);
+  </script>
+{% endif %}
+
+{% endblock %}

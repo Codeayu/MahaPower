@@ -1,0 +1,190 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if taluka %}Edit Taluka{% else %}Add Taluka{% endif %} - UdyogSetu
+{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <!-- Header -->
+    <div class="bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-2xl p-8 mb-8 shadow-xl">
+        <h1 class="text-4xl font-bold mb-2">
+            <i class="fas fa-map mr-3"></i>
+            {% if taluka %}Edit Taluka{% else %}Add New Taluka{% endif %}
+        </h1>
+        <p class="text-xl opacity-90">
+            {% if taluka %}
+                Update taluka information for {{ taluka.name_en }}
+            {% else %}
+                Add a new taluka to the system
+            {% endif %}
+        </p>
+    </div>
+
+    <div class="max-w-2xl mx-auto">
+        <div class="bg-white rounded-2xl shadow-xl p-8 mb-8">
+            <form method="POST" novalidate>
+                {% csrf_token %}
+                
+                <!-- District Selection -->
+                <div class="mb-6">
+                    <label for="district" class="block text-sm font-semibold text-gray-700 mb-2">
+                        District <span class="text-red-500">*</span>
+                    </label>
+                    <select class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-300" 
+                            id="district" name="district" required>
+                        <option value="">Select District</option>
+                        {% for district in districts %}
+                        <option value="{{ district.id }}" 
+                                {% if taluka and taluka.district.id == district.id %}selected{% endif %}>
+                            {{ district.name_en }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                    <p class="text-sm text-gray-600 mt-2">
+                        Select the district under which this taluka falls
+                    </p>
+                </div>
+
+                <!-- English Name -->
+                <div class="mb-6">
+                    <label for="name_en" class="block text-sm font-semibold text-gray-700 mb-2">
+                        Taluka Name (English) <span class="text-red-500">*</span>
+                    </label>
+                    <input type="text" class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-300" 
+                           id="name_en" name="name_en" 
+                           value="{% if taluka %}{{ taluka.name_en }}{% endif %}"
+                           placeholder="Enter taluka name in English" required>
+                    <p class="text-sm text-gray-600 mt-2">
+                        Enter the official taluka name in English
+                    </p>
+                </div>
+
+                <!-- Marathi Name -->
+                <div class="mb-8">
+                    <label for="name_mr" class="block text-sm font-semibold text-gray-700 mb-2">
+                        Taluka Name (Marathi)
+                    </label>
+                    <input type="text" class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-300" 
+                           id="name_mr" name="name_mr" 
+                           value="{% if taluka %}{{ taluka.name_mr }}{% endif %}"
+                           placeholder="तालुक्याचे नाव मराठीत">
+                    <p class="text-sm text-gray-600 mt-2">
+                        Enter the taluka name in Marathi (optional)
+                    </p>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="flex justify-center gap-4">
+                    <button type="submit" class="bg-gradient-to-r from-green-600 to-blue-600 text-white px-8 py-3 rounded-full font-semibold hover:from-green-700 hover:to-blue-700 transform hover:-translate-y-1 transition-all duration-300 shadow-lg">
+                        <i class="fas fa-save mr-2"></i>
+                        {% if taluka %}Update Taluka{% else %}Create Taluka{% endif %}
+                    </button>
+                    <a href="{% url 'manage_talukas' %}" class="bg-gray-200 text-gray-700 px-8 py-3 rounded-full font-semibold hover:bg-gray-300 transition-colors duration-300">
+                        <i class="fas fa-times mr-2"></i> Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Information Card -->
+    <div class="max-w-2xl mx-auto">
+        <div class="bg-blue-50 border-l-4 border-blue-400 rounded-lg shadow-lg overflow-hidden">
+            <div class="bg-blue-500 text-white p-4">
+                <h3 class="text-lg font-semibold">
+                    <i class="fas fa-info-circle mr-2"></i> Information
+                </h3>
+            </div>
+            <div class="p-6">
+                <ul class="space-y-2 text-gray-700">
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 mr-2 mt-1 flex-shrink-0"></i>
+                        District selection is required
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 mr-2 mt-1 flex-shrink-0"></i>
+                        Taluka name in English is required
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-info-circle text-blue-500 mr-2 mt-1 flex-shrink-0"></i>
+                        Marathi name is optional but recommended for better user experience
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-exclamation-triangle text-yellow-500 mr-2 mt-1 flex-shrink-0"></i>
+                        Taluka names should be unique within each district
+                    </li>
+                    {% if taluka %}
+                    <li class="flex items-start">
+                        <i class="fas fa-building text-purple-500 mr-2 mt-1 flex-shrink-0"></i>
+                        This taluka currently has {{ taluka.gram_panchayats.count }} gram panchayat(s)
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block custom_js %}
+<script>
+// Form validation
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+    const district = document.getElementById('district');
+    const nameEn = document.getElementById('name_en');
+    
+    // Real-time validation
+    nameEn.addEventListener('input', function() {
+        if (this.value.trim().length < 2) {
+            this.setCustomValidity('Taluka name must be at least 2 characters long');
+            this.classList.add('is-invalid');
+        } else {
+            this.setCustomValidity('');
+            this.classList.remove('is-invalid');
+            this.classList.add('is-valid');
+        }
+    });
+    
+    district.addEventListener('change', function() {
+        if (!this.value) {
+            this.classList.add('is-invalid');
+        } else {
+            this.classList.remove('is-invalid');
+            this.classList.add('is-valid');
+        }
+    });
+    
+    // Form submission validation
+    form.addEventListener('submit', function(e) {
+        let hasErrors = false;
+        
+        if (!district.value) {
+            e.preventDefault();
+            district.focus();
+            alert('Please select a district');
+            hasErrors = true;
+        }
+        
+        if (!nameEn.value.trim()) {
+            e.preventDefault();
+            if (!hasErrors) nameEn.focus();
+            alert('Please enter taluka name in English');
+            hasErrors = true;
+        }
+        
+        if (nameEn.value.trim().length < 2) {
+            e.preventDefault();
+            if (!hasErrors) nameEn.focus();
+            alert('Taluka name must be at least 2 characters long');
+            hasErrors = true;
+        }
+        
+        if (hasErrors) {
+            return false;
+        }
+    });
+});
+</script>
+{% endblock %}

@@ -118,6 +118,8 @@ class Sector(models.Model):
 class WorkType(models.Model):
     name_en = models.CharField(max_length=255)
     name_mr = models.CharField(max_length=255)
+    description_en = models.TextField(blank=True, help_text="Detailed description of the work type in English")
+    description_mr = models.TextField(blank=True, help_text="Detailed description of the work type in Marathi")
     sector = models.ForeignKey(Sector, on_delete=models.CASCADE, related_name='work_types')
     created_at = models.DateTimeField(default=timezone.now)                                    
     updated_at = models.DateTimeField(auto_now=True)

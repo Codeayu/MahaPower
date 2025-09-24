@@ -10,6 +10,11 @@ from django.conf import settings
 from django.utils.crypto import get_random_string
 from django.http import JsonResponse
 from .models import District, Taluka, GramPanchayat, WorkSuggestion, WorkType, Sector
+from django.core.paginator import Paginator
+from django.db.models import Q
+from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_exempt
+import json
 
 
 
@@ -501,6 +506,8 @@ def get_suggestions(request):
                         'id': s.work_type.id,
                         'name_en': s.work_type.name_en,
                         'name_mr': s.work_type.name_mr,
+                        'description_en': s.work_type.description_en,
+                        'description_mr': s.work_type.description_mr,
                         'sector': {
                             'id': s.work_type.sector.id,
                             'name_en': s.work_type.sector.name_en,
@@ -733,3 +740,704 @@ def get_work_types(request):
     
     work_types = WorkType.objects.filter(sector_id=sector_id).values('id', 'name_en', 'name_mr')
     return JsonResponse(list(work_types), safe=False)
+
+
+
+def work_type_add(request):
+    if request.method == 'POST':
+        name_en = request.POST.get('name_en')
+        name_mr = request.POST.get('name_mr')
+        sector_id = request.POST.get('sector')
+
+        if not all([name_en, name_mr, sector_id]):
+            messages.error(request, "Please fill all required fields.")
+        else:
+            sector = get_object_or_404(Sector, id=sector_id)
+            WorkType.objects.create(
+                name_en=name_en,
+                name_mr=name_mr,
+                sector=sector
+            )
+            messages.success(request, "Work Type added successfully!")
+            return redirect('create_suggestion')
+
+    sectors = Sector.objects.all()
+    return render(request, 'work_type_add.html', {'sectors': sectors})
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser or u.role in ['admin', 'staff'])
+def work_type_management(request):
+    """Main work type management view with add functionality"""
+    if request.method == 'POST':
+        name_en = request.POST.get('name_en')
+        name_mr = request.POST.get('name_mr')
+        description_en = request.POST.get('description_en', '')
+        description_mr = request.POST.get('description_mr', '')
+        sector_id = request.POST.get('sector')
+
+        if not all([name_en, name_mr, sector_id]):
+            messages.error(request, "Please fill all required fields.")
+        else:
+            try:
+                sector = get_object_or_404(Sector, id=sector_id)
+                WorkType.objects.create(
+                    name_en=name_en,
+                    name_mr=name_mr,
+                    description_en=description_en,
+                    description_mr=description_mr,
+                    sector=sector
+                )
+                # Log user activity
+                log_user_activity(
+                    user=request.user,
+                    activity_type="Work Type Addition",
+                    description=f"Work type '{name_en}' added to sector '{sector.name_en}'",
+                    created_by=request.user
+                )
+                messages.success(request, "Work Type added successfully!")
+                return redirect('work_type_management')
+            except Exception as e:
+                messages.error(request, f"Error adding work type: {str(e)}")
+
+    # Get all work types with their sectors
+    work_types = WorkType.objects.select_related('sector').all().order_by('sector__name_en', 'name_en')
+    sectors = Sector.objects.all().order_by('name_en')
+    
+    context = {
+        'work_types': work_types,
+        'sectors': sectors,
+        'is_english': request.GET.get('lang', 'en') == 'en'
+    }
+    return render(request, 'work_type.html', context)
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser or u.role in ['admin', 'staff'])
+def edit_work_type(request, work_type_id):
+    """Edit work type via AJAX"""
+    work_type = get_object_or_404(WorkType, id=work_type_id)
+    
+    if request.method == 'POST':
+        # Debug logging
+        print(f"=== EDIT WORK TYPE DEBUG ===")
+        print(f"Work type ID: {work_type_id}")
+        print(f"POST data: {dict(request.POST)}")
+        print(f"User: {request.user}")
+        print(f"User authenticated: {request.user.is_authenticated}")
+        
+        name_en = request.POST.get('name_en')
+        name_mr = request.POST.get('name_mr')
+        description_en = request.POST.get('description_en', '')
+        description_mr = request.POST.get('description_mr', '')
+        sector_id = request.POST.get('sector')
+        
+        print(f"Parsed data - name_en: '{name_en}', name_mr: '{name_mr}', sector_id: '{sector_id}'")
+        
+        if not all([name_en, name_mr, sector_id]):
+            print(f"Validation failed - missing fields")
+            return JsonResponse({'success': False, 'message': 'All fields are required'})
+        
+        try:
+            # Validate sector exists
+            try:
+                sector = Sector.objects.get(id=sector_id)
+                print(f"Found sector: {sector.name_en}")
+            except Sector.DoesNotExist:
+                print(f"Sector not found: {sector_id}")
+                return JsonResponse({'success': False, 'message': 'Selected sector does not exist'})
+            
+            old_name = work_type.name_en
+            print(f"Old work type name: {old_name}")
+            
+            # Update work type fields
+            work_type.name_en = name_en.strip()
+            work_type.name_mr = name_mr.strip()
+            work_type.description_en = description_en.strip() if description_en else ''
+            work_type.description_mr = description_mr.strip() if description_mr else ''
+            work_type.sector = sector
+            
+            print(f"About to save work type...")
+            work_type.save()
+            print(f"Work type saved successfully")
+            
+            # Log user activity
+            try:
+                log_user_activity(
+                    user=request.user,
+                    activity_type="Work Type Update",
+                    description=f"Work type '{old_name}' updated to '{name_en}' in sector '{sector.name_en}'",
+                    created_by=request.user
+                )
+                print(f"Activity logged successfully")
+            except Exception as log_error:
+                print(f"Warning: Failed to log activity: {log_error}")
+            
+            print(f"=== SUCCESS ===")
+            return JsonResponse({'success': True, 'message': 'Work type updated successfully'})
+            
+        except Exception as e:
+            import traceback
+            error_details = traceback.format_exc()
+            print(f"=== ERROR ===")
+            print(f"Error updating work type: {error_details}")
+            return JsonResponse({'success': False, 'message': f'Database error: {str(e)}'})
+    
+    print(f"Invalid request method: {request.method}")
+    return JsonResponse({'success': False, 'message': 'Invalid request method'})
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser or u.role in ['admin', 'staff'])
+def delete_work_type(request, work_type_id):
+    """Delete work type"""
+    work_type = get_object_or_404(WorkType, id=work_type_id)
+    
+    if request.method == 'POST':
+        try:
+            work_type_name = work_type.name_en
+            sector_name = work_type.sector.name_en
+            
+            # Check if work type is being used in any suggestions
+            suggestions_count = WorkSuggestion.objects.filter(work_type=work_type).count()
+            if suggestions_count > 0:
+                messages.error(request, f"Cannot delete work type '{work_type_name}' as it is used in {suggestions_count} work suggestion(s). Please delete those suggestions first.")
+            else:
+                work_type.delete()
+                
+                # Log user activity
+                log_user_activity(
+                    user=request.user,
+                    activity_type="Work Type Deletion",
+                    description=f"Work type '{work_type_name}' deleted from sector '{sector_name}'",
+                    created_by=request.user
+                )
+                
+                messages.success(request, f"Work type '{work_type_name}' deleted successfully!")
+        
+        except Exception as e:
+            messages.error(request, f"Error deleting work type: {str(e)}")
+        
+        return redirect('manage_work_types')
+    
+    return redirect('manage_work_types')
+
+# ===== LOCATION MANAGEMENT VIEWS =====
+
+@login_required
+@user_passes_test(is_admin, login_url='login_view')
+def manage_locations(request):
+    """Main location management dashboard"""
+    districts_count = District.objects.count()
+    talukas_count = Taluka.objects.count()
+    gp_count = GramPanchayat.objects.count()
+    
+    context = {
+        'districts_count': districts_count,
+        'talukas_count': talukas_count,
+        'gp_count': gp_count,
+    }
+    return render(request, 'manage_locations.html', context)
+
+# ===== DISTRICT MANAGEMENT =====
+
+@login_required
+@user_passes_test(is_admin, login_url='login_view')
+def manage_districts(request):
+    """List all districts with search and pagination"""
+    search_query = request.GET.get('search', '')
+    districts = District.objects.all().order_by('name_en')
+    
+    if search_query:
+        districts = districts.filter(
+            Q(name_en__icontains=search_query) | 
+            Q(name_mr__icontains=search_query)
+        )
+    
+    paginator = Paginator(districts, 15)  # 15 districts per page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+    context = {
+        'districts': page_obj,
+        'search_query': search_query,
+        'total_count': districts.count(),
+        'is_paginated': page_obj.has_other_pages()
+    }
+    return render(request, 'manage_districts.html', context)
+
+@login_required
+@user_passes_test(is_admin, login_url='login_view')
+def add_district(request):
+    """Add new district"""
+    if request.method == 'POST':
+        name_en = request.POST.get('name_en', '').strip()
+        name_mr = request.POST.get('name_mr', '').strip()
+        
+        if not name_en or not name_mr:
+            messages.error(request, 'Both English and Marathi names are required.')
+            return render(request, 'add_district.html')
+        
+        # Check if district already exists
+        if District.objects.filter(Q(name_en__iexact=name_en) | Q(name_mr__iexact=name_mr)).exists():
+            messages.error(request, 'District with this name already exists.')
+            return render(request, 'add_district.html')
+        
+        district = District.objects.create(
+            name_en=name_en,
+            name_mr=name_mr
+        )
+        
+        # Log user activity
+        log_user_activity(
+            user=request.user,
+            activity_type="District Creation",
+            description=f"New district '{name_en}' / '{name_mr}' created",
+            created_by=request.user
+        )
+        
+        messages.success(request, f"District '{name_en}' added successfully!")
+        return redirect('manage_districts')
+    
+    return render(request, 'add_district.html')
+
+@login_required
+@user_passes_test(is_admin, login_url='login_view')
+def edit_district(request, district_id):
+    """Edit existing district"""
+    district = get_object_or_404(District, id=district_id)
+    
+    if request.method == 'POST':
+        name_en = request.POST.get('name_en', '').strip()
+        name_mr = request.POST.get('name_mr', '').strip()
+        
+        if not name_en or not name_mr:
+            messages.error(request, 'Both English and Marathi names are required.')
+            return render(request, 'add_district.html', {'district': district})
+        
+        # Check if another district with same name exists
+        existing = District.objects.filter(
+            Q(name_en__iexact=name_en) | Q(name_mr__iexact=name_mr)
+        ).exclude(id=district_id)
+        
+        if existing.exists():
+            messages.error(request, 'Another district with this name already exists.')
+            return render(request, 'add_district.html', {'district': district})
+        
+        old_name = f"{district.name_en} / {district.name_mr}"
+        district.name_en = name_en
+        district.name_mr = name_mr
+        district.save()
+        
+        # Log user activity
+        log_user_activity(
+            user=request.user,
+            activity_type="District Update",
+            description=f"District updated from '{old_name}' to '{name_en}' / '{name_mr}'",
+            created_by=request.user
+        )
+        
+        messages.success(request, f"District '{name_en}' updated successfully!")
+        return redirect('manage_districts')
+    
+    return render(request, 'add_district.html', {'district': district})
+
+@login_required
+@user_passes_test(is_admin, login_url='login_view')
+def delete_district(request, district_id):
+    """Delete district (only if no talukas exist)"""
+    if request.method != 'POST':
+        return redirect('manage_districts')
+    
+    district = get_object_or_404(District, id=district_id)
+    district_name = f"{district.name_en} / {district.name_mr}"
+    
+    # Check if district has talukas
+    talukas_count = district.talukas.count()
+    if talukas_count > 0:
+        messages.error(request, f"Cannot delete district '{district.name_en}' as it has {talukas_count} taluka(s). Please delete those first.")
+    else:
+        district.delete()
+        
+        # Log user activity
+        log_user_activity(
+            user=request.user,
+            activity_type="District Deletion",
+            description=f"District '{district_name}' deleted",
+            created_by=request.user
+        )
+        
+        messages.success(request, f"District '{district.name_en}' deleted successfully!")
+    
+    return redirect('manage_districts')
+
+# ===== TALUKA MANAGEMENT =====
+
+@login_required
+@user_passes_test(is_admin, login_url='login_view')
+def manage_talukas(request):
+    """List all talukas with search and pagination"""
+    search_query = request.GET.get('search', '')
+    district_filter = request.GET.get('district', '')
+    
+    talukas = Taluka.objects.select_related('district').all().order_by('district__name_en', 'name_en')
+    
+    if search_query:
+        talukas = talukas.filter(
+            Q(name_en__icontains=search_query) | 
+            Q(name_mr__icontains=search_query) |
+            Q(district__name_en__icontains=search_query) |
+            Q(district__name_mr__icontains=search_query)
+        )
+    
+    if district_filter:
+        talukas = talukas.filter(district_id=district_filter)
+    
+    paginator = Paginator(talukas, 15)  # 15 talukas per page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+    districts = District.objects.all().order_by('name_en')
+    
+    context = {
+        'talukas': page_obj,
+        'search_query': search_query,
+        'district_filter': district_filter,
+        'districts': districts,
+        'total_count': talukas.count(),
+        'is_paginated': page_obj.has_other_pages()
+    }
+    return render(request, 'manage_talukas.html', context)
+
+@login_required
+@user_passes_test(is_admin, login_url='login_view')
+def add_taluka(request):
+    """Add new taluka"""
+    districts = District.objects.all().order_by('name_en')
+    
+    if request.method == 'POST':
+        name_en = request.POST.get('name_en', '').strip()
+        name_mr = request.POST.get('name_mr', '').strip()
+        district_id = request.POST.get('district')
+        
+        if not name_en or not name_mr or not district_id:
+            messages.error(request, 'All fields are required.')
+            return render(request, 'add_taluka.html', {'districts': districts})
+        
+        district = get_object_or_404(District, id=district_id)
+        
+        # Check if taluka already exists in this district
+        if Taluka.objects.filter(
+            district=district,
+            name_en__iexact=name_en
+        ).exists() or Taluka.objects.filter(
+            district=district,
+            name_mr__iexact=name_mr
+        ).exists():
+            messages.error(request, f'Taluka with this name already exists in {district.name_en}.')
+            return render(request, 'add_taluka.html', {'districts': districts})
+        
+        taluka = Taluka.objects.create(
+            name_en=name_en,
+            name_mr=name_mr,
+            district=district
+        )
+        
+        # Log user activity
+        log_user_activity(
+            user=request.user,
+            activity_type="Taluka Creation",
+            description=f"New taluka '{name_en}' / '{name_mr}' created in district '{district.name_en}'",
+            created_by=request.user
+        )
+        
+        messages.success(request, f"Taluka '{name_en}' added successfully!")
+        return redirect('manage_talukas')
+    
+    return render(request, 'add_taluka.html', {'districts': districts})
+
+@login_required
+@user_passes_test(is_admin, login_url='login_view')
+def edit_taluka(request, taluka_id):
+    """Edit existing taluka"""
+    taluka = get_object_or_404(Taluka, id=taluka_id)
+    districts = District.objects.all().order_by('name_en')
+    
+    if request.method == 'POST':
+        name_en = request.POST.get('name_en', '').strip()
+        name_mr = request.POST.get('name_mr', '').strip()
+        district_id = request.POST.get('district')
+        
+        if not name_en or not name_mr or not district_id:
+            messages.error(request, 'All fields are required.')
+            return render(request, 'add_taluka.html', {'taluka': taluka, 'districts': districts})
+        
+        district = get_object_or_404(District, id=district_id)
+        
+        # Check if another taluka with same name exists in this district
+        existing = Taluka.objects.filter(
+            district=district,
+            name_en__iexact=name_en
+        ).exclude(id=taluka_id)
+        
+        if existing.exists():
+            messages.error(request, f'Another taluka with name "{name_en}" already exists in {district.name_en}.')
+            return render(request, 'add_taluka.html', {'taluka': taluka, 'districts': districts})
+        
+        existing_mr = Taluka.objects.filter(
+            district=district,
+            name_mr__iexact=name_mr
+        ).exclude(id=taluka_id)
+        
+        if existing_mr.exists():
+            messages.error(request, f'Another taluka with name "{name_mr}" already exists in {district.name_en}.')
+            return render(request, 'add_taluka.html', {'taluka': taluka, 'districts': districts})
+        
+        old_name = f"{taluka.name_en} / {taluka.name_mr}"
+        old_district = taluka.district.name_en
+        
+        taluka.name_en = name_en
+        taluka.name_mr = name_mr
+        taluka.district = district
+        taluka.save()
+        
+        # Log user activity
+        log_user_activity(
+            user=request.user,
+            activity_type="Taluka Update",
+            description=f"Taluka updated from '{old_name}' in '{old_district}' to '{name_en}' / '{name_mr}' in '{district.name_en}'",
+            created_by=request.user
+        )
+        
+        messages.success(request, f"Taluka '{name_en}' updated successfully!")
+        return redirect('manage_talukas')
+    
+    return render(request, 'add_taluka.html', {'taluka': taluka, 'districts': districts})
+
+@login_required
+@user_passes_test(is_admin, login_url='login_view')
+def delete_taluka(request, taluka_id):
+    """Delete taluka (only if no gram panchayats exist)"""
+    if request.method != 'POST':
+        return redirect('manage_talukas')
+    
+    taluka = get_object_or_404(Taluka, id=taluka_id)
+    taluka_name = f"{taluka.name_en} / {taluka.name_mr}"
+    
+    # Check if taluka has gram panchayats
+    gp_count = taluka.grampanchayats.count()
+    if gp_count > 0:
+        messages.error(request, f"Cannot delete taluka '{taluka.name_en}' as it has {gp_count} gram panchayat(s). Please delete those first.")
+    else:
+        district_name = taluka.district.name_en
+        taluka.delete()
+        
+        # Log user activity
+        log_user_activity(
+            user=request.user,
+            activity_type="Taluka Deletion",
+            description=f"Taluka '{taluka_name}' from district '{district_name}' deleted",
+            created_by=request.user
+        )
+        
+        messages.success(request, f"Taluka '{taluka.name_en}' deleted successfully!")
+    
+    return redirect('manage_talukas')
+
+# ===== GRAM PANCHAYAT MANAGEMENT =====
+
+@login_required
+@user_passes_test(is_admin, login_url='login_view')
+def manage_gram_panchayats(request):
+    """List all gram panchayats with search and pagination"""
+    search_query = request.GET.get('search', '')
+    district_filter = request.GET.get('district', '')
+    taluka_filter = request.GET.get('taluka', '')
+    
+    gps = GramPanchayat.objects.select_related('taluka', 'taluka__district').all().order_by('taluka__district__name_en', 'taluka__name_en', 'name_en')
+    
+    if search_query:
+        gps = gps.filter(
+            Q(name_en__icontains=search_query) | 
+            Q(name_mr__icontains=search_query) |
+            Q(taluka__name_en__icontains=search_query) |
+            Q(taluka__name_mr__icontains=search_query) |
+            Q(taluka__district__name_en__icontains=search_query) |
+            Q(taluka__district__name_mr__icontains=search_query)
+        )
+    
+    if district_filter:
+        gps = gps.filter(taluka__district_id=district_filter)
+    
+    if taluka_filter:
+        gps = gps.filter(taluka_id=taluka_filter)
+    
+    paginator = Paginator(gps, 20)  # 20 GPs per page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+    districts = District.objects.all().order_by('name_en')
+    talukas = Taluka.objects.all().order_by('name_en')
+    
+    context = {
+        'gram_panchayats': page_obj,
+        'search_query': search_query,
+        'district_filter': district_filter,
+        'taluka_filter': taluka_filter,
+        'districts': districts,
+        'talukas': talukas,
+        'total_count': gps.count(),
+        'is_paginated': page_obj.has_other_pages()
+    }
+    return render(request, 'manage_gram_panchayats.html', context)
+
+@login_required
+@user_passes_test(is_admin, login_url='login_view')
+def add_gram_panchayat(request):
+    """Add new gram panchayat"""
+    districts = District.objects.all().order_by('name_en')
+    
+    if request.method == 'POST':
+        name_en = request.POST.get('name_en', '').strip()
+        name_mr = request.POST.get('name_mr', '').strip()
+        taluka_id = request.POST.get('taluka')
+        
+        if not name_en or not name_mr or not taluka_id:
+            messages.error(request, 'All fields are required.')
+            return render(request, 'add_gram_panchayat.html', {'districts': districts})
+        
+        taluka = get_object_or_404(Taluka, id=taluka_id)
+        
+        # Check if GP already exists in this taluka
+        if GramPanchayat.objects.filter(
+            taluka=taluka,
+            name_en__iexact=name_en
+        ).exists() or GramPanchayat.objects.filter(
+            taluka=taluka,
+            name_mr__iexact=name_mr
+        ).exists():
+            messages.error(request, f'Gram Panchayat with this name already exists in {taluka.name_en}.')
+            return render(request, 'add_gram_panchayat.html', {'districts': districts})
+        
+        gp = GramPanchayat.objects.create(
+            name_en=name_en,
+            name_mr=name_mr,
+            taluka=taluka
+        )
+        
+        # Log user activity
+        log_user_activity(
+            user=request.user,
+            activity_type="Gram Panchayat Creation",
+            description=f"New gram panchayat '{name_en}' / '{name_mr}' created in taluka '{taluka.name_en}', district '{taluka.district.name_en}'",
+            created_by=request.user
+        )
+        
+        messages.success(request, f"Gram Panchayat '{name_en}' added successfully!")
+        return redirect('manage_gram_panchayats')
+    
+    return render(request, 'add_gram_panchayat.html', {'districts': districts})
+
+@login_required
+@user_passes_test(is_admin, login_url='login_view')
+def edit_gram_panchayat(request, gp_id):
+    """Edit existing gram panchayat"""
+    gp = get_object_or_404(GramPanchayat, id=gp_id)
+    districts = District.objects.all().order_by('name_en')
+    talukas = Taluka.objects.filter(district=gp.taluka.district).order_by('name_en')
+    
+    if request.method == 'POST':
+        name_en = request.POST.get('name_en', '').strip()
+        name_mr = request.POST.get('name_mr', '').strip()
+        taluka_id = request.POST.get('taluka')
+        
+        if not name_en or not name_mr or not taluka_id:
+            messages.error(request, 'All fields are required.')
+            return render(request, 'add_gram_panchayat.html', {'gp': gp, 'districts': districts, 'talukas': talukas})
+        
+        taluka = get_object_or_404(Taluka, id=taluka_id)
+        
+        # Check if another GP with same name exists in this taluka
+        existing = GramPanchayat.objects.filter(
+            taluka=taluka,
+            name_en__iexact=name_en
+        ).exclude(id=gp_id)
+        
+        if existing.exists():
+            messages.error(request, f'Another gram panchayat with name "{name_en}" already exists in {taluka.name_en}.')
+            return render(request, 'add_gram_panchayat.html', {'gp': gp, 'districts': districts, 'talukas': talukas})
+        
+        existing_mr = GramPanchayat.objects.filter(
+            taluka=taluka,
+            name_mr__iexact=name_mr
+        ).exclude(id=gp_id)
+        
+        if existing_mr.exists():
+            messages.error(request, f'Another gram panchayat with name "{name_mr}" already exists in {taluka.name_en}.')
+            return render(request, 'add_gram_panchayat.html', {'gp': gp, 'districts': districts, 'talukas': talukas})
+        
+        old_name = f"{gp.name_en} / {gp.name_mr}"
+        old_location = f"{gp.taluka.name_en}, {gp.taluka.district.name_en}"
+        
+        gp.name_en = name_en
+        gp.name_mr = name_mr
+        gp.taluka = taluka
+        gp.save()
+        
+        # Log user activity
+        log_user_activity(
+            user=request.user,
+            activity_type="Gram Panchayat Update",
+            description=f"Gram Panchayat updated from '{old_name}' in '{old_location}' to '{name_en}' / '{name_mr}' in '{taluka.name_en}, {taluka.district.name_en}'",
+            created_by=request.user
+        )
+        
+        messages.success(request, f"Gram Panchayat '{name_en}' updated successfully!")
+        return redirect('manage_gram_panchayats')
+    
+    return render(request, 'add_gram_panchayat.html', {'gp': gp, 'districts': districts, 'talukas': talukas})
+
+@login_required
+@user_passes_test(is_admin, login_url='login_view')
+def delete_gram_panchayat(request, gp_id):
+    """Delete gram panchayat (only if no work suggestions exist)"""
+    if request.method != 'POST':
+        return redirect('manage_gram_panchayats')
+    
+    gp = get_object_or_404(GramPanchayat, id=gp_id)
+    gp_name = f"{gp.name_en} / {gp.name_mr}"
+    
+    # Check if GP has work suggestions
+    suggestions_count = WorkSuggestion.objects.filter(gram_panchayat=gp).count()
+    if suggestions_count > 0:
+        messages.error(request, f"Cannot delete gram panchayat '{gp.name_en}' as it has {suggestions_count} work suggestion(s). Please delete those first.")
+    else:
+        location = f"{gp.taluka.name_en}, {gp.taluka.district.name_en}"
+        gp.delete()
+        
+        # Log user activity
+        log_user_activity(
+            user=request.user,
+            activity_type="Gram Panchayat Deletion",
+            description=f"Gram Panchayat '{gp_name}' from '{location}' deleted",
+            created_by=request.user
+        )
+        
+        messages.success(request, f"Gram Panchayat '{gp.name_en}' deleted successfully!")
+    
+    return redirect('manage_gram_panchayats')
+
+# AJAX endpoint for getting talukas by district (for location management forms)
+@require_POST
+def get_talukas_for_district(request):
+    """AJAX endpoint to get talukas for a specific district"""
+    try:
+        data = json.loads(request.body)
+        district_id = data.get('district_id')
+        
+        if not district_id:
+            return JsonResponse({'error': 'District ID is required'}, status=400)
+        
+        talukas = Taluka.objects.filter(district_id=district_id).values('id', 'name_en', 'name_mr').order_by('name_en')
+        
+        return JsonResponse({'talukas': list(talukas)})
+        
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)

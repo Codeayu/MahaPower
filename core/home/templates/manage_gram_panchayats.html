@@ -1,0 +1,284 @@
+{% extends 'base.html' %}
+
+{% block title %}Manage Gram Panchayats - UdyogSetu{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <!-- Header -->
+    <div class="bg-gradient-to-r from-red-500 to-red-600 text-white rounded-2xl p-8 mb-8 shadow-xl">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-4 md:mb-0">
+                <h1 class="text-4xl font-bold mb-2">
+                    <i class="fas fa-home mr-3"></i> Gram Panchayat Management
+                </h1>
+                <p class="text-xl opacity-90">Manage all gram panchayats across Maharashtra</p>
+            </div>
+            <div>
+                <a href="{% url 'add_gram_panchayat' %}" class="bg-white text-red-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-300 shadow-lg">
+                    <i class="fas fa-plus mr-2"></i> Add New Gram Panchayat
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search and Filter -->
+    <div class="bg-gray-50 rounded-xl p-6 mb-8 shadow-lg">
+        <form method="GET" class="grid grid-cols-1 md:grid-cols-4 gap-6 items-end">
+            <div>
+                <label for="search" class="block text-sm font-semibold text-gray-700 mb-2">Search Gram Panchayats</label>
+                <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500" 
+                       name="search" id="search" placeholder="Search by name..." value="{{ request.GET.search }}">
+            </div>
+            <div>
+                <label for="district_filter" class="block text-sm font-semibold text-gray-700 mb-2">Filter by District</label>
+                <select name="district" id="district_filter" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500">
+                    <option value="">All Districts</option>
+                    {% for district in districts %}
+                    <option value="{{ district.id }}" 
+                            {% if request.GET.district == district.id|stringformat:"s" %}selected{% endif %}>
+                        {{ district.name_en }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div>
+                <label for="taluka_filter" class="block text-sm font-semibold text-gray-700 mb-2">Filter by Taluka</label>
+                <select name="taluka" id="taluka_filter" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500">
+                    <option value="">All Talukas</option>
+                    {% for taluka in talukas %}
+                    <option value="{{ taluka.id }}" 
+                            {% if request.GET.taluka == taluka.id|stringformat:"s" %}selected{% endif %}>
+                        {{ taluka.name_en }} ({{ taluka.district.name_en }})
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div>
+                <div class="flex gap-3 mb-2">
+                    <button type="submit" class="bg-red-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-red-700 transition-colors duration-300">
+                        <i class="fas fa-search mr-2"></i> Search
+                    </button>
+                    <a href="{% url 'manage_gram_panchayats' %}" class="bg-gray-200 text-gray-700 px-6 py-3 rounded-lg font-semibold hover:bg-gray-300 transition-colors duration-300">
+                        <i class="fas fa-times mr-2"></i> Clear
+                    </a>
+                </div>
+                <p class="text-sm text-gray-600">Total: {{ gram_panchayats.count }} GP(s)</p>
+            </div>
+        </form>
+    </div>
+
+    <!-- Gram Panchayats Table -->
+    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full table-auto">
+                <thead class="bg-red-600 text-white">
+                    <tr>
+                        <th class="px-6 py-4 text-left font-semibold">Sr. No.</th>
+                        <th class="px-6 py-4 text-left font-semibold">Gram Panchayat Name</th>
+                        <th class="px-6 py-4 text-left font-semibold">Marathi Name</th>
+                        <th class="px-6 py-4 text-left font-semibold">Location</th>
+                        <th class="px-6 py-4 text-left font-semibold">Created</th>
+                        <th class="px-6 py-4 text-left font-semibold">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                    {% for gp in gram_panchayats %}
+                    <tr class="hover:bg-gray-50 transition-colors duration-200">
+                        <td class="px-6 py-4 text-gray-900">{{ forloop.counter0|add:gram_panchayats.start_index }}</td>
+                        <td class="px-6 py-4">
+                            <span class="font-semibold text-gray-900">{{ gp.name_en }}</span>
+                        </td>
+                        <td class="px-6 py-4 text-gray-700">{{ gp.name_mr|default:"-" }}</td>
+                        <td class="px-6 py-4">
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-3 py-1 rounded-full text-xs font-medium">
+                                    {{ gp.taluka.district.name_en }}
+                                </span>
+                                <span class="bg-gradient-to-r from-green-500 to-blue-500 text-white px-3 py-1 rounded-full text-xs font-medium">
+                                    {{ gp.taluka.name_en }}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 text-gray-600">{{ gp.created_at|date:"M d, Y" }}</td>
+                        <td class="px-6 py-4">
+                            <div class="flex gap-2">
+                                <a href="{% url 'edit_gram_panchayat' gp.id %}" 
+                                   class="bg-yellow-500 text-white px-3 py-2 rounded-lg hover:bg-yellow-600 transition-colors duration-200" 
+                                   title="Edit Gram Panchayat">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <button type="button" class="bg-red-500 text-white px-3 py-2 rounded-lg hover:bg-red-600 transition-colors duration-200" 
+                                        onclick="confirmDelete({{ gp.id }}, '{{ gp.name_en }}', '{{ gp.taluka.name_en }}', '{{ gp.taluka.district.name_en }}')"
+                                        title="Delete Gram Panchayat">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="px-6 py-12 text-center">
+                            <div class="flex flex-col items-center">
+                                <i class="fas fa-inbox text-6xl text-gray-400 mb-4"></i>
+                                <p class="text-gray-600 mb-4">No gram panchayats found.</p>
+                                <a href="{% url 'add_gram_panchayat' %}" class="bg-red-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-red-700 transition-colors duration-300">
+                                    <i class="fas fa-plus mr-2"></i> Add First Gram Panchayat
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Pagination -->
+        {% if is_paginated %}
+        <div class="bg-gray-50 px-6 py-4">
+            <nav aria-label="Gram Panchayats pagination">
+                <div class="flex justify-center space-x-2">
+                    {% if gram_panchayats.has_previous %}
+                        <a href="?page=1{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.district %}&district={{ request.GET.district }}{% endif %}{% if request.GET.taluka %}&taluka={{ request.GET.taluka }}{% endif %}" 
+                           class="bg-white text-gray-700 px-4 py-2 rounded-lg border hover:bg-gray-50 transition-colors duration-200">
+                            First
+                        </a>
+                        <a href="?page={{ gram_panchayats.previous_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.district %}&district={{ request.GET.district }}{% endif %}{% if request.GET.taluka %}&taluka={{ request.GET.taluka }}{% endif %}" 
+                           class="bg-white text-gray-700 px-4 py-2 rounded-lg border hover:bg-gray-50 transition-colors duration-200">
+                            Previous
+                        </a>
+                    {% endif %}
+
+                    <span class="bg-red-600 text-white px-4 py-2 rounded-lg font-semibold">
+                        Page {{ gram_panchayats.number }} of {{ gram_panchayats.paginator.num_pages }}
+                    </span>
+
+                    {% if gram_panchayats.has_next %}
+                        <a href="?page={{ gram_panchayats.next_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.district %}&district={{ request.GET.district }}{% endif %}{% if request.GET.taluka %}&taluka={{ request.GET.taluka }}{% endif %}" 
+                           class="bg-white text-gray-700 px-4 py-2 rounded-lg border hover:bg-gray-50 transition-colors duration-200">
+                            Next
+                        </a>
+                        <a href="?page={{ gram_panchayats.paginator.num_pages }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.district %}&district={{ request.GET.district }}{% endif %}{% if request.GET.taluka %}&taluka={{ request.GET.taluka }}{% endif %}" 
+                           class="bg-white text-gray-700 px-4 py-2 rounded-lg border hover:bg-gray-50 transition-colors duration-200">
+                            Last
+                        </a>
+                    {% endif %}
+                </div>
+            </nav>
+        </div>
+        {% endif %}
+    </div>
+    
+    <!-- Back Button -->
+    <div class="mt-8">
+        <a href="{% url 'manage_locations' %}" class="bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-700 transition-colors duration-300">
+            <i class="fas fa-arrow-left mr-2"></i> Back to Location Management
+        </a>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+    <div class="bg-white rounded-xl shadow-2xl max-w-md w-full mx-4">
+        <div class="bg-red-600 text-white p-6 rounded-t-xl">
+            <div class="flex justify-between items-center">
+                <h3 class="text-xl font-bold">
+                    <i class="fas fa-exclamation-triangle mr-2"></i> Confirm Deletion
+                </h3>
+                <button type="button" class="text-white hover:text-gray-200" onclick="closeModal()">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+        </div>
+        <div class="p-6">
+            <p class="mb-4">Are you sure you want to delete the gram panchayat <strong id="gpName"></strong> 
+               from taluka <strong id="talukaName"></strong>, district <strong id="districtName"></strong>?</p>
+            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-4">
+                <p class="text-yellow-800">
+                    <i class="fas fa-exclamation-triangle mr-2"></i> 
+                    This action cannot be undone!
+                </p>
+            </div>
+        </div>
+        <div class="flex justify-end gap-3 p-6 pt-0">
+            <button type="button" class="bg-gray-200 text-gray-700 px-6 py-3 rounded-lg font-semibold hover:bg-gray-300 transition-colors duration-300" onclick="closeModal()">
+                Cancel
+            </button>
+            <form id="deleteForm" method="POST" class="inline">
+                {% csrf_token %}
+                <button type="submit" class="bg-red-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-red-700 transition-colors duration-300">
+                    <i class="fas fa-trash mr-2"></i> Delete Gram Panchayat
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block custom_js %}
+<script>
+function confirmDelete(gpId, gpName, talukaName, districtName) {
+    document.getElementById('gpName').textContent = gpName;
+    document.getElementById('talukaName').textContent = talukaName;
+    document.getElementById('districtName').textContent = districtName;
+    document.getElementById('deleteForm').action = '{% url "delete_gram_panchayat" 0 %}'.replace('0', gpId);
+    document.getElementById('deleteModal').classList.remove('hidden');
+}
+
+function closeModal() {
+    document.getElementById('deleteModal').classList.add('hidden');
+}
+
+// Close modal when clicking outside
+document.getElementById('deleteModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeModal();
+    }
+});
+
+// Auto-submit search form on Enter key
+document.getElementById('search').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        this.form.submit();
+    }
+});
+
+// Auto-submit on filter change
+document.getElementById('district_filter').addEventListener('change', function() {
+    // Clear taluka filter when district changes
+    document.getElementById('taluka_filter').value = '';
+    this.form.submit();
+});
+
+document.getElementById('taluka_filter').addEventListener('change', function() {
+    this.form.submit();
+});
+
+// Load talukas based on selected district
+document.getElementById('district_filter').addEventListener('change', function() {
+    const districtId = this.value;
+    const talukaSelect = document.getElementById('taluka_filter');
+    
+    if (!districtId) {
+        // Reset taluka dropdown
+        talukaSelect.innerHTML = '<option value="">All Talukas</option>';
+        {% for taluka in talukas %}
+        talukaSelect.innerHTML += '<option value="{{ taluka.id }}">{{ taluka.name_en }} ({{ taluka.district.name_en }})</option>';
+        {% endfor %}
+        return;
+    }
+    
+    // Fetch talukas for selected district
+    fetch(`/get-talukas-for-district/?district_id=${districtId}`)
+        .then(response => response.json())
+        .then(data => {
+            talukaSelect.innerHTML = '<option value="">All Talukas</option>';
+            data.talukas.forEach(taluka => {
+                talukaSelect.innerHTML += `<option value="${taluka.id}">${taluka.name_en}</option>`;
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching talukas:', error);
+        });
+});
+</script>
+{% endblock %}

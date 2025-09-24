@@ -228,7 +228,10 @@
           {% if is_english %}{{ suggestion.work_type.name_en }}{% else %}{{ suggestion.work_type.name_mr }}{% endif %}
         </p>
       </div>
-      <button type="button" class="relative inline-flex items-center px-3 py-1.5 rounded-md bg-white border border-blue-200 text-sm font-medium text-blue-600 hover:bg-blue-600 hover:text-white hover:border-transparent transition-all duration-300 group-hover:shadow-md">
+      <button type="button" 
+              onclick="console.log('Details button clicked'); showWorkTypeDetails('{{ suggestion.work_type.name_en|escapejs }}', '{{ suggestion.work_type.name_mr|escapejs }}', '{{ suggestion.work_type.description_en|escapejs }}', '{{ suggestion.work_type.description_mr|escapejs }}', '{{ suggestion.work_type.sector.name_en|escapejs }}', '{{ suggestion.work_type.sector.name_mr|escapejs }}')"
+              class="relative inline-flex items-center px-3 py-1.5 rounded-md bg-white border border-blue-200 text-sm font-medium text-blue-600 hover:bg-blue-600 hover:text-white hover:border-transparent transition-all duration-300 group-hover:shadow-md"
+              title="Click to view work type details">
         <span class="english-text flex items-center {% if not is_english %}hidden{% endif %}">
           Details
           <svg class="w-4 h-4 ml-1.5 transform transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -339,7 +342,10 @@
           </span>
         </div>
       </div>
-      <button type="button" class="relative inline-flex items-center px-3 py-1.5 rounded-md bg-white border border-yellow-200 text-sm font-medium text-yellow-600 hover:bg-yellow-600 hover:text-white hover:border-transparent transition-all duration-300 group-hover:shadow-md">
+      <button type="button" 
+              onclick="console.log('Details button clicked (specialty)'); showWorkTypeDetails('{{ suggestion.work_type.name_en|escapejs }}', '{{ suggestion.work_type.name_mr|escapejs }}', '{{ suggestion.work_type.description_en|escapejs }}', '{{ suggestion.work_type.description_mr|escapejs }}', '{{ suggestion.work_type.sector.name_en|escapejs }}', '{{ suggestion.work_type.sector.name_mr|escapejs }}')"
+              class="relative inline-flex items-center px-3 py-1.5 rounded-md bg-white border border-yellow-200 text-sm font-medium text-yellow-600 hover:bg-yellow-600 hover:text-white hover:border-transparent transition-all duration-300 group-hover:shadow-md"
+              title="Click to view work type details">
         <span class="english-text flex items-center {% if not is_english %}hidden{% endif %}">
           Details
           <svg class="w-4 h-4 ml-1.5 transform transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -901,7 +907,16 @@
                                           ${isEnglish ? suggestion.work_type.name_en : suggestion.work_type.name_mr}
                                       </p>
                                   </div>
-                                  <button type="button" class="relative inline-flex items-center px-3 py-1.5 rounded-md bg-white border border-blue-200 text-sm font-medium text-blue-600 hover:bg-blue-600 hover:text-white hover:border-transparent transition-all duration-300 group-hover:shadow-md">
+                                  <button type="button" 
+                                          class="details-btn relative inline-flex items-center px-3 py-1.5 rounded-md bg-white border border-blue-200 text-sm font-medium text-blue-600 hover:bg-blue-600 hover:text-white hover:border-transparent transition-all duration-300 group-hover:shadow-md"
+                                          title="Click to view work type details"
+                                          data-name-en="${suggestion.work_type.name_en}"
+                                          data-name-mr="${suggestion.work_type.name_mr}"
+                                          data-desc-en="${suggestion.work_type.description_en || 'No description available'}"
+                                          data-desc-mr="${suggestion.work_type.description_mr || 'वर्णन उपलब्ध नाही'}"
+                                          data-sector-en="${suggestion.work_type.sector.name_en}"
+                                          data-sector-mr="${suggestion.work_type.sector.name_mr}"
+                                          data-type="regular">
                                       <span class="english-text flex items-center ${isEnglish ? '' : 'hidden'}">
                                           Details
                                           <svg class="w-4 h-4 ml-1.5 transform transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -996,7 +1011,16 @@
                                           </span>
                                       </div>
                                   </div>
-                                  <button type="button" class="relative inline-flex items-center px-3 py-1.5 rounded-md bg-white border border-yellow-200 text-sm font-medium text-yellow-600 hover:bg-yellow-600 hover:text-white hover:border-transparent transition-all duration-300 group-hover:shadow-md">
+                                  <button type="button" 
+                                          class="details-btn relative inline-flex items-center px-3 py-1.5 rounded-md bg-white border border-yellow-200 text-sm font-medium text-yellow-600 hover:bg-yellow-600 hover:text-white hover:border-transparent transition-all duration-300 group-hover:shadow-md"
+                                          title="Click to view work type details"
+                                          data-name-en="${suggestion.work_type.name_en}"
+                                          data-name-mr="${suggestion.work_type.name_mr}"
+                                          data-desc-en="${suggestion.work_type.description_en || 'No description available'}"
+                                          data-desc-mr="${suggestion.work_type.description_mr || 'वर्णन उपलब्ध नाही'}"
+                                          data-sector-en="${suggestion.work_type.sector.name_en}"
+                                          data-sector-mr="${suggestion.work_type.sector.name_mr}"
+                                          data-type="specialty">
                                       <span class="english-text flex items-center ${isEnglish ? '' : 'hidden'}">
                                           Details
                                           <svg class="w-4 h-4 ml-1.5 transform transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1039,6 +1063,26 @@
       
       // Set container content
       container.innerHTML = html;
+      
+      // Add event delegation for details buttons
+      container.addEventListener('click', function(e) {
+          if (e.target.classList.contains('details-btn') || e.target.closest('.details-btn')) {
+              const button = e.target.classList.contains('details-btn') ? e.target : e.target.closest('.details-btn');
+              const nameEn = button.getAttribute('data-name-en');
+              const nameMr = button.getAttribute('data-name-mr');
+              const descEn = button.getAttribute('data-desc-en');
+              const descMr = button.getAttribute('data-desc-mr');
+              const sectorEn = button.getAttribute('data-sector-en');
+              const sectorMr = button.getAttribute('data-sector-mr');
+              const type = button.getAttribute('data-type');
+              
+              console.log('Details button clicked - Type:', type);
+              console.log('Data attributes retrieved:', {
+                nameEn, nameMr, descEn, descMr, sectorEn, sectorMr
+              });
+              showWorkTypeDetails(nameEn, nameMr, descEn, descMr, sectorEn, sectorMr);
+          }
+      });
       
       // Add fadeIn animation if not already added
       if (!document.querySelector('style[data-animation="fadeIn"]')) {
@@ -1121,5 +1165,179 @@
           </div>
       `;
   }
+
+  // Function to show work type details modal
+  function showWorkTypeDetails(nameEn, nameMr, descriptionEn, descriptionMr, sectorEn, sectorMr) {
+    console.log('showWorkTypeDetails called with:', {
+      nameEn, nameMr, descriptionEn, descriptionMr, sectorEn, sectorMr
+    });
+    
+    try {
+      // More reliable language detection
+      const englishElements = document.querySelectorAll('.english-text');
+      const isEnglish = englishElements.length > 0 && !englishElements[0].classList.contains('hidden');
+      console.log('Language is English:', isEnglish);
+      
+      // Check if modal exists
+      const modal = document.getElementById('workTypeModal');
+      if (!modal) {
+        console.error('Modal element not found!');
+        alert('Modal not found. Please refresh the page.');
+        return;
+      }
+      
+      // Set modal content
+      const nameElement = document.getElementById('modalWorkTypeName');
+      const descElement = document.getElementById('modalWorkTypeDescription');
+      const sectorElement = document.getElementById('modalWorkTypeSector');
+      
+      if (!nameElement || !descElement || !sectorElement) {
+        console.error('Modal content elements not found!');
+        alert('Modal content elements missing. Please refresh the page.');
+        return;
+      }
+      
+      const finalName = isEnglish ? nameEn : nameMr;
+      const finalDesc = isEnglish ? (descriptionEn || 'No description available') : (descriptionMr || 'वर्णन उपलब्ध नाही');
+      const finalSector = isEnglish ? sectorEn : sectorMr;
+      
+      console.log('Setting modal content:', {
+        name: finalName,
+        description: finalDesc,
+        sector: finalSector,
+        rawDesc: { descriptionEn, descriptionMr }
+      });
+      
+      nameElement.textContent = finalName;
+      descElement.textContent = finalDesc;
+      sectorElement.textContent = finalSector;
+      
+      // Update modal language display
+      const modalEnglishElements = modal.querySelectorAll('.english-text');
+      const modalMarathiElements = modal.querySelectorAll('.marathi-text');
+      
+      modalEnglishElements.forEach(el => {
+        if (isEnglish) {
+          el.classList.remove('hidden');
+        } else {
+          el.classList.add('hidden');
+        }
+      });
+      
+      modalMarathiElements.forEach(el => {
+        if (!isEnglish) {
+          el.classList.remove('hidden');
+        } else {
+          el.classList.add('hidden');
+        }
+      });
+      
+      console.log('Modal content set, showing modal...');
+      modal.classList.remove('hidden');
+      console.log('Modal should now be visible');
+      
+    } catch (error) {
+      console.error('Error in showWorkTypeDetails:', error);
+      alert('Error showing details: ' + error.message);
+    }
+  }
+
+  // Function to close work type details modal
+  function closeWorkTypeModal() {
+    document.getElementById('workTypeModal').classList.add('hidden');
+  }
+
+  // Make functions globally available
+  window.showWorkTypeDetails = showWorkTypeDetails;
+  window.closeWorkTypeModal = closeWorkTypeModal;
+
+  // Close modal when clicking outside
+  document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded, setting up modal event listeners...');
+    
+    // Test if all modal elements exist
+    const modal = document.getElementById('workTypeModal');
+    const nameElement = document.getElementById('modalWorkTypeName');
+    const descElement = document.getElementById('modalWorkTypeDescription');
+    const sectorElement = document.getElementById('modalWorkTypeSector');
+    
+    console.log('Modal elements check:', {
+      modal: !!modal,
+      nameElement: !!nameElement,
+      descElement: !!descElement,
+      sectorElement: !!sectorElement
+    });
+    
+    if (modal) {
+      modal.addEventListener('click', function(e) {
+        if (e.target === this) {
+          closeWorkTypeModal();
+        }
+      });
+      console.log('Modal click listener added');
+    } else {
+      console.error('Work type modal not found during DOMContentLoaded');
+    }
+    
+    // Test the showWorkTypeDetails function
+    console.log('showWorkTypeDetails function available:', typeof showWorkTypeDetails === 'function');
+    
+    
 </script>
+
+<!-- Work Type Details Modal -->
+<div id="workTypeModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+  <div class="flex items-center justify-center min-h-screen p-4">
+    <div class="bg-white rounded-lg shadow-xl max-w-lg w-full max-h-96 overflow-y-auto">
+      <div class="p-5 bg-gradient-to-r from-navyBlue to-blue-700 text-white rounded-t-lg">
+        <div class="flex justify-between items-center">
+          <h4 class="text-xl font-semibold english-text">Work Type Details</h4>
+          <h4 class="text-xl font-semibold marathi-text hidden">कार्य प्रकाराचे तपशील</h4>
+          <button onclick="closeWorkTypeModal()" class="text-white hover:text-gray-300 transition-colors">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      
+      <div class="p-6 space-y-4">
+        <!-- Work Type Name -->
+        <div>
+          <h5 class="text-lg font-semibold text-gray-800 mb-2" id="modalWorkTypeName"></h5>
+          <div class="flex items-center text-sm text-gray-600">
+            <svg class="w-4 h-4 mr-2 text-navyBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+            </svg>
+            <span class="english-text">Sector:</span>
+            <span class="marathi-text hidden">क्षेत्र:</span>
+            <span id="modalWorkTypeSector" class="ml-1 font-medium text-navyBlue"></span>
+          </div>
+        </div>
+        
+        <!-- Work Type Description -->
+        <div>
+          <h6 class="text-sm font-medium text-gray-600 mb-2 english-text">Description</h6>
+          <h6 class="text-sm font-medium text-gray-600 mb-2 marathi-text hidden">वर्णन</h6>
+          <div class="bg-gray-50 rounded-lg p-4">
+            <p id="modalWorkTypeDescription" class="text-gray-700 leading-relaxed"></p>
+          </div>
+        </div>
+        
+        <!-- Action Buttons -->
+        <div class="flex justify-end pt-4 border-t border-gray-200">
+          <button onclick="closeWorkTypeModal()" 
+                  class="py-2 px-4 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors english-text">
+            Close
+          </button>
+          <button onclick="closeWorkTypeModal()" 
+                  class="py-2 px-4 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors marathi-text hidden">
+            बंद करा
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 {% endblock %}

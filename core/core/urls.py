@@ -72,6 +72,35 @@ urlpatterns = [
     
     path('edit-suggestion/<int:suggestion_id>/', edit_suggestion, name='edit_suggestion'),
     path('delete-suggestion/<int:suggestion_id>/', delete_suggestion, name='delete_suggestion'),
+    
+    # Work type management
+    path('work-types/', work_type_management, name='work_type_management'),
+    path('edit-work-type/<int:work_type_id>/', edit_work_type, name='edit_work_type'),
+    path('delete-work-type/<int:work_type_id>/', delete_work_type, name='delete_work_type'),
+    
+    # Location Management URLs
+    path('manage-locations/', manage_locations, name='manage_locations'),
+    
+    # District Management
+    path('manage-districts/', manage_districts, name='manage_districts'),
+    path('add-district/', add_district, name='add_district'),
+    path('edit-district/<int:district_id>/', edit_district, name='edit_district'),
+    path('delete-district/<int:district_id>/', delete_district, name='delete_district'),
+    
+    # Taluka Management
+    path('manage-talukas/', manage_talukas, name='manage_talukas'),
+    path('add-taluka/', add_taluka, name='add_taluka'),
+    path('edit-taluka/<int:taluka_id>/', edit_taluka, name='edit_taluka'),
+    path('delete-taluka/<int:taluka_id>/', delete_taluka, name='delete_taluka'),
+    
+    # Gram Panchayat Management
+    path('manage-gram-panchayats/', manage_gram_panchayats, name='manage_gram_panchayats'),
+    path('add-gram-panchayat/', add_gram_panchayat, name='add_gram_panchayat'),
+    path('edit-gram-panchayat/<int:gp_id>/', edit_gram_panchayat, name='edit_gram_panchayat'),
+    path('delete-gram-panchayat/<int:gp_id>/', delete_gram_panchayat, name='delete_gram_panchayat'),
+    
+    # AJAX endpoints for location management
+    path('get-talukas-for-district/', get_talukas_for_district, name='get_talukas_for_district'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

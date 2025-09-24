@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+
+{% block title %}Manage Locations - UdyogSetu{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <!-- Header Card -->
+    <div class="bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-2xl p-8 mb-8 shadow-xl transform hover:-translate-y-1 transition-transform duration-300">
+        <h1 class="text-4xl font-bold mb-4">
+            <i class="fas fa-map-marked-alt mr-3"></i> Location Management System
+        </h1>
+        <p class="text-xl mb-8 opacity-90">
+            Manage Districts, Talukas, and Gram Panchayats for Maharashtra Power Infrastructure
+        </p>
+        
+        <!-- Statistics Grid -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-8">
+            <div class="bg-white bg-opacity-20 backdrop-blur-lg rounded-xl p-6 text-center">
+                <div class="text-4xl font-bold text-yellow-300 mb-2">{{ districts_count }}</div>
+                <div class="text-lg">Districts</div>
+            </div>
+            <div class="bg-white bg-opacity-20 backdrop-blur-lg rounded-xl p-6 text-center">
+                <div class="text-4xl font-bold text-yellow-300 mb-2">{{ talukas_count }}</div>
+                <div class="text-lg">Talukas</div>
+            </div>
+            <div class="bg-white bg-opacity-20 backdrop-blur-lg rounded-xl p-6 text-center">
+                <div class="text-4xl font-bold text-yellow-300 mb-2">{{ gps_count }}</div>
+                <div class="text-lg">Gram Panchayats</div>
+            </div>
+            <div class="bg-white bg-opacity-20 backdrop-blur-lg rounded-xl p-6 text-center">
+                <div class="text-4xl font-bold text-yellow-300 mb-2">{{ total_locations }}</div>
+                <div class="text-lg">Total Locations</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Management Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden h-full">
+            <div class="p-8 text-center">
+                <div class="mb-6">
+                    <i class="fas fa-city text-blue-600 text-6xl"></i>
+                </div>
+                <h4 class="text-2xl font-bold text-gray-800 mb-4">Districts</h4>
+                <p class="text-gray-600 mb-6">
+                    Manage all districts in Maharashtra. Add, edit, or remove district information.
+                </p>
+                <a href="{% url 'manage_districts' %}" class="inline-block bg-gradient-to-r from-blue-600 to-blue-800 text-white px-8 py-3 rounded-full font-semibold hover:from-blue-700 hover:to-blue-900 transform hover:-translate-y-1 transition-all duration-300 shadow-lg">
+                    <i class="fas fa-cog mr-2"></i> Manage Districts
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden h-full">
+            <div class="p-8 text-center">
+                <div class="mb-6">
+                    <i class="fas fa-map text-green-600 text-6xl"></i>
+                </div>
+                <h4 class="text-2xl font-bold text-gray-800 mb-4">Talukas</h4>
+                <p class="text-gray-600 mb-6">
+                    Manage talukas under each district. Configure the administrative subdivisions.
+                </p>
+                <a href="{% url 'manage_talukas' %}" class="inline-block bg-gradient-to-r from-green-500 to-blue-500 text-white px-8 py-3 rounded-full font-semibold hover:from-green-600 hover:to-blue-600 transform hover:-translate-y-1 transition-all duration-300 shadow-lg">
+                    <i class="fas fa-cog mr-2"></i> Manage Talukas
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden h-full">
+            <div class="p-8 text-center">
+                <div class="mb-6">
+                    <i class="fas fa-home text-red-600 text-6xl"></i>
+                </div>
+                <h4 class="text-2xl font-bold text-gray-800 mb-4">Gram Panchayats</h4>
+                <p class="text-gray-600 mb-6">
+                    Manage gram panchayats under each taluka. Local governance units configuration.
+                </p>
+                <a href="{% url 'manage_gram_panchayats' %}" class="inline-block bg-gradient-to-r from-red-500 to-orange-500 text-white px-8 py-3 rounded-full font-semibold hover:from-red-600 hover:to-orange-600 transform hover:-translate-y-1 transition-all duration-300 shadow-lg">
+                    <i class="fas fa-cog mr-2"></i> Manage Gram Panchayats
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Quick Actions -->
+    <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+        <div class="flex items-center mb-6">
+            <i class="fas fa-bolt text-saffron text-2xl mr-3"></i>
+            <h5 class="text-2xl font-bold text-gray-800">Quick Actions</h5>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <a href="{% url 'add_district' %}" class="bg-blue-50 border-2 border-blue-200 text-blue-700 px-6 py-4 rounded-lg hover:bg-blue-100 hover:border-blue-300 transition-all duration-300 text-center font-semibold">
+                <i class="fas fa-plus mr-2"></i> Add New District
+            </a>
+            <a href="{% url 'add_taluka' %}" class="bg-green-50 border-2 border-green-200 text-green-700 px-6 py-4 rounded-lg hover:bg-green-100 hover:border-green-300 transition-all duration-300 text-center font-semibold">
+                <i class="fas fa-plus mr-2"></i> Add New Taluka
+            </a>
+            <a href="{% url 'add_gram_panchayat' %}" class="bg-red-50 border-2 border-red-200 text-red-700 px-6 py-4 rounded-lg hover:bg-red-100 hover:border-red-300 transition-all duration-300 text-center font-semibold">
+                <i class="fas fa-plus mr-2"></i> Add New Gram Panchayat
+            </a>
+        </div>
+    </div>
+    
+    <!-- Recent Activity -->
+    {% if recent_activities %}
+    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+        <div class="bg-blue-600 text-white p-6">
+            <h5 class="text-xl font-bold flex items-center">
+                <i class="fas fa-history mr-3"></i> Recent Location Activities
+            </h5>
+        </div>
+        <div class="p-6">
+            <div class="overflow-x-auto">
+                <table class="w-full table-auto">
+                    <thead>
+                        <tr class="border-b border-gray-200">
+                            <th class="text-left py-3 px-4 font-semibold text-gray-700">Activity</th>
+                            <th class="text-left py-3 px-4 font-semibold text-gray-700">User</th>
+                            <th class="text-left py-3 px-4 font-semibold text-gray-700">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for activity in recent_activities %}
+                        <tr class="border-b border-gray-100 hover:bg-gray-50">
+                            <td class="py-3 px-4">{{ activity.description }}</td>
+                            <td class="py-3 px-4">{{ activity.user.username }}</td>
+                            <td class="py-3 px-4 text-gray-600">{{ activity.created_at|date:"M d, Y H:i" }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
