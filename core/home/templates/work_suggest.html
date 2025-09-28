@@ -1,180 +1,375 @@
 {% extends 'base.html' %}
 {% block title %}
-  UdyogSetu | कामाच्या सूचना पोर्टल |Maharashtra State Khadi & Village Industries Board
+  UdyogSetu (Bridge to Enterprise) | कामाच्या सूचना पोर्टल | Maharashtra State Khadi & Village Industries Board
 {% endblock %}
 {% load static %}
 
 {% block content %}
-<div class="container mx-auto px-4 py-12">
-  <!-- Header Section with subtle animation -->
-  <div class="mb-8 text-center transform transition hover:scale-105 duration-300">  
-    <h2 class="text-3xl font-bold text-gray-800 mb-2 english-text">Work Suggestion Portal</h2>
-    <h2 class="text-3xl font-bold text-gray-800 mb-2 marathi-text hidden">कामाच्या सूचना पोर्टल</h2>
-    <div class="w-20 h-1 bg-saffron mx-auto mb-4"></div>
-    <p class="text-gray-600 max-w-2xl mx-auto english-text">Find the most suitable work suggestions for your area by selecting location details below.</p>
-    <p class="text-gray-600 max-w-2xl mx-auto marathi-text hidden">खालील स्थान तपशील निवडून आपल्या क्षेत्रासाठी सर्वात योग्य कामाच्या सूचना शोधा.</p>
+<!-- Hero Section with Government Portal Design -->
+<div class="relative bg-gradient-to-br from-blue-900 via-navyBlue to-indigo-900 text-white overflow-hidden">
+  <!-- Decorative Background Elements -->
+  <div class="absolute inset-0 opacity-10">
+    <div class="absolute top-10 left-10 w-32 h-32 bg-gradient-to-r from-saffron to-yellow-500 rounded-full blur-3xl"></div>
+    <div class="absolute top-1/2 right-20 w-40 h-40 bg-gradient-to-r from-green-400 to-blue-500 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-10 left-1/3 w-28 h-28 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full blur-3xl"></div>
+  </div>
+  
+  <!-- Geometric Pattern Overlay -->
+  <div class="absolute inset-0 opacity-5">
+    <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+      <defs>
+        <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
+          <path d="M 10 0 L 0 0 0 10" fill="none" stroke="white" stroke-width="0.5"/>
+        </pattern>
+      </defs>
+      <rect width="100" height="100" fill="url(#grid)" />
+    </svg>
   </div>
 
-  <!-- Form Section with improved UI -->
-  <div class="rounded-xl shadow-lg overflow-hidden border border-gray-200 mb-10 transform transition-all duration-300 hover:shadow-xl">
-    <div class="p-5 bg-gradient-to-r from-navyBlue to-blue-700 text-white">
-      <div class="flex flex-wrap justify-between items-center">
-        <h4 class="text-2xl font-semibold english-text mb-2 md:mb-0">Work Suggestions Form</h4>
-        <h4 class="text-2xl font-semibold marathi-text hidden mb-2 md:mb-0">कामाच्या सूचना फॉर्म</h4>
-        
-        <!-- Language Toggle with improved styling -->
-        <div class="flex bg-white rounded-full p-1 shadow-sm">
-          <button type="button" id="englishBtn" class="px-4 py-1.5 rounded-full bg-saffron text-white text-sm font-medium transition-all duration-200">English</button>
-          <button type="button" id="marathiBtn" class="px-4 py-1.5 rounded-full text-gray-700 text-sm font-medium transition-all duration-200">मराठी</button>
+  <div class="relative container mx-auto px-4 py-16 lg:py-20">
+    <div class="text-center max-w-4xl mx-auto">
+      <!-- Indian Emblem and Title -->
+      <div class="flex items-center justify-center mb-6">
+        <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mr-4 shadow-lg">
+          <svg class="w-10 h-10 text-saffron" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2L3.09 8.26L4 21L12 17L20 21L20.91 8.26L12 2Z"/>
+          </svg>
+        </div>
+        <div class="text-left">
+          <div class="flex items-center mb-2">
+            <h1 class="text-4xl lg:text-5xl font-bold bg-gradient-to-r from-saffron via-yellow-400 to-saffron bg-clip-text text-transparent mr-3">
+              UdyogSetu
+            </h1>
+            <span class="text-lg lg:text-xl text-blue-200 font-medium">(Bridge to Enterprise)</span>
+          </div>
+          <p class="text-sm text-blue-200 opacity-80 english-text">Maharashtra State Khadi & Village Industries Board</p>
+          <p class="text-sm text-blue-200 opacity-80 marathi-text hidden">महाराष्ट्र राज्य खादी आणि ग्रामोद्योग मंडळ</p>
         </div>
       </div>
+
+      <!-- Main Heading -->
+      <div class="mb-8">
+        <h2 class="text-3xl lg:text-4xl font-bold mb-4 english-text">
+          <span class="bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
+            Advice for choosing the right industry
+          </span>
+        </h2>
+        <h2 class="text-3xl lg:text-4xl font-bold mb-4 marathi-text hidden">
+          <span class="bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
+            योग्य उद्योग निवडीसाठी सल्ला
+          </span>
+        </h2>
+        
+        <!-- Decorative Line -->
+        <div class="flex items-center justify-center mb-6">
+          <div class="h-px bg-gradient-to-r from-transparent via-saffron to-transparent w-32"></div>
+          <div class="w-2 h-2 bg-saffron rounded-full mx-4"></div>
+          <div class="h-px bg-gradient-to-r from-transparent via-saffron to-transparent w-32"></div>
+        </div>
+
+        <p class="text-lg text-blue-100 max-w-3xl mx-auto leading-relaxed english-text">
+          Discover tailored work opportunities and employment suggestions based on your location and sector preferences. Our comprehensive portal connects you with suitable livelihood options in your area.
+        </p>
+        <p class="text-lg text-blue-100 max-w-3xl mx-auto leading-relaxed marathi-text hidden">
+          आपल्या स्थान आणि क्षेत्राच्या प्राधान्यांच्या आधारे योग्य कामाच्या संधी आणि रोजगाराच्या सूचना शोधा. आमचे व्यापक पोर्टल आपल्याला आपल्या क्षेत्रातील योग्य उपजीविकेच्या पर्यायांशी जोडते.
+        </p>
+      </div>
+
+      <!-- Scroll Down Indicator -->
+      <div class="animate-bounce">
+        <svg class="w-6 h-6 mx-auto text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m0 0l7-7 7 7z"></path>
+        </svg>
+      </div>
     </div>
-    
-    <div class="p-6 bg-white">
-      <form method="get" class="grid grid-cols-1 md:grid-cols-2 gap-6" id="suggestionForm">
-        <!-- District Dropdown with improved styling -->
-        <div class="relative">
-          <label for="district" class="block text-sm font-medium text-gray-600 mb-1.5 english-text">District</label>
-          <label for="district" class="block text-sm font-medium text-gray-600 mb-1.5 marathi-text hidden">जिल्हा</label>
-          <select id="district" name="district" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-saffron focus:border-transparent appearance-none bg-white">
-            <option value="">{% if is_english %}Select District{% else %}जिल्हा निवडा{% endif %}</option>
-            {% for district in districts %}
-              <option value="{{ district.id }}" 
-                data-name-en="{{ district.name_en }}" 
-                data-name-mr="{{ district.name_mr }}"
-                {% if district.id|stringformat:"s" == selected_district %}selected{% endif %}>
-                {{ district.name_mr }}
-              </option>
-            {% endfor %}
-          </select>
-          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 pt-6">
-            <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"></path>
-            </svg>
-          </div>
-        </div>
-
-        <!-- Taluka Dropdown with improved styling -->
-        <div class="relative">
-          <label for="taluka" class="block text-sm font-medium text-gray-600 mb-1.5 english-text">Taluka</label>
-          <label for="taluka" class="block text-sm font-medium text-gray-600 mb-1.5 marathi-text hidden">तालुका</label>
-          <select id="taluka" name="taluka" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-saffron focus:border-transparent appearance-none bg-white">
-            <option value="">Select Taluka</option>
-          </select>
-          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 pt-6">
-            <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"></path>
-            </svg>
-          </div>
-          <div id="taluka-loading" class="hidden absolute right-10 top-1/2 transform -translate-y-1/3">
-            <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-saffron"></div>
-          </div>
-        </div>
-
-        <!-- Gram Panchayat Dropdown with improved styling -->
-        <div class="relative">
-          <label for="gram_panchayat" class="block text-sm font-medium text-gray-600 mb-1.5 english-text">Gram Panchayat</label>
-          <label for="gram_panchayat" class="block text-sm font-medium text-gray-600 mb-1.5 marathi-text hidden">ग्रामपंचायत</label>
-          <select id="gram_panchayat" name="gram_panchayat" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-saffron focus:border-transparent appearance-none bg-white">
-            <option value="">Select Gram Panchayat</option>
-          </select>
-          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 pt-6">
-            <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"></path>
-            </svg>
-          </div>
-          <div id="gp-loading" class="hidden absolute right-10 top-1/2 transform -translate-y-1/3">
-            <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-saffron"></div>
-          </div>
-        </div>
-
-        <!-- Sector Dropdown with improved styling -->
-        <!-- Sector Dropdown with improved styling -->
-<div class="relative">
-  <label for="sector" class="block text-sm font-medium text-gray-600 mb-1.5 english-text">Sector</label>
-  <label for="sector" class="block text-sm font-medium text-gray-600 mb-1.5 marathi-text hidden">क्षेत्र</label>
-  <select id="sector" name="sector" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-saffron focus:border-transparent appearance-none bg-white required">
-    <option value="">{% if is_english %}Select Sector{% else %}क्षेत्र निवडा{% endif %}</option>
-    {% for sector in sectors %}
-      <option value="{{ sector.id }}" 
-        data-name-en="{{ sector.name_en }}" 
-        data-name-mr="{{ sector.name_mr }}"
-        {% if sector.id|stringformat:"s" == selected_sector %}selected{% endif %}>
-        {% if is_english %}{{ sector.name_en }}{% else %}{{ sector.name_mr }}{% endif %}
-      </option>
-    {% endfor %}
-  </select>
-  <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 pt-6">
-    <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
-      <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"></path>
-    </svg>
   </div>
 </div>
-  <!-- Reset Button -->
-  <!-- Button row with improved layout -->
-  <div class="col-span-1 md:col-span-2 flex justify-between items-center">
-    <!-- Reset Button - Changed to button type for proper form reset -->
-    <button type="reset" class="py-2.5 px-8 rounded-lg text-sm font-semibold bg-gray-200 text-gray-700 hover:bg-gray-300 hover:shadow-md transition-all duration-300 transform hover:-translate-y-0.5 flex items-center">
-      <span class="english-text flex items-center">
-        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
-        </svg>
-        Reset Form
-      </span>
-      <span class="marathi-text hidden flex items-center">
-        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
-        </svg>
-        फॉर्म रीसेट करा
-      </span>
-    </button>
 
-    <!-- Submit Button -->
-    <button type="submit" id="submitBtn" class="py-2.5 px-8 rounded-lg text-sm font-semibold bg-gradient-to-r from-saffron to-yellow-500 text-white hover:shadow-md transition-all duration-300 transform hover:-translate-y-0.5">
-      <span class="english-text flex items-center">
-        Get Work Suggestions
-        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-        </svg>
-      </span>
-      <span class="marathi-text hidden flex items-center">
-        कामाच्या सूचना मिळवा
-        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-        </svg>
-      </span>
-    </button>
-  </div>
-      </form>
-    </div>
-  </div>
+<!-- Main Content Section -->
+<div class="bg-gray-50 min-h-screen">
+  <div class="container mx-auto px-4 py-12">
 
-  <!-- Enhanced Suggestions Section with modern UI -->
-  <div id="suggestions-container" class="space-y-8 hidden">
-    <div class="p-5 bg-gradient-to-r from-navyBlue via-blue-600 to-blue-700 text-white rounded-xl shadow-lg flex justify-between items-center">
-      <div>
-  <h4 class="text-2xl font-bold english-text flex items-center">
-    <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
-    </svg>
-    Work Suggestions
-  </h4>
-  <h4 class="text-2xl font-bold marathi-text hidden flex items-center">
-    <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
-    </svg>
-    कामाच्या सूचना
-  </h4>
-  <div class="w-20 h-1 bg-saffron mt-2"></div>
+    <!-- Professional Form Section -->
+    <div class="max-w-6xl mx-auto">
+      <!-- Form Header -->
+      <div class="bg-white rounded-t-2xl shadow-lg border-b-4 border-gradient-to-r from-saffron to-yellow-500">
+        <div class="p-6 bg-gradient-to-r from-navyBlue via-blue-700 to-indigo-800 text-white rounded-t-2xl relative overflow-hidden">
+          <!-- Decorative Elements -->
+          <div class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-white bg-opacity-10 rounded-full"></div>
+          <div class="absolute bottom-0 left-0 -mb-4 -ml-4 w-20 h-20 bg-white bg-opacity-5 rounded-full"></div>
+          
+          <div class="relative z-10 flex flex-col lg:flex-row justify-between items-center">
+            <div class="mb-4 lg:mb-0">
+              <div class="flex items-center mb-2">
+                <div class="w-10 h-10 bg-saffron rounded-lg flex items-center justify-center mr-3">
+                  <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                  </svg>
+                </div>
+                <div>
+                  <h4 class="text-2xl font-bold english-text">Fill the information below to select the right industry</h4>
+                  <h4 class="text-2xl font-bold marathi-text hidden">योग्य उद्योग निवडण्यासाठी खालील माहिती भरा</h4>
+                  <p class="text-blue-200 text-sm english-text">Find opportunities in your area</p>
+                  <p class="text-blue-200 text-sm marathi-text hidden">आपल्या क्षेत्रातील संधी शोधा</p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Enhanced Language Toggle -->
+            <div class="bg-white bg-opacity-20 backdrop-blur-lg rounded-full p-1 border border-white border-opacity-30">
+              <div class="flex">
+                <button type="button" id="englishBtn" class="px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50">
+                  <span class="flex items-center">
+                    <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.01-4.65.75-6.78-.87-1.46-2.43-2.35-4.11-2.35-.98 0-2.01.39-2.71 1.09C3.7 5.07 3.31 6.1 3.31 7.08c0 1.68.89 3.24 2.35 4.11 2.13 1.26 4.84.99 6.78-.75l.03.03 2.51 2.54 2.54-2.51c-.99-1.74-2.35-2.63-4.11-2.63-.98 0-2.01.39-2.71 1.09z"/>
+                    </svg>
+                    English
+                  </span>
+                </button>
+                <button type="button" id="marathiBtn" class="px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50">
+                  <span class="flex items-center">
+                    <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.01-4.65.75-6.78-.87-1.46-2.43-2.35-4.11-2.35-.98 0-2.01.39-2.71 1.09C3.7 5.07 3.31 6.1 3.31 7.08c0 1.68.89 3.24 2.35 4.11 2.13 1.26 4.84.99 6.78-.75l.03.03 2.51 2.54 2.54-2.51c-.99-1.74-2.35-2.63-4.11-2.63-.98 0-2.01.39-2.71 1.09z"/>
+                    </svg>
+                    मराठी
+                  </span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="hidden md:block">
-  <div class="animate-pulse flex space-x-1">
-    <div class="h-2 w-2 bg-white rounded-full"></div>
-    <div class="h-2 w-2 bg-white rounded-full"></div>
-    <div class="h-2 w-2 bg-white rounded-full"></div>
-  </div>
+      
+      <!-- Form Content -->
+      <div class="bg-white rounded-b-2xl shadow-lg">
+        <div class="p-8">
+          <form method="get" class="space-y-8" id="suggestionForm">
+            
+            <!-- Form Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              
+              <!-- District Selection -->
+              <div class="group">
+                <label for="district" class="block text-sm font-semibold text-gray-700 mb-3 english-text flex items-center">
+                  <svg class="w-4 h-4 mr-2 text-navyBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                  </svg>
+                  District Selection
+                </label>
+                <label for="district" class="block text-sm font-semibold text-gray-700 mb-3 marathi-text hidden flex items-center">
+                  <svg class="w-4 h-4 mr-2 text-navyBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                  </svg>
+                  जिल्हा निवड
+                </label>
+                <div class="relative">
+                  <select id="district" name="district" class="w-full px-4 py-3.5 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-saffron focus:ring-opacity-20 focus:border-saffron transition-all duration-300 appearance-none bg-white shadow-sm group-hover:border-blue-300">
+                    <option value="">{% if is_english %}Choose your district{% else %}आपला जिल्हा निवडा{% endif %}</option>
+                    {% for district in districts %}
+                      <option value="{{ district.id }}" 
+                        data-name-en="{{ district.name_en }}" 
+                        data-name-mr="{{ district.name_mr }}"
+                        {% if district.id|stringformat:"s" == selected_district %}selected{% endif %}>
+                        {{ district.name_mr }}
+                      </option>
+                    {% endfor %}
+                  </select>
+                  <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4">
+                    <svg class="w-5 h-5 text-gray-400 group-hover:text-blue-500 transition-colors" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Taluka Selection -->
+              <div class="group">
+                <label for="taluka" class="block text-sm font-semibold text-gray-700 mb-3 english-text flex items-center">
+                  <svg class="w-4 h-4 mr-2 text-navyBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                  </svg>
+                  Taluka Selection
+                </label>
+                <label for="taluka" class="block text-sm font-semibold text-gray-700 mb-3 marathi-text hidden flex items-center">
+                  <svg class="w-4 h-4 mr-2 text-navyBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                  </svg>
+                  तालुका निवड
+                </label>
+                <div class="relative">
+                  <select id="taluka" name="taluka" class="w-full px-4 py-3.5 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-saffron focus:ring-opacity-20 focus:border-saffron transition-all duration-300 appearance-none bg-white shadow-sm group-hover:border-blue-300">
+                    <option value="">तालुका निवडा</option>
+                  </select>
+                  <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4">
+                    <svg class="w-5 h-5 text-gray-400 group-hover:text-blue-500 transition-colors" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                    </svg>
+                  </div>
+                  <div id="taluka-loading" class="hidden absolute right-12 top-1/2 transform -translate-y-1/2">
+                    <div class="animate-spin rounded-full h-5 w-5 border-2 border-saffron border-t-transparent"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+              <!-- Gram Panchayat Selection -->
+              <div class="group">
+                <label for="gram_panchayat" class="block text-sm font-semibold text-gray-700 mb-3 english-text flex items-center">
+                  <svg class="w-4 h-4 mr-2 text-navyBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                  Gram Panchayat
+                </label>
+                <label for="gram_panchayat" class="block text-sm font-semibold text-gray-700 mb-3 marathi-text hidden flex items-center">
+                  <svg class="w-4 h-4 mr-2 text-navyBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                  ग्रामपंचायत
+                </label>
+                <div class="relative">
+                  <select id="gram_panchayat" name="gram_panchayat" class="w-full px-4 py-3.5 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-saffron focus:ring-opacity-20 focus:border-saffron transition-all duration-300 appearance-none bg-white shadow-sm group-hover:border-blue-300">
+                    <option value="">ग्रामपंचायत निवडा</option>
+                  </select>
+                  <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4">
+                    <svg class="w-5 h-5 text-gray-400 group-hover:text-blue-500 transition-colors" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                    </svg>
+                  </div>
+                  <div id="gp-loading" class="hidden absolute right-12 top-1/2 transform -translate-y-1/2">
+                    <div class="animate-spin rounded-full h-5 w-5 border-2 border-saffron border-t-transparent"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Sector Selection -->
+              <div class="group">
+                <label for="sector" class="block text-sm font-semibold text-gray-700 mb-3 english-text flex items-center">
+                  <svg class="w-4 h-4 mr-2 text-navyBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                  </svg>
+                  Sector Preference
+                </label>
+                <label for="sector" class="block text-sm font-semibold text-gray-700 mb-3 marathi-text hidden flex items-center">
+                  <svg class="w-4 h-4 mr-2 text-navyBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                  </svg>
+                  क्षेत्र प्राधान्य
+                </label>
+                <div class="relative">
+                  <select id="sector" name="sector" class="w-full px-4 py-3.5 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-saffron focus:ring-opacity-20 focus:border-saffron transition-all duration-300 appearance-none bg-white shadow-sm group-hover:border-blue-300 required">
+                    <option value="">{% if is_english %}Choose work sector{% else %}कामाचे क्षेत्र निवडा{% endif %}</option>
+                    {% for sector in sectors %}
+                      <option value="{{ sector.id }}" 
+                        data-name-en="{{ sector.name_en }}" 
+                        data-name-mr="{{ sector.name_mr }}"
+                        {% if sector.id|stringformat:"s" == selected_sector %}selected{% endif %}>
+                        {% if is_english %}{{ sector.name_en }}{% else %}{{ sector.name_mr }}{% endif %}
+                      </option>
+                    {% endfor %}
+                  </select>
+                  <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4">
+                    <svg class="w-5 h-5 text-gray-400 group-hover:text-blue-500 transition-colors" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Action Buttons -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-between items-center pt-6 border-t border-gray-200">
+              <!-- Reset Button -->
+              <button type="reset" class="w-full sm:w-auto px-8 py-3.5 rounded-xl text-sm font-semibold bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700 hover:from-gray-200 hover:to-gray-300 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 active:scale-95 flex items-center justify-center border-2 border-gray-300 hover:border-gray-400 group">
+                <span class="english-text flex items-center">
+                  <svg class="w-5 h-5 mr-2 group-hover:rotate-180 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                  </svg>
+                  Clear All Fields
+                </span>
+                <span class="marathi-text hidden flex items-center">
+                  <svg class="w-5 h-5 mr-2 group-hover:rotate-180 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                  </svg>
+                  सर्व फील्ड साफ करा
+                </span>
+              </button>
+
+              <!-- Submit Button -->
+              <button type="submit" id="submitBtn" class="w-full sm:w-auto px-10 py-3.5 rounded-xl text-sm font-bold bg-gradient-to-r from-saffron via-yellow-500 to-amber-500 text-white hover:from-amber-500 hover:via-saffron hover:to-yellow-500 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 active:scale-95 flex items-center justify-center group relative overflow-hidden">
+                <!-- Button glow effect -->
+                <div class="absolute inset-0 bg-gradient-to-r from-saffron to-yellow-500 opacity-0 group-hover:opacity-100 blur-lg transition-opacity duration-300"></div>
+                
+                <span class="english-text flex items-center relative z-10">
+                  <svg class="w-5 h-5 mr-2 group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                  </svg>
+                  Find Work Opportunities
+                  <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                  </svg>
+                </span>
+                <span class="marathi-text hidden flex items-center relative z-10">
+                  <svg class="w-5 h-5 mr-2 group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                  </svg>
+                  कामाच्या संधी शोधा
+                  <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                  </svg>
+                </span>
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
+
+    <!-- Professional Suggestions Section -->
+    <div id="suggestions-container" class="max-w-6xl mx-auto mt-12 hidden">
+      
+      <!-- Results Header -->
+      <div class="bg-white rounded-2xl shadow-xl border-l-4 border-saffron mb-8 overflow-hidden">
+        <div class="p-6 bg-gradient-to-r from-navyBlue via-blue-700 to-indigo-800 text-white relative">
+          <!-- Decorative Elements -->
+          <div class="absolute top-0 right-0 -mt-6 -mr-6 w-32 h-32 bg-white bg-opacity-10 rounded-full"></div>
+          <div class="absolute bottom-0 left-0 -mb-6 -ml-6 w-24 h-24 bg-white bg-opacity-5 rounded-full"></div>
+          
+          <div class="relative z-10 flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-4 md:mb-0">
+              <div class="flex items-center mb-3">
+                <div class="w-12 h-12 bg-saffron rounded-xl flex items-center justify-center mr-4 shadow-lg">
+                  <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-5 9a2 2 0 002 2h2a2 2 0 002-2m-6 0a2 2 0 002 2h2a2 2 0 002-2"></path>
+                  </svg>
+                </div>
+                <div>
+                  <h4 class="text-2xl md:text-3xl font-bold english-text">Work Suggestions Results</h4>
+                  <h4 class="text-2xl md:text-3xl font-bold marathi-text hidden">कामाच्या सूचना परिणाम</h4>
+                  <p class="text-blue-200 text-sm english-text">Tailored opportunities for your location</p>
+                  <p class="text-blue-200 text-sm marathi-text hidden">आपल्या स्थानासाठी योग्य संधी</p>
+                </div>
+              </div>
+              <div class="w-24 h-1 bg-gradient-to-r from-saffron to-yellow-400 rounded-full"></div>
+            </div>
+            
+            <!-- Success Animation -->
+            <div class="hidden md:flex items-center space-x-2">
+              <div class="flex space-x-1">
+                <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                <div class="w-3 h-3 bg-yellow-400 rounded-full animate-pulse" style="animation-delay: 0.2s"></div>
+                <div class="w-3 h-3 bg-blue-400 rounded-full animate-pulse" style="animation-delay: 0.4s"></div>
+              </div>
+              <svg class="w-8 h-8 text-green-400 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
 
     {% if suggestions %}
       {% regroup suggestions by work_type.sector as sector_list %}
@@ -421,9 +616,12 @@
 
   // Initialize when DOM is loaded
   document.addEventListener('DOMContentLoaded', function() {
-      // Set Marathi as active by default
-      document.getElementById('marathiBtn').classList.add('bg-saffron', 'text-white');
-      document.getElementById('englishBtn').classList.remove('bg-saffron', 'text-white');
+      // Set Marathi as active by default with enhanced styling
+      const marathiBtn = document.getElementById('marathiBtn');
+      const englishBtn = document.getElementById('englishBtn');
+      
+      marathiBtn.classList.add('bg-saffron', 'text-white', 'shadow-lg', 'transform', 'scale-105');
+      englishBtn.classList.add('text-gray-600', 'hover:text-white');
       
       // Hide English, show Marathi by default
       document.querySelectorAll('.english-text').forEach(el => el.classList.add('hidden'));
@@ -439,11 +637,15 @@
       // Initialize event listeners
       setupEventListeners();
       
-      // Add ripple effect to buttons
-      addRippleEffect();
+      // Add enhanced interactions
+      addEnhancedInteractions();
+      
+      // Initialize floating labels
+      initializeFloatingLabels();
   });
 
-  function addRippleEffect() {
+  function addEnhancedInteractions() {
+      // Enhanced ripple effect for buttons
       const buttons = document.querySelectorAll('button:not([type="reset"])');
       buttons.forEach(button => {
           button.addEventListener('click', function(e) {
@@ -461,35 +663,111 @@
                   ripple.remove();
               }, 600);
           });
+          
+          // Add hover glow effect
+          button.addEventListener('mouseenter', function() {
+              this.style.boxShadow = '0 20px 40px rgba(255, 153, 51, 0.3)';
+          });
+          
+          button.addEventListener('mouseleave', function() {
+              this.style.boxShadow = '';
+          });
+      });
+      
+      // Add focus effects to form inputs
+      const inputs = document.querySelectorAll('select');
+      inputs.forEach(input => {
+          input.addEventListener('focus', function() {
+              this.parentElement.classList.add('input-focused');
+          });
+          
+          input.addEventListener('blur', function() {
+              this.parentElement.classList.remove('input-focused');
+          });
       });
       
       // Add the necessary CSS
-      const style = document.createElement('style');
-      style.innerHTML = `
-          .ripple-effect {
-              position: absolute;
-              background: rgba(255, 255, 255, 0.4);
-              border-radius: 50%;
-              pointer-events: none;
-              width: 100px;
-              height: 100px;
-              transform: scale(0);
-              animation: ripple 0.6s linear;
-          }
-          
-          @keyframes ripple {
-              to {
-                  transform: scale(4);
-                  opacity: 0;
+      if (!document.querySelector('#enhanced-styles')) {
+          const style = document.createElement('style');
+          style.id = 'enhanced-styles';
+          style.innerHTML = `
+              .ripple-effect {
+                  position: absolute;
+                  background: rgba(255, 255, 255, 0.4);
+                  border-radius: 50%;
+                  pointer-events: none;
+                  width: 100px;
+                  height: 100px;
+                  transform: scale(0);
+                  animation: ripple 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
               }
-          }
+              
+              @keyframes ripple {
+                  to {
+                      transform: scale(4);
+                      opacity: 0;
+                  }
+              }
+              
+              button {
+                  overflow: hidden;
+                  position: relative;
+              }
+              
+              .input-focused {
+                  transform: translateY(-2px);
+                  transition: transform 0.2s ease;
+              }
+              
+              .group:hover .group-hover\\:border-blue-300 {
+                  border-color: #93c5fd !important;
+              }
+              
+              @keyframes fadeInUp {
+                  from {
+                      opacity: 0;
+                      transform: translateY(30px);
+                  }
+                  to {
+                      opacity: 1;
+                      transform: translateY(0);
+                  }
+              }
+              
+              .animate-fadeInUp {
+                  animation: fadeInUp 0.6s ease-out forwards;
+              }
+              
+              .card-hover-effect {
+                  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+              }
+              
+              .card-hover-effect:hover {
+                  transform: translateY(-8px) scale(1.02);
+                  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+              }
+          `;
+          document.head.appendChild(style);
+      }
+  }
+  
+  function initializeFloatingLabels() {
+      // Add floating label effect for enhanced UX
+      const formGroups = document.querySelectorAll('.group');
+      formGroups.forEach(group => {
+          const select = group.querySelector('select');
+          const label = group.querySelector('label');
           
-          button {
-              overflow: hidden;
-              position: relative;
+          if (select && label) {
+              select.addEventListener('change', function() {
+                  if (this.value) {
+                      label.classList.add('text-saffron', 'transform', 'scale-95');
+                  } else {
+                      label.classList.remove('text-saffron', 'transform', 'scale-95');
+                  }
+              });
           }
-      `;
-      document.head.appendChild(style);
+      });
   }
 
   function initializeDistrictDropdown() {
@@ -540,38 +818,86 @@
       // Form submission
       document.getElementById('suggestionForm').addEventListener('submit', handleFormSubmit);
       
-      // Form reset - Add animation
+      // Enhanced form reset with professional animation
       document.querySelector('button[type="reset"]').addEventListener('click', function() {
-          // Add a subtle shake animation to the form
+          // Add professional pulse animation to the form
           const form = document.getElementById('suggestionForm');
-          form.classList.add('animate-shake');
-          setTimeout(() => form.classList.remove('animate-shake'), 500);
+          form.classList.add('animate-pulse-gentle');
+          setTimeout(() => form.classList.remove('animate-pulse-gentle'), 800);
           
-          // Reset dropdowns with proper language
+          // Show confirmation with fade effect
+          showNotification('Form cleared successfully', 'success');
+          
+          // Reset dropdowns with proper language and smooth transitions
           setTimeout(() => {
-              document.getElementById('taluka').innerHTML = '<option value="">' + (isEnglish ? 'Select Taluka' : 'तालुका निवडा') + '</option>';
-              document.getElementById('gram_panchayat').innerHTML = '<option value="">' + (isEnglish ? 'Select Gram Panchayat' : 'ग्रामपंचायत निवडा') + '</option>';
+              const talukaSelect = document.getElementById('taluka');
+              const gpSelect = document.getElementById('gram_panchayat');
               
-              // Clear and hide the suggestions container
+              talukaSelect.style.opacity = '0.5';
+              gpSelect.style.opacity = '0.5';
+              
+              talukaSelect.innerHTML = '<option value="">' + (isEnglish ? 'Select Taluka' : 'तालुका निवडा') + '</option>';
+              gpSelect.innerHTML = '<option value="">' + (isEnglish ? 'Select Gram Panchayat' : 'ग्रामपंचायत निवडा') + '</option>';
+              
+              setTimeout(() => {
+                  talukaSelect.style.opacity = '1';
+                  gpSelect.style.opacity = '1';
+              }, 200);
+              
+              // Clear and hide the suggestions container with fade effect
               const suggestionsContainer = document.getElementById('suggestions-container');
-              suggestionsContainer.innerHTML = '';
-              suggestionsContainer.classList.add('hidden');
+              if (!suggestionsContainer.classList.contains('hidden')) {
+                  suggestionsContainer.style.opacity = '0';
+                  setTimeout(() => {
+                      suggestionsContainer.innerHTML = '';
+                      suggestionsContainer.classList.add('hidden');
+                      suggestionsContainer.style.opacity = '1';
+                  }, 300);
+              }
           }, 100);
       });
       
-      // Add the shake animation CSS
-      const style = document.createElement('style');
-      style.innerHTML = `
-          @keyframes shake {
-              0%, 100% { transform: translateX(0); }
-              25% { transform: translateX(5px); }
-              75% { transform: translateX(-5px); }
-          }
-          .animate-shake {
-              animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
-          }
-      `;
-      document.head.appendChild(style);
+      // Add enhanced animation CSS
+      if (!document.querySelector('#reset-animations')) {
+          const style = document.createElement('style');
+          style.id = 'reset-animations';
+          style.innerHTML = `
+              @keyframes pulseGentle {
+                  0%, 100% { transform: scale(1); opacity: 1; }
+                  50% { transform: scale(1.02); opacity: 0.9; }
+              }
+              .animate-pulse-gentle {
+                  animation: pulseGentle 0.8s ease-in-out;
+              }
+              
+              .notification {
+                  position: fixed;
+                  top: 20px;
+                  right: 20px;
+                  z-index: 9999;
+                  padding: 12px 24px;
+                  border-radius: 8px;
+                  font-weight: 500;
+                  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+                  animation: slideInRight 0.3s ease-out, fadeOut 0.3s ease-in 2.7s forwards;
+              }
+              
+              .notification.success {
+                  background: linear-gradient(135deg, #10B981, #059669);
+                  color: white;
+              }
+              
+              @keyframes slideInRight {
+                  from { transform: translateX(100%); opacity: 0; }
+                  to { transform: translateX(0); opacity: 1; }
+              }
+              
+              @keyframes fadeOut {
+                  to { opacity: 0; transform: translateX(100%); }
+              }
+          `;
+          document.head.appendChild(style);
+      }
   }
 
   function updateLanguageUI() {
@@ -581,13 +907,21 @@
       if (isEnglish) {
           document.querySelectorAll('.english-text').forEach(el => el.classList.remove('hidden'));
           document.querySelectorAll('.marathi-text').forEach(el => el.classList.add('hidden'));
-          englishBtn.classList.add('bg-saffron', 'text-white');
-          marathiBtn.classList.remove('bg-saffron', 'text-white');
+          
+          // Enhanced button styling
+          englishBtn.classList.add('bg-saffron', 'text-white', 'shadow-lg', 'transform', 'scale-105');
+          englishBtn.classList.remove('text-gray-600', 'hover:text-white');
+          marathiBtn.classList.remove('bg-saffron', 'text-white', 'shadow-lg', 'transform', 'scale-105');
+          marathiBtn.classList.add('text-gray-600', 'hover:text-white');
       } else {
           document.querySelectorAll('.english-text').forEach(el => el.classList.add('hidden'));
           document.querySelectorAll('.marathi-text').forEach(el => el.classList.remove('hidden'));
-          englishBtn.classList.remove('bg-saffron', 'text-white');
-          marathiBtn.classList.add('bg-saffron', 'text-white');
+          
+          // Enhanced button styling
+          marathiBtn.classList.add('bg-saffron', 'text-white', 'shadow-lg', 'transform', 'scale-105');
+          marathiBtn.classList.remove('text-gray-600', 'hover:text-white');
+          englishBtn.classList.remove('bg-saffron', 'text-white', 'shadow-lg', 'transform', 'scale-105');
+          englishBtn.classList.add('text-gray-600', 'hover:text-white');
       }
   }
   function updateDropdownsLanguage() {
@@ -711,21 +1045,33 @@
       const submitBtn = document.getElementById('submitBtn');
       const suggestionsContainer = document.getElementById('suggestions-container');
       
-      // Make the container visible
+      // Make the container visible with smooth transition
       suggestionsContainer.classList.remove('hidden');
+      suggestionsContainer.style.opacity = '0';
+      suggestionsContainer.style.transform = 'translateY(20px)';
       
-      // Clear previous results with fade-out effect
-      suggestionsContainer.classList.add('opacity-0');
+      // Clear previous results with enhanced fade-out effect
       setTimeout(() => {
           suggestionsContainer.innerHTML = '';
-          suggestionsContainer.classList.remove('opacity-0');
+          suggestionsContainer.style.opacity = '1';
+          suggestionsContainer.style.transform = 'translateY(0)';
       }, 300);
       
-      // Show loading state
+      // Enhanced loading state with professional spinner
       submitBtn.disabled = true;
-      submitBtn.innerHTML = isEnglish ? 
-          '<span class="flex items-center"><div class="animate-spin mr-2 h-4 w-4 border-2 border-white rounded-full border-t-transparent"></div>Loading...</span>' :
-          '<span class="flex items-center"><div class="animate-spin mr-2 h-4 w-4 border-2 border-white rounded-full border-t-transparent"></div>लोड होत आहे...</span>';
+      const originalContent = submitBtn.innerHTML;
+      submitBtn.innerHTML = `
+          <span class="flex items-center relative z-10">
+              <div class="animate-spin mr-3 h-5 w-5 border-2 border-white border-t-transparent rounded-full"></div>
+              <span class="english-text ${!isEnglish ? 'hidden' : ''}">Searching Opportunities...</span>
+              <span class="marathi-text ${isEnglish ? 'hidden' : ''}">संधी शोधत आहे...</span>
+              <div class="ml-2 flex space-x-1">
+                  <div class="w-1 h-1 bg-white rounded-full animate-bounce"></div>
+                  <div class="w-1 h-1 bg-white rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+                  <div class="w-1 h-1 bg-white rounded-full animate-bounce" style="animation-delay: 0.4s"></div>
+              </div>
+          </span>
+      `;
 
       // Get form data
       const formData = {
@@ -735,84 +1081,124 @@
           sector: document.getElementById('sector').value
       };
 
-      // Validate GP selection
+      // Enhanced validation with visual feedback
       if (!formData.gram_panchayat) {
-          showError(isEnglish ? 'Please select a Gram Panchayat' : 'कृपया ग्रामपंचायत निवडा');
+          const gpSelect = document.getElementById('gram_panchayat');
+          gpSelect.classList.add('border-red-500', 'animate-shake');
+          setTimeout(() => {
+              gpSelect.classList.remove('border-red-500', 'animate-shake');
+          }, 2000);
+          
+          showError(isEnglish ? 'Please select a Gram Panchayat to find work suggestions' : 'कामाच्या सूचना शोधण्यासाठी कृपया ग्रामपंचायत निवडा');
           submitBtn.disabled = false;
-          resetSubmitButton();
+          submitBtn.innerHTML = originalContent;
           return;
       }
 
-      // Make AJAX request with simulated delay for smooth transitions
+      // Make AJAX request with enhanced error handling
       setTimeout(() => {
-  fetch(`/get-suggestions/?${new URLSearchParams(formData)}`)
-    .then(response => {
-        if (!response.ok) {
-            // Get the error message from response if available
-            return response.json().then(err => {
-                throw new Error(err.message || 'Request failed');
-            }).catch(() => {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            });
-        }
-        return response.json();
-    })
-    .then(data => {
-        if (!data.suggestions) {
-            throw new Error('Invalid response format - missing suggestions');
-        }
-        updateSuggestionsUI(data.suggestions);
-        // ... rest of your code
-    })
-    .catch(error => {
-        console.error('Fetch error:', error);
-        showError(isEnglish ? 
-            `Error: ${error.message}` : 
-            `त्रुटी: ${error.message}`);
-    })
+          fetch(`/get-suggestions/?${new URLSearchParams(formData)}`)
+              .then(response => {
+                  if (!response.ok) {
+                      return response.json().then(err => {
+                          throw new Error(err.message || 'Request failed');
+                      }).catch(() => {
+                          throw new Error(`HTTP error! status: ${response.status}`);
+                      });
+                  }
+                  return response.json();
+              })
+              .then(data => {
+                  if (!data.suggestions) {
+                      throw new Error('Invalid response format - missing suggestions');
+                  }
+                  updateSuggestionsUI(data.suggestions);
+                  
+                  // Show success notification
+                  showNotification(
+                      isEnglish ? 'Work suggestions loaded successfully!' : 'कामाच्या सूचना यशस्वीपणे लोड झाल्या!',
+                      'success'
+                  );
+                  
+                  // Smooth scroll to results
+                  setTimeout(() => {
+                      suggestionsContainer.scrollIntoView({ 
+                          behavior: 'smooth', 
+                          block: 'start',
+                          inline: 'nearest' 
+                      });
+                  }, 500);
+              })
+              .catch(error => {
+                  console.error('Fetch error:', error);
+                  showError(isEnglish ? 
+                      `Error loading suggestions: ${error.message}` : 
+                      `सूचना लोड करताना त्रुटी: ${error.message}`);
+              })
               .finally(() => {
                   submitBtn.disabled = false;
-                  resetSubmitButton();
+                  submitBtn.innerHTML = originalContent;
               });
-      }, 1000); // Simulated delay for better UX
+      }, 1200); // Enhanced delay for better UX
   }
 
   function showError(message) {
       const suggestionsContainer = document.getElementById('suggestions-container');
       suggestionsContainer.innerHTML = `
-          <div class="p-4 mb-4 bg-gradient-to-r from-red-50 to-red-100 text-red-800 rounded-xl border-l-4 border-red-500 animate-fadeIn">
-              <div class="flex items-center">
-                  <div class="flex-shrink-0">
-                      <svg class="w-5 h-5 text-red-600" fill="currentColor" viewBox="0 0 20 20">
-                          <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
-                      </svg>
-                  </div>
-                  <div class="ml-3">
-                      <p class="font-medium">${message}</p>
+          <div class="max-w-4xl mx-auto">
+              <div class="bg-gradient-to-r from-red-50 via-red-100 to-pink-50 border-l-4 border-red-500 rounded-xl shadow-lg p-6 animate-fadeInUp">
+                  <div class="flex items-center">
+                      <div class="flex-shrink-0">
+                          <div class="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center shadow-lg">
+                              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                              </svg>
+                          </div>
+                      </div>
+                      <div class="ml-4 flex-1">
+                          <h3 class="text-lg font-semibold text-red-800 mb-1">
+                              ${isEnglish ? 'Unable to Load Suggestions' : 'सूचना लोड करू शकत नाही'}
+                          </h3>
+                          <p class="text-red-700">${message}</p>
+                          <button onclick="location.reload()" class="mt-3 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors text-sm font-medium">
+                              ${isEnglish ? 'Try Again' : 'पुन्हा प्रयत्न करा'}
+                          </button>
+                      </div>
                   </div>
               </div>
           </div>
       `;
+  }
+  
+  function showNotification(message, type = 'info') {
+      const notification = document.createElement('div');
+      notification.className = `notification ${type}`;
+      notification.textContent = message;
       
-      // Add fadeIn animation
-      const style = document.createElement('style');
-      style.innerHTML = `
-          @keyframes fadeIn {
-              0% { opacity: 0; transform: translateY(-10px); }
-              100% { opacity: 1; transform: translateY(0); }
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+          if (notification.parentNode) {
+              notification.parentNode.removeChild(notification);
           }
-          .animate-fadeIn {
-              animation: fadeIn 0.5s ease-out forwards;
+      }, 3000);
+  }
+
+  // Enhanced shake animation for validation errors
+  if (!document.querySelector('#validation-styles')) {
+      const style = document.createElement('style');
+      style.id = 'validation-styles';
+      style.innerHTML = `
+          @keyframes shake {
+              0%, 100% { transform: translateX(0); }
+              10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+              20%, 40%, 60%, 80% { transform: translateX(5px); }
+          }
+          .animate-shake {
+              animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
           }
       `;
       document.head.appendChild(style);
-  }
-
-  function resetSubmitButton() {
-      const submitBtn = document.getElementById('submitBtn');
-      submitBtn.innerHTML = isEnglish ? 
-          '<span class="english-text flex items-center">Get Work Suggestions<svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></span>' : 
-          '<span class="marathi-text flex items-center">कामाच्या सूचना मिळवा<svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></span>';
   }
 
   function updateSuggestionsUI(suggestions) {
@@ -1127,4 +1513,9 @@
       `;
   }
 </script>
+
+<!-- Closing divs for main content sections -->
+  </div>
+</div>
+
 {% endblock %}
