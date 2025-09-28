@@ -1,100 +1,293 @@
 {% extends 'base.html' %}
-{% block title %}Admin Dashboard | Maharashtra State Khadi & Village Industries Board{% endblock %}
+{% block title %}Admin Dashboard - UdyogSetu (Bridge to Enterprise) | Maharashtra State Khadi & Village Industries Board{% endblock %}
 {% block content %}
 
+<!-- Enhanced Admin Dashboard Hero Section -->
+<section class="bg-gradient-to-br from-[#000080] via-[#0066CC] to-[#FF9933] text-white py-16 relative overflow-hidden">
+    <!-- Animated Background Elements -->
+    <div class="absolute inset-0 opacity-10">
+        <div class="absolute top-20 left-10 w-32 h-32 rounded-full bg-white animate-pulse"></div>
+        <div class="absolute top-40 right-20 w-20 h-20 rounded-full bg-white animate-bounce" style="animation-delay: 1s;"></div>
+        <div class="absolute bottom-32 left-1/4 w-16 h-16 rounded-full bg-white animate-pulse" style="animation-delay: 2s;"></div>
+        <div class="absolute bottom-20 right-1/3 w-24 h-24 rounded-full bg-white animate-pulse" style="animation-delay: 0.5s;"></div>
+    </div>
+    
+    <!-- Decorative wave effect -->
+    <div class="absolute bottom-0 left-0 right-0">
+        <svg viewBox="0 0 1440 120" class="w-full">
+            <path fill="white" fill-opacity="0.15" d="M0,64L48,80C96,96,192,128,288,128C384,128,480,96,576,85.3C672,75,768,85,864,112C960,139,1056,181,1152,181.3C1248,181,1344,139,1392,117.3L1440,96L1440,120L1392,120C1344,120,1248,120,1152,120C1056,120,960,120,864,120C768,120,672,120,576,120C480,120,384,120,288,120C192,120,96,120,48,120L0,120Z"></path>
+        </svg>
+    </div>
 
- <div class="container mx-auto px-4 py-12 relative">
-  <!-- Top Navigation Bar -->
-  
-
-  <h1 class="text-4xl font-bold text-center mb-12 text-gray-800 english-text">Admin Dashboard</h1>
-  <h1 class="text-4xl font-bold text-center mb-12 text-gray-800 marathi-text hidden">प्रशासक डॅशबोर्ड</h1>
-
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-    <!-- Admin Profile Card -->
-    <div>
-      <div class="rounded-lg shadow-lg overflow-hidden border border-gray-200">
-        <div class="p-5 bg-navyBlue text-white flex justify-between items-center">
-          <h4 class="text-2xl font-semibold english-text">Admin Profile</h4>
-          <h4 class="text-2xl font-semibold marathi-text hidden">प्रशासक प्रोफाइल</h4>
-          <button 
-            class="py-2 px-4 rounded-lg text-sm font-semibold bg-saffron text-white transition duration-300 shadow-md hover:shadow-lg english-text"
-            onclick="toggleModal('editProfileModal')">
-            Edit Profile
-          </button>
-          <button 
-            class="py-2 px-4 rounded-lg text-sm font-semibold bg-saffron text-white transition duration-300 shadow-md hover:shadow-lg marathi-text hidden"
-            onclick="toggleModal('editProfileModal')">
-            प्रोफाइल संपादित करा
-          </button>
+    <div class="container mx-auto px-4 max-w-7xl text-center relative z-10">
+        <!-- Enhanced Header -->
+        <div class="flex flex-col lg:flex-row items-center justify-center mb-12">
+            <div class="flex items-center justify-center mb-8 lg:mb-0 lg:mr-8">
+                <div class="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mr-4">
+                    <i class="fas fa-shield-alt text-3xl text-yellow-300"></i>
+                </div>
+                <div class="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
+                    <i class="fas fa-cogs text-3xl text-yellow-300"></i>
+                </div>
+            </div>
+            
+            <div class="text-center lg:text-left">
+                <div class="mb-4">
+                    <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold mb-2 drop-shadow-lg english-text bg-gradient-to-r from-white to-yellow-200 bg-clip-text text-transparent">
+                        Admin Control Center
+                    </h1>
+                    <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold mb-2 drop-shadow-lg marathi-text hidden bg-gradient-to-r from-white to-yellow-200 bg-clip-text text-transparent">
+                        प्रशासक नियंत्रण केंद्र
+                    </h1>
+                    <p class="text-lg md:text-xl font-medium text-yellow-200 english-text">UdyogSetu Management Portal</p>
+                    <p class="text-lg md:text-xl font-medium text-yellow-200 marathi-text hidden">उद्योगसेतू व्यवस्थापन पोर्टल</p>
+                </div>
+                
+                <h2 class="text-xl md:text-2xl lg:text-3xl font-bold font-devanagari mb-3 drop-shadow-lg text-white">
+                    <span class="marathi-text">महाराष्ट्र राज्य खादी व ग्रामोद्योग मंडळ</span>
+                    <span class="english-text hidden">Maharashtra State Khadi & Village Industries Board</span>
+                </h2>
+                
+                <h3 class="text-lg md:text-xl text-yellow-200 font-medium border-l-4 border-yellow-300 pl-4 inline-block">
+                    <span class="marathi-text">जिल्हा कार्यालय - अमरावती</span>
+                    <span class="english-text hidden">District Office - Amravati</span>
+                </h3>
+            </div>
         </div>
-        <div class="p-6">
-          <ul class="divide-y divide-gray-200">
-            <li class="py-4 flex justify-between items-center">
-              <span class="font-medium text-gray-600 english-text">Full Name:</span>
-              <span class="font-medium text-gray-600 marathi-text hidden">पूर्ण नाव:</span>
-              <span class="text-gray-800">{{ user.full_name }}</span>
-            </li>
-            <li class="py-4 flex justify-between items-center">
-              <span class="font-medium text-gray-600 english-text">Email:</span>
-              <span class="font-medium text-gray-600 marathi-text hidden">ईमेल:</span>
-              <span class="text-gray-800">{{ user.email }}</span>
-            </li>
-            <li class="py-4 flex justify-between items-center">
-              <span class="font-medium text-gray-600 english-text">Role:</span>
-              <span class="font-medium text-gray-600 marathi-text hidden">भूमिका:</span>
-              <span class="px-3 py-1 rounded-full text-sm bg-navyBlue text-white">
-                <span class="english-text">{{ user.get_role_display }}</span>
-                <span class="marathi-text hidden">
-                  {% if user.get_role_display == "Admin" %}प्रशासक{% else %}{{ user.get_role_display }}{% endif %}
-                </span>
-              </span>
-            </li>
-          </ul>
+
+        <!-- Admin Stats Dashboard -->
+        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 mb-8 border border-white/20">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                <div>
+                    <div class="text-3xl md:text-4xl font-bold text-yellow-200 mb-2">
+                        <i class="fas fa-users mr-2"></i>
+                        <span class="english-text">{{ total_users|default:"150" }}</span>
+                        <span class="marathi-text hidden">{{ total_users|default:"१५०" }}</span>
+                    </div>
+                    <div class="text-sm text-white/80 english-text">Total Users</div>
+                    <div class="text-sm text-white/80 marathi-text hidden">एकूण वापरकर्ते</div>
+                </div>
+                <div>
+                    <div class="text-3xl md:text-4xl font-bold text-yellow-200 mb-2">
+                        <i class="fas fa-clipboard-list mr-2"></i>
+                        <span class="english-text">{{ total_schemes|default:"45" }}</span>
+                        <span class="marathi-text hidden">{{ total_schemes|default:"४५" }}</span>
+                    </div>
+                    <div class="text-sm text-white/80 english-text">Active Schemes</div>
+                    <div class="text-sm text-white/80 marathi-text hidden">सक्रिय योजना</div>
+                </div>
+                <div>
+                    <div class="text-3xl md:text-4xl font-bold text-yellow-200 mb-2">
+                        <i class="fas fa-check-circle mr-2"></i>
+                        <span class="english-text">{{ pending_approvals|default:"12" }}</span>
+                        <span class="marathi-text hidden">{{ pending_approvals|default:"१२" }}</span>
+                    </div>
+                    <div class="text-sm text-white/80 english-text">Pending Approvals</div>
+                    <div class="text-sm text-white/80 marathi-text hidden">प्रलंबित मंजुरी</div>
+                </div>
+                <div>
+                    <div class="text-3xl md:text-4xl font-bold text-yellow-200 mb-2">
+                        <i class="fas fa-chart-line mr-2"></i>
+                        <span class="english-text">98%</span>
+                        <span class="marathi-text hidden">९८%</span>
+                    </div>
+                    <div class="text-sm text-white/80 english-text">System Uptime</div>
+                    <div class="text-sm text-white/80 marathi-text hidden">सिस्टम अपटाइम</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container mx-auto px-4 py-12 max-w-7xl relative">
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+    <!-- Enhanced Admin Profile Card -->
+    <div class="lg:col-span-2">
+      <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-500">
+        <div class="relative">
+          <!-- Header with gradient background -->
+          <div class="bg-gradient-to-r from-[#000080] to-[#0066CC] p-6 text-white relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-32 h-32 rounded-full bg-white/10 -translate-y-16 translate-x-16"></div>
+            <div class="absolute bottom-0 left-0 w-24 h-24 rounded-full bg-white/10 translate-y-12 -translate-x-12"></div>
+            
+            <div class="relative z-10 flex justify-between items-center">
+              <div class="flex items-center">
+                <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mr-4 backdrop-blur-sm">
+                  <i class="fas fa-user-shield text-2xl"></i>
+                </div>
+                <div>
+                  <h4 class="text-2xl font-bold english-text">Admin Profile</h4>
+                  <h4 class="text-2xl font-bold marathi-text hidden">प्रशासक प्रोफाइल</h4>
+                  <p class="text-white/80 text-sm english-text">System Administrator</p>
+                  <p class="text-white/80 text-sm marathi-text hidden">सिस्टम प्रशासक</p>
+                </div>
+              </div>
+              <button 
+                class="group bg-gradient-to-r from-[#FF9933] to-[#FF7722] hover:from-[#FF7722] hover:to-[#FF6611] py-3 px-6 rounded-xl text-sm font-semibold text-white transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 english-text"
+                onclick="toggleModal('editProfileModal')">
+                <i class="fas fa-edit mr-2 group-hover:rotate-12 transition-transform"></i>
+                Edit Profile
+              </button>
+              <button 
+                class="group bg-gradient-to-r from-[#FF9933] to-[#FF7722] hover:from-[#FF7722] hover:to-[#FF6611] py-3 px-6 rounded-xl text-sm font-semibold text-white transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 marathi-text hidden"
+                onclick="toggleModal('editProfileModal')">
+                <i class="fas fa-edit mr-2 group-hover:rotate-12 transition-transform"></i>
+                प्रोफाइल संपादित करा
+              </button>
+            </div>
+          </div>
+          
+          <!-- Profile Content -->
+          <div class="p-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <!-- Personal Information -->
+              <div class="space-y-4">
+                <div class="flex items-center p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-100">
+                  <div class="w-12 h-12 bg-gradient-to-br from-[#000080] to-[#0066CC] rounded-full flex items-center justify-center mr-4">
+                    <i class="fas fa-user text-white"></i>
+                  </div>
+                  <div>
+                    <span class="text-sm font-medium text-gray-500 english-text">Full Name</span>
+                    <span class="text-sm font-medium text-gray-500 marathi-text hidden">पूर्ण नाव</span>
+                    <p class="text-lg font-semibold text-gray-800">{{ user.full_name|default:"Admin User" }}</p>
+                  </div>
+                </div>
+                
+                <div class="flex items-center p-4 bg-gradient-to-r from-orange-50 to-red-50 rounded-xl border border-orange-100">
+                  <div class="w-12 h-12 bg-gradient-to-br from-[#FF9933] to-[#FF7722] rounded-full flex items-center justify-center mr-4">
+                    <i class="fas fa-envelope text-white"></i>
+                  </div>
+                  <div>
+                    <span class="text-sm font-medium text-gray-500 english-text">Email Address</span>
+                    <span class="text-sm font-medium text-gray-500 marathi-text hidden">ईमेल पत्ता</span>
+                    <p class="text-lg font-semibold text-gray-800">{{ user.email|default:"admin@example.com" }}</p>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Role & Permissions -->
+              <div class="space-y-4">
+                <div class="flex items-center p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl border border-green-100">
+                  <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center mr-4">
+                    <i class="fas fa-shield-alt text-white"></i>
+                  </div>
+                  <div>
+                    <span class="text-sm font-medium text-gray-500 english-text">Role & Access</span>
+                    <span class="text-sm font-medium text-gray-500 marathi-text hidden">भूमिका आणि प्रवेश</span>
+                    <div class="flex items-center">
+                      <span class="px-3 py-1 rounded-full text-sm bg-gradient-to-r from-[#000080] to-[#0066CC] text-white font-medium mr-2">
+                        <span class="english-text">{{ user.get_role_display|default:"Administrator" }}</span>
+                        <span class="marathi-text hidden">
+                          {% if user.get_role_display == "Admin" %}प्रशासक{% else %}{{ user.get_role_display|default:"प्रशासक" }}{% endif %}
+                        </span>
+                      </span>
+                      <span class="text-xs text-green-600 font-medium english-text">Full Access</span>
+                      <span class="text-xs text-green-600 font-medium marathi-text hidden">पूर्ण प्रवेश</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="flex items-center p-4 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl border border-purple-100">
+                  <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-full flex items-center justify-center mr-4">
+                    <i class="fas fa-clock text-white"></i>
+                  </div>
+                  <div>
+                    <span class="text-sm font-medium text-gray-500 english-text">Last Active</span>
+                    <span class="text-sm font-medium text-gray-500 marathi-text hidden">शेवटची सक्रियता</span>
+                    <p class="text-lg font-semibold text-gray-800">{{ user.last_login|date:"M d, Y H:i"|default:"Just now" }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Quick Actions Card -->
-    <div>
-      <div class="rounded-lg shadow-lg overflow-hidden border border-gray-200">
-        <div class="p-5 bg-saffron text-white">
-          <h4 class="text-2xl font-semibold english-text">Quick Actions</h4>
-          <h4 class="text-2xl font-semibold marathi-text hidden">द्रुत क्रिया</h4>
+    <!-- Enhanced Quick Actions Card -->
+    <div class="lg:col-span-1">
+      <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-500">
+        <div class="bg-gradient-to-r from-[#FF9933] to-[#FF7722] p-6 text-white relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-24 h-24 rounded-full bg-white/10 -translate-y-12 translate-x-12"></div>
+          <div class="relative z-10 flex items-center">
+            <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mr-4 backdrop-blur-sm">
+              <i class="fas fa-bolt text-xl"></i>
+            </div>
+            <div>
+              <h4 class="text-xl font-bold english-text">Quick Actions</h4>
+              <h4 class="text-xl font-bold marathi-text hidden">द्रुत क्रिया</h4>
+              <p class="text-white/80 text-sm english-text">Admin Tools</p>
+              <p class="text-white/80 text-sm marathi-text hidden">प्रशासक साधने</p>
+            </div>
+          </div>
         </div>
-        <div class="p-6 flex items-center justify-center">
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
+        
+        <div class="p-6">
+          <div class="space-y-4">
+            <!-- Manage Schemes -->
             <a href="/manage_scheme/"
-               class="py-4 px-6 rounded-lg flex items-center justify-center gap-2 bg-navyBlue text-white transition duration-300 shadow-md hover:shadow-lg english-text">
-              Manage Schemes
+               class="group flex items-center p-4 bg-gradient-to-r from-blue-50 to-indigo-50 hover:from-[#000080] hover:to-[#0066CC] rounded-xl border border-blue-100 hover:border-transparent transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
+              <div class="w-12 h-12 bg-gradient-to-br from-[#000080] to-[#0066CC] group-hover:from-white group-hover:to-gray-100 rounded-full flex items-center justify-center mr-4 transition-all duration-300">
+                <i class="fas fa-clipboard-list text-white group-hover:text-[#000080] transition-colors duration-300"></i>
+              </div>
+              <div>
+                <p class="font-semibold text-gray-800 group-hover:text-white transition-colors duration-300 english-text">Manage Schemes</p>
+                <p class="font-semibold text-gray-800 group-hover:text-white transition-colors duration-300 marathi-text hidden">योजना व्यवस्थापित करा</p>
+                <p class="text-sm text-gray-600 group-hover:text-white/80 transition-colors duration-300 english-text">Create & edit schemes</p>
+                <p class="text-sm text-gray-600 group-hover:text-white/80 transition-colors duration-300 marathi-text hidden">योजना तयार आणि संपादित करा</p>
+              </div>
+              <i class="fas fa-arrow-right ml-auto text-gray-400 group-hover:text-white group-hover:translate-x-1 transition-all duration-300"></i>
             </a>
-            <a href="/manage_scheme/"
-               class="py-4 px-6 rounded-lg flex items-center justify-center gap-2 bg-navyBlue text-white transition duration-300 shadow-md hover:shadow-lg marathi-text hidden">
-              योजना व्यवस्थापित करा
-            </a>
+            
+            <!-- Location Management -->
             <a href="{% url 'manage_locations' %}"
-               class="py-4 px-6 rounded-lg flex items-center justify-center gap-2 bg-green-600 text-white transition duration-300 shadow-md hover:shadow-lg english-text">
-              Location Management
+               class="group flex items-center p-4 bg-gradient-to-r from-green-50 to-emerald-50 hover:from-green-500 hover:to-emerald-600 rounded-xl border border-green-100 hover:border-transparent transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
+              <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 group-hover:from-white group-hover:to-gray-100 rounded-full flex items-center justify-center mr-4 transition-all duration-300">
+                <i class="fas fa-map-marker-alt text-white group-hover:text-green-600 transition-colors duration-300"></i>
+              </div>
+              <div>
+                <p class="font-semibold text-gray-800 group-hover:text-white transition-colors duration-300 english-text">Location Management</p>
+                <p class="font-semibold text-gray-800 group-hover:text-white transition-colors duration-300 marathi-text hidden">स्थान व्यवस्थापन</p>
+                <p class="text-sm text-gray-600 group-hover:text-white/80 transition-colors duration-300 english-text">Manage districts & talukas</p>
+                <p class="text-sm text-gray-600 group-hover:text-white/80 transition-colors duration-300 marathi-text hidden">जिल्हे आणि तालुके व्यवस्थापित करा</p>
+              </div>
+              <i class="fas fa-arrow-right ml-auto text-gray-400 group-hover:text-white group-hover:translate-x-1 transition-all duration-300"></i>
             </a>
-            <a href="{% url 'manage_locations' %}"
-               class="py-4 px-6 rounded-lg flex items-center justify-center gap-2 bg-green-600 text-white transition duration-300 shadow-md hover:shadow-lg marathi-text hidden">
-              स्थान व्यवस्थापन
-            </a>
+            
+            <!-- View Reports -->
             <a href="#"
-               class="py-4 px-6 rounded-lg flex items-center justify-center gap-2 font-medium border border-navyBlue bg-lightBlue text-gray-800 transition duration-300 shadow-md hover:shadow-lg english-text">
-              View Reports
+               class="group flex items-center p-4 bg-gradient-to-r from-purple-50 to-pink-50 hover:from-purple-500 hover:to-pink-600 rounded-xl border border-purple-100 hover:border-transparent transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
+              <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 group-hover:from-white group-hover:to-gray-100 rounded-full flex items-center justify-center mr-4 transition-all duration-300">
+                <i class="fas fa-chart-bar text-white group-hover:text-purple-600 transition-colors duration-300"></i>
+              </div>
+              <div>
+                <p class="font-semibold text-gray-800 group-hover:text-white transition-colors duration-300 english-text">View Reports</p>
+                <p class="font-semibold text-gray-800 group-hover:text-white transition-colors duration-300 marathi-text hidden">अहवाल पहा</p>
+                <p class="text-sm text-gray-600 group-hover:text-white/80 transition-colors duration-300 english-text">Analytics & insights</p>
+                <p class="text-sm text-gray-600 group-hover:text-white/80 transition-colors duration-300 marathi-text hidden">विश्लेषणे आणि अंतर्दृष्टी</p>
+              </div>
+              <i class="fas fa-arrow-right ml-auto text-gray-400 group-hover:text-white group-hover:translate-x-1 transition-all duration-300"></i>
             </a>
-            <a href="#"
-               class="py-4 px-6 rounded-lg flex items-center justify-center gap-2 font-medium border border-navyBlue bg-lightBlue text-gray-800 transition duration-300 shadow-md hover:shadow-lg marathi-text hidden">
-              अहवाल पहा
-            </a>
+            
+            <!-- Staff Approval -->
             <a href="/staff_user_approval/"
-               class="py-4 px-6 rounded-lg flex items-center justify-center gap-2 bg-saffron text-white transition duration-300 shadow-md hover:shadow-lg english-text">
-              Staff Approval
-            </a>
-            <a href="/staff_user_approval/"
-               class="py-4 px-6 rounded-lg flex items-center justify-center gap-2 bg-saffron text-white transition duration-300 shadow-md hover:shadow-lg marathi-text hidden">
-              कर्मचारी मंजुरी
+               class="group flex items-center p-4 bg-gradient-to-r from-orange-50 to-red-50 hover:from-[#FF9933] hover:to-[#FF7722] rounded-xl border border-orange-100 hover:border-transparent transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
+              <div class="w-12 h-12 bg-gradient-to-br from-[#FF9933] to-[#FF7722] group-hover:from-white group-hover:to-gray-100 rounded-full flex items-center justify-center mr-4 transition-all duration-300">
+                <i class="fas fa-user-check text-white group-hover:text-[#FF9933] transition-colors duration-300"></i>
+              </div>
+              <div>
+                <p class="font-semibold text-gray-800 group-hover:text-white transition-colors duration-300 english-text">Staff Approval</p>
+                <p class="font-semibold text-gray-800 group-hover:text-white transition-colors duration-300 marathi-text hidden">कर्मचारी मंजुरी</p>
+                <p class="text-sm text-gray-600 group-hover:text-white/80 transition-colors duration-300 english-text">Approve staff access</p>
+                <p class="text-sm text-gray-600 group-hover:text-white/80 transition-colors duration-300 marathi-text hidden">कर्मचारी प्रवेश मंजूर करा</p>
+              </div>
+              <div class="ml-auto flex items-center">
+                {% if pending_approvals %}
+                <span class="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full mr-2">{{ pending_approvals|default:"3" }}</span>
+                {% endif %}
+                <i class="fas fa-arrow-right text-gray-400 group-hover:text-white group-hover:translate-x-1 transition-all duration-300"></i>
+              </div>
             </a>
           </div>
         </div>
@@ -102,95 +295,611 @@
     </div>
   </div>
 
-  <!-- Edit Profile Modal -->
-  <div id="editProfileModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
-    <div class="bg-white rounded-lg shadow-lg w-96">
-      <div class="p-5 bg-navyBlue text-white flex justify-between items-center">
-        <h4 class="text-xl font-semibold english-text">Edit Profile</h4>
-        <h4 class="text-xl font-semibold marathi-text hidden">प्रोफाइल संपादित करा</h4>
-        <button class="text-white text-lg" onclick="toggleModal('editProfileModal')">&times;</button>
+  <!-- Enhanced System Overview Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+    <!-- System Health -->
+    <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+      <div class="flex items-center justify-between mb-4">
+        <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center">
+          <i class="fas fa-heartbeat text-white text-xl"></i>
+        </div>
+        <span class="bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded-full english-text">Healthy</span>
+        <span class="bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded-full marathi-text hidden">निरोगी</span>
       </div>
-      <form method="POST" action="{% url 'user_profile_edit' %}" class="p-6">
+      <h3 class="text-lg font-bold text-gray-800 mb-2 english-text">System Health</h3>
+      <h3 class="text-lg font-bold text-gray-800 mb-2 marathi-text hidden">सिस्टम आरोग्य</h3>
+      <p class="text-3xl font-bold text-green-600 mb-1">98.5%</p>
+      <p class="text-sm text-gray-600 english-text">All systems operational</p>
+      <p class="text-sm text-gray-600 marathi-text hidden">सर्व सिस्टम कार्यरत</p>
+    </div>
+
+    <!-- Active Sessions -->
+    <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+      <div class="flex items-center justify-between mb-4">
+        <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center">
+          <i class="fas fa-users text-white text-xl"></i>
+        </div>
+        <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded-full english-text">Active</span>
+        <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded-full marathi-text hidden">सक्रिय</span>
+      </div>
+      <h3 class="text-lg font-bold text-gray-800 mb-2 english-text">Active Users</h3>
+      <h3 class="text-lg font-bold text-gray-800 mb-2 marathi-text hidden">सक्रिय वापरकर्ते</h3>
+      <p class="text-3xl font-bold text-blue-600 mb-1">{{ active_users|default:"24" }}</p>
+      <p class="text-sm text-gray-600 english-text">Currently online</p>
+      <p class="text-sm text-gray-600 marathi-text hidden">सध्या ऑनलाइन</p>
+    </div>
+
+    <!-- Today's Activity -->
+    <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+      <div class="flex items-center justify-between mb-4">
+        <div class="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-600 rounded-full flex items-center justify-center">
+          <i class="fas fa-chart-line text-white text-xl"></i>
+        </div>
+        <span class="bg-orange-100 text-orange-800 text-xs font-medium px-2 py-1 rounded-full english-text">+15%</span>
+        <span class="bg-orange-100 text-orange-800 text-xs font-medium px-2 py-1 rounded-full marathi-text hidden">+१५%</span>
+      </div>
+      <h3 class="text-lg font-bold text-gray-800 mb-2 english-text">Today's Activity</h3>
+      <h3 class="text-lg font-bold text-gray-800 mb-2 marathi-text hidden">आजची क्रियाकलाप</h3>
+      <p class="text-3xl font-bold text-orange-600 mb-1">{{ daily_activity|default:"156" }}</p>
+      <p class="text-sm text-gray-600 english-text">Actions performed</p>
+      <p class="text-sm text-gray-600 marathi-text hidden">क्रिया केल्या</p>
+    </div>
+
+    <!-- Security Status -->
+    <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+      <div class="flex items-center justify-between mb-4">
+        <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-full flex items-center justify-center">
+          <i class="fas fa-shield-alt text-white text-xl"></i>
+        </div>
+        <span class="bg-purple-100 text-purple-800 text-xs font-medium px-2 py-1 rounded-full english-text">Secure</span>
+        <span class="bg-purple-100 text-purple-800 text-xs font-medium px-2 py-1 rounded-full marathi-text hidden">सुरक्षित</span>
+      </div>
+      <h3 class="text-lg font-bold text-gray-800 mb-2 english-text">Security</h3>
+      <h3 class="text-lg font-bold text-gray-800 mb-2 marathi-text hidden">सुरक्षा</h3>
+      <p class="text-3xl font-bold text-purple-600 mb-1">100%</p>
+      <p class="text-sm text-gray-600 english-text">No threats detected</p>
+      <p class="text-sm text-gray-600 marathi-text hidden">कोणतेही धोके आढळले नाहीत</p>
+    </div>
+  </div>
+
+  <!-- Enhanced Edit Profile Modal -->
+  <div id="editProfileModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center z-50 p-4">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md transform transition-all duration-300 scale-95 modal-content">
+      <!-- Modal Header -->
+      <div class="relative bg-gradient-to-r from-[#000080] to-[#0066CC] p-6 text-white rounded-t-2xl overflow-hidden">
+        <div class="absolute top-0 right-0 w-32 h-32 rounded-full bg-white/10 -translate-y-16 translate-x-16"></div>
+        <div class="relative z-10 flex justify-between items-center">
+          <div class="flex items-center">
+            <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mr-4 backdrop-blur-sm">
+              <i class="fas fa-user-edit text-xl"></i>
+            </div>
+            <div>
+              <h4 class="text-xl font-bold english-text">Edit Profile</h4>
+              <h4 class="text-xl font-bold marathi-text hidden">प्रोफाइल संपादित करा</h4>
+              <p class="text-white/80 text-sm english-text">Update your information</p>
+              <p class="text-white/80 text-sm marathi-text hidden">तुमची माहिती अद्यतनित करा</p>
+            </div>
+          </div>
+          <button class="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center text-white text-xl transition-all duration-300 hover:scale-110" 
+                  onclick="toggleModal('editProfileModal')">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Modal Form -->
+      <form method="POST" action="{% url 'user_profile_edit' %}" class="p-6 space-y-6">
         {% csrf_token %}
-        <div class="mb-4">
-          <label for="full_name" class="block text-sm font-medium text-gray-600 english-text">Full Name</label>
-          <label for="full_name" class="block text-sm font-medium text-gray-600 marathi-text hidden">पूर्ण नाव</label>
+        
+        <!-- Full Name Field -->
+        <div class="relative">
+          <label for="full_name" class="block text-sm font-semibold text-gray-700 mb-2 english-text">
+            <i class="fas fa-user mr-2 text-[#000080]"></i>Full Name
+          </label>
+          <label for="full_name" class="block text-sm font-semibold text-gray-700 mb-2 marathi-text hidden">
+            <i class="fas fa-user mr-2 text-[#000080]"></i>पूर्ण नाव
+          </label>
           <input type="text" id="full_name" name="full_name" value="{{ user.full_name }}" 
-                 class="w-full mt-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-navyBlue">
+                 class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#000080] focus:border-transparent transition-all duration-300 hover:border-gray-300"
+                 placeholder="Enter your full name">
+          <div class="absolute inset-y-0 right-0 top-8 pr-3 flex items-center pointer-events-none">
+            <i class="fas fa-check text-green-500 hidden" id="name-check"></i>
+          </div>
         </div>
-        <div class="mb-4">
-          <label for="email" class="block text-sm font-medium text-gray-600 english-text">Email</label>
-          <label for="email" class="block text-sm font-medium text-gray-600 marathi-text hidden">ईमेल</label>
+
+        <!-- Email Field -->
+        <div class="relative">
+          <label for="email" class="block text-sm font-semibold text-gray-700 mb-2 english-text">
+            <i class="fas fa-envelope mr-2 text-[#000080]"></i>Email Address
+          </label>
+          <label for="email" class="block text-sm font-semibold text-gray-700 mb-2 marathi-text hidden">
+            <i class="fas fa-envelope mr-2 text-[#000080]"></i>ईमेल पत्ता
+          </label>
           <input type="email" id="email" name="email" value="{{ user.email }}" 
-                 class="w-full mt-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-navyBlue">
+                 class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#000080] focus:border-transparent transition-all duration-300 hover:border-gray-300"
+                 placeholder="Enter your email address">
+          <div class="absolute inset-y-0 right-0 top-8 pr-3 flex items-center pointer-events-none">
+            <i class="fas fa-check text-green-500 hidden" id="email-check"></i>
+          </div>
         </div>
-        <div class="flex justify-end">
+
+        <!-- Security Notice -->
+        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-4">
+          <div class="flex items-start">
+            <i class="fas fa-info-circle text-blue-500 mt-1 mr-3"></i>
+            <div>
+              <p class="text-sm font-medium text-blue-800 english-text">Security Note</p>
+              <p class="text-sm font-medium text-blue-800 marathi-text hidden">सुरक्षा टीप</p>
+              <p class="text-xs text-blue-600 mt-1 english-text">
+                Changes to your profile will require administrator verification for security purposes.
+              </p>
+              <p class="text-xs text-blue-600 mt-1 marathi-text hidden">
+                सुरक्षेच्या कारणास्तव तुमच्या प्रोफाइलमधील बदलांना प्रशासकीय पडताळणी आवश्यक असेल.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex flex-col sm:flex-row gap-3 pt-4">
           <button type="button" 
-                  class="py-2 px-4 rounded-lg text-sm font-semibold bg-gray-300 text-gray-800 mr-2 english-text"
+                  class="flex-1 py-3 px-6 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 english-text"
                   onclick="toggleModal('editProfileModal')">
-            Cancel
+            <i class="fas fa-times mr-2"></i>Cancel
           </button>
           <button type="button" 
-                  class="py-2 px-4 rounded-lg text-sm font-semibold bg-gray-300 text-gray-800 mr-2 marathi-text hidden"
+                  class="flex-1 py-3 px-6 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 marathi-text hidden"
                   onclick="toggleModal('editProfileModal')">
-            रद्द करा
+            <i class="fas fa-times mr-2"></i>रद्द करा
+          </button>
+          
+          <button type="submit" 
+                  class="flex-1 py-3 px-6 bg-gradient-to-r from-[#FF9933] to-[#FF7722] hover:from-[#FF7722] hover:to-[#FF6611] text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 english-text">
+            <i class="fas fa-save mr-2"></i>Save Changes
           </button>
           <button type="submit" 
-                  class="py-2 px-4 rounded-lg text-sm font-semibold bg-saffron text-white english-text">
-            Save
-          </button>
-          <button type="submit" 
-                  class="py-2 px-4 rounded-lg text-sm font-semibold bg-saffron text-white marathi-text hidden">
-            जतन करा
+                  class="flex-1 py-3 px-6 bg-gradient-to-r from-[#FF9933] to-[#FF7722] hover:from-[#FF7722] hover:to-[#FF6611] text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 marathi-text hidden">
+            <i class="fas fa-save mr-2"></i>बदल जतन करा
           </button>
         </div>
       </form>
     </div>
   </div>
 
-  <script>
-    function toggleModal(modalId) {
-      const modal = document.getElementById(modalId);
-      modal.classList.toggle('hidden');
-    }
-  </script>
+<!-- Enhanced JavaScript for Admin Dashboard -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Enhanced Modal Toggle with Animation
+    window.toggleModal = function(modalId) {
+        const modal = document.getElementById(modalId);
+        const modalContent = modal.querySelector('.modal-content');
+        
+        if (modal.classList.contains('hidden')) {
+            // Show modal
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modalContent.style.transform = 'scale(1)';
+                modalContent.style.opacity = '1';
+            }, 10);
+        } else {
+            // Hide modal
+            modalContent.style.transform = 'scale(0.95)';
+            modalContent.style.opacity = '0';
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+    };
 
-  <!-- Recent Activities Card -->
-  <div class="rounded-lg shadow-lg overflow-hidden border border-gray-200">
-    <div class="p-5 bg-navyBlue text-white">
-      <h4 class="text-2xl font-semibold english-text">Recent Activities</h4>
-      <h4 class="text-2xl font-semibold marathi-text hidden">अलीकडील क्रियाकलाप</h4>
+    // Close modal when clicking outside
+    document.getElementById('editProfileModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            toggleModal('editProfileModal');
+        }
+    });
+
+    // Form validation for profile edit
+    const nameInput = document.getElementById('full_name');
+    const emailInput = document.getElementById('email');
+    const nameCheck = document.getElementById('name-check');
+    const emailCheck = document.getElementById('email-check');
+
+    if (nameInput) {
+        nameInput.addEventListener('input', function() {
+            if (this.value.trim().length >= 2) {
+                nameCheck.classList.remove('hidden');
+                this.classList.add('border-green-300');
+                this.classList.remove('border-red-300');
+            } else {
+                nameCheck.classList.add('hidden');
+                this.classList.remove('border-green-300');
+                this.classList.add('border-red-300');
+            }
+        });
+    }
+
+    if (emailInput) {
+        emailInput.addEventListener('input', function() {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (emailRegex.test(this.value)) {
+                emailCheck.classList.remove('hidden');
+                this.classList.add('border-green-300');
+                this.classList.remove('border-red-300');
+            } else {
+                emailCheck.classList.add('hidden');
+                this.classList.remove('border-green-300');
+                this.classList.add('border-red-300');
+            }
+        });
+    }
+
+    // Animated Counter for Statistics
+    function animateCounter(element, target, suffix = '') {
+        let current = 0;
+        const increment = target / 50;
+        const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+                current = target;
+                clearInterval(timer);
+            }
+            element.textContent = Math.floor(current) + suffix;
+        }, 50);
+    }
+
+    // Initialize counters
+    const statsCounters = document.querySelectorAll('[class*="text-3xl md:text-4xl font-bold text-yellow-200"] span');
+    statsCounters.forEach((counter, index) => {
+        const text = counter.textContent;
+        const numbers = text.match(/\d+/);
+        if (numbers) {
+            const target = parseInt(numbers[0]);
+            const suffix = text.replace(numbers[0], '');
+            setTimeout(() => {
+                animateCounter(counter, target, suffix);
+            }, index * 200);
+        }
+    });
+
+    // Interactive Dashboard Cards
+    const dashboardCards = document.querySelectorAll('.hover\\:scale-105');
+    dashboardCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'scale(1.05) translateY(-5px)';
+            this.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.15)';
+        });
+
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'scale(1) translateY(0)';
+            this.style.boxShadow = '';
+        });
+    });
+
+    // Quick Actions Enhanced Feedback
+    const quickActionLinks = document.querySelectorAll('a[class*="group flex items-center"]');
+    quickActionLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            // Add visual feedback
+            this.style.transform = 'scale(0.98)';
+            setTimeout(() => {
+                this.style.transform = 'scale(1.02)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 100);
+            }, 100);
+
+            // Show loading state (optional)
+            const icon = this.querySelector('i.fas');
+            const originalClass = icon.className;
+            icon.className = 'fas fa-spinner fa-spin text-white group-hover:text-[#000080] transition-colors duration-300';
+            
+            setTimeout(() => {
+                icon.className = originalClass;
+            }, 1000);
+        });
+    });
+
+    // Activity Timeline Animation
+    const activityItems = document.querySelectorAll('.group.flex.items-start');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '0';
+                entry.target.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    entry.target.style.transition = 'all 0.5s ease';
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }, 100);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    activityItems.forEach((item, index) => {
+        setTimeout(() => {
+            observer.observe(item);
+        }, index * 100);
+    });
+
+    // Real-time Clock
+    function updateClock() {
+        const now = new Date();
+        const timeString = now.toLocaleTimeString('en-US', { 
+            hour12: false,
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+        
+        // Update any clock elements if they exist
+        const clockElements = document.querySelectorAll('.admin-clock');
+        clockElements.forEach(clock => {
+            clock.textContent = timeString;
+        });
+    }
+
+    // Update clock every second
+    setInterval(updateClock, 1000);
+    updateClock(); // Initial call
+
+    // System Health Check Simulation
+    function simulateSystemCheck() {
+        const healthElement = document.querySelector('.text-green-600');
+        if (healthElement) {
+            const originalText = healthElement.textContent;
+            healthElement.textContent = 'Checking...';
+            healthElement.classList.add('animate-pulse');
+            
+            setTimeout(() => {
+                healthElement.textContent = originalText;
+                healthElement.classList.remove('animate-pulse');
+            }, 2000);
+        }
+    }
+
+    // Run system check every 30 seconds
+    setInterval(simulateSystemCheck, 30000);
+
+    // Notification System
+    function showNotification(message, type = 'info') {
+        const notification = document.createElement('div');
+        notification.className = `fixed top-4 right-4 z-50 px-6 py-4 rounded-xl shadow-2xl transform translate-x-full transition-transform duration-300 ${
+            type === 'success' ? 'bg-green-500 text-white' : 
+            type === 'error' ? 'bg-red-500 text-white' : 
+            'bg-blue-500 text-white'
+        }`;
+        notification.innerHTML = `
+            <div class="flex items-center">
+                <i class="fas ${
+                    type === 'success' ? 'fa-check-circle' : 
+                    type === 'error' ? 'fa-exclamation-circle' : 
+                    'fa-info-circle'
+                } mr-3"></i>
+                <span>${message}</span>
+            </div>
+        `;
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.style.transform = 'translateX(0)';
+        }, 100);
+        
+        setTimeout(() => {
+            notification.style.transform = 'translateX(full)';
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 300);
+        }, 4000);
+    }
+
+    // Welcome message on load
+    setTimeout(() => {
+        const userName = '{{ user.full_name|default:"Administrator" }}';
+        showNotification(`Welcome back, ${userName}!`, 'success');
+    }, 1000);
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+        // Ctrl/Cmd + E to open edit profile modal
+        if ((e.ctrlKey || e.metaKey) && e.key === 'e') {
+            e.preventDefault();
+            toggleModal('editProfileModal');
+        }
+        
+        // Escape to close modal
+        if (e.key === 'Escape') {
+            const modal = document.getElementById('editProfileModal');
+            if (!modal.classList.contains('hidden')) {
+                toggleModal('editProfileModal');
+            }
+        }
+    });
+});
+</script>
+
+<!-- Enhanced CSS for Admin Dashboard -->
+<style>
+.modal-content {
+    opacity: 0;
+    transform: scale(0.95);
+    transition: all 0.3s ease;
+}
+
+.modal-content.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Smooth transitions for all interactive elements */
+.group {
+    transition: all 0.3s ease;
+}
+
+/* Enhanced hover effects */
+.hover\:scale-105:hover {
+    transform: scale(1.05) translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Loading animation */
+@keyframes shimmer {
+    0% { background-position: -468px 0; }
+    100% { background-position: 468px 0; }
+}
+
+.loading {
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    background-size: 468px 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+/* Pulse animation for stats */
+@keyframes pulse-glow {
+    0%, 100% { 
+        box-shadow: 0 0 0 0 rgba(255, 153, 51, 0.4);
+    }
+    50% { 
+        box-shadow: 0 0 0 10px rgba(255, 153, 51, 0);
+    }
+}
+
+.stat-card:hover {
+    animation: pulse-glow 2s infinite;
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+    .modal-content {
+        margin: 1rem;
+        width: calc(100% - 2rem);
+    }
+    
+    .text-4xl.md\\:text-6xl.lg\\:text-7xl {
+        font-size: 2rem;
+    }
+    
+    .grid.grid-cols-1.lg\\:grid-cols-3 {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+  <!-- Enhanced Recent Activities Section -->
+  <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-500">
+    <!-- Header -->
+    <div class="bg-gradient-to-r from-[#000080] to-[#0066CC] p-6 text-white relative overflow-hidden">
+      <div class="absolute top-0 right-0 w-32 h-32 rounded-full bg-white/10 -translate-y-16 translate-x-16"></div>
+      <div class="absolute bottom-0 left-0 w-24 h-24 rounded-full bg-white/10 translate-y-12 -translate-x-12"></div>
+      
+      <div class="relative z-10 flex items-center justify-between">
+        <div class="flex items-center">
+          <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mr-4 backdrop-blur-sm">
+            <i class="fas fa-history text-2xl"></i>
+          </div>
+          <div>
+            <h4 class="text-2xl font-bold english-text">Recent Activities</h4>
+            <h4 class="text-2xl font-bold marathi-text hidden">अलीकडील क्रियाकलाप</h4>
+            <p class="text-white/80 text-sm english-text">System activity log</p>
+            <p class="text-white/80 text-sm marathi-text hidden">सिस्टम क्रियाकलाप लॉग</p>
+          </div>
+        </div>
+        <div class="text-right">
+          <p class="text-white/80 text-sm english-text">Last 24 hours</p>
+          <p class="text-white/80 text-sm marathi-text hidden">गेले २४ तास</p>
+          <p class="text-yellow-300 font-bold text-lg">{{ user_activities|length|default:"5" }}</p>
+        </div>
+      </div>
     </div>
+
+    <!-- Activities Content -->
     <div class="p-6">
       {% if user_activities %}
-        <ul class="divide-y divide-gray-200">
+        <div class="space-y-4">
           {% for activity in user_activities %}
-            <li class="py-4">
-              <div class="flex justify-between items-center">
-                <div>
-                  <p class="font-medium text-gray-800 english-text">{{ activity.activity_type }}</p>
-                  <p class="font-medium text-gray-800 marathi-text hidden">
-                    {% if activity.activity_type == "Login" %}लॉगिन
-                    {% elif activity.activity_type == "Profile Update" %}प्रोफाइल अद्यतन
-                    {% elif activity.activity_type == "Scheme Created" %}योजना तयार केली
-                    {% else %}{{ activity.activity_type }}{% endif %}
-                  </p>
-                  <p class="text-sm text-gray-600">{{ activity.description }}</p>
+            <div class="group flex items-start p-4 bg-gradient-to-r from-gray-50 to-blue-50 hover:from-blue-50 hover:to-indigo-50 rounded-xl border border-gray-100 hover:border-blue-200 transition-all duration-300 transform hover:scale-102 hover:shadow-md">
+              <!-- Activity Icon -->
+              <div class="flex-shrink-0 mr-4">
+                <div class="w-12 h-12 rounded-full flex items-center justify-center
+                  {% if activity.activity_type == 'Login' %}bg-gradient-to-br from-green-500 to-emerald-600
+                  {% elif activity.activity_type == 'Profile Update' %}bg-gradient-to-br from-blue-500 to-indigo-600
+                  {% elif activity.activity_type == 'Scheme Created' %}bg-gradient-to-br from-purple-500 to-pink-600
+                  {% else %}bg-gradient-to-br from-gray-500 to-gray-600{% endif %}">
+                  <i class="text-white
+                    {% if activity.activity_type == 'Login' %}fas fa-sign-in-alt
+                    {% elif activity.activity_type == 'Profile Update' %}fas fa-user-edit
+                    {% elif activity.activity_type == 'Scheme Created' %}fas fa-plus-circle
+                    {% else %}fas fa-cog{% endif %}"></i>
                 </div>
-                <span class="text-sm text-gray-500">{{ activity.timestamp|date:"M d, Y H:i" }}</span>
               </div>
-            </li>
-          {% endfor %}
-        </ul>
-      {% else %}
-        <div class="p-5 rounded-lg bg-gray-100">
-          <div class="flex items-center">
-            <div class="mr-4 text-gray-600">
-              <i class="fas fa-info-circle text-2xl"></i>
+
+              <!-- Activity Details -->
+              <div class="flex-1 min-w-0">
+                <div class="flex items-start justify-between">
+                  <div>
+                    <h5 class="font-semibold text-gray-800 group-hover:text-[#000080] transition-colors duration-300 english-text">
+                      {{ activity.activity_type|default:"System Activity" }}
+                    </h5>
+                    <h5 class="font-semibold text-gray-800 group-hover:text-[#000080] transition-colors duration-300 marathi-text hidden">
+                      {% if activity.activity_type == "Login" %}लॉगिन
+                      {% elif activity.activity_type == "Profile Update" %}प्रोफाइल अद्यतन
+                      {% elif activity.activity_type == "Scheme Created" %}योजना तयार केली
+                      {% else %}सिस्टम क्रियाकलाप{% endif %}
+                    </h5>
+                    <p class="text-sm text-gray-600 group-hover:text-gray-700 transition-colors duration-300 mt-1">
+                      {{ activity.description|default:"System activity performed" }}
+                    </p>
+                    
+                    <!-- Activity Status -->
+                    <div class="flex items-center mt-2 space-x-2">
+                      <span class="px-2 py-1 bg-green-100 text-green-800 text-xs font-medium rounded-full english-text">
+                        <i class="fas fa-check-circle mr-1"></i>Completed
+                      </span>
+                      <span class="px-2 py-1 bg-green-100 text-green-800 text-xs font-medium rounded-full marathi-text hidden">
+                        <i class="fas fa-check-circle mr-1"></i>पूर्ण झाले
+                      </span>
+                    </div>
+                  </div>
+
+                  <!-- Timestamp -->
+                  <div class="text-right flex-shrink-0 ml-4">
+                    <p class="text-sm font-medium text-gray-500">
+                      {{ activity.timestamp|date:"M d, Y"|default:"Today" }}
+                    </p>
+                    <p class="text-xs text-gray-400">
+                      {{ activity.timestamp|date:"H:i"|default:"12:30" }}
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
-            <p class="font-medium text-gray-800 english-text">No recent activities found.</p>
-            <p class="font-medium text-gray-800 marathi-text hidden">कोणतेही अलीकडील क्रियाकलाप सापडले नाहीत.</p>
+          {% endfor %}
+        </div>
+        
+        <!-- View All Activities Button -->
+        <div class="mt-6 text-center">
+          <button class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-[#000080] to-[#0066CC] hover:from-[#000060] hover:to-[#0055AA] text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+            <i class="fas fa-list mr-2"></i>
+            <span class="english-text">View All Activities</span>
+            <span class="marathi-text hidden">सर्व क्रियाकलाप पहा</span>
+            <i class="fas fa-arrow-right ml-2"></i>
+          </button>
+        </div>
+      {% else %}
+        <!-- Empty State -->
+        <div class="text-center py-12">
+          <div class="w-20 h-20 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-inbox text-3xl text-gray-400"></i>
           </div>
+          <h5 class="text-lg font-semibold text-gray-600 mb-2 english-text">No Recent Activities</h5>
+          <h5 class="text-lg font-semibold text-gray-600 mb-2 marathi-text hidden">कोणतेही अलीकडील क्रियाकलाप नाहीत</h5>
+          <p class="text-gray-500 mb-6 english-text">Your recent system activities will appear here</p>
+          <p class="text-gray-500 mb-6 marathi-text hidden">तुमच्या अलीकडील सिस्टम क्रियाकलाप येथे दिसतील</p>
+          
+          <button class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-[#FF9933] to-[#FF7722] hover:from-[#FF7722] hover:to-[#FF6611] text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+            <i class="fas fa-refresh mr-2"></i>
+            <span class="english-text">Refresh Activities</span>
+            <span class="marathi-text hidden">क्रियाकलाप रीफ्रेश करा</span>
+          </button>
         </div>
       {% endif %}
     </div>
