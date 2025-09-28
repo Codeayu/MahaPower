@@ -150,7 +150,7 @@
   </div>
 
   <!-- Enhanced Suggestions Section with modern UI -->
-  <div id="suggestions-container" class="space-y-8">
+  <div id="suggestions-container" class="space-y-8 hidden">
     <div class="p-5 bg-gradient-to-r from-navyBlue via-blue-600 to-blue-700 text-white rounded-xl shadow-lg flex justify-between items-center">
       <div>
   <h4 class="text-2xl font-bold english-text flex items-center">
@@ -552,8 +552,10 @@
               document.getElementById('taluka').innerHTML = '<option value="">' + (isEnglish ? 'Select Taluka' : 'तालुका निवडा') + '</option>';
               document.getElementById('gram_panchayat').innerHTML = '<option value="">' + (isEnglish ? 'Select Gram Panchayat' : 'ग्रामपंचायत निवडा') + '</option>';
               
-              // Clear any suggestions
-              document.getElementById('suggestions-container').innerHTML = '';
+              // Clear and hide the suggestions container
+              const suggestionsContainer = document.getElementById('suggestions-container');
+              suggestionsContainer.innerHTML = '';
+              suggestionsContainer.classList.add('hidden');
           }, 100);
       });
       
@@ -708,6 +710,9 @@
       
       const submitBtn = document.getElementById('submitBtn');
       const suggestionsContainer = document.getElementById('suggestions-container');
+      
+      // Make the container visible
+      suggestionsContainer.classList.remove('hidden');
       
       // Clear previous results with fade-out effect
       suggestionsContainer.classList.add('opacity-0');
