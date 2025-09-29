@@ -47,25 +47,25 @@
       {% if user.is_authenticated %}
         {% if user.role == 'admin' %}
           <a href="{% url 'admin_user' %}" class="text-xl font-semibold font-devanagari hover:text-saffron transition-colors english-text">
-            Maharashtra State Khadi & Village Industries Board
+            UdyogSetu (Bridge to Enterprise)
           </a>
           <a href="{% url 'admin_user' %}" class="text-xl font-semibold font-devanagari hover:text-saffron transition-colors marathi-text hidden">
-            महाराष्ट्र राज्य खादी व ग्रामोद्योग मंडळ
+            उद्योगसेतू (उद्योगाला जोडणारा पूल)
           </a>
         {% elif user.role == 'staff' %}
           <a href="{% url 'staff_user' %}" class="text-xl font-semibold font-devanagari hover:text-saffron transition-colors english-text">
-            Maharashtra State Khadi & Village Industries Board
+            UdyogSetu (Bridge to Enterprise)
           </a>
           <a href="{% url 'staff_user' %}" class="text-xl font-semibold font-devanagari hover:text-saffron transition-colors marathi-text hidden">
-            महाराष्ट्र राज्य खादी व ग्रामोद्योग मंडळ
+            उद्योगसेतू (उद्योगाला जोडणारा पूल)
           </a>
         {% endif %}
       {% else %}
         <a href="{% url 'index' %}" class="text-xl font-semibold font-devanagari hover:text-saffron transition-colors english-text">
-          Maharashtra State Khadi & Village Industries Board
+          UdyogSetu (Bridge to Enterprise)
         </a>
         <a href="{% url 'index' %}" class="text-xl font-semibold font-devanagari hover:text-saffron transition-colors marathi-text hidden">
-          महाराष्ट्र राज्य खादी व ग्रामोद्योग मंडळ
+          उद्योगसेतू (उद्योगाला जोडणारा पूल)
         </a>
       {% endif %}
       <div class="flex items-center space-x-4">

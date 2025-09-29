@@ -528,6 +528,8 @@ def work_suggestion_detail(request, suggestion_id):
     work type information, sector details, and AI-powered analysis
     """
     try:
+        from .azure_openai_service import azure_openai_service
+        
         suggestion = get_object_or_404(WorkSuggestion, id=suggestion_id)
         
         # Get the complete location hierarchy
@@ -538,6 +540,26 @@ def work_suggestion_detail(request, suggestion_id):
         # Get work type and sector details
         work_type = suggestion.work_type
         sector = work_type.sector
+        
+        # Determine language preference
+        is_english = request.GET.get('lang', 'en') == 'en'
+        language = 'en' if is_english else 'mr'
+        
+        # Generate AI analysis based on work type and location
+        ai_analysis = azure_openai_service.generate_work_analysis(
+            work_type=work_type.name_en,
+            work_type_mr=work_type.name_mr,
+            district=district.name_en,
+            district_mr=district.name_mr,
+            taluka=taluka.name_en,
+            taluka_mr=taluka.name_mr,
+            gram_panchayat=gram_panchayat.name_en,
+            gram_panchayat_mr=gram_panchayat.name_mr,
+            sector=sector.name_en,
+            sector_mr=sector.name_mr,
+            is_specialty=suggestion.is_specialty,
+            language=language
+        )
         
         # Get related work suggestions in the same gram panchayat for comparison
         related_suggestions = WorkSuggestion.objects.filter(
@@ -561,7 +583,8 @@ def work_suggestion_detail(request, suggestion_id):
             'sector': sector,
             'related_suggestions': related_suggestions,
             'similar_suggestions': similar_suggestions,
-            'is_english': request.GET.get('lang', 'en') == 'en'
+            'ai_analysis': ai_analysis,
+            'is_english': is_english
         }
         
         return render(request, 'work_suggestion_detail.html', context)

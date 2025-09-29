@@ -127,86 +127,171 @@
           </div>
         </div>
 
-        <!-- Work Type Description -->
-        <div class="bg-white border border-gray-200 rounded-xl shadow-sm mb-6 p-6">
-          <div class="flex items-center mb-4">
-            <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mr-3">
-              <i class="fas fa-info-circle text-purple-600"></i>
-            </div>
-            <h2 class="text-xl font-semibold text-gray-800">
-              <span class="english-text">About This Work</span>
-              <span class="marathi-text hidden">या कामाविषयी</span>
-            </h2>
-          </div>
-          
-          {% if work_type.description_en or work_type.description_mr %}
-          <div class="prose max-w-none">
-            <div class="english-text">
-              <p class="text-gray-700 leading-relaxed text-base">{{ work_type.description_en|default:"Detailed description will be added soon." }}</p>
-            </div>
-            <div class="marathi-text hidden">
-              <p class="text-gray-700 leading-relaxed text-base">{{ work_type.description_mr|default:"लवकरच तपशीलवार वर्णन जोडले जाईल." }}</p>
-            </div>
-          </div>
-          {% else %}
-          <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 text-center">
-            <i class="fas fa-clock text-gray-400 text-2xl mb-2"></i>
-            <p class="text-gray-600">
-              <span class="english-text">Detailed description will be added soon.</span>
-              <span class="marathi-text hidden">लवकरच तपशीलवार वर्णन जोडले जाईल.</span>
-            </p>
-          </div>
-          {% endif %}
-        </div>
-
         <!-- AI Analysis Section -->
         <div class="bg-gradient-to-br from-indigo-50 to-purple-50 border border-indigo-200 rounded-xl shadow-sm mb-6 p-6">
-          <div class="flex items-center mb-4">
-            <div class="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center mr-3">
-              <i class="fas fa-brain text-indigo-600"></i>
+          <div class="flex items-center mb-6">
+            <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mr-4">
+              <i class="fas fa-brain text-indigo-600 text-xl"></i>
             </div>
-            <h2 class="text-xl font-semibold text-gray-800">
-              <span class="english-text">AI Analysis & Recommendations</span>
-              <span class="marathi-text hidden">AI विश्लेषण आणि शिफारसी</span>
-            </h2>
+            <div>
+              <h2 class="text-xl font-semibold text-gray-800">
+                <span class="english-text">AI Analysis & Recommendations</span>
+                <span class="marathi-text hidden">AI विश्लेषण आणि शिफारसी</span>
+              </h2>
+              <p class="text-sm text-gray-600">
+                <span class="english-text">Powered by advanced AI for location-specific insights</span>
+                <span class="marathi-text hidden">स्थान-विशिष्ट अंतर्दृष्टीसाठी प्रगत AI द्वारे संचालित</span>
+              </p>
+            </div>
           </div>
-          
+
+          {% if ai_analysis %}
+          <!-- Overview -->
+          {% if ai_analysis.overview %}
           <div class="bg-white border border-indigo-200 rounded-lg p-4 mb-4">
-            <h3 class="font-semibold text-indigo-800 mb-2">
-              <span class="english-text">Why this work is good for {{ gram_panchayat.name_en }}:</span>
-              <span class="marathi-text hidden">{{ gram_panchayat.name_mr }}साठी हे काम का चांगले आहे:</span>
-            </h3>
+            <div class="flex items-center mb-3">
+              <i class="fas fa-lightbulb text-yellow-500 mr-2"></i>
+              <h3 class="font-semibold text-indigo-800">
+                <span class="english-text">Business Overview</span>
+                <span class="marathi-text hidden">व्यवसायाचे विहंगावलोकन</span>
+              </h3>
+            </div>
+            <p class="text-gray-700 text-sm leading-relaxed">{{ ai_analysis.overview }}</p>
+          </div>
+          {% endif %}
+
+          <!-- Why Suitable -->
+          {% if ai_analysis.why_suitable %}
+          <div class="bg-white border border-green-200 rounded-lg p-4 mb-4">
+            <div class="flex items-center mb-3">
+              <i class="fas fa-check-circle text-green-600 mr-2"></i>
+              <h3 class="font-semibold text-green-800">
+                <span class="english-text">Why Perfect for {{ gram_panchayat.name_en }}</span>
+                <span class="marathi-text hidden">{{ gram_panchayat.name_mr }}साठी का योग्य</span>
+              </h3>
+            </div>
             <div class="space-y-2">
+              {% for point in ai_analysis.why_suitable %}
               <div class="flex items-start">
-                <i class="fas fa-check-circle text-green-600 mr-2 mt-1 text-sm"></i>
-                <p class="text-gray-700 text-sm english-text">Local demand and market availability in {{ district.name_en }} region</p>
-                <p class="text-gray-700 text-sm marathi-text hidden">{{ district.name_mr }} भागातील स्थानिक मागणी आणि बाजार उपलब्धता</p>
+                <i class="fas fa-check text-green-600 mr-2 mt-1 text-xs"></i>
+                <p class="text-gray-700 text-sm">{{ point }}</p>
               </div>
-              <div class="flex items-start">
-                <i class="fas fa-check-circle text-green-600 mr-2 mt-1 text-sm"></i>
-                <p class="text-gray-700 text-sm english-text">Suitable for {{ sector.name_en }} sector development in rural areas</p>
-                <p class="text-gray-700 text-sm marathi-text hidden">ग्रामीण भागात {{ sector.name_mr }} क्षेत्राच्या विकासासाठी योग्य</p>
-              </div>
-              {% if suggestion.is_specialty %}
-              <div class="flex items-start">
-                <i class="fas fa-star text-yellow-600 mr-2 mt-1 text-sm"></i>
-                <p class="text-gray-700 text-sm english-text">This is a local specialty of {{ gram_panchayat.name_en }}, giving you competitive advantage</p>
-                <p class="text-gray-700 text-sm marathi-text hidden">ही {{ gram_panchayat.name_mr }}ची स्थानिक विशेषता आहे, ज्यामुळे तुम्हाला स्पर्धात्मक फायदा मिळेल</p>
-              </div>
-              {% endif %}
-              <div class="flex items-start">
-                <i class="fas fa-check-circle text-green-600 mr-2 mt-1 text-sm"></i>
-                <p class="text-gray-700 text-sm english-text">Government support and schemes available for this sector</p>
-                <p class="text-gray-700 text-sm marathi-text hidden">या क्षेत्रासाठी सरकारी सहाय्य आणि योजना उपलब्ध</p>
-              </div>
+              {% endfor %}
             </div>
           </div>
-          
-          <button class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center">
-            <i class="fas fa-robot mr-2"></i>
-            <span class="english-text">Get Detailed AI Analysis</span>
-            <span class="marathi-text hidden">तपशीलवार AI विश्लेषण मिळवा</span>
-          </button>
+          {% endif %}
+
+          <!-- Business Potential -->
+          {% if ai_analysis.business_potential %}
+          <div class="bg-white border border-blue-200 rounded-lg p-4 mb-4">
+            <div class="flex items-center mb-3">
+              <i class="fas fa-chart-line text-blue-600 mr-2"></i>
+              <h3 class="font-semibold text-blue-800">
+                <span class="english-text">Business Growth Potential</span>
+                <span class="marathi-text hidden">व्यवसाय वाढीची शक्यता</span>
+              </h3>
+            </div>
+            <div class="space-y-2">
+              {% for point in ai_analysis.business_potential %}
+              <div class="flex items-start">
+                <i class="fas fa-trending-up text-blue-600 mr-2 mt-1 text-xs"></i>
+                <p class="text-gray-700 text-sm">{{ point }}</p>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+          {% endif %}
+
+          <!-- Local Advantages -->
+          {% if ai_analysis.local_advantages %}
+          <div class="bg-white border border-orange-200 rounded-lg p-4 mb-4">
+            <div class="flex items-center mb-3">
+              <i class="fas fa-map-marker-alt text-orange-600 mr-2"></i>
+              <h3 class="font-semibold text-orange-800">
+                <span class="english-text">Location-Specific Advantages</span>
+                <span class="marathi-text hidden">स्थान-विशिष्ट फायदे</span>
+              </h3>
+            </div>
+            <div class="space-y-2">
+              {% for point in ai_analysis.local_advantages %}
+              <div class="flex items-start">
+                <i class="fas fa-star text-orange-600 mr-2 mt-1 text-xs"></i>
+                <p class="text-gray-700 text-sm">{{ point }}</p>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+          {% endif %}
+
+          <!-- Government Support -->
+          {% if ai_analysis.government_support %}
+          <div class="bg-white border border-purple-200 rounded-lg p-4 mb-4">
+            <div class="flex items-center mb-3">
+              <i class="fas fa-building text-purple-600 mr-2"></i>
+              <h3 class="font-semibold text-purple-800">
+                <span class="english-text">Government Support Available</span>
+                <span class="marathi-text hidden">उपलब्ध सरकारी सहाय्य</span>
+              </h3>
+            </div>
+            <div class="space-y-2">
+              {% for point in ai_analysis.government_support %}
+              <div class="flex items-start">
+                <i class="fas fa-handshake text-purple-600 mr-2 mt-1 text-xs"></i>
+                <p class="text-gray-700 text-sm">{{ point }}</p>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+          {% endif %}
+
+          <!-- Success Factors -->
+          {% if ai_analysis.success_factors %}
+          <div class="bg-white border border-red-200 rounded-lg p-4 mb-4">
+            <div class="flex items-center mb-3">
+              <i class="fas fa-trophy text-red-600 mr-2"></i>
+              <h3 class="font-semibold text-red-800">
+                <span class="english-text">Keys to Success</span>
+                <span class="marathi-text hidden">यशाच्या गुरुकिल्ली</span>
+              </h3>
+            </div>
+            <div class="space-y-2">
+              {% for point in ai_analysis.success_factors %}
+              <div class="flex items-start">
+                <i class="fas fa-key text-red-600 mr-2 mt-1 text-xs"></i>
+                <p class="text-gray-700 text-sm">{{ point }}</p>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+          {% endif %}
+
+          {% else %}
+          <!-- Loading/Error State -->
+          <div class="bg-white border border-indigo-200 rounded-lg p-6 text-center">
+            <i class="fas fa-robot text-indigo-400 text-3xl mb-3"></i>
+            <p class="text-gray-600 mb-3">
+              <span class="english-text">Generating AI analysis for this work opportunity...</span>
+              <span class="marathi-text hidden">या कामाच्या संधीसाठी AI विश्लेषण तयार करत आहे...</span>
+            </p>
+            <div class="flex justify-center">
+              <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-indigo-600"></div>
+            </div>
+          </div>
+          {% endif %}
+
+          <!-- Action Button -->
+          <div class="mt-6 flex flex-col sm:flex-row gap-3">
+            <button class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center">
+              <i class="fas fa-refresh mr-2"></i>
+              <span class="english-text">Refresh Analysis</span>
+              <span class="marathi-text hidden">विश्लेषण रिफ्रेश करा</span>
+            </button>
+            <button class="flex-1 bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center">
+              <i class="fas fa-download mr-2"></i>
+              <span class="english-text">Download Report</span>
+              <span class="marathi-text hidden">रिपोर्ट डाउनलोड करा</span>
+            </button>
+          </div>
         </div>
 
       </div>
