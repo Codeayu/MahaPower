@@ -3,6 +3,7 @@ import json
 from openai import AzureOpenAI
 from typing import Dict, Any, Optional
 import logging
+from django.conf import settings
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -12,23 +13,32 @@ class AzureOpenAIService:
     """Service class for interacting with Azure OpenAI API"""
     
     def __init__(self):
+        # Validate that required settings are present
+        if not all([
+            settings.AZURE_OPENAI_GENERATION_API_KEY,
+            settings.AZURE_OPENAI_GENERATION_ENDPOINT,
+            settings.AZURE_OPENAI_EMBEDDING_API_KEY,
+            settings.AZURE_OPENAI_EMBEDDING_ENDPOINT
+        ]):
+            raise ValueError("Azure OpenAI configuration is missing. Please check your environment variables.")
+        
         # Azure OpenAI credentials for generation
         self.generation_client = AzureOpenAI(
-            api_key="EzJLxZQRf8MEWAKA2F9f46lIukbOBYn0Orv5YA96lSOUVRcwUR52JQQJ99BGACHYHv6XJ3w3AAAAACOGSQqB",
-            api_version="2024-02-15-preview",
-            azure_endpoint="https://karam-mdc6aytc-eastus2.openai.azure.com/"
+            api_key=settings.AZURE_OPENAI_GENERATION_API_KEY,
+            api_version=settings.AZURE_OPENAI_API_VERSION,
+            azure_endpoint=settings.AZURE_OPENAI_GENERATION_ENDPOINT
         )
         
         # Azure OpenAI credentials for embeddings (if needed later)
         self.embedding_client = AzureOpenAI(
-            api_key="ACAThiJJscBMSmQRA6UnBGtKAXxkcE77EgQOZal184mJuS1i4GNxJQQJ99BGAC77bzfXJ3w3AAABACOGJnaG",
-            api_version="2024-02-15-preview",
-            azure_endpoint="https://karam-hackrx-openai.openai.azure.com/"
+            api_key=settings.AZURE_OPENAI_EMBEDDING_API_KEY,
+            api_version=settings.AZURE_OPENAI_API_VERSION,
+            azure_endpoint=settings.AZURE_OPENAI_EMBEDDING_ENDPOINT
         )
         
-        # Model deployment names (adjust these based on your actual deployments)
-        self.generation_model = "gpt-35-turbo"  # or "gpt-4" if available
-        self.embedding_model = "text-embedding-ada-002"
+        # Model deployment names from settings
+        self.generation_model = settings.AZURE_OPENAI_GENERATION_MODEL
+        self.embedding_model = settings.AZURE_OPENAI_EMBEDDING_MODEL
     
     def generate_work_analysis(self, work_type: str, work_type_mr: str, district: str, district_mr: str, 
                               taluka: str, taluka_mr: str, gram_panchayat: str, gram_panchayat_mr: str,

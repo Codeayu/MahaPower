@@ -594,6 +594,7 @@ def work_suggestion_detail(request, suggestion_id):
         return redirect('get_work_suggestions')
     except Exception as e:
         messages.error(request, f'An error occurred: {str(e)}')
+        print(e)
         return redirect('get_work_suggestions')
 
 def get_talukas(request):

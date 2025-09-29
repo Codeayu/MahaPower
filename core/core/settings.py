@@ -12,9 +12,13 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 import os
 from pathlib import Path
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Load environment variables from .env file
+load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 
 # Quick-start development settings - unsuitable for production
@@ -155,7 +159,18 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-EMAIL_HOST_USER = 'codehack584@gmail.com'          # your Gmail address
-EMAIL_HOST_PASSWORD = 'kbzbpphekwvgsclq'         # generated from Gmail App Passwords
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'codehack584@gmail.com')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', 'kbzbpphekwvgsclq')
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Azure OpenAI Configuration
+AZURE_OPENAI_GENERATION_API_KEY = os.environ.get('AZURE_OPENAI_GENERATION_API_KEY')
+AZURE_OPENAI_GENERATION_ENDPOINT = os.environ.get('AZURE_OPENAI_GENERATION_ENDPOINT')
+AZURE_OPENAI_GENERATION_MODEL = os.environ.get('AZURE_OPENAI_GENERATION_MODEL', 'gpt-35-turbo')
+
+AZURE_OPENAI_EMBEDDING_API_KEY = os.environ.get('AZURE_OPENAI_EMBEDDING_API_KEY')
+AZURE_OPENAI_EMBEDDING_ENDPOINT = os.environ.get('AZURE_OPENAI_EMBEDDING_ENDPOINT')
+AZURE_OPENAI_EMBEDDING_MODEL = os.environ.get('AZURE_OPENAI_EMBEDDING_MODEL', 'text-embedding-ada-002')
+
+AZURE_OPENAI_API_VERSION = os.environ.get('AZURE_OPENAI_API_VERSION', '2024-02-15-preview')
