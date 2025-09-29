@@ -423,7 +423,7 @@
           {% if is_english %}{{ suggestion.work_type.name_en }}{% else %}{{ suggestion.work_type.name_mr }}{% endif %}
         </p>
       </div>
-      <button type="button" class="relative inline-flex items-center px-3 py-1.5 rounded-md bg-white border border-blue-200 text-sm font-medium text-blue-600 hover:bg-blue-600 hover:text-white hover:border-transparent transition-all duration-300 group-hover:shadow-md">
+      <a href="{% url 'work_suggestion_detail' suggestion.id %}" class="relative inline-flex items-center px-3 py-1.5 rounded-md bg-white border border-blue-200 text-sm font-medium text-blue-600 hover:bg-blue-600 hover:text-white hover:border-transparent transition-all duration-300 group-hover:shadow-md">
         <span class="english-text flex items-center {% if not is_english %}hidden{% endif %}">
           Details
           <svg class="w-4 h-4 ml-1.5 transform transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -436,7 +436,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
           </svg>
         </span>
-      </button>
+      </a>
           </div>
         </div>
       </li>
@@ -534,7 +534,7 @@
           </span>
         </div>
       </div>
-      <button type="button" class="relative inline-flex items-center px-3 py-1.5 rounded-md bg-white border border-yellow-200 text-sm font-medium text-yellow-600 hover:bg-yellow-600 hover:text-white hover:border-transparent transition-all duration-300 group-hover:shadow-md">
+      <a href="{% url 'work_suggestion_detail' suggestion.id %}" class="relative inline-flex items-center px-3 py-1.5 rounded-md bg-white border border-yellow-200 text-sm font-medium text-yellow-600 hover:bg-yellow-600 hover:text-white hover:border-transparent transition-all duration-300 group-hover:shadow-md">
         <span class="english-text flex items-center {% if not is_english %}hidden{% endif %}">
           Details
           <svg class="w-4 h-4 ml-1.5 transform transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -547,7 +547,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
           </svg>
         </span>
-      </button>
+      </a>
           </div>
         </div>
       </li>
@@ -1292,7 +1292,7 @@
                                           ${isEnglish ? suggestion.work_type.name_en : suggestion.work_type.name_mr}
                                       </p>
                                   </div>
-                                  <button type="button" class="relative inline-flex items-center px-3 py-1.5 rounded-md bg-white border border-blue-200 text-sm font-medium text-blue-600 hover:bg-blue-600 hover:text-white hover:border-transparent transition-all duration-300 group-hover:shadow-md">
+                                  <a href="/suggestion/${suggestion.id}/" class="relative inline-flex items-center px-3 py-1.5 rounded-md bg-white border border-blue-200 text-sm font-medium text-blue-600 hover:bg-blue-600 hover:text-white hover:border-transparent transition-all duration-300 group-hover:shadow-md">
                                       <span class="english-text flex items-center ${isEnglish ? '' : 'hidden'}">
                                           Details
                                           <svg class="w-4 h-4 ml-1.5 transform transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1305,7 +1305,7 @@
                                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
                                           </svg>
                                       </span>
-                                  </button>
+                                  </a>
                               </div>
                           </div>
                       </li>
@@ -1387,7 +1387,7 @@
                                           </span>
                                       </div>
                                   </div>
-                                  <button type="button" class="relative inline-flex items-center px-3 py-1.5 rounded-md bg-white border border-yellow-200 text-sm font-medium text-yellow-600 hover:bg-yellow-600 hover:text-white hover:border-transparent transition-all duration-300 group-hover:shadow-md">
+                                  <a href="/suggestion/${suggestion.id}/" class="relative inline-flex items-center px-3 py-1.5 rounded-md bg-white border border-yellow-200 text-sm font-medium text-yellow-600 hover:bg-yellow-600 hover:text-white hover:border-transparent transition-all duration-300 group-hover:shadow-md">
                                       <span class="english-text flex items-center ${isEnglish ? '' : 'hidden'}">
                                           Details
                                           <svg class="w-4 h-4 ml-1.5 transform transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1400,7 +1400,7 @@
                                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
                                           </svg>
                                       </span>
-                                  </button>
+                                  </a>
                               </div>
                           </div>
                       </li>

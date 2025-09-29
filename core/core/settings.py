@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'home',
     'simple_history',
     'anymail',
+    'openai',
 ]
 
 MIDDLEWARE = [

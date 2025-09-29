@@ -522,6 +522,57 @@ def get_suggestions(request):
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
 
+def work_suggestion_detail(request, suggestion_id):
+    """
+    Display comprehensive details of a work suggestion including location hierarchy,
+    work type information, sector details, and AI-powered analysis
+    """
+    try:
+        suggestion = get_object_or_404(WorkSuggestion, id=suggestion_id)
+        
+        # Get the complete location hierarchy
+        gram_panchayat = suggestion.gram_panchayat
+        taluka = gram_panchayat.taluka
+        district = taluka.district
+        
+        # Get work type and sector details
+        work_type = suggestion.work_type
+        sector = work_type.sector
+        
+        # Get related work suggestions in the same gram panchayat for comparison
+        related_suggestions = WorkSuggestion.objects.filter(
+            gram_panchayat=gram_panchayat
+        ).exclude(id=suggestion_id).select_related('work_type', 'work_type__sector')[:5]
+        
+        # Get other gram panchayats in the same taluka with similar work suggestions
+        similar_suggestions = WorkSuggestion.objects.filter(
+            gram_panchayat__taluka=taluka,
+            work_type=work_type
+        ).exclude(gram_panchayat=gram_panchayat).select_related(
+            'gram_panchayat', 'work_type', 'work_type__sector'
+        )[:5]
+        
+        context = {
+            'suggestion': suggestion,
+            'district': district,
+            'taluka': taluka,
+            'gram_panchayat': gram_panchayat,
+            'work_type': work_type,
+            'sector': sector,
+            'related_suggestions': related_suggestions,
+            'similar_suggestions': similar_suggestions,
+            'is_english': request.GET.get('lang', 'en') == 'en'
+        }
+        
+        return render(request, 'work_suggestion_detail.html', context)
+        
+    except WorkSuggestion.DoesNotExist:
+        messages.error(request, 'Work suggestion not found.')
+        return redirect('get_work_suggestions')
+    except Exception as e:
+        messages.error(request, f'An error occurred: {str(e)}')
+        return redirect('get_work_suggestions')
+
 def get_talukas(request):
     district_id = request.GET.get('district_id')
     talukas = Taluka.objects.filter(district_id=district_id).values('id', 'name_en', 'name_mr')

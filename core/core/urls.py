@@ -59,6 +59,7 @@ urlpatterns = [
     
     #work suggestion pages
     path('suggestions/', get_work_suggestions, name='get_work_suggestions'),
+    path('suggestion/<int:suggestion_id>/', work_suggestion_detail, name='work_suggestion_detail'),
     # Add this to your urlpatterns list
     path('get-suggestions/', get_suggestions, name='get_suggestions'),
     path('get-talukas/', get_talukas, name='get_talukas'),

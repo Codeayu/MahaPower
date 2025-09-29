@@ -1,0 +1,342 @@
+{% extends 'base.html' %}
+{% block title %}
+  {{ work_type.name_en }} in {{ gram_panchayat.name_en }} | UdyogSetu | Maharashtra State Khadi & Village Industries Board
+{% endblock %}
+{% load static %}
+
+{% block content %}
+<!-- Breadcrumb Navigation -->
+<section class="bg-gradient-to-r from-blue-50 to-indigo-50 py-4">
+  <div class="container mx-auto px-4">
+    <nav class="flex items-center space-x-2 text-sm">
+      <a href="/" class="text-blue-600 hover:text-blue-800 flex items-center">
+        <i class="fas fa-home mr-1"></i>
+        <span class="english-text">Home</span>
+        <span class="marathi-text hidden">मुख्यपृष्ठ</span>
+      </a>
+      <i class="fas fa-chevron-right text-gray-400"></i>
+      <a href="{% url 'get_work_suggestions' %}" class="text-blue-600 hover:text-blue-800">
+        <span class="english-text">Work Suggestions</span>
+        <span class="marathi-text hidden">काम सुचवणी</span>
+      </a>
+      <i class="fas fa-chevron-right text-gray-400"></i>
+      <span class="text-gray-600">
+        <span class="english-text">{{ work_type.name_en }}</span>
+        <span class="marathi-text hidden">{{ work_type.name_mr }}</span>
+      </span>
+    </nav>
+  </div>
+</section>
+
+<!-- Main Content -->
+<section class="py-8 bg-white">
+  <div class="container mx-auto px-4 max-w-7xl">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      
+      <!-- Main Content Column -->
+      <div class="lg:col-span-2">
+        
+        <!-- Work Type Header -->
+        <div class="bg-white border border-gray-200 rounded-xl shadow-sm mb-6 overflow-hidden">
+          <div class="bg-gradient-to-r from-[#FF9933] to-[#FF7722] p-6">
+            <div class="flex items-start justify-between">
+              <div class="flex-1">
+                <h1 class="text-2xl md:text-3xl font-bold text-white mb-2">
+                  <span class="english-text">{{ work_type.name_en }}</span>
+                  <span class="marathi-text hidden">{{ work_type.name_mr }}</span>
+                </h1>
+                <div class="flex flex-wrap items-center gap-3">
+                  <span class="bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm font-medium">
+                    <i class="fas fa-industry mr-1"></i>
+                    <span class="english-text">{{ sector.name_en }}</span>
+                    <span class="marathi-text hidden">{{ sector.name_mr }}</span>
+                  </span>
+                  {% if suggestion.is_specialty %}
+                  <span class="bg-yellow-400 text-[#000080] px-3 py-1 rounded-full text-sm font-bold">
+                    <i class="fas fa-star mr-1"></i>
+                    <span class="english-text">Local Specialty</span>
+                    <span class="marathi-text hidden">स्थानिक विशेषता</span>
+                  </span>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="bg-white/20 backdrop-blur-sm rounded-lg p-3">
+                <i class="fas fa-briefcase text-2xl text-white"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Location Hierarchy -->
+        <div class="bg-white border border-gray-200 rounded-xl shadow-sm mb-6 p-6">
+          <div class="flex items-center mb-4">
+            <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
+              <i class="fas fa-map-marker-alt text-blue-600"></i>
+            </div>
+            <h2 class="text-xl font-semibold text-gray-800">
+              <span class="english-text">Location Details</span>
+              <span class="marathi-text hidden">स्थानाचे तपशील</span>
+            </h2>
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <!-- District -->
+            <div class="bg-gradient-to-br from-red-50 to-red-100 border border-red-200 rounded-lg p-4">
+              <div class="flex items-center mb-2">
+                <i class="fas fa-map text-red-600 mr-2"></i>
+                <h3 class="font-semibold text-red-800">
+                  <span class="english-text">District</span>
+                  <span class="marathi-text hidden">जिल्हा</span>
+                </h3>
+              </div>
+              <p class="text-red-700 font-medium">
+                <span class="english-text">{{ district.name_en }}</span>
+                <span class="marathi-text hidden">{{ district.name_mr }}</span>
+              </p>
+            </div>
+            
+            <!-- Taluka -->
+            <div class="bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-lg p-4">
+              <div class="flex items-center mb-2">
+                <i class="fas fa-location-dot text-blue-600 mr-2"></i>
+                <h3 class="font-semibold text-blue-800">
+                  <span class="english-text">Taluka</span>
+                  <span class="marathi-text hidden">तालुका</span>
+                </h3>
+              </div>
+              <p class="text-blue-700 font-medium">
+                <span class="english-text">{{ taluka.name_en }}</span>
+                <span class="marathi-text hidden">{{ taluka.name_mr }}</span>
+              </p>
+            </div>
+            
+            <!-- Gram Panchayat -->
+            <div class="bg-gradient-to-br from-green-50 to-green-100 border border-green-200 rounded-lg p-4">
+              <div class="flex items-center mb-2">
+                <i class="fas fa-home text-green-600 mr-2"></i>
+                <h3 class="font-semibold text-green-800">
+                  <span class="english-text">Village/Gram Panchayat</span>
+                  <span class="marathi-text hidden">गाव/ग्राम पंचायत</span>
+                </h3>
+              </div>
+              <p class="text-green-700 font-medium">
+                <span class="english-text">{{ gram_panchayat.name_en }}</span>
+                <span class="marathi-text hidden">{{ gram_panchayat.name_mr }}</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Work Type Description -->
+        <div class="bg-white border border-gray-200 rounded-xl shadow-sm mb-6 p-6">
+          <div class="flex items-center mb-4">
+            <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mr-3">
+              <i class="fas fa-info-circle text-purple-600"></i>
+            </div>
+            <h2 class="text-xl font-semibold text-gray-800">
+              <span class="english-text">About This Work</span>
+              <span class="marathi-text hidden">या कामाविषयी</span>
+            </h2>
+          </div>
+          
+          {% if work_type.description_en or work_type.description_mr %}
+          <div class="prose max-w-none">
+            <div class="english-text">
+              <p class="text-gray-700 leading-relaxed text-base">{{ work_type.description_en|default:"Detailed description will be added soon." }}</p>
+            </div>
+            <div class="marathi-text hidden">
+              <p class="text-gray-700 leading-relaxed text-base">{{ work_type.description_mr|default:"लवकरच तपशीलवार वर्णन जोडले जाईल." }}</p>
+            </div>
+          </div>
+          {% else %}
+          <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 text-center">
+            <i class="fas fa-clock text-gray-400 text-2xl mb-2"></i>
+            <p class="text-gray-600">
+              <span class="english-text">Detailed description will be added soon.</span>
+              <span class="marathi-text hidden">लवकरच तपशीलवार वर्णन जोडले जाईल.</span>
+            </p>
+          </div>
+          {% endif %}
+        </div>
+
+        <!-- AI Analysis Section -->
+        <div class="bg-gradient-to-br from-indigo-50 to-purple-50 border border-indigo-200 rounded-xl shadow-sm mb-6 p-6">
+          <div class="flex items-center mb-4">
+            <div class="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center mr-3">
+              <i class="fas fa-brain text-indigo-600"></i>
+            </div>
+            <h2 class="text-xl font-semibold text-gray-800">
+              <span class="english-text">AI Analysis & Recommendations</span>
+              <span class="marathi-text hidden">AI विश्लेषण आणि शिफारसी</span>
+            </h2>
+          </div>
+          
+          <div class="bg-white border border-indigo-200 rounded-lg p-4 mb-4">
+            <h3 class="font-semibold text-indigo-800 mb-2">
+              <span class="english-text">Why this work is good for {{ gram_panchayat.name_en }}:</span>
+              <span class="marathi-text hidden">{{ gram_panchayat.name_mr }}साठी हे काम का चांगले आहे:</span>
+            </h3>
+            <div class="space-y-2">
+              <div class="flex items-start">
+                <i class="fas fa-check-circle text-green-600 mr-2 mt-1 text-sm"></i>
+                <p class="text-gray-700 text-sm english-text">Local demand and market availability in {{ district.name_en }} region</p>
+                <p class="text-gray-700 text-sm marathi-text hidden">{{ district.name_mr }} भागातील स्थानिक मागणी आणि बाजार उपलब्धता</p>
+              </div>
+              <div class="flex items-start">
+                <i class="fas fa-check-circle text-green-600 mr-2 mt-1 text-sm"></i>
+                <p class="text-gray-700 text-sm english-text">Suitable for {{ sector.name_en }} sector development in rural areas</p>
+                <p class="text-gray-700 text-sm marathi-text hidden">ग्रामीण भागात {{ sector.name_mr }} क्षेत्राच्या विकासासाठी योग्य</p>
+              </div>
+              {% if suggestion.is_specialty %}
+              <div class="flex items-start">
+                <i class="fas fa-star text-yellow-600 mr-2 mt-1 text-sm"></i>
+                <p class="text-gray-700 text-sm english-text">This is a local specialty of {{ gram_panchayat.name_en }}, giving you competitive advantage</p>
+                <p class="text-gray-700 text-sm marathi-text hidden">ही {{ gram_panchayat.name_mr }}ची स्थानिक विशेषता आहे, ज्यामुळे तुम्हाला स्पर्धात्मक फायदा मिळेल</p>
+              </div>
+              {% endif %}
+              <div class="flex items-start">
+                <i class="fas fa-check-circle text-green-600 mr-2 mt-1 text-sm"></i>
+                <p class="text-gray-700 text-sm english-text">Government support and schemes available for this sector</p>
+                <p class="text-gray-700 text-sm marathi-text hidden">या क्षेत्रासाठी सरकारी सहाय्य आणि योजना उपलब्ध</p>
+              </div>
+            </div>
+          </div>
+          
+          <button class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center">
+            <i class="fas fa-robot mr-2"></i>
+            <span class="english-text">Get Detailed AI Analysis</span>
+            <span class="marathi-text hidden">तपशीलवार AI विश्लेषण मिळवा</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Sidebar -->
+      <div class="lg:col-span-1">
+        
+        <!-- Quick Actions -->
+        <div class="bg-white border border-gray-200 rounded-xl shadow-sm mb-6 p-6">
+          <h3 class="text-lg font-semibold text-gray-800 mb-4">
+            <span class="english-text">Quick Actions</span>
+            <span class="marathi-text hidden">त्वरित कृती</span>
+          </h3>
+          <div class="space-y-3">
+            <button class="w-full bg-[#FF9933] hover:bg-[#e6831a] text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center">
+              <i class="fas fa-bookmark mr-2"></i>
+              <span class="english-text">Save for Later</span>
+              <span class="marathi-text hidden">नंतरसाठी जतन करा</span>
+            </button>
+            <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center">
+              <i class="fas fa-share mr-2"></i>
+              <span class="english-text">Share</span>
+              <span class="marathi-text hidden">शेअर करा</span>
+            </button>
+            <a href="#" class="block w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center">
+              <i class="fas fa-phone mr-2"></i>
+              <span class="english-text">Get Support</span>
+              <span class="marathi-text hidden">सहाय्य मिळवा</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Related Suggestions -->
+        {% if related_suggestions %}
+        <div class="bg-white border border-gray-200 rounded-xl shadow-sm mb-6 p-6">
+          <h3 class="text-lg font-semibold text-gray-800 mb-4">
+            <span class="english-text">Other Options in {{ gram_panchayat.name_en }}</span>
+            <span class="marathi-text hidden">{{ gram_panchayat.name_mr }}मधील इतर पर्याय</span>
+          </h3>
+          <div class="space-y-3">
+            {% for related in related_suggestions %}
+            <a href="{% url 'work_suggestion_detail' related.id %}" class="block p-3 bg-gray-50 hover:bg-blue-50 border border-gray-200 hover:border-blue-300 rounded-lg transition-all duration-200">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="font-medium text-gray-800 text-sm">
+                    <span class="english-text">{{ related.work_type.name_en }}</span>
+                    <span class="marathi-text hidden">{{ related.work_type.name_mr }}</span>
+                  </p>
+                  <p class="text-xs text-gray-600">
+                    <span class="english-text">{{ related.work_type.sector.name_en }}</span>
+                    <span class="marathi-text hidden">{{ related.work_type.sector.name_mr }}</span>
+                  </p>
+                </div>
+                {% if related.is_specialty %}
+                <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded">
+                  <i class="fas fa-star mr-1"></i>
+                  <span class="english-text">Special</span>
+                  <span class="marathi-text hidden">विशेष</span>
+                </span>
+                {% endif %}
+              </div>
+            </a>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+
+        <!-- Similar Suggestions in Area -->
+        {% if similar_suggestions %}
+        <div class="bg-white border border-gray-200 rounded-xl shadow-sm mb-6 p-6">
+          <h3 class="text-lg font-semibold text-gray-800 mb-4">
+            <span class="english-text">Same Work in {{ taluka.name_en }}</span>
+            <span class="marathi-text hidden">{{ taluka.name_mr }}मधील समान काम</span>
+          </h3>
+          <div class="space-y-3">
+            {% for similar in similar_suggestions %}
+            <a href="{% url 'work_suggestion_detail' similar.id %}" class="block p-3 bg-gray-50 hover:bg-green-50 border border-gray-200 hover:border-green-300 rounded-lg transition-all duration-200">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="font-medium text-gray-800 text-sm">
+                    <span class="english-text">{{ similar.gram_panchayat.name_en }}</span>
+                    <span class="marathi-text hidden">{{ similar.gram_panchayat.name_mr }}</span>
+                  </p>
+                  <p class="text-xs text-gray-600">
+                    <span class="english-text">{{ similar.work_type.name_en }}</span>
+                    <span class="marathi-text hidden">{{ similar.work_type.name_mr }}</span>
+                  </p>
+                </div>
+                {% if similar.is_specialty %}
+                <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded">
+                  <i class="fas fa-star mr-1"></i>
+                  <span class="english-text">Special</span>
+                  <span class="marathi-text hidden">विशेष</span>
+                </span>
+                {% endif %}
+              </div>
+            </a>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+
+        <!-- Contact Information -->
+        <div class="bg-gradient-to-br from-orange-50 to-red-50 border border-orange-200 rounded-xl shadow-sm p-6">
+          <h3 class="text-lg font-semibold text-gray-800 mb-4">
+            <span class="english-text">Need Help?</span>
+            <span class="marathi-text hidden">मदत हवी आहे?</span>
+          </h3>
+          <div class="space-y-3">
+            <div class="flex items-center text-sm">
+              <i class="fas fa-phone text-orange-600 mr-3 w-4"></i>
+              <span class="text-gray-700">0721-2563894</span>
+            </div>
+            <div class="flex items-center text-sm">
+              <i class="fas fa-envelope text-orange-600 mr-3 w-4"></i>
+              <span class="text-gray-700">info@udyogsetu.gov.in</span>
+            </div>
+            <div class="flex items-start text-sm">
+              <i class="fas fa-map-marker-alt text-orange-600 mr-3 w-4 mt-1"></i>
+              <span class="text-gray-700">
+                <span class="english-text">District Office, Amravati</span>
+                <span class="marathi-text hidden">जिल्हा कार्यालय, अमरावती</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
