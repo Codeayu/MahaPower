@@ -95,7 +95,7 @@
                 Simple 4-step process to start your entrepreneurial journey with government support
             </p>
             <p class="text-lg text-gray-600 max-w-2xl mx-auto marathi-text hidden">
-                सरकारी मदतीने तुमचा धंदा सुरू करण्यासाठी फक्त ४ सोप्या पायऱ्या
+                सरकारी मदतीने तुमचा उद्योग सुरू करण्यासाठी फक्त ४ सोप्या पायऱ्या
             </p>
         </div>
 
@@ -116,12 +116,12 @@
                         </div>
                     </div>
                     <h3 class="text-lg font-semibold text-[#000080] mb-3 english-text">Go to Work Suggestions</h3>
-                    <h3 class="text-lg font-semibold text-[#000080] mb-3 marathi-text hidden">कार्य सूचनांवर जा</h3>
+                    <h3 class="text-lg font-semibold text-[#000080] mb-3 marathi-text hidden">उद्योगाची संधी </h3>
                     <p class="text-gray-600 text-sm mb-4 english-text">
                         Click on "Work Suggestions" to start finding the perfect business opportunity for your area
                     </p>
                     <p class="text-gray-600 text-sm mb-4 marathi-text hidden">
-                        तुमच्या क्षेत्रासाठी योग्य व्यवसायिक संधी शोधण्यासाठी "कार्य सूचना" वर क्लिक करा
+                        तुमच्या क्षेत्रासाठी योग्य व्यवसायिक संधी शोधण्यासाठी "उद्योगाची संधी" वर क्लिक करा
                     </p>
                     <div class="bg-orange-50 border border-orange-200 rounded-lg p-3">
                         <div class="flex items-center justify-center space-x-2 text-orange-700 text-xs">
@@ -197,12 +197,12 @@
                         </div>
                     </div>
                     <h3 class="text-lg font-semibold text-[#000080] mb-3 english-text">Get AI-Powered Details</h3>
-                    <h3 class="text-lg font-semibold text-[#000080] mb-3 marathi-text hidden">AI-शक्तीचे तपशील मिळवा</h3>
+                    <h3 class="text-lg font-semibold text-[#000080] mb-3 marathi-text hidden">AI-शक्तीचे माहिती मिळवा</h3>
                     <p class="text-gray-600 text-sm mb-4 english-text">
                         View personalized suggestions, then click "Get Details" for AI analysis on why it's perfect for you
                     </p>
                     <p class="text-gray-600 text-sm mb-4 marathi-text hidden">
-                        वैयक्तिक सूचना पहा, नंतर हे तुमच्यासाठी का योग्य आहे याच्या AI विश्लेषणासाठी "तपशील मिळवा" वर क्लिक करा
+                        वैयक्तिक सूचना पहा, नंतर हे तुमच्यासाठी का योग्य आहे याच्या AI विश्लेषणासाठी "माहिती मिळवा" वर क्लिक करा
                     </p>
                     <div class="bg-purple-50 border border-purple-200 rounded-lg p-3">
                         <div class="flex items-center justify-center space-x-2 text-purple-700 text-xs">
@@ -226,7 +226,7 @@
             </h3>
 
             <p class="text-gray-600 mb-6 marathi-text">
-                तुमच्या उद्योजकता प्रवासासाठी वैयक्तिक व्यवसाय शिफारसी, निधी मार्गदर्शन आणि चरणबद्ध सहाय्य मिळवा.
+                तुमच्या उद्योजकता प्रवासासाठी वैयक्तिक व्यवसाय शिफारसी, निधी मार्गदर्शन आणि अर्थ साहाय्य मिळवा.
             </p>
             <p class="text-gray-600 mb-6 english-text hidden">
                 Join thousands of entrepreneurs who have found their path to success through UdyogSetu
@@ -247,13 +247,15 @@
                     Click "Work Suggestions" to find suitable business opportunities for your area
                     <i class="fas fa-arrow-right ml-3"></i>
                 </a>
-                <a href="/schemes/" 
-                   class="bg-white border border-[#000080] text-[#000080] hover:bg-[#000080] hover:text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200 flex items-center marathi-text">
+                <a href="#schemes-section" 
+                   class="bg-white border border-[#000080] text-[#000080] hover:bg-[#000080] hover:text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200 flex items-center marathi-text"
+                   onclick="scrollToSchemes(event)">
                 <i class="fas fa-list mr-2"></i>
                 सगळ्या योजना बघा
                 </a>
-                <a href="/schemes/" 
-                   class="bg-white border border-[#000080] text-[#000080] hover:bg-[#000080] hover:text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200 flex items-center english-text hidden">
+                <a href="#schemes-section" 
+                   class="bg-white border border-[#000080] text-[#000080] hover:bg-[#000080] hover:text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200 flex items-center english-text hidden"
+                   onclick="scrollToSchemes(event)">
                 <i class="fas fa-list mr-2"></i>
                 Browse All Schemes
                 </a>
@@ -322,86 +324,148 @@
                 Simple support and clear steps to help entrepreneurs across Maharashtra
             </p>
             <p class="text-xl text-gray-600 max-w-3xl mx-auto marathi-text hidden">
-                महाराष्ट्रभरातील उद्योजकांना सर्वसमावेशक सहाय्य आणि मार्गदर्शनासह सक्षम करणे
+                उद्योग निवडीसाठी अचूक मार्गदर्शन व सर्व उद्योग समावेशक सहाय्य
             </p>
         </div>
         
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Industry Selection Card -->
-            <div class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow border border-gray-200">
-                <div class="mb-6">
-                    <div class="w-16 h-16 bg-[#FF9933] rounded-lg flex items-center justify-center text-white text-2xl mx-auto">
+        <!-- Special Industry Selection Card (Main Feature) -->
+        <div class="col-span-1 lg:col-span-3 flex justify-center mb-12">
+            <div class="bg-gradient-to-br from-[#FF9933] via-[#FF7722] to-[#000080] rounded-2xl p-8 shadow-2xl border-4 border-[#FF9933]/30 relative w-full max-w-xl hover:scale-105 transition-transform duration-300 group">
+                <!-- Animated Icon -->
+                <div class="mb-6 flex justify-center">
+                    <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center text-[#FF9933] text-4xl shadow-lg animate-float border-2 border-[#FF9933]/40">
                         <i class="fas fa-industry"></i>
                     </div>
                 </div>
-                <h3 class="text-lg font-semibold text-[#000080] mb-3 text-center english-text">Industry Selection</h3>
-                <h3 class="text-lg font-semibold text-[#000080] mb-3 text-center marathi-text hidden">उद्योग निवड</h3>
-                <p class="text-gray-600 text-center mb-4 text-sm english-text">
-                    Get personalized recommendations based on your skills, location, and market opportunities
+                <!-- Title -->
+                <h3 class="text-2xl md:text-3xl font-extrabold text-white mb-4 text-center english-text drop-shadow-lg group-hover:text-yellow-300 transition-colors duration-300">
+                    Industry Selection
+                </h3>
+                <h3 class="text-2xl md:text-3xl font-extrabold text-white mb-4 text-center marathi-text hidden drop-shadow-lg group-hover:text-yellow-300 transition-colors duration-300">
+                    उद्योग निवड
+                </h3>
+                <!-- Subtitle -->
+                <p class="text-lg text-white/90 text-center mb-6 english-text">
+                    Get personalized recommendations based on your skills, location, and market opportunities.
                 </p>
-                <p class="text-gray-600 text-center mb-4 text-sm marathi-text hidden">
-                    तुमच्या कौशल्य, स्थान आणि बाजारातील संधींवर आधारित व्यक्तिगत शिफारसी
+                <p class="text-lg text-white/90 text-center mb-6 marathi-text hidden">
+                    तुमच्या कौशल्य, स्थान आणि बाजारातील संधींवर आधारित व्यक्तिगत शिफारसी.
                 </p>
-                <div class="text-center">
-                    <span class="bg-blue-50 text-blue-700 px-3 py-1 rounded-md text-xs font-medium">
-                        <span class="english-text">Smart Matching</span>
-                        <span class="marathi-text hidden">स्मार्ट जुळवणी</span>
+                <!-- Interactive Button -->
+                <div class="flex justify-center mb-4">
+                    <a href="/suggestions/" class="bg-yellow-300 hover:bg-yellow-400 text-[#000080] font-bold py-3 px-8 rounded-xl shadow-lg transition-all duration-300 flex items-center gap-2 text-lg group-hover:scale-105">
+                        <i class="fas fa-compass"></i>
+                        <span class="english-text">Start Now</span>
+                        <span class="marathi-text hidden">सुरू करा</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                <!-- Highlight Badges -->
+                <div class="flex flex-wrap justify-center gap-2 mt-2">
+                    <span class="bg-white/80 text-[#FF9933] px-4 py-2 rounded-full text-xs font-bold shadow group-hover:bg-yellow-200 transition-colors duration-300">
+                        <span class="english-text">AI Powered</span>
+                        <span class="marathi-text hidden">AI सहाय्य</span>
                     </span>
+                    <span class="bg-white/80 text-[#000080] px-4 py-2 rounded-full text-xs font-bold shadow group-hover:bg-blue-200 transition-colors duration-300">
+                        <span class="english-text">Location Based</span>
+                        <span class="marathi-text hidden">स्थान आधारित</span>
+                    </span>
+                    <span class="bg-white/80 text-green-700 px-4 py-2 rounded-full text-xs font-bold shadow group-hover:bg-green-200 transition-colors duration-300">
+                        <span class="english-text">Personalized</span>
+                        <span class="marathi-text hidden">वैयक्तिक</span>
+                    </span>
+                </div>
+                <!-- Animated Glow Effect -->
+                <div class="absolute inset-0 pointer-events-none">
+                    <div class="absolute -top-6 left-1/2 -translate-x-1/2 w-40 h-40 bg-yellow-300 opacity-20 rounded-full blur-2xl animate-float"></div>
+                    <div class="absolute -bottom-6 right-1/3 w-32 h-32 bg-[#000080] opacity-10 rounded-full blur-2xl"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Three Main Feature Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Industry Selection Card -->
+            <div class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow border border-gray-200 feature-card">
+                <div class="card-content">
+                    <div class="mb-6">
+                        <div class="w-16 h-16 bg-[#FF9933] rounded-lg flex items-center justify-center text-white text-2xl mx-auto">
+                            <i class="fas fa-industry"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-lg font-semibold text-[#000080] mb-3 text-center english-text">Industry Selection</h3>
+                    <h3 class="text-lg font-semibold text-[#000080] mb-3 text-center marathi-text hidden">उद्योग निवड</h3>
+                    <p class="text-gray-600 text-center mb-4 text-sm english-text flex-grow">
+                        Get personalized recommendations based on your skills, location, and market opportunities
+                    </p>
+                    <p class="text-gray-600 text-center mb-4 text-sm marathi-text hidden flex-grow">
+                        तुमच्या कौशल्य, स्थान आणि बाजारातील संधींवर आधारित व्यक्तिगत शिफारसी
+                    </p>
+                    <div class="text-center mt-auto">
+                        <span class="bg-blue-50 text-blue-700 px-3 py-1 rounded-md text-xs font-medium">
+                            <span class="english-text">Smart Matching</span>
+                            <span class="marathi-text hidden">स्मार्ट जुळवणी</span>
+                        </span>
+                    </div>
                 </div>
             </div>
             
             <!-- Training Programs Card -->
-            <div class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow border border-gray-200">
-                <div class="mb-6">
-                    <div class="w-16 h-16 bg-[#000080] rounded-lg flex items-center justify-center text-white text-2xl mx-auto">
-                        <i class="fas fa-graduation-cap"></i>
+            <div class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow border border-gray-200 feature-card">
+                <div class="card-content">
+                    <div class="mb-6">
+                        <div class="w-16 h-16 bg-[#000080] rounded-lg flex items-center justify-center text-white text-2xl mx-auto">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
                     </div>
-                </div>
-                <h3 class="text-lg font-semibold text-[#000080] mb-3 text-center english-text">Training & Mentoring</h3>
-                <h3 class="text-lg font-semibold text-[#000080] mb-3 text-center marathi-text hidden">प्रशिक्षण आणि सल्ला</h3>
-                <p class="text-gray-600 text-center mb-4 text-sm english-text">
-                    Access free training programs, expert mentorship, and practical business guidance
-                </p>
-                <p class="text-gray-600 text-center mb-4 text-sm marathi-text hidden">
-                    मोफत प्रशिक्षण कार्यक्रम, तज्ञ सल्ला आणि व्यावहारिक व्यवसाय मार्गदर्शन
-                </p>
-                <div class="flex justify-center space-x-2">
-                    <span class="bg-green-50 text-green-700 px-3 py-1 rounded-md text-xs font-medium">
-                        <span class="english-text">Free Access</span>
-                        <span class="marathi-text hidden">मोफत प्रवेश</span>
-                    </span>
-                    <span class="bg-blue-50 text-blue-700 px-3 py-1 rounded-md text-xs font-medium">
-                        <span class="english-text">Certified</span>
-                        <span class="marathi-text hidden">प्रमाणित</span>
-                    </span>
+                    <h3 class="text-lg font-semibold text-[#000080] mb-3 text-center english-text">Training & Mentoring</h3>
+                    <h3 class="text-lg font-semibold text-[#000080] mb-3 text-center marathi-text hidden">प्रशिक्षण आणि सल्ला</h3>
+                    <p class="text-gray-600 text-center mb-4 text-sm english-text flex-grow">
+                        Access free training programs, expert mentorship, and practical business guidance
+                    </p>
+                    <p class="text-gray-600 text-center mb-4 text-sm marathi-text hidden flex-grow">
+                        मोफत प्रशिक्षण कार्यक्रम, तज्ञ सल्ला आणि व्यावहारिक व्यवसाय मार्गदर्शन
+                    </p>
+                    <div class="flex justify-center space-x-2 mt-auto">
+                        <span class="bg-green-50 text-green-700 px-3 py-1 rounded-md text-xs font-medium">
+                            <span class="english-text">Free Access</span>
+                            <span class="marathi-text hidden">मोफत प्रवेश</span>
+                        </span>
+                        <span class="bg-blue-50 text-blue-700 px-3 py-1 rounded-md text-xs font-medium">
+                            <span class="english-text">Certified</span>
+                            <span class="marathi-text hidden">प्रमाणित</span>
+                        </span>
+                    </div>
                 </div>
             </div>
             
             <!-- Financial Support Card -->
-            <div class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow border border-gray-200">
-                <div class="mb-6">
-                    <div class="w-16 h-16 bg-green-600 rounded-lg flex items-center justify-center text-white text-2xl mx-auto">
-                        <i class="fas fa-hand-holding-usd"></i>
+            <div class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow border border-gray-200 feature-card">
+                <div class="card-content">
+                    <div class="mb-6">
+                        <div class="w-16 h-16 bg-green-600 rounded-lg flex items-center justify-center text-white text-2xl mx-auto">
+                            <i class="fas fa-hand-holding-usd"></i>
+                        </div>
                     </div>
-                </div>
-                <h3 class="text-lg font-semibold text-[#000080] mb-3 text-center english-text">Financial Support</h3>
-                <h3 class="text-lg font-semibold text-[#000080] mb-3 text-center marathi-text hidden">आर्थिक सहाय्य</h3>
-                <p class="text-gray-600 text-center mb-4 text-sm english-text">
-                    Access low-interest loans, government subsidies, and simplified application processes
-                </p>
-                <p class="text-gray-600 text-center mb-4 text-sm marathi-text hidden">
-                    कमी व्याजदरावर कर्ज, सरकारी अनुदान आणि सुलभ अर्ज प्रक्रिया
-                </p>
-                <div class="grid grid-cols-2 gap-2">
-                    <div class="bg-blue-50 text-blue-700 px-3 py-2 rounded-md text-center">
-                        <div class="font-semibold text-sm">3-7%</div>
-                        <div class="text-xs english-text">Interest Rate</div>
-                        <div class="text-xs marathi-text hidden">व्याज दर</div>
-                    </div>
-                    <div class="bg-orange-50 text-orange-700 px-3 py-2 rounded-md text-center">
-                        <div class="font-semibold text-sm">Up to 80%</div>
-                        <div class="text-xs english-text">Subsidy</div>
-                        <div class="text-xs marathi-text hidden">सबसिडी</div>
+                    <h3 class="text-lg font-semibold text-[#000080] mb-3 text-center english-text">Financial Support</h3>
+                    <h3 class="text-lg font-semibold text-[#000080] mb-3 text-center marathi-text hidden">आर्थिक सहाय्य</h3>
+                    <p class="text-gray-600 text-center mb-4 text-sm english-text flex-grow">
+                        Access low-interest loans, government subsidies, and simplified application processes
+                    </p>
+                    <p class="text-gray-600 text-center mb-4 text-sm marathi-text hidden flex-grow">
+                        कमी व्याजदरावर कर्ज, सरकारी अनुदान आणि सुलभ अर्ज प्रक्रिया
+                    </p>
+                    <div class="grid grid-cols-2 gap-2 mt-auto">
+                        <div class="bg-blue-50 text-blue-700 px-3 py-2 rounded-md text-center">
+                            <div class="font-semibold text-sm">3-7%</div>
+                            <div class="text-xs english-text">Interest Rate</div>
+                            <div class="text-xs marathi-text hidden">व्याज दर</div>
+                        </div>
+                        <div class="bg-orange-50 text-orange-700 px-3 py-2 rounded-md text-center">
+                            <div class="font-semibold text-sm">Up to 80%</div>
+                            <div class="text-xs english-text">Subsidy</div>
+                            <div class="text-xs marathi-text hidden">सबसिडی</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -409,44 +473,52 @@
 
         <!-- Additional Services -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
-            <div class="bg-white rounded-lg p-6 text-center border border-gray-200 hover:border-[#FF9933] transition-colors">
-                <div class="w-12 h-12 bg-[#FF9933] rounded-lg flex items-center justify-center text-white mx-auto mb-4">
-                    <i class="fas fa-handshake text-lg"></i>
+            <div class="bg-white rounded-lg p-6 text-center border border-gray-200 hover:border-[#FF9933] transition-colors feature-card h-full">
+                <div class="card-content">
+                    <div class="w-12 h-12 bg-[#FF9933] rounded-lg flex items-center justify-center text-white mx-auto mb-4">
+                        <i class="fas fa-handshake text-lg"></i>
+                    </div>
+                    <h4 class="font-semibold text-gray-800 mb-2 english-text">Expert Mentoring</h4>
+                    <h4 class="font-semibold text-gray-800 mb-2 marathi-text hidden">तज्ञ सल्लागार</h4>
+                    <p class="text-sm text-gray-600 english-text flex-grow">Personal guidance from industry experts</p>
+                    <p class="text-sm text-gray-600 marathi-text hidden flex-grow">उद्योग तज्ञांकडून वैयक्तिक मार्गदर्शन</p>
                 </div>
-                <h4 class="font-semibold text-gray-800 mb-2 english-text">Expert Mentoring</h4>
-                <h4 class="font-semibold text-gray-800 mb-2 marathi-text hidden">तज्ञ सल्लागार</h4>
-                <p class="text-sm text-gray-600 english-text">Personal guidance from industry experts</p>
-                <p class="text-sm text-gray-600 marathi-text hidden">उद्योग तज्ञांकडून वैयक्तिक मार्गदर्शन</p>
             </div>
             
-            <div class="bg-white rounded-lg p-6 text-center border border-gray-200 hover:border-[#000080] transition-colors">
-                <div class="w-12 h-12 bg-[#000080] rounded-lg flex items-center justify-center text-white mx-auto mb-4">
-                    <i class="fas fa-users text-lg"></i>
+            <div class="bg-white rounded-lg p-6 text-center border border-gray-200 hover:border-[#000080] transition-colors feature-card h-full">
+                <div class="card-content">
+                    <div class="w-12 h-12 bg-[#000080] rounded-lg flex items-center justify-center text-white mx-auto mb-4">
+                        <i class="fas fa-users text-lg"></i>
+                    </div>
+                    <h4 class="font-semibold text-gray-800 mb-2 english-text">Business Network</h4>
+                    <h4 class="font-semibold text-gray-800 mb-2 marathi-text hidden">व्यवसाय नेटवर्क</h4>
+                    <p class="text-sm text-gray-600 english-text flex-grow">Connect with buyers and suppliers</p>
+                    <p class="text-sm text-gray-600 marathi-text hidden flex-grow">खरेदीदार आणि पुरवठादारांशी संपर्क</p>
                 </div>
-                <h4 class="font-semibold text-gray-800 mb-2 english-text">Business Network</h4>
-                <h4 class="font-semibold text-gray-800 mb-2 marathi-text hidden">व्यवसाय नेटवर्क</h4>
-                <p class="text-sm text-gray-600 english-text">Connect with buyers and suppliers</p>
-                <p class="text-sm text-gray-600 marathi-text hidden">खरेदीदार आणि पुरवठादारांशी संपर्क</p>
             </div>
             
-            <div class="bg-white rounded-lg p-6 text-center border border-gray-200 hover:border-green-500 transition-colors">
-                <div class="w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center text-white mx-auto mb-4">
-                    <i class="fas fa-chart-line text-lg"></i>
+            <div class="bg-white rounded-lg p-6 text-center border border-gray-200 hover:border-green-500 transition-colors feature-card h-full">
+                <div class="card-content">
+                    <div class="w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center text-white mx-auto mb-4">
+                        <i class="fas fa-chart-line text-lg"></i>
+                    </div>
+                    <h4 class="font-semibold text-gray-800 mb-2 english-text">Market Access</h4>
+                    <h4 class="font-semibold text-gray-800 mb-2 marathi-text hidden">बाजार प्रवेश</h4>
+                    <p class="text-sm text-gray-600 english-text flex-grow">Direct access to market opportunities</p>
+                    <p class="text-sm text-gray-600 marathi-text hidden flex-grow">बाजारातील संधींमध्ये थेट प्रवेश</p>
                 </div>
-                <h4 class="font-semibold text-gray-800 mb-2 english-text">Market Access</h4>
-                <h4 class="font-semibold text-gray-800 mb-2 marathi-text hidden">बाजार प्रवेश</h4>
-                <p class="text-sm text-gray-600 english-text">Direct access to market opportunities</p>
-                <p class="text-sm text-gray-600 marathi-text hidden">बाजारातील संधींमध्ये थेट प्रवेश</p>
             </div>
             
-            <div class="bg-white rounded-lg p-6 text-center border border-gray-200 hover:border-purple-500 transition-colors">
-                <div class="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center text-white mx-auto mb-4">
-                    <i class="fas fa-mobile-alt text-lg"></i>
+            <div class="bg-white rounded-lg p-6 text-center border border-gray-200 hover:border-purple-500 transition-colors feature-card h-full">
+                <div class="card-content">
+                    <div class="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center text-white mx-auto mb-4">
+                        <i class="fas fa-mobile-alt text-lg"></i>
+                    </div>
+                    <h4 class="font-semibold text-gray-800 mb-2 english-text">Digital Tools</h4>
+                    <h4 class="font-semibold text-gray-800 mb-2 marathi-text hidden">डिजिटल साधने</h4>
+                    <p class="text-sm text-gray-600 english-text flex-grow">Mobile-friendly business management</p>
+                    <p class="text-sm text-gray-600 marathi-text hidden flex-grow">मोबाइल-अनुकूल व्यवसाय व्यवस्थापन</p>
                 </div>
-                <h4 class="font-semibold text-gray-800 mb-2 english-text">Digital Tools</h4>
-                <h4 class="font-semibold text-gray-800 mb-2 marathi-text hidden">डिजिटल साधने</h4>
-                <p class="text-sm text-gray-600 english-text">Mobile-friendly business management</p>
-                <p class="text-sm text-gray-600 marathi-text hidden">मोबाइल-अनुकूल व्यवसाय व्यवस्थापन</p>
             </div>
         </div>
     </div>
@@ -531,7 +603,7 @@
 </section>
 
 <!-- Professional Featured Schemes Section -->
-<section class="py-20 bg-gradient-to-br from-gray-50 via-white to-blue-50">
+<section id="schemes-section" class="py-20 bg-gradient-to-br from-gray-50 via-white to-blue-50">
     <div class="container mx-auto px-4 max-w-7xl">
         <div class="text-center mb-16">
             <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-[#FF9933] to-[#FF7722] rounded-full mb-6">
@@ -561,7 +633,7 @@
                 <span class="english-text">All</span>
                 <span class="marathi-text hidden">सर्व योजना</span>
             </button>
-            <button class="scheme-filter-btn bg-white text-[#000080] px-6 py-3 rounded-full font-medium border-2 border-[#000080]/20 hover:border-[#FF9933] hover:bg-[#FF9933] hover:text-white transition-all duration-300" data-category="loan">
+</div>            <button class="scheme-filter-btn bg-white text-[#000080] px-6 py-3 rounded-full font-medium border-2 border-[#000080]/20 hover:border-[#FF9933] hover:bg-[#FF9933] hover:text-white transition-all duration-300" data-category="loan">
                 <i class="fas fa-coins mr-2"></i>
                 <span class="english-text">Loans</span>
                 <span class="marathi-text hidden">कर्ज</span>
@@ -803,6 +875,26 @@
     box-shadow: 0 8px 25px rgba(255, 153, 51, 0.3);
 }
 
+/* Highlight effect for schemes section */
+.highlight-section {
+    animation: highlightPulse 2s ease-in-out;
+}
+
+@keyframes highlightPulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 153, 51, 0.7);
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 0 0 0 20px rgba(255, 153, 51, 0);
+        transform: scale(1.02);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 153, 51, 0);
+        transform: scale(1);
+    }
+}
+
 /* Animation keyframes */
 @keyframes float {
     0%, 100% { transform: translateY(0px) rotate(0deg); }
@@ -811,6 +903,32 @@
 
 .animate-float {
     animation: float 6s ease-in-out infinite;
+}
+
+/* Card alignment fixes */
+.grid > div {
+    display: flex;
+    flex-direction: column;
+}
+
+.grid > div > div {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Ensure equal height for feature cards */
+.feature-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.feature-card .card-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 /* Responsive adjustments */
@@ -824,6 +942,24 @@
 
 <!-- Enhanced JavaScript for scheme filtering and image handling -->
 <script>
+// Function to scroll smoothly to schemes section
+function scrollToSchemes(event) {
+    event.preventDefault();
+    const schemesSection = document.getElementById('schemes-section');
+    if (schemesSection) {
+        schemesSection.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+        
+        // Add a highlight effect to the schemes section
+        schemesSection.classList.add('highlight-section');
+        setTimeout(() => {
+            schemesSection.classList.remove('highlight-section');
+        }, 2000);
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     // Enhanced scheme filtering with animations
     const filterButtons = document.querySelectorAll('.scheme-filter-btn');
