@@ -407,6 +407,7 @@ def password_reset_flow(request):
             try:
                 user = CustomUser.objects.get(username=username)
                 otp = get_random_string(length=6, allowed_chars='0123456789')
+                print(otp)
                 user.otp = otp
                 user.save()
 
@@ -528,8 +529,6 @@ def work_suggestion_detail(request, suggestion_id):
     work type information, sector details, and AI-powered analysis
     """
     try:
-        from .azure_openai_service import azure_openai_service
-        
         suggestion = get_object_or_404(WorkSuggestion, id=suggestion_id)
         
         # Get the complete location hierarchy
@@ -541,25 +540,128 @@ def work_suggestion_detail(request, suggestion_id):
         work_type = suggestion.work_type
         sector = work_type.sector
         
-        # Determine language preference
-        is_english = request.GET.get('lang', 'en') == 'en'
+        # Determine language preference - default to Marathi
+        lang_param = request.GET.get('lang', 'mr')  # Default to Marathi
+        is_english = lang_param == 'en'
         language = 'en' if is_english else 'mr'
         
-        # Generate AI analysis based on work type and location
-        ai_analysis = azure_openai_service.generate_work_analysis(
-            work_type=work_type.name_en,
-            work_type_mr=work_type.name_mr,
-            district=district.name_en,
-            district_mr=district.name_mr,
-            taluka=taluka.name_en,
-            taluka_mr=taluka.name_mr,
-            gram_panchayat=gram_panchayat.name_en,
-            gram_panchayat_mr=gram_panchayat.name_mr,
-            sector=sector.name_en,
-            sector_mr=sector.name_mr,
-            is_specialty=suggestion.is_specialty,
-            language=language
-        )
+        # Try to generate AI analysis with comprehensive error handling
+        ai_analysis = None
+        ai_error = None
+        
+        try:
+            from .azure_openai_service import get_azure_openai_service
+            service = get_azure_openai_service()
+            
+            if service:
+                ai_analysis = service.generate_work_analysis(
+                    work_type=work_type.name_en,
+                    work_type_mr=work_type.name_mr,
+                    district=district.name_en,
+                    district_mr=district.name_mr,
+                    taluka=taluka.name_en,
+                    taluka_mr=taluka.name_mr,
+                    gram_panchayat=gram_panchayat.name_en,
+                    gram_panchayat_mr=gram_panchayat.name_mr,
+                    sector=sector.name_en,
+                    sector_mr=sector.name_mr,
+                    is_specialty=suggestion.is_specialty,
+                    language=language
+                )
+                
+        except Exception as ai_exception:
+            ai_error = str(ai_exception)
+            print(f"AI Analysis Error: {ai_error}")  # For debugging
+            
+            # Provide comprehensive fallback analysis when AI fails
+            if is_english:
+                ai_analysis = {
+                    'overview': f'{work_type.name_en} is a promising business opportunity in {gram_panchayat.name_en} village, {taluka.name_en} taluka, {district.name_en} district. This business has good potential in rural Maharashtra due to local demand and support infrastructure.',
+                    'why_suitable': [
+                        f'Strong local demand in {district.name_en} region for {work_type.name_en} services',
+                        f'Suitable geographic and climatic conditions in {taluka.name_en} area',
+                        'Low competition and established market presence opportunities',
+                        'Available skilled workforce and traditional knowledge in the area',
+                        'Good connectivity to nearby urban markets for product distribution',
+                        'Community support and local networking advantages'
+                    ],
+                    'business_potential': [
+                        'Expected monthly earning potential of ₹15,000 to ₹40,000 for small scale operation',
+                        'Initial investment requirement between ₹50,000 to ₹2,00,000 depending on scale',
+                        'Business can break-even within 12-18 months with proper planning',
+                        'High scope for expansion to neighboring villages and markets',
+                        'Growing demand ensures sustainable long-term business growth',
+                        'Multiple revenue streams possible through diversification'
+                    ],
+                    'local_advantages': [
+                        f'Easy access to raw materials and suppliers in {district.name_en} district',
+                        f'Lower operational costs compared to urban areas with same market access',
+                        f'Strong community networks in {gram_panchayat.name_en} provide customer base',
+                        'Reduced transportation costs for local market serving',
+                        'Government focus on rural development provides additional support',
+                        'Less regulatory complexity compared to urban business setup'
+                    ],
+                    'government_support': [
+                        'PMEGP (Prime Minister Employment Generation Programme) providing up to ₹25 lakh assistance',
+                        'Stand-Up India scheme offering loans between ₹10 lakh to ₹1 crore',
+                        'Skill development programs through District Industries Center (DIC)',
+                        'Maharashtra State Rural Development schemes and subsidies',
+                        'Mudra loan facility for micro and small enterprises',
+                        'Technical training and mentorship through local entrepreneurship centers'
+                    ],
+                    'success_factors': [
+                        'Maintain consistent quality and reliable service delivery to build reputation',
+                        'Develop strong relationships with local customers and supply chain partners',
+                        'Keep detailed financial records and plan for seasonal variations',
+                        'Invest in basic technology and modern equipment for efficiency',
+                        'Build local partnerships and collaborate with other businesses',
+                        'Focus on customer satisfaction and word-of-mouth marketing'
+                    ]
+                }
+            else:
+                ai_analysis = {
+                    'overview': f'{gram_panchayat.name_mr}, {taluka.name_mr} तालुका, {district.name_mr} जिल्ह्यामध्ये {work_type.name_mr} हा एक उत्तम व्यवसायिक पर्याय आहे. स्थानिक मागणी आणि उपलब्ध सुविधांमुळे ग्रामीण महाराष्ट्रामध्ये या व्यवसायाची चांगली संधी आहे.',
+                    'why_suitable': [
+                        f'{district.name_mr} प्रदेशात {work_type.name_mr} सेवांची प्रबळ स्थानिक मागणी',
+                        f'{taluka.name_mr} भागात योग्य भौगोलिक आणि हवामान परिस्थिती',
+                        'कमी स्पर्धा आणि बाजारात स्थान निर्माण करण्याच्या संधी',
+                        'या भागात उपलब्ध कुशल कामगार आणि पारंपरिक ज्ञान',
+                        'उत्पादन वितरणासाठी जवळच्या शहरी बाजारांशी चांगली जोडणी',
+                        'समुदायिक समर्थन आणि स्थानिक नेटवर्किंगचे फायदे'
+                    ],
+                    'business_potential': [
+                        'छोट्या व्यवसायासाठी मासिक ₹15,000 ते ₹40,000 कमाईची अपेक्षा',
+                        'व्यापानुसार ₹50,000 ते ₹2,00,000 पर्यंत सुरुवातीची गुंतवणूक',
+                        'योग्य नियोजनाने 12-18 महिन्यांत व्यवसाय फायदेशीर होऊ शकतो',
+                        'शेजारच्या गावे आणि बाजारांमध्ये विस्ताराची मोठी वाव',
+                        'वाढती मागणीमुळे दीर्घकालीन व्यवसाय वाढ सुनिश्चित',
+                        'विविधीकरणाद्वारे अनेक कमाईचे स्रोत शक्य'
+                    ],
+                    'local_advantages': [
+                        f'{district.name_mr} जिल्ह्यात कच्चा माल आणि पुरवठादारांपर्यंत सुलभ पोहोच',
+                        'समान बाजार प्रवेशासह शहरी भागांच्या तुलनेत कमी परिचालन खर्च',
+                        f'{gram_panchayat.name_mr}मधील मजबूत समुदायिक नेटवर्क ग्राहकवर्ग प्रदान करते',
+                        'स्थानिक बाजार सेवेसाठी कमी वाहतूक खर्च',
+                        'ग्रामीण विकासावर सरकारचा भर अतिरिक्त समर्थन प्रदान करतो',
+                        'शहरी व्यवसाय स्थापनेच्या तुलनेत कमी नियामक जटिलता'
+                    ],
+                    'government_support': [
+                        'PMEGP (पंतप्रधान रोजगार निर्मिती कार्यक्रम) ₹25 लाखांपर्यंत सहाय्य',
+                        'स्टँड-अप इंडिया योजना ₹10 लाख ते ₹1 कोटी कर्ज सुविधा',
+                        'जिल्हा उद्योग केंद्र (DIC) द्वारे कौशल्य विकास कार्यक्रम',
+                        'महाराष्ट्र राज्य ग्रामीण विकास योजना आणि सबसिडी',
+                        'सूक्ष्म आणि लघु उद्योगांसाठी मुद्रा कर्ज सुविधा',
+                        'स्थानिक उद्योजकता केंद्रांद्वारे तांत्रिक प्रशिक्षण आणि मार्गदर्शन'
+                    ],
+                    'success_factors': [
+                        'प्रतिष्ठा निर्माण करण्यासाठी सातत्यपूर्ण गुणवत्ता आणि विश्वसनीय सेवा वितरण राखा',
+                        'स्थानिक ग्राहक आणि पुरवठा साखळी भागीदारांसह मजबूत संबंध विकसित करा',
+                        'तपशीलवार आर्थिक नोंदी ठेवा आणि हंगामी बदलांसाठी योजना करा',
+                        'कार्यक्षमतेसाठी मूलभूत तंत्रज्ञान आणि आधुनिक उपकरणांमध्ये गुंतवणूक करा',
+                        'स्थानिक भागीदारी निर्माण करा आणि इतर व्यवसायांसह सहकार्य करा',
+                        'ग्राहक समाधान आणि तोंडी प्रसारावर लक्ष केंद्रित करा'
+                    ]
+                }
         
         # Get related work suggestions in the same gram panchayat for comparison
         related_suggestions = WorkSuggestion.objects.filter(
@@ -584,6 +686,7 @@ def work_suggestion_detail(request, suggestion_id):
             'related_suggestions': related_suggestions,
             'similar_suggestions': similar_suggestions,
             'ai_analysis': ai_analysis,
+            'ai_error': ai_error,
             'is_english': is_english
         }
         

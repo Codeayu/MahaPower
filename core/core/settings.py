@@ -96,10 +96,10 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'bcs1okmr84u5meejvqig',
-        'USER': 'unaj4iri3s993dsd',
-        'PASSWORD': 'qnrksr452jHUkap0PhzL',
-        'HOST': 'bcs1okmr84u5meejvqig-mysql.services.clever-cloud.com',
+        'NAME': 'b2iolizjetqclmhnlaez',
+        'USER': 'un8efxjrpstc9q8n',
+        'PASSWORD': 'fe1ZzxNCutffEdfetn89',
+        'HOST': 'b2iolizjetqclmhnlaez-mysql.services.clever-cloud.com',
         'PORT': '3306',
         'init_command': "SET SESSION wait_timeout=28800",
         'CONN_MAX_AGE': 600,
@@ -173,4 +173,4 @@ AZURE_OPENAI_EMBEDDING_API_KEY = os.environ.get('AZURE_OPENAI_EMBEDDING_API_KEY'
 AZURE_OPENAI_EMBEDDING_ENDPOINT = os.environ.get('AZURE_OPENAI_EMBEDDING_ENDPOINT')
 AZURE_OPENAI_EMBEDDING_MODEL = os.environ.get('AZURE_OPENAI_EMBEDDING_MODEL', 'text-embedding-ada-002')
 
-AZURE_OPENAI_API_VERSION = os.environ.get('AZURE_OPENAI_API_VERSION', '2024-02-15-preview')
+AZURE_OPENAI_API_VERSION = os.environ.get('AZURE_OPENAI_API_VERSION', '2024-12-01-preview')

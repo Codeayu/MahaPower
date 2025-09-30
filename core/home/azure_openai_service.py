@@ -13,14 +13,29 @@ class AzureOpenAIService:
     """Service class for interacting with Azure OpenAI API"""
     
     def __init__(self):
+        # Debug configuration values
+        logger.info("=== Azure OpenAI Configuration Debug ===")
+        logger.info(f"AZURE_OPENAI_GENERATION_API_KEY: {'SET' if settings.AZURE_OPENAI_GENERATION_API_KEY else 'MISSING'}")
+        logger.info(f"AZURE_OPENAI_GENERATION_ENDPOINT: {settings.AZURE_OPENAI_GENERATION_ENDPOINT}")
+        logger.info(f"AZURE_OPENAI_EMBEDDING_API_KEY: {'SET' if settings.AZURE_OPENAI_EMBEDDING_API_KEY else 'MISSING'}")
+        logger.info(f"AZURE_OPENAI_EMBEDDING_ENDPOINT: {settings.AZURE_OPENAI_EMBEDDING_ENDPOINT}")
+        logger.info(f"AZURE_OPENAI_API_VERSION: {settings.AZURE_OPENAI_API_VERSION}")
+        
         # Validate that required settings are present
-        if not all([
-            settings.AZURE_OPENAI_GENERATION_API_KEY,
-            settings.AZURE_OPENAI_GENERATION_ENDPOINT,
-            settings.AZURE_OPENAI_EMBEDDING_API_KEY,
-            settings.AZURE_OPENAI_EMBEDDING_ENDPOINT
-        ]):
-            raise ValueError("Azure OpenAI configuration is missing. Please check your environment variables.")
+        missing_configs = []
+        if not settings.AZURE_OPENAI_GENERATION_API_KEY:
+            missing_configs.append("AZURE_OPENAI_GENERATION_API_KEY")
+        if not settings.AZURE_OPENAI_GENERATION_ENDPOINT:
+            missing_configs.append("AZURE_OPENAI_GENERATION_ENDPOINT")
+        if not settings.AZURE_OPENAI_EMBEDDING_API_KEY:
+            missing_configs.append("AZURE_OPENAI_EMBEDDING_API_KEY")
+        if not settings.AZURE_OPENAI_EMBEDDING_ENDPOINT:
+            missing_configs.append("AZURE_OPENAI_EMBEDDING_ENDPOINT")
+            
+        if missing_configs:
+            error_msg = f"Azure OpenAI configuration is missing: {', '.join(missing_configs)}. Please check your environment variables."
+            logger.error(error_msg)
+            raise ValueError(error_msg)
         
         # Azure OpenAI credentials for generation
         self.generation_client = AzureOpenAI(
@@ -84,15 +99,15 @@ class AzureOpenAIService:
                 messages=[
                     {
                         "role": "system",
-                        "content": "You are an expert business advisor for rural entrepreneurship in Maharashtra, India. Provide practical, location-specific business advice for village-level entrepreneurs."
+                        "content": "You are an expert business advisor and rural development specialist for Maharashtra, India. You have deep knowledge of village-level entrepreneurship, local markets, government schemes, and practical business implementation. Provide comprehensive, actionable, and location-specific business guidance that village entrepreneurs can immediately implement."
                     },
                     {
                         "role": "user",
                         "content": prompt
                     }
                 ],
-                max_tokens=800,
-                temperature=0.7
+                max_tokens=1500,  # Increased for more comprehensive responses
+                temperature=0.6   # Slightly reduced for more focused responses
             )
             
             # Parse the response
@@ -112,36 +127,46 @@ class AzureOpenAIService:
         specialty_text = f" This work is considered a local specialty of {gram_panchayat}." if is_specialty else ""
         
         prompt = f"""
-        Analyze the business opportunity for "{work_type}" in {gram_panchayat} village, {taluka} taluka, {district} district, Maharashtra.{specialty_text}
+        Conduct a comprehensive business analysis for "{work_type}" in {gram_panchayat} village, {taluka} taluka, {district} district, Maharashtra.{specialty_text}
         
-        This work falls under the {sector} sector. Please provide:
-        
-        1. WHY this work is suitable for {gram_panchayat}:
-        - Local market demand and opportunities
-        - Geographic and demographic advantages
-        - Available resources and skills in the area
-        
-        2. BUSINESS POTENTIAL:
-        - Market size and growth potential
-        - Revenue expectations for a small entrepreneur
-        - Investment requirements and profitability
-        
-        3. LOCAL ADVANTAGES:
-        - Why {gram_panchayat} is particularly good for this work
-        - Transportation and infrastructure benefits
-        - Local supplier/customer network possibilities
-        
-        4. GOVERNMENT SUPPORT:
-        - Available schemes and subsidies for this sector
-        - Training programs and mentorship opportunities
-        - Licensing and regulatory support
-        
-        5. SUCCESS FACTORS:
-        - Key requirements for success in this location
-        - Common challenges and how to overcome them
-        - Timeline for business establishment
-        
-        Please make the response practical, actionable, and specific to rural Maharashtra context. Use simple language that village entrepreneurs can understand.
+        This business falls under the {sector} sector. Provide detailed, practical information:
+
+        1. WHY this work is perfect for {gram_panchayat}:
+        - Local demand, customer base, and market conditions in this village
+        - Position of this business in {district} district and competition analysis
+        - Geographic, climate, and infrastructure advantages of this area
+        - Local skills, traditions, and experience of people
+        - Availability of raw materials, energy, and labor
+
+        2. BUSINESS POTENTIAL detailed analysis:
+        - Expected monthly earnings (mention in ₹)
+        - Initial investment required (detailed cost breakdown)
+        - Time to recover investment (payback period)
+        - Business expansion opportunities and future plans
+        - Local and external market sales opportunities
+
+        3. LOCAL ADVANTAGES specific to {gram_panchayat}:
+        - Special advantages this village has compared to other villages
+        - Connectivity to nearby cities, transport facilities, and road conditions
+        - Local supplier, customer, and trader networks
+        - Collaboration possibilities with other local businesses
+        - Support from local institutions, cooperatives, and community
+
+        4. GOVERNMENT SUPPORT and schemes:
+        - Available Central/State government schemes for this business (mention names)
+        - Detailed information about loans, grants, and subsidies
+        - Skill development, training centers, and technical assistance
+        - Licensing, registration, and legal requirements
+        - Marketing, sales, and export assistance
+
+        5. SUCCESS FACTORS for guaranteed success:
+        - What to do in the first 6 months (step-by-step guide)
+        - Common problems and their immediate solutions
+        - Quality control and customer satisfaction tips
+        - Financial planning and record-keeping advice
+        - Ways to grow the business and future opportunities
+
+        Provide detailed, practical, and immediately actionable suggestions for each point. Use simple English that rural entrepreneurs can easily understand and implement.
         """
         
         return prompt
@@ -153,47 +178,54 @@ class AzureOpenAIService:
         specialty_text = f" हे काम {gram_panchayat_mr}ची विशिष्ट कामगिरी मानली जाते." if is_specialty else ""
         
         prompt = f"""
-        {gram_panchayat_mr} गाव, {taluka_mr} तालुका, {district_mr} जिल्हा, महाराष्ट्र येथे "{work_type_mr}" या व्यवसायाच्या संधीचे विश्लेषण करा.{specialty_text}
+        महाराष्ट्रातील {district_mr} जिल्ह्यातील {taluka_mr} तालुक्यातील {gram_panchayat_mr} गावामध्ये "{work_type_mr}" या व्यवसायाचे सखोल विश्लेषण करा.{specialty_text}
         
-        हे काम {sector_mr} क्षेत्रात येते. कृपया पुढील गोष्टी सांगा:
-        
-        1. {gram_panchayat_mr}साठी हे काम का योग्य आहे:
-        - स्थानिक बाजारातील मागणी आणि संधी
-        - भौगोलिक आणि लोकसंख्याशास्त्रीय फायदे
-        - या भागातील उपलब्ध संसाधने आणि कौशल्ये
-        
-        2. व्यवसायाची शक्यता:
-        - बाजाराचा आकार आणि वाढीची शक्यता
-        - छोट्या उद्योजकासाठी कमाईची अपेक्षा
-        - गुंतवणुकीची आवश्यकता आणि नफ्याची शक्यता
-        
-        3. स्थानिक फायदे:
-        - या कामासाठी {gram_panchayat_mr} का विशेष चांगले आहे
-        - वाहतूक आणि पायाभूत सुविधांचे फायदे
-        - स्थानिक पुरवठादार/ग्राहक नेटवर्कची शक्यता
-        
-        4. सरकारी सहाय्य:
-        - या क्षेत्रासाठी उपलब्ध योजना आणि अनुदान
-        - प्रशिक्षण कार्यक्रम आणि मार्गदर्शन संधी
-        - परवाना आणि नियामक सहाय्य
-        
-        5. यशाचे घटक:
-        - या ठिकाणी यशस्वी होण्यासाठी मुख्य आवश्यकता
-        - सामान्य आव्हाने आणि ती कशी सोडवायची
-        - व्यवसाय स्थापनेसाठी वेळसारणी
-        
-        कृपया ग्रामीण महाराष्ट्राच्या संदर्भात व्यावहारिक, कृतीशील आणि विशिष्ट उत्तर द्या. गावातील उद्योजकांना समजेल अशी सोपी भाषा वापरा.
+        हे काम {sector_mr} क्षेत्रातील आहे. कृपया तपशीलवार आणि व्यावहारिक माहिती द्या:
+
+        1. WHY {gram_panchayat_mr}साठी हे काम योग्य आहे:
+        - या गावातील स्थानिक मागणी, ग्राहकवर्ग आणि बाजारपेठेची परिस्थिती
+        - {district_mr} जिल्ह्यातील या व्यवसायाची स्थिती आणि स्पर्धा
+        - या भागातील भौगोलिक, हवामान आणि पायाभूत सुविधांचे फायदे
+        - स्थानिक लोकांची कौशल्ये, परंपरा आणि अनुभव
+        - कच्चा माल, उर्जा आणि मजुरांची उपलब्धता
+
+        2. BUSINESS व्यवसायाची शक्यता:
+        - महिन्याला किती कमाई अपेक्षित (₹ मध्ये नमूद करा)
+        - सुरुवातीची किती गुंतवणूक लागेल (तपशीलवार खर्चाची यादी)
+        - किती काळात गुंतवणूक परत येईल
+        - व्यवसाय वाढवण्याच्या संधी आणि भविष्यातील योजना
+        - स्थानिक आणि बाहेरील बाजारपेठेतील विक्रीच्या संधी
+
+        3. LOCAL {gram_panchayat_mr}चे विशेष फायदे:
+        - इतर गावांच्या तुलनेत या गावाचे कोणते विशेष फायदे आहेत
+        - जवळच्या शहरांशी जोडणी, वाहतूक सुविधा आणि रस्ते परिस्थिती  
+        - स्थानिक पुरवठादार, ग्राहक आणि व्यापारी नेटवर्क
+        - गावातील इतर व्यवसायांसोबत सहकार्याची शक्यता
+        - स्थानिक संस्था, सहकारी संस्था आणि समुदायाचा पाठिंबा
+
+        4. GOVERNMENT सरकारी सहाय्य आणि योजना:
+        - या व्यवसायासाठी उपलब्ध केंद्र/राज्य सरकारी योजना (नावं सांगा)
+        - कर्ज, अनुदान आणि सबसिडीची तपशीलवार माहिती
+        - कौशल्य विकास, प्रशिक्षण केंद्रे आणि तांत्रिक सहाय्य
+        - परवाना, नोंदणी आणि कायदेशीर आवश्यकता
+        - मार्केटिंग, विक्री आणि निर्यात सहाय्य
+
+        5. SUCCESS यशस्वी होण्यासाठी महत्वाचे घटक:
+        - पहिल्या ६ महिन्यांत काय करावे (स्टेप बाय स्टेप)
+        - सामान्य समस्या आणि त्यांचे तत्काळ उपाय
+        - गुणवत्ता नियंत्रण आणि ग्राहक समाधानाच्या टिप्स
+        - आर्थिक नियोजन आणि हिशेब ठेवण्याच्या सूचना
+        - व्यवसाय वाढवण्याचे मार्ग आणि भविष्यातील संधी
+
+        प्रत्येक मुद्द्यासाठी तपशीलवार, व्यावहारिक आणि तत्काळ अंमलात आणता येणारे सुझावणी द्या. ग्रामीण उद्योजकांना सहज समजेल अशी सरल मराठी भाषा वापरा.
         """
         
         return prompt
     
     def _parse_analysis_response(self, analysis_text: str, language: str) -> Dict[str, Any]:
-        """Parse and structure the AI response"""
+        """Parse and structure the AI analysis response with improved logic"""
         
-        # Split the response into sections (this is a simple approach)
-        lines = analysis_text.strip().split('\n')
-        
-        # Extract different sections based on content
+        # Initialize sections
         sections = {
             'overview': '',
             'why_suitable': [],
@@ -203,54 +235,76 @@ class AzureOpenAIService:
             'success_factors': []
         }
         
-        current_section = 'overview'
-        section_content = []
+        # Split text into sections using numbered patterns and keywords
+        text_sections = []
+        current_section_text = ""
         
+        lines = analysis_text.split('\n')
         for line in lines:
             line = line.strip()
             if not line:
                 continue
                 
-            # Simple section detection based on keywords
-            if any(keyword in line.lower() for keyword in ['why', 'suitable', 'का योग्य']):
-                if section_content and current_section == 'overview':
-                    sections['overview'] = ' '.join(section_content)
-                current_section = 'why_suitable'
-                section_content = []
-            elif any(keyword in line.lower() for keyword in ['business', 'potential', 'व्यवसाय', 'शक्यता']):
-                if section_content:
-                    sections[current_section] = section_content
-                current_section = 'business_potential'
-                section_content = []
-            elif any(keyword in line.lower() for keyword in ['local', 'advantage', 'स्थानिक', 'फायदे']):
-                if section_content:
-                    sections[current_section] = section_content
-                current_section = 'local_advantages'
-                section_content = []
-            elif any(keyword in line.lower() for keyword in ['government', 'support', 'सरकारी', 'सहाय्य']):
-                if section_content:
-                    sections[current_section] = section_content
-                current_section = 'government_support'
-                section_content = []
-            elif any(keyword in line.lower() for keyword in ['success', 'factor', 'यश', 'घटक']):
-                if section_content:
-                    sections[current_section] = section_content
-                current_section = 'success_factors'
-                section_content = []
+            # Check for section headers (numbered or keyword-based)
+            if (line.startswith(('1.', '2.', '3.', '4.', '5.')) or 
+                any(keyword in line.upper() for keyword in ['WHY', 'BUSINESS', 'LOCAL', 'GOVERNMENT', 'SUCCESS'])):
+                if current_section_text:
+                    text_sections.append(current_section_text.strip())
+                current_section_text = line + "\n"
             else:
-                # Clean and add line to current section
-                if line.startswith('-') or line.startswith('•') or line.startswith('*'):
-                    line = line[1:].strip()
-                if line and not line.isdigit() and len(line) > 5:
-                    section_content.append(line)
+                current_section_text += line + "\n"
         
         # Add the last section
-        if section_content:
-            sections[current_section] = section_content
+        if current_section_text:
+            text_sections.append(current_section_text.strip())
         
-        # If overview is empty, create one from the full text
+        # Map sections to appropriate categories
+        for section_text in text_sections:
+            section_lines = [line.strip() for line in section_text.split('\n') if line.strip()]
+            if not section_lines:
+                continue
+                
+            header = section_lines[0].lower()
+            content_lines = section_lines[1:] if len(section_lines) > 1 else section_lines
+            
+            # Process content lines into bullet points
+            processed_content = []
+            for line in content_lines:
+                if line.startswith(('-', '•', '*', '→', '➤')):
+                    processed_content.append(line[1:].strip())
+                elif line and not line.isdigit() and len(line) > 10:
+                    processed_content.append(line)
+            
+            # Categorize based on keywords
+            if any(keyword in header for keyword in ['why', 'suitable', 'का योग्य', 'योग्य आहे']):
+                sections['why_suitable'] = processed_content[:6]  # Limit to 6 points
+            elif any(keyword in header for keyword in ['business', 'potential', 'व्यवसाय', 'शक्यता']):
+                sections['business_potential'] = processed_content[:6]
+            elif any(keyword in header for keyword in ['local', 'advantage', 'स्थानिक', 'फायदे']):
+                sections['local_advantages'] = processed_content[:6]
+            elif any(keyword in header for keyword in ['government', 'support', 'सरकारी', 'सहाय्य']):
+                sections['government_support'] = processed_content[:6]
+            elif any(keyword in header for keyword in ['success', 'factor', 'यश', 'घटक']):
+                sections['success_factors'] = processed_content[:6]
+            elif not sections['overview']:  # First section becomes overview
+                sections['overview'] = ' '.join(processed_content[:2]) if processed_content else section_text[:300]
+        
+        # Ensure we have an overview
         if not sections['overview']:
-            sections['overview'] = analysis_text[:200] + "..." if len(analysis_text) > 200 else analysis_text
+            sections['overview'] = analysis_text[:300] + "..." if len(analysis_text) > 300 else analysis_text
+        
+        # Ensure each section has at least some content
+        default_content = {
+            'why_suitable': ['स्थानिक मागणी आणि बाजार उपलब्धता', 'कमी गुंतवणुकीत सुरुवात', 'समुदायिक समर्थन'] if language == 'mr' else ['Local market demand available', 'Low investment start possible', 'Community support'],
+            'business_potential': ['चांगली कमाईची शक्यता', 'व्यवसाय वाढवण्याची संधी', 'स्थिर ग्राहकवर्ग'] if language == 'mr' else ['Good earning potential', 'Business growth opportunities', 'Stable customer base'],
+            'local_advantages': ['स्थानिक कच्चा माल', 'कमी वाहतूक खर्च', 'स्थानिक कौशल्य'] if language == 'mr' else ['Local raw materials', 'Lower transport costs', 'Local skills available'],
+            'government_support': ['सरकारी योजना उपलब्ध', 'कौशल्य विकास प्रशिक्षण', 'कर्ज सुविधा'] if language == 'mr' else ['Government schemes available', 'Skill development training', 'Loan facilities'],
+            'success_factors': ['गुणवत्तेवर भर', 'ग्राहक सेवा', 'नियमित उत्पादन'] if language == 'mr' else ['Focus on quality', 'Customer service', 'Regular production']
+        }
+        
+        for key, default_list in default_content.items():
+            if not sections[key]:
+                sections[key] = default_list
         
         return sections
     
@@ -316,5 +370,23 @@ class AzureOpenAIService:
                 ]
             }
 
-# Global instance
-azure_openai_service = AzureOpenAIService()
+# Singleton instance - lazy initialization
+_azure_openai_service_instance = None
+
+def get_azure_openai_service():
+    """Get the Azure OpenAI service instance with lazy initialization"""
+    global _azure_openai_service_instance
+    
+    if _azure_openai_service_instance is None:
+        try:
+            _azure_openai_service_instance = AzureOpenAIService()
+            logger.info("Azure OpenAI service initialized successfully")
+        except Exception as e:
+            logger.error(f"Failed to initialize Azure OpenAI service: {str(e)}")
+            _azure_openai_service_instance = None
+            raise
+    
+    return _azure_openai_service_instance
+
+# For backward compatibility
+azure_openai_service = None
