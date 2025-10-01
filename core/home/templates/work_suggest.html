@@ -5,16 +5,13 @@
 {% load static %}
 
 {% block content %}
-<!-- Hero Section with Government Portal Design -->
 <div class="relative bg-gradient-to-br from-blue-900 via-navyBlue to-indigo-900 text-white overflow-hidden">
-  <!-- Decorative Background Elements -->
   <div class="absolute inset-0 opacity-10">
     <div class="absolute top-10 left-10 w-32 h-32 bg-gradient-to-r from-saffron to-yellow-500 rounded-full blur-3xl"></div>
     <div class="absolute top-1/2 right-20 w-40 h-40 bg-gradient-to-r from-green-400 to-blue-500 rounded-full blur-3xl"></div>
     <div class="absolute bottom-10 left-1/3 w-28 h-28 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full blur-3xl"></div>
   </div>
   
-  <!-- Geometric Pattern Overlay -->
   <div class="absolute inset-0 opacity-5">
     <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
       <defs>
@@ -28,7 +25,6 @@
 
   <div class="relative container mx-auto px-4 py-16 lg:py-20">
     <div class="text-center max-w-4xl mx-auto">
-      <!-- Indian Emblem and Title -->
       <div class="flex items-center justify-center mb-6">
         <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mr-4 shadow-lg">
           <svg class="w-10 h-10 text-saffron" fill="currentColor" viewBox="0 0 24 24">
@@ -47,7 +43,6 @@
         </div>
       </div>
 
-      <!-- Main Heading -->
       <div class="mb-8">
         <h2 class="text-3xl lg:text-4xl font-bold mb-4 english-text">
           <span class="bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
@@ -60,7 +55,6 @@
           </span>
         </h2>
         
-        <!-- Decorative Line -->
         <div class="flex items-center justify-center mb-6">
           <div class="h-px bg-gradient-to-r from-transparent via-saffron to-transparent w-32"></div>
           <div class="w-2 h-2 bg-saffron rounded-full mx-4"></div>
@@ -75,7 +69,6 @@
         </p>
       </div>
 
-      <!-- Scroll Down Indicator -->
       <div class="animate-bounce">
         <svg class="w-6 h-6 mx-auto text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m0 0l7-7 7 7z"></path>
@@ -85,16 +78,12 @@
   </div>
 </div>
 
-<!-- Main Content Section -->
 <div class="bg-gray-50 min-h-screen">
   <div class="container mx-auto px-4 py-12">
 
-    <!-- Professional Form Section -->
     <div class="max-w-6xl mx-auto">
-      <!-- Form Header -->
       <div class="bg-white rounded-t-2xl shadow-lg border-b-4 border-gradient-to-r from-saffron to-yellow-500">
         <div class="p-6 bg-gradient-to-r from-navyBlue via-blue-700 to-indigo-800 text-white rounded-t-2xl relative overflow-hidden">
-          <!-- Decorative Elements -->
           <div class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-white bg-opacity-10 rounded-full"></div>
           <div class="absolute bottom-0 left-0 -mb-4 -ml-4 w-20 h-20 bg-white bg-opacity-5 rounded-full"></div>
           
@@ -115,7 +104,6 @@
               </div>
             </div>
             
-            <!-- Enhanced Language Toggle -->
             <div class="bg-white bg-opacity-20 backdrop-blur-lg rounded-full p-1 border border-white border-opacity-30">
               <div class="flex">
                 <button type="button" id="englishBtn" class="px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50">
@@ -140,15 +128,12 @@
         </div>
       </div>
       
-      <!-- Form Content -->
       <div class="bg-white rounded-b-2xl shadow-lg">
         <div class="p-8">
           <form method="get" class="space-y-8" id="suggestionForm">
             
-            <!-- Form Grid -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
               
-              <!-- District Selection -->
               <div class="group">
                 <label for="district" class="block text-sm font-semibold text-gray-700 mb-3 english-text flex items-center">
                   <svg class="w-4 h-4 mr-2 text-navyBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -184,7 +169,6 @@
                 </div>
               </div>
 
-              <!-- Taluka Selection -->
               <div class="group">
                 <label for="taluka" class="block text-sm font-semibold text-gray-700 mb-3 english-text flex items-center">
                   <svg class="w-4 h-4 mr-2 text-navyBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -216,7 +200,6 @@
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
 
-              <!-- Gram Panchayat Selection -->
               <div class="group">
                 <label for="gram_panchayat" class="block text-sm font-semibold text-gray-700 mb-3 english-text flex items-center">
                   <svg class="w-4 h-4 mr-2 text-navyBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -245,7 +228,6 @@
                 </div>
               </div>
 
-              <!-- Sector Selection -->
               <div class="group">
                 <label for="sector" class="block text-sm font-semibold text-gray-700 mb-3 english-text flex items-center">
                   <svg class="w-4 h-4 mr-2 text-navyBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -280,9 +262,7 @@
               </div>
             </div>
             
-            <!-- Action Buttons -->
             <div class="flex flex-col sm:flex-row gap-4 justify-between items-center pt-6 border-t border-gray-200">
-              <!-- Reset Button -->
               <button type="reset" class="w-full sm:w-auto px-8 py-3.5 rounded-xl text-sm font-semibold bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700 hover:from-gray-200 hover:to-gray-300 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 active:scale-95 flex items-center justify-center border-2 border-gray-300 hover:border-gray-400 group">
                 <span class="english-text flex items-center">
                   <svg class="w-5 h-5 mr-2 group-hover:rotate-180 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -298,9 +278,7 @@
                 </span>
               </button>
 
-              <!-- Submit Button -->
               <button type="submit" id="submitBtn" class="w-full sm:w-auto px-10 py-3.5 rounded-xl text-sm font-bold bg-gradient-to-r from-saffron via-yellow-500 to-amber-500 text-white hover:from-amber-500 hover:via-saffron hover:to-yellow-500 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 active:scale-95 flex items-center justify-center group relative overflow-hidden">
-                <!-- Button glow effect -->
                 <div class="absolute inset-0 bg-gradient-to-r from-saffron to-yellow-500 opacity-0 group-hover:opacity-100 blur-lg transition-opacity duration-300"></div>
                 
                 <span class="english-text flex items-center relative z-10">
@@ -328,13 +306,10 @@
       </div>
     </div>
 
-    <!-- Professional Suggestions Section -->
     <div id="suggestions-container" class="max-w-6xl mx-auto mt-12 hidden">
       
-      <!-- Results Header -->
       <div class="bg-white rounded-2xl shadow-xl border-l-4 border-saffron mb-8 overflow-hidden">
         <div class="p-6 bg-gradient-to-r from-navyBlue via-blue-700 to-indigo-800 text-white relative">
-          <!-- Decorative Elements -->
           <div class="absolute top-0 right-0 -mt-6 -mr-6 w-32 h-32 bg-white bg-opacity-10 rounded-full"></div>
           <div class="absolute bottom-0 left-0 -mb-6 -ml-6 w-24 h-24 bg-white bg-opacity-5 rounded-full"></div>
           
@@ -356,7 +331,6 @@
               <div class="w-24 h-1 bg-gradient-to-r from-saffron to-yellow-400 rounded-full"></div>
             </div>
             
-            <!-- Success Animation -->
             <div class="hidden md:flex items-center space-x-2">
               <div class="flex space-x-1">
                 <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
@@ -372,239 +346,174 @@
       </div>
 
     {% if suggestions %}
-      {% regroup suggestions by work_type.sector as sector_list %}
-      
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-  {% for sector in sector_list %}
-    {% with regular_suggestions=sector.list|dictsort:"is_specialty"|dictsortreversed:"0" specialty_suggestions=sector.list|dictsort:"is_specialty"|dictsortreversed:"1" %}
-    
-    <!-- Regular suggestions card -->
-    {% with regular_suggestions=sector.list|dictsortreversed:"is_specialty" %}
-    {% if regular_suggestions %}
-    <div class="rounded-xl shadow-lg overflow-hidden border border-gray-200 transition-all duration-300 hover:shadow-xl transform hover:-translate-y-1 hover:border-blue-300">
-      <div class="p-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white relative overflow-hidden">
-        <div class="absolute -right-4 -top-4 bg-blue-400 bg-opacity-30 rounded-full w-16 h-16"></div>
-        <div class="absolute -right-2 -bottom-2 bg-blue-400 bg-opacity-20 rounded-full w-12 h-12"></div>
-        <h4 class="text-xl font-bold relative z-10 flex items-center">
-    {% if sector.grouper.name_en == "Water" or sector.grouper == "Water" %}
-      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
-      </svg>
-    {% elif sector.grouper.name_en == "Agriculture" or sector.grouper == "Agriculture" %}
-      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-      </svg>
-    {% elif sector.grouper.name_en == "Road" or sector.grouper == "Road" %}
-      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path>
-      </svg>
-    {% else %}
-      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path>
-      </svg>
-    {% endif %}
-    {% if is_english %}
-      {{ sector.grouper.name_en|default:sector.grouper }}
-    {% else %}
-      {{ sector.grouper.name_mr|default:sector.grouper }}
-    {% endif %}
-        </h4>
-        <span class="text-xs text-blue-100 opacity-75">{{ regular_suggestions|length }} suggestions</span>
-      </div>
-      <div class="p-4 bg-white">
-        <ul class="space-y-2">
-    {% for suggestion in regular_suggestions %}
-      {% if not suggestion.is_specialty %}
-      <li class="transition-all duration-300 rounded-lg border border-transparent hover:border-gray-200 hover:bg-blue-50 group">
-        <div class="p-3">
-          <div class="flex flex-wrap justify-between items-center">
-      <div class="flex-grow pr-2">
-        <p class="font-medium text-gray-800 group-hover:text-blue-700 transition-colors">
-          {% if is_english %}{{ suggestion.work_type.name_en }}{% else %}{{ suggestion.work_type.name_mr }}{% endif %}
-        </p>
-      </div>
-      <a href="{% url 'work_suggestion_detail' suggestion.id %}" class="relative inline-flex items-center px-3 py-1.5 rounded-md bg-white border border-blue-200 text-sm font-medium text-blue-600 hover:bg-blue-600 hover:text-white hover:border-transparent transition-all duration-300 group-hover:shadow-md">
-        <span class="english-text flex items-center {% if not is_english %}hidden{% endif %}">
-          Details
-          <svg class="w-4 h-4 ml-1.5 transform transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-          </svg>
-        </span>
-        <span class="marathi-text flex items-center {% if is_english %}hidden{% endif %}">
-          तपशील
-          <svg class="w-4 h-4 ml-1.5 transform transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-          </svg>
-        </span>
-      </a>
+        
+        {% for suggestion in suggestions %}
+          {% if suggestion.is_specialty %}
+          <div class="group rounded-xl shadow-lg overflow-hidden border border-green-300 transition-all duration-300 hover:shadow-xl transform hover:-translate-y-1 hover:border-green-400">
+            <div class="p-4 bg-gradient-to-r from-green-600 to-teal-600 text-white relative overflow-hidden">
+              <div class="absolute -right-4 -top-4 bg-green-400 bg-opacity-30 rounded-full w-16 h-16"></div>
+              <div class="absolute -right-2 -bottom-2 bg-green-400 bg-opacity-20 rounded-full w-12 h-12"></div>
+              <div class="flex items-center justify-between">
+                <h4 class="text-xl font-bold relative z-10 flex items-center">
+                    {% if suggestion.work_type.sector.name_en == "Water" %}
+                      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                    {% elif suggestion.work_type.sector.name_en == "Agriculture" %}
+                      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    {% elif suggestion.work_type.sector.name_en == "Road" %}
+                      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path></svg>
+                    {% else %}
+                      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path></svg>
+                    {% endif %}
+                    <div>
+                      <div class="english-text {% if not is_english %}hidden{% endif %}">
+                        {{ suggestion.work_type.sector.name_en }} Specialty
+                      </div>
+                      <div class="marathi-text {% if is_english %}hidden{% endif %}">
+                        {{ suggestion.work_type.sector.name_mr }} विशेष
+                      </div>
+                    </div>
+                </h4>
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-white text-green-800">
+                  <svg class="mr-1 h-3 w-3 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                  </svg>
+                  <span class="english-text {% if not is_english %}hidden{% endif %}">Specialty</span>
+                  <span class="marathi-text {% if is_english %}hidden{% endif %}">विशेष</span>
+                </span>
+              </div>
+            </div>
+            <div class="p-4 bg-white hover:bg-green-50 transition-colors duration-300">
+              <div class="flex flex-wrap justify-between items-center">
+                <div class="flex-grow pr-2">
+                  <p class="font-medium text-gray-800 group-hover:text-green-700 transition-colors">
+                    {% if is_english %}{{ suggestion.work_type.name_en }}{% else %}{{ suggestion.work_type.name_mr }}{% endif %}
+                  </p>
+                </div>
+                <a href="{% url 'work_suggestion_detail' suggestion.id %}" class="relative inline-flex items-center px-3 py-1.5 rounded-md bg-white border border-green-200 text-sm font-medium text-green-600 hover:bg-green-600 hover:text-white hover:border-transparent transition-all duration-300 group-hover:shadow-md">
+                  <span class="english-text flex items-center {% if not is_english %}hidden{% endif %}">
+                    Details
+                    <svg class="w-4 h-4 ml-1.5 transform transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                    </svg>
+                  </span>
+                  <span class="marathi-text flex items-center {% if is_english %}hidden{% endif %}">
+                    तपशील
+                    <svg class="w-4 h-4 ml-1.5 transform transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                    </svg>
+                  </span>
+                </a>
+              </div>
+            </div>
           </div>
+          {% endif %}
+        {% endfor %}
+        {% regroup suggestions by work_type.sector as sector_list %}
+        {% for sector in sector_list %}
+          {% with regular_suggestions=sector.list %}
+            <div class="rounded-xl shadow-lg overflow-hidden border border-gray-200 transition-all duration-300 hover:shadow-xl transform hover:-translate-y-1 hover:border-blue-300">
+              <div class="p-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white relative overflow-hidden">
+                <div class="absolute -right-4 -top-4 bg-blue-400 bg-opacity-30 rounded-full w-16 h-16"></div>
+                <div class="absolute -right-2 -bottom-2 bg-blue-400 bg-opacity-20 rounded-full w-12 h-12"></div>
+                <h4 class="text-xl font-bold relative z-10 flex items-center">
+                  {% if sector.grouper.name_en == "Water" or sector.grouper == "Water" %}
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                  {% elif sector.grouper.name_en == "Agriculture" or sector.grouper == "Agriculture" %}
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                  {% elif sector.grouper.name_en == "Road" or sector.grouper == "Road" %}
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path></svg>
+                  {% else %}
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path></svg>
+                  {% endif %}
+                  {% if is_english %}
+                    {{ sector.grouper.name_en|default:sector.grouper }}
+                  {% else %}
+                    {{ sector.grouper.name_mr|default:sector.grouper }}
+                  {% endif %}
+                </h4>
+                <span class="text-xs text-blue-100 opacity-75">{{ regular_suggestions|length }} suggestions</span>
+              </div>
+              <div class="p-4 bg-white">
+                <ul class="space-y-2">
+                {% for suggestion in regular_suggestions %}
+                  {% if not suggestion.is_specialty %}
+                  <li class="transition-all duration-300 rounded-lg border border-transparent hover:border-gray-200 hover:bg-blue-50 group">
+                    <div class="p-3">
+                      <div class="flex flex-wrap justify-between items-center">
+                        <div class="flex-grow pr-2">
+                          <p class="font-medium text-gray-800 group-hover:text-blue-700 transition-colors">
+                            {% if is_english %}{{ suggestion.work_type.name_en }}{% else %}{{ suggestion.work_type.name_mr }}{% endif %}
+                          </p>
+                        </div>
+                        <a href="{% url 'work_suggestion_detail' suggestion.id %}" class="relative inline-flex items-center px-3 py-1.5 rounded-md bg-white border border-blue-200 text-sm font-medium text-blue-600 hover:bg-blue-600 hover:text-white hover:border-transparent transition-all duration-300 group-hover:shadow-md">
+                          <span class="english-text flex items-center {% if not is_english %}hidden{% endif %}">
+                            Details
+                            <svg class="w-4 h-4 ml-1.5 transform transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                            </svg>
+                          </span>
+                          <span class="marathi-text flex items-center {% if is_english %}hidden{% endif %}">
+                            तपशील
+                            <svg class="w-4 h-4 ml-1.5 transform transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                            </svg>
+                          </span>
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+                  {% endif %}
+                {% endfor %}
+                </ul>
+                <div class="mt-4 pt-3 border-t border-dashed border-gray-200 text-center">
+                  <a href="#" class="text-sm text-blue-600 hover:text-blue-800 font-medium flex items-center justify-center">
+                    <span class="english-text {% if not is_english %}hidden{% endif %}">View All {{ sector.grouper.name_en|default:sector.grouper }} Suggestions</span>
+                    <span class="marathi-text {% if is_english %}hidden{% endif %}">सर्व {{ sector.grouper.name_mr|default:sector.grouper }} सूचना पहा</span>
+                    <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          {% endwith %}
+        {% endfor %}
         </div>
-      </li>
-      {% endif %}
-    {% endfor %}
-        </ul>
-        <div class="mt-4 pt-3 border-t border-dashed border-gray-200 text-center">
-    <a href="#" class="text-sm text-blue-600 hover:text-blue-800 font-medium flex items-center justify-center">
-      <span class="english-text {% if not is_english %}hidden{% endif %}">View All {{ sector.grouper.name_en|default:sector.grouper }} Suggestions</span>
-      <span class="marathi-text {% if is_english %}hidden{% endif %}">सर्व {{ sector.grouper.name_mr|default:sector.grouper }} सूचना पहा</span>
-      <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-      </svg>
-    </a>
-        </div>
-      </div>
-    </div>
-    {% endif %}
-    {% endwith %}
-    
-    <!-- Specialty suggestions card -->
-    {% with specialty_suggestions=sector.list|dictsort:"is_specialty"|dictsortreversed:"0" %}
-    {% if specialty_suggestions %}
-    <div class="rounded-xl shadow-lg overflow-hidden border border-yellow-300 transition-all duration-300 hover:shadow-xl transform hover:-translate-y-1 hover:border-yellow-400">
-      <div class="p-4 bg-gradient-to-r from-yellow-500 to-amber-500 text-white relative overflow-hidden">
-        <div class="absolute -right-4 -top-4 bg-yellow-400 bg-opacity-30 rounded-full w-16 h-16"></div>
-        <div class="absolute -right-2 -bottom-2 bg-yellow-400 bg-opacity-20 rounded-full w-12 h-12"></div>
-        <div class="flex items-center justify-between">
-    <h4 class="text-xl font-bold relative z-10 flex items-center">
-      {% if sector.grouper.name_en == "Water" or sector.grouper == "Water" %}
-        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
-        </svg>
-      {% elif sector.grouper.name_en == "Agriculture" or sector.grouper == "Agriculture" %}
-        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-        </svg>
-      {% elif sector.grouper.name_en == "Road" or sector.grouper == "Road" %}
-        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path>
-        </svg>
-      {% else %}
-        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path>
-        </svg>
-      {% endif %}
-      <div>
-        <div class="english-text {% if not is_english %}hidden{% endif %}">
-          {{ sector.grouper.name_en|default:sector.grouper }} Specialty
-        </div>
-        <div class="marathi-text {% if is_english %}hidden{% endif %}">
-          {{ sector.grouper.name_mr|default:sector.grouper }} विशेष
-        </div>
-      </div>
-    </h4>
-    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-white text-yellow-800">
-      <svg class="mr-1 h-3 w-3 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
-        <path fill-rule="evenodd" d="M5 2a1 1 0 011 1v1h1a1 1 0 010 2H6v1a1 1 0 01-2 0V6H3a1 1 0 010-2h1V3a1 1 0 011-1zm0 10a1 1 0 011 1v1h1a1 1 0 110 2H6v1a1 1 0 11-2 0v-1H3a1 1 0 110-2h1v-1a1 1 0 011-1z" clip-rule="evenodd"></path>
-        <path d="M11 5a3 3 0 116 0 3 3 0 01-6 0zm3 9a8 8 0 100-16 8 8 0 000 16z"></path>
-      </svg>
-      <span class="english-text {% if not is_english %}hidden{% endif %}">Specialty</span>
-      <span class="marathi-text {% if is_english %}hidden{% endif %}">विशेष</span>
-    </span>
-        </div>
-        <span class="text-xs text-yellow-100 opacity-75 mt-1">
-    {% with specialty_count=0 %}
-      {% for item in sector.list %}
-        {% if item.is_specialty %}
-          {% with specialty_count=specialty_count|add:1 %}{% endwith %}
-        {% endif %}
-      {% endfor %}
-      {{ specialty_count }} specialty suggestions
-    {% endwith %}
-        </span>
-      </div>
-      <div class="p-4 bg-white">
-        <ul class="space-y-2">
-    {% for suggestion in sector.list %}
-      {% if suggestion.is_specialty %}
-      <li class="transition-all duration-300 rounded-lg border border-transparent hover:border-yellow-200 hover:bg-yellow-50 group">
-        <div class="p-3">
-          <div class="flex flex-wrap justify-between items-center">
-      <div class="flex-grow pr-2">
-        <p class="font-medium text-gray-800 group-hover:text-yellow-700 transition-colors">
-          {% if is_english %}{{ suggestion.work_type.name_en }}{% else %}{{ suggestion.work_type.name_mr }}{% endif %}
-        </p>
-        <div class="mt-1.5">
-          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-            <svg class="mr-1 h-3 w-3 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
-        <path fill-rule="evenodd" d="M5 2a1 1 0 011 1v1h1a1 1 0 010 2H6v1a1 1 0 01-2 0V6H3a1 1 0 010-2h1V3a1 1 0 011-1zm0 10a1 1 0 011 1v1h1a1 1 0 110 2H6v1a1 1 0 11-2 0v-1H3a1 1 0 110-2h1v-1a1 1 0 011-1z" clip-rule="evenodd"></path>
-        <path d="M11 5a3 3 0 116 0 3 3 0 01-6 0zm3 9a8 8 0 100-16 8 8 0 000 16z"></path>
-            </svg>
-            <span class="english-text {% if not is_english %}hidden{% endif %}">Specialty Work</span>
-            <span class="marathi-text {% if is_english %}hidden{% endif %}">विशेष काम</span>
-          </span>
-        </div>
-      </div>
-      <a href="{% url 'work_suggestion_detail' suggestion.id %}" class="relative inline-flex items-center px-3 py-1.5 rounded-md bg-white border border-yellow-200 text-sm font-medium text-yellow-600 hover:bg-yellow-600 hover:text-white hover:border-transparent transition-all duration-300 group-hover:shadow-md">
-        <span class="english-text flex items-center {% if not is_english %}hidden{% endif %}">
-          Details
-          <svg class="w-4 h-4 ml-1.5 transform transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-          </svg>
-        </span>
-        <span class="marathi-text flex items-center {% if is_english %}hidden{% endif %}">
-          तपशील
-          <svg class="w-4 h-4 ml-1.5 transform transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-          </svg>
-        </span>
-      </a>
-          </div>
-        </div>
-      </li>
-      {% endif %}
-    {% endfor %}
-        </ul>
-        <div class="mt-4 pt-3 border-t border-dashed border-yellow-200 text-center">
-    <a href="#" class="text-sm text-yellow-600 hover:text-yellow-800 font-medium flex items-center justify-center">
-      <span class="english-text {% if not is_english %}hidden{% endif %}">View All Specialty Suggestions</span>
-      <span class="marathi-text {% if is_english %}hidden{% endif %}">सर्व विशेष सूचना पहा</span>
-      <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-      </svg>
-    </a>
-        </div>
-      </div>
-    </div>
-    {% endif %}
-    {% endwith %}
-    {% endwith %}
-  {% endfor %}
-      </div>
       
     {% else %}
       <div class="p-6 bg-white rounded-xl shadow-lg border border-gray-200">
-  <div class="p-8 rounded-2xl bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200 text-center relative overflow-hidden">
-    <!-- Decorative elements -->
-    <div class="absolute top-0 right-0 -mt-6 -mr-6 w-24 h-24 rounded-full bg-gray-200 opacity-50"></div>
-    <div class="absolute bottom-0 left-0 -mb-6 -ml-6 w-20 h-20 rounded-full bg-gray-200 opacity-30"></div>
+        <div class="p-8 rounded-2xl bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200 text-center relative overflow-hidden">
+          <div class="absolute top-0 right-0 -mt-6 -mr-6 w-24 h-24 rounded-full bg-gray-200 opacity-50"></div>
+          <div class="absolute bottom-0 left-0 -mb-6 -ml-6 w-20 h-20 rounded-full bg-gray-200 opacity-30"></div>
 
-    <div class="bg-white p-4 rounded-xl shadow-md inline-block mb-6 relative z-10">
-      <svg class="w-16 h-16 text-gray-400 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
-      </svg>
-    </div>
-    
-    <h5 class="font-bold text-xl text-gray-800 mb-3 english-text">No Work Suggestions Available</h5>
-    <h5 class="font-bold text-xl text-gray-800 mb-3 marathi-text hidden">कोणत्याही कामाच्या सूचना उपलब्ध नाहीत</h5>
-    
-    <p class="text-gray-600 mb-6 max-w-md mx-auto english-text">Please select different location details to find available work suggestions for your area.</p>
-    <p class="text-gray-600 mb-6 max-w-md mx-auto marathi-text hidden">कृपया आपल्या क्षेत्रासाठी उपलब्ध कामाच्या सूचना शोधण्यासाठी वेगळे स्थान तपशील निवडा.</p>
-    
-    <button type="button" onclick="document.getElementById('submitBtn').scrollIntoView({behavior: 'smooth'})" class="bg-gradient-to-r from-saffron to-yellow-500 text-white rounded-lg px-6 py-3 font-medium hover:shadow-lg transition-all duration-300 flex items-center mx-auto">
-      <span class="english-text flex items-center">
-        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-        </svg>
-        Try Different Selection
-      </span>
-      <span class="marathi-text hidden flex items-center">
-        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-        </svg>
-        वेगळी निवड प्रयत्न करा
-      </span>
-    </button>
-  </div>
+          <div class="bg-white p-4 rounded-xl shadow-md inline-block mb-6 relative z-10">
+            <svg class="w-16 h-16 text-gray-400 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+            </svg>
+          </div>
+          
+          <h5 class="font-bold text-xl text-gray-800 mb-3 english-text">No Work Suggestions Available</h5>
+          <h5 class="font-bold text-xl text-gray-800 mb-3 marathi-text hidden">कोणत्याही कामाच्या सूचना उपलब्ध नाहीत</h5>
+          
+          <p class="text-gray-600 mb-6 max-w-md mx-auto english-text">Please select different location details to find available work suggestions for your area.</p>
+          <p class="text-gray-600 mb-6 max-w-md mx-auto marathi-text hidden">कृपया आपल्या क्षेत्रासाठी उपलब्ध कामाच्या सूचना शोधण्यासाठी वेगळे स्थान तपशील निवडा.</p>
+          
+          <button type="button" onclick="document.getElementById('submitBtn').scrollIntoView({behavior: 'smooth'})" class="bg-gradient-to-r from-saffron to-yellow-500 text-white rounded-lg px-6 py-3 font-medium hover:shadow-lg transition-all duration-300 flex items-center mx-auto">
+            <span class="english-text flex items-center">
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+              </svg>
+              Try Different Selection
+            </span>
+            <span class="marathi-text hidden flex items-center">
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+              </svg>
+              वेगळी निवड प्रयत्न करा
+            </span>
+          </button>
+        </div>
       </div>
     {% endif %}
   </div>
@@ -745,6 +654,161 @@
               .card-hover-effect:hover {
                   transform: translateY(-8px) scale(1.02);
                   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+              }
+              
+              /* Enhanced Grid System for Specialty Cards */
+              .specialty-card {
+                  min-height: 420px;
+                  display: flex;
+                  flex-direction: column;
+                  position: relative;
+                  background: linear-gradient(145deg, #ffffff 0%, #f0fdf4 100%);
+                  border: 1px solid #f3f4f6;
+                  border-radius: 16px;
+                  overflow: hidden;
+                  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+              }
+              
+              .specialty-card:hover {
+                  transform: translateY(-12px) scale(1.02);
+                  box-shadow: 
+                      0 25px 50px -12px rgba(34, 197, 94, 0.25),
+                      0 0 0 1px rgba(34, 197, 94, 0.1),
+                      0 0 0 4px rgba(34, 197, 94, 0.05);
+                  background: linear-gradient(145deg, #ffffff 0%, #dcfce7 100%);
+              }
+              
+              .specialty-card::before {
+                  content: '';
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  right: 0;
+                  height: 4px;
+                  background: linear-gradient(90deg, #22c55e, #10b981, #22c55e);
+                  background-size: 200% 100%;
+                  animation: shimmer 3s ease-in-out infinite;
+              }
+              
+              @keyframes shimmer {
+                  0%, 100% { background-position: 200% 0; }
+                  50% { background-position: -200% 0; }
+              }
+              
+              /* Grid responsive adjustments */
+              @media (min-width: 768px) {
+                  .specialty-card {
+                      min-height: 440px;
+                  }
+              }
+              
+              @media (min-width: 1280px) {
+                  .specialty-card {
+                      min-height: 460px;
+                  }
+              }
+              
+              /* Line clamp utility for consistent card heights */
+              .line-clamp-2 {
+                  overflow: hidden;
+                  display: -webkit-box;
+                  -webkit-box-orient: vertical;
+                  -webkit-line-clamp: 2;
+                  line-clamp: 2;
+              }
+              
+              /* Enhanced button hover effects */
+              .specialty-card button:hover {
+                  background-size: 120% 120%;
+                  box-shadow: 
+                      0 10px 25px -5px rgba(34, 197, 94, 0.4),
+                      0 0 0 1px rgba(34, 197, 94, 0.2);
+              }
+              
+              /* Floating animations for decorative elements */
+              @keyframes float-slow {
+                  0%, 100% { transform: translateY(0px) scale(1); }
+                  50% { transform: translateY(-8px) scale(1.05); }
+              }
+              
+              @keyframes float-fast {
+                  0%, 100% { transform: translateY(0px) rotate(0deg); }
+                  50% { transform: translateY(-12px) rotate(5deg); }
+              }
+              
+              .specialty-card .w-20.h-20 {
+                  animation: float-slow 4s ease-in-out infinite;
+              }
+              
+              .specialty-card .w-16.h-16 {
+                  animation: float-fast 3s ease-in-out infinite 1s;
+              }
+              
+              /* Premium badge pulse effect */
+              .specialty-card .absolute.top-4.right-4 > div {
+                  animation: pulse-glow 2s ease-in-out infinite;
+              }
+              
+              @keyframes pulse-glow {
+                  0%, 100% { 
+                      box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+                      transform: scale(1);
+                  }
+                  50% {
+                      box-shadow: 0 0 0 8px rgba(34, 197, 94, 0);
+                      transform: scale(1.05);
+                  }
+              }
+              
+              /* Improved typography and spacing */
+              .specialty-card h3 {
+                  font-size: 1.125rem;
+                  line-height: 1.4;
+                  font-weight: 700;
+                  letter-spacing: -0.025em;
+              }
+              
+              .specialty-card p {
+                  line-height: 1.6;
+              }
+              
+              /* Enhanced focus states for accessibility */
+              .specialty-card button:focus {
+                  outline: none;
+                  ring: 4px;
+                  ring-color: rgba(34, 197, 94, 0.3);
+                  ring-offset: 2px;
+                  ring-offset-color: #ffffff;
+              }
+              
+              /* Section headers styling */
+              .section-header {
+                  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+                  border: 1px solid #e2e8f0;
+                  border-radius: 12px;
+                  padding: 1.5rem;
+                  margin-bottom: 2rem;
+              }
+              
+              /* Grid gap adjustments for better spacing */
+              .specialty-grid {
+                  display: grid;
+                  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                  gap: 2rem;
+              }
+              
+              @media (min-width: 768px) {
+                  .specialty-grid {
+                      grid-template-columns: repeat(2, 1fr);
+                      gap: 2.5rem;
+                  }
+              }
+              
+              @media (min-width: 1280px) {
+                  .specialty-grid {
+                      grid-template-columns: repeat(3, 1fr);
+                      gap: 2rem;
+                  }
               }
           `;
           document.head.appendChild(style);
@@ -1231,9 +1295,13 @@
           }
       });
       
+      // Check if there are any specialty suggestions across all sectors
+      const totalSpecialty = Object.values(sectors).reduce((total, sector) => total + sector.specialty_suggestions.length, 0);
+      const totalRegular = Object.values(sectors).reduce((total, sector) => total + sector.regular_suggestions.length, 0);
+      
       // Add appropriate header
       let html = `
-          <div class="p-5 bg-gradient-to-r from-navyBlue via-blue-600 to-blue-700 text-white rounded-xl shadow-lg flex justify-between items-center">
+          <div class="p-5 bg-gradient-to-r from-navyBlue via-blue-600 to-blue-700 text-white rounded-xl shadow-lg flex justify-between items-center mb-8">
               <div>
                   <h4 class="text-2xl font-bold english-text flex items-center ${isEnglish ? '' : 'hidden'}">
                       <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1248,6 +1316,14 @@
                       तुमच्या साठी योग्य प्रकारे उद्योग निवडण्यासाठी खालील माहिती
                   </h4>
                   <div class="w-20 h-1 bg-saffron mt-2"></div>
+                  <p class="text-blue-200 text-sm mt-2">
+                      <span class="english-text ${isEnglish ? '' : 'hidden'}">
+                          ${totalSpecialty} Premium Specialties • ${totalRegular} Regular Opportunities
+                      </span>
+                      <span class="marathi-text ${!isEnglish ? '' : 'hidden'}">
+                          ${totalSpecialty} प्रीमियम विशेषता • ${totalRegular} नियमित संधी
+                      </span>
+                  </p>
               </div>
               <div class="hidden md:block">
                   <div class="animate-pulse flex space-x-1">
@@ -1257,11 +1333,213 @@
                   </div>
               </div>
           </div>
-          
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
       `;
       
+      // Specialty Suggestions Section (if any exist)
+      if (totalSpecialty > 0) {
+          html += `
+              <div class="mb-12">
+                  <div class="flex items-center justify-between mb-6">
+                      <div class="flex items-center">
+                          <div class="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl flex items-center justify-center mr-4 shadow-lg">
+                              <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                              </svg>
+                          </div>
+                          <div>
+                              <h3 class="text-2xl font-bold text-gray-800 english-text ${isEnglish ? '' : 'hidden'}">Premium Specialty Opportunities</h3>
+                              <h3 class="text-2xl font-bold text-gray-800 marathi-text ${!isEnglish ? '' : 'hidden'}">प्रीमियम विशेष संधी</h3>
+                              <p class="text-gray-600 text-sm mt-1">
+                                  <span class="english-text ${isEnglish ? '' : 'hidden'}">Curated high-potential work suggestions with enhanced benefits</span>
+                                  <span class="marathi-text ${!isEnglish ? '' : 'hidden'}">वाढीव फायद्यासह उच्च क्षमतेच्या काम सूचना</span>
+                              </p>
+                          </div>
+                      </div>
+                      <div class="hidden lg:flex items-center bg-gradient-to-r from-green-50 to-emerald-50 px-4 py-2 rounded-full border border-green-200">
+                          <svg class="w-4 h-4 text-green-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                              <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"></path>
+                          </svg>
+                          <span class="text-green-700 font-medium text-sm">
+                              <span class="english-text ${isEnglish ? '' : 'hidden'}">${totalSpecialty} Available</span>
+                              <span class="marathi-text ${!isEnglish ? '' : 'hidden'}">${totalSpecialty} उपलब्ध</span>
+                          </span>
+                      </div>
+                  </div>
+                  
+                  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+          `;
+      }
+      
+      // Regular Suggestions Section Header
+      let regularSectionAdded = false;
+      
       // Add sector cards
+      Object.values(sectors).forEach((sector, index) => {
+          // Individual specialty suggestion cards
+          if (sector.specialty_suggestions.length > 0) {
+              const specialtySuggestions = sector.specialty_suggestions;
+              
+              // Create individual cards for each specialty in proper grid
+              specialtySuggestions.forEach((suggestion, specIndex) => {
+                  html += `
+                      <div class="specialty-card group bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 hover:scale-[1.02] opacity-0 animate-fadeIn border border-amber-200 hover:border-amber-300 overflow-hidden relative" style="animation-delay: ${specIndex * 200}ms;">
+                          
+                          <!-- Premium Badge -->
+                          <div class="absolute top-4 right-4 z-30">
+                              <div class="bg-gradient-to-r from-green-500 to-emerald-500 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-lg border-2 border-white flex items-center">
+                                  <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                  </svg>
+                                  <span class="english-text ${isEnglish ? '' : 'hidden'}">PREMIUM</span>
+                                  <span class="marathi-text ${!isEnglish ? '' : 'hidden'}">प्रीमियम</span>
+                              </div>
+                          </div>
+                          
+                          <!-- Decorative Background Elements -->
+                          <div class="absolute top-0 left-0 w-full h-32 bg-gradient-to-br from-green-50 via-emerald-50 to-green-100 opacity-60"></div>
+                          <div class="absolute top-6 left-6 w-20 h-20 bg-gradient-to-br from-green-200 to-emerald-200 rounded-full opacity-20 blur-xl"></div>
+                          <div class="absolute bottom-6 right-6 w-16 h-16 bg-gradient-to-br from-emerald-200 to-green-200 rounded-full opacity-15 blur-lg"></div>
+                          
+                          <!-- Card Header -->
+                          <div class="relative p-6 pb-4">
+                              <div class="flex items-start justify-between mb-4">
+                                  <div class="flex items-center">
+                                      <div class="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center shadow-lg mr-4 group-hover:scale-110 transition-transform duration-300">
+                                          ${getSectorIcon(sector.name_en, 'w-7 h-7 text-white')}
+                                      </div>
+                                      <div class="flex-grow min-w-0">
+                                          <p class="text-xs uppercase tracking-wider text-green-600 font-semibold mb-1">
+                                              <span class="english-text ${isEnglish ? '' : 'hidden'}">${sector.name_en} Sector</span>
+                                              <span class="marathi-text ${!isEnglish ? '' : 'hidden'}">${sector.name_mr} क्षेत्र</span>
+                                          </p>
+                                          <h3 class="text-lg font-bold text-gray-900 leading-tight group-hover:text-green-700 transition-colors duration-300 line-clamp-2">
+                                              <span class="english-text ${isEnglish ? '' : 'hidden'}">${suggestion.work_type.name_en}</span>
+                                              <span class="marathi-text ${!isEnglish ? '' : 'hidden'}">${suggestion.work_type.name_mr}</span>
+                                          </h3>
+                                      </div>
+                                  </div>
+                              </div>
+                              
+                              <!-- Feature Tags -->
+                              <div class="flex flex-wrap gap-2 mb-4">
+                                  <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-green-100 to-emerald-100 text-green-800 border border-green-200">
+                                      <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                          <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"></path>
+                                      </svg>
+                                      <span class="english-text ${isEnglish ? '' : 'hidden'}">High Potential</span>
+                                      <span class="marathi-text ${!isEnglish ? '' : 'hidden'}">उच्च क्षमता</span>
+                                  </span>
+                                  <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-green-100 to-emerald-100 text-green-800 border border-green-200">
+                                      <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                      </svg>
+                                      <span class="english-text ${isEnglish ? '' : 'hidden'}">AI-Analyzed</span>
+                                      <span class="marathi-text ${!isEnglish ? '' : 'hidden'}">AI-विश्लेषित</span>
+                                  </span>
+                              </div>
+                          </div>
+                          
+                          <!-- Card Content -->
+                          <div class="px-6 pb-6">
+                              <!-- Description -->
+                              <div class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-4 mb-6 border border-green-100">
+                                  <div class="flex items-start">
+                                      <div class="flex-shrink-0">
+                                          <div class="w-8 h-8 bg-gradient-to-br from-green-400 to-emerald-400 rounded-lg flex items-center justify-center">
+                                              <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                                              </svg>
+                                          </div>
+                                      </div>
+                                      <div class="ml-3 flex-grow">
+                                          <p class="text-sm text-green-800 leading-relaxed">
+                                              <span class="english-text ${isEnglish ? '' : 'hidden'}">
+                                                  This specialty opportunity offers enhanced earning potential with comprehensive business analysis and market insights.
+                                              </span>
+                                              <span class="marathi-text ${!isEnglish ? '' : 'hidden'}">
+                                                  ही विशेष संधी सर्वसमावेशक व्यवसाय विश्लेषण आणि बाजार अंतर्दृष्टीसह वाढीव कमाईची क्षमता देते.
+                                              </span>
+                                          </p>
+                                      </div>
+                                  </div>
+                              </div>
+                              
+                              <!-- Action Button -->
+                              <a href="/suggestion/${suggestion.id}/" class="block w-full">
+                                  <button class="w-full bg-gradient-to-r from-green-500 via-emerald-500 to-green-500 hover:from-green-600 hover:via-emerald-600 hover:to-green-600 text-white font-bold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg group focus:outline-none focus:ring-4 focus:ring-green-200">
+                                      <span class="flex items-center justify-center">
+                                          <svg class="w-5 h-5 mr-2 group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                          </svg>
+                                          <span class="english-text ${isEnglish ? '' : 'hidden'}">View Complete Analysis</span>
+                                          <span class="marathi-text ${!isEnglish ? '' : 'hidden'}">संपूर्ण विश्लेषण पहा</span>
+                                          <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                          </svg>
+                                      </span>
+                                  </button>
+                              </a>
+                              
+                              <!-- Footer Info -->
+                              <div class="flex items-center justify-center mt-4 text-xs text-gray-500">
+                                  <svg class="w-3 h-3 mr-1 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                  </svg>
+                                  <span class="english-text ${isEnglish ? '' : 'hidden'}">Includes detailed business feasibility report</span>
+                                  <span class="marathi-text ${!isEnglish ? '' : 'hidden'}">तपशीलवार व्यवसाय व्यवहार्यता अहवाल समाविष्ट</span>
+                              </div>
+                          </div>
+                      </div>
+                  `;
+              });
+          }
+      });
+      
+      // Close specialty section if it exists
+      if (totalSpecialty > 0) {
+          html += `
+                  </div>
+              </div>
+          `;
+      }
+      
+      // Regular Suggestions Section
+      if (totalRegular > 0) {
+          html += `
+              <div class="mb-8">
+                  <div class="flex items-center justify-between mb-6">
+                      <div class="flex items-center">
+                          <div class="w-12 h-12 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center mr-4 shadow-lg">
+                              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                              </svg>
+                          </div>
+                          <div>
+                              <h3 class="text-2xl font-bold text-gray-800 english-text ${isEnglish ? '' : 'hidden'}">Regular Work Opportunities</h3>
+                              <h3 class="text-2xl font-bold text-gray-800 marathi-text ${!isEnglish ? '' : 'hidden'}">नियमित काम संधी</h3>
+                              <p class="text-gray-600 text-sm mt-1">
+                                  <span class="english-text ${isEnglish ? '' : 'hidden'}">Standard work suggestions based on your location and sector preferences</span>
+                                  <span class="marathi-text ${!isEnglish ? '' : 'hidden'}">आपल्या स्थान आणि क्षेत्राच्या प्राधान्यांवर आधारित मानक काम सूचना</span>
+                              </p>
+                          </div>
+                      </div>
+                      <div class="hidden lg:flex items-center bg-gradient-to-r from-blue-50 to-indigo-50 px-4 py-2 rounded-full border border-blue-200">
+                          <svg class="w-4 h-4 text-blue-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                          </svg>
+                          <span class="text-blue-700 font-medium text-sm">
+                              <span class="english-text ${isEnglish ? '' : 'hidden'}">${totalRegular} Available</span>
+                              <span class="marathi-text ${!isEnglish ? '' : 'hidden'}">${totalRegular} उपलब्ध</span>
+                          </span>
+                      </div>
+                  </div>
+                  
+                  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          `;
+      }
+      
+      // Add sector cards for regular suggestions
       Object.values(sectors).forEach((sector, index) => {
           // Regular suggestions card
           if (sector.regular_suggestions.length > 0) {
@@ -1284,31 +1562,31 @@
               // Add regular work items
               regularSuggestions.forEach(suggestion => {
                   html += `
-                      <li class="transition-all duration-300 rounded-lg border border-transparent hover:border-gray-200 hover:bg-blue-50 group">
-                          <div class="p-3">
-                              <div class="flex flex-wrap justify-between items-center">
-                                  <div class="flex-grow pr-2">
-                                      <p class="font-medium text-gray-800 group-hover:text-blue-700 transition-colors">
-                                          ${isEnglish ? suggestion.work_type.name_en : suggestion.work_type.name_mr}
-                                      </p>
+                          <li class="transition-all duration-300 rounded-lg border border-transparent hover:border-gray-200 hover:bg-blue-50 group">
+                              <div class="p-3">
+                                  <div class="flex flex-wrap justify-between items-center">
+                                      <div class="flex-grow pr-2">
+                                          <p class="font-medium text-gray-800 group-hover:text-blue-700 transition-colors">
+                                              ${isEnglish ? suggestion.work_type.name_en : suggestion.work_type.name_mr}
+                                          </p>
+                                      </div>
+                                      <a href="/suggestion/${suggestion.id}/" class="relative inline-flex items-center px-3 py-1.5 rounded-md bg-white border border-blue-200 text-sm font-medium text-blue-600 hover:bg-blue-600 hover:text-white hover:border-transparent transition-all duration-300 group-hover:shadow-md">
+                                          <span class="english-text flex items-center ${isEnglish ? '' : 'hidden'}">
+                                              Details
+                                              <svg class="w-4 h-4 ml-1.5 transform transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                                              </svg>
+                                          </span>
+                                          <span class="marathi-text flex items-center ${!isEnglish ? '' : 'hidden'}">
+                                              तपशील
+                                              <svg class="w-4 h-4 ml-1.5 transform transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                                              </svg>
+                                          </span>
+                                      </a>
                                   </div>
-                                  <a href="/suggestion/${suggestion.id}/" class="relative inline-flex items-center px-3 py-1.5 rounded-md bg-white border border-blue-200 text-sm font-medium text-blue-600 hover:bg-blue-600 hover:text-white hover:border-transparent transition-all duration-300 group-hover:shadow-md">
-                                      <span class="english-text flex items-center ${isEnglish ? '' : 'hidden'}">
-                                          Details
-                                          <svg class="w-4 h-4 ml-1.5 transform transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-                                          </svg>
-                                      </span>
-                                      <span class="marathi-text flex items-center ${!isEnglish ? '' : 'hidden'}">
-                                          तपशील
-                                          <svg class="w-4 h-4 ml-1.5 transform transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-                                          </svg>
-                                      </span>
-                                  </a>
                               </div>
-                          </div>
-                      </li>
+                          </li>
                   `;
               });
               
@@ -1328,105 +1606,15 @@
                   </div>
               `;
           }
-          
-          // Specialty suggestions card
-          if (sector.specialty_suggestions.length > 0) {
-              const specialtySuggestions = sector.specialty_suggestions;
-              html += `
-                  <div class="rounded-xl shadow-lg overflow-hidden border border-yellow-300 transition-all duration-300 hover:shadow-xl transform hover:-translate-y-1 hover:border-yellow-400 opacity-0 animate-fadeIn" style="animation-delay: ${index * 100 + 150}ms">
-                      <div class="p-4 bg-gradient-to-r from-yellow-500 to-amber-500 text-white relative overflow-hidden">
-                          <div class="absolute -right-4 -top-4 bg-yellow-400 bg-opacity-30 rounded-full w-16 h-16"></div>
-                          <div class="absolute -right-2 -bottom-2 bg-yellow-400 bg-opacity-20 rounded-full w-12 h-12"></div>
-                          <div class="flex items-center justify-between">
-                              <h4 class="text-xl font-bold relative z-10 flex items-center">
-                                  ${getSectorIcon(sector.name_en)}
-                                  <div>
-                                      <div class="english-text ${isEnglish ? '' : 'hidden'}">
-                                          ${sector.name_en} Specialty
-                                      </div>
-                                      <div class="marathi-text ${!isEnglish ? '' : 'hidden'}">
-                                          ${sector.name_mr} विशेष
-                                      </div>
-                                  </div>
-                              </h4>
-                              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-white text-yellow-800">
-                                  <svg class="mr-1 h-3 w-3 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
-                                      <path fill-rule="evenodd" d="M5 2a1 1 0 011 1v1h1a1 1 0 010 2H6v1a1 1 0 01-2 0V6H3a1 1 0 010-2h1V3a1 1 0 011-1zm0 10a1 1 0 011 1v1h1a1 1 0 110 2H6v1a1 1 0 11-2 0v-1H3a1 1 0 110-2h1v-1a1 1 0 011-1z" clip-rule="evenodd"></path>
-                                      <path d="M11 5a3 3 0 116 0 3 3 0 01-6 0zm3 9a8 8 0 100-16 8 8 0 000 16z"></path>
-                                  </svg>
-                                  <span class="english-text ${isEnglish ? '' : 'hidden'}">Specialty</span>
-                                  <span class="marathi-text ${!isEnglish ? '' : 'hidden'}">विशेष</span>
-                              </span>
-                          </div>
-                          <span class="text-xs text-yellow-100 opacity-75 mt-1">
-                              ${specialtySuggestions.length} specialty suggestions
-                          </span>
-                      </div>
-                      <div class="p-4 bg-white">
-                          <ul class="space-y-2">
-              `;
-              
-              // Add specialty work items
-              specialtySuggestions.forEach(suggestion => {
-                  html += `
-                      <li class="transition-all duration-300 rounded-lg border border-transparent hover:border-yellow-200 hover:bg-yellow-50 group">
-                          <div class="p-3">
-                              <div class="flex flex-wrap justify-between items-center">
-                                  <div class="flex-grow pr-2">
-                                      <p class="font-medium text-gray-800 group-hover:text-yellow-700 transition-colors">
-                                          ${isEnglish ? suggestion.work_type.name_en : suggestion.work_type.name_mr}
-                                      </p>
-                                      <div class="mt-1.5">
-                                          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                                              <svg class="mr-1 h-3 w-3 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
-                                                  <path fill-rule="evenodd" d="M5 2a1 1 0 011 1v1h1a1 1 0 010 2H6v1a1 1 0 01-2 0V6H3a1 1 0 010-2h1V3a1 1 0 011-1zm0 10a1 1 0 011 1v1h1a1 1 0 110 2H6v1a1 1 0 11-2 0v-1H3a1 1 0 110-2h1v-1a1 1 0 011-1z" clip-rule="evenodd"></path>
-                                                  <path d="M11 5a3 3 0 116 0 3 3 0 01-6 0zm3 9a8 8 0 100-16 8 8 0 000 16z"></path>
-                                              </svg>
-                                              <span class="english-text ${isEnglish ? '' : 'hidden'}">Specialty Work</span>
-                                              <span class="marathi-text ${!isEnglish ? '' : 'hidden'}">विशेष काम</span>
-                                          </span>
-                                      </div>
-                                  </div>
-                                  <a href="/suggestion/${suggestion.id}/" class="relative inline-flex items-center px-3 py-1.5 rounded-md bg-white border border-yellow-200 text-sm font-medium text-yellow-600 hover:bg-yellow-600 hover:text-white hover:border-transparent transition-all duration-300 group-hover:shadow-md">
-                                      <span class="english-text flex items-center ${isEnglish ? '' : 'hidden'}">
-                                          Details
-                                          <svg class="w-4 h-4 ml-1.5 transform transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-                                          </svg>
-                                      </span>
-                                      <span class="marathi-text flex items-center ${!isEnglish ? '' : 'hidden'}">
-                                          तपशील
-                                          <svg class="w-4 h-4 ml-1.5 transform transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-                                          </svg>
-                                      </span>
-                                  </a>
-                              </div>
-                          </div>
-                      </li>
-                  `;
-              });
-              
-              // Close specialty list and add view all link
-              html += `
-                          </ul>
-                          <div class="mt-4 pt-3 border-t border-dashed border-yellow-200 text-center">
-                              <a href="#" class="text-sm text-yellow-600 hover:text-yellow-800 font-medium flex items-center justify-center">
-                                  <span class="english-text ${isEnglish ? '' : 'hidden'}">View All Specialty Suggestions</span>
-                                  <span class="marathi-text ${!isEnglish ? '' : 'hidden'}">सर्व विशेष सूचना पहा</span>
-                                  <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                                  </svg>
-                              </a>
-                          </div>
-                      </div>
-                  </div>
-              `;
-          }
       });
       
-      // Close grid container
-      html += `</div>`;
+      // Close regular suggestions section if it exists
+      if (totalRegular > 0) {
+          html += `
+                  </div>
+              </div>
+          `;
+      }
       
       // Set container content
       container.innerHTML = html;
@@ -1478,7 +1666,6 @@
       return `
           <div class="p-6 bg-white rounded-xl shadow-lg border border-gray-200">
               <div class="p-8 rounded-2xl bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200 text-center relative overflow-hidden">
-                  <!-- Decorative elements -->
                   <div class="absolute top-0 right-0 -mt-6 -mr-6 w-24 h-24 rounded-full bg-gray-200 opacity-50"></div>
                   <div class="absolute bottom-0 left-0 -mb-6 -ml-6 w-20 h-20 rounded-full bg-gray-200 opacity-30"></div>
 
@@ -1514,8 +1701,7 @@
   }
 </script>
 
-<!-- Closing divs for main content sections -->
-  </div>
+</div>
 </div>
 
 {% endblock %}
