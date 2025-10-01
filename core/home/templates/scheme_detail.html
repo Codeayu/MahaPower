@@ -1,122 +1,532 @@
 {% extends "base.html" %}
-{% block title %}Scheme Detail | Maharashtra State Khadi & Village Industries Board{% endblock %}
+{% block title %}{{ scheme.name_mr|default:scheme.name_en }} | UdyogSetu | Maharashtra State Khadi & Village Industries Board{% endblock %}
 
 {% block content %}
-    <!-- Main Content -->
-    <main class="container mx-auto px-6 py-10">
-        <div class="bg-white shadow-lg rounded-lg p-8">
-            {% if scheme.photo %}
-            <div class="scheme-image mb-8">
-                <img src="{{ scheme.photo.url }}" alt="{{ scheme.title }}" class="w-full h-72 object-cover rounded-lg shadow-md">
-            </div>
-            {% endif %}
-            <!-- Tabs -->
-            <div class="tabs">
-                <ul class="flex border-b border-gray600">
-                    <li class="mr-1">
-                        <a href="#english" class="bg-white inline-block py-2 px-4 text-navyBlue font-semibold hover:text-blue-700 active-tab">English</a>
-                    </li>
-                    <li class="mr-1">
-                        <a href="#marathi" class="bg-white inline-block py-2 px-4 text-gray600 font-semibold hover:text-blue-700">मराठी</a>
-                    </li>
-                </ul>
-            </div>
+<!-- Breadcrumb Navigation -->
+<section class="bg-gradient-to-r from-blue-50 to-indigo-50 py-4">
+  <div class="container mx-auto px-4">
+    <nav class="flex items-center space-x-2 text-sm">
+      <a href="/" class="text-blue-600 hover:text-blue-800 flex items-center">
+        <i class="fas fa-home mr-1"></i>
+        <span class="english-text hidden">Home</span>
+        <span class="marathi-text">मुख्यपृष्ठ</span>
+      </a>
+      <i class="fas fa-chevron-right text-gray-400"></i>
+      <a href="/#schemes-section" class="text-blue-600 hover:text-blue-800">
+        <span class="english-text hidden">Schemes</span>
+        <span class="marathi-text">योजना</span>
+      </a>
+      <i class="fas fa-chevron-right text-gray-400"></i>
+      <span class="text-gray-600">
+        <span class="english-text hidden">{{ scheme.name_en }}</span>
+        <span class="marathi-text">{{ scheme.name_mr|default:scheme.name_en }}</span>
+      </span>
+    </nav>
+  </div>
+</section>
 
-            <!-- Tab Content -->
-            <div id="english" class="tab-content mt-6">
-                <!-- Scheme Details in English -->
-                <h1 class="text-4xl font-extrabold text-gray800 mb-6">{{ scheme.name_en }}</h1>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div>
-                        <h2 class="text-lg font-semibold text-dark-gray">Scheme Type</h2>
-                        <p class="text-gray600 mt-1">{{ scheme.scheme_type }}</p>
-                    </div>
-                    <div>
-                        <h2 class="text-lg font-semibold text-dark-gray">Sector</h2>
-                        <p class="text-gray600 mt-1">{{ scheme.sector }}</p>
-                    </div>
-                    <div>
-                        <h2 class="text-lg font-semibold text-dark-gray">Start Date</h2>
-                        <p class="text-gray600 mt-1">{{ scheme.created_at|date:"F j, Y" }}</p>
-                    </div>
-                    <div>
-                        <h2 class="text-lg font-semibold text-dark-gray">Eligibility</h2>
-                        <p class="text-gray600 mt-1">{{ scheme.eligibility_criteria_en }}</p>
-                    </div>
-                </div>
-                <div class="mt-8">
-                    <h2 class="text-lg font-semibold text-dark-gray">Description</h2>
-                    <p class="text-gray600 mt-2 leading-relaxed">{{ scheme.details_en }}</p>
-                </div>
-                <div class="mt-8">
-                    <h2 class="text-lg font-semibold text-dark-gray">Benefits</h2>
-                    <ul class="list-disc list-inside text-gray600 mt-2 space-y-2">
-                        <li>{{ scheme.summary_en }}</li>
-                    </ul>
-                </div>
-                {% if scheme.website_link %}
-                <div class="mt-8">
-                    <h2 class="text-lg font-semibold text-dark-gray">Website</h2>
-                    <a href="{{ scheme.website_link }}" class="text-blue-700 hover:underline font-medium mt-2 inline-block" target="_blank">
-                        Visit Official Website
-                    </a>
-                </div>
-                {% endif %}
+<!-- Main Content -->
+<section class="py-12 bg-gradient-to-br from-gray-50 via-white to-blue-50 min-h-screen">
+  <div class="container mx-auto px-4 max-w-7xl">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      
+      <!-- Main Content Column -->
+      <div class="lg:col-span-2">
+        
+        <!-- Hero Section with Image -->
+        {% if scheme.photo %}
+        <div class="relative mb-8 rounded-2xl overflow-hidden shadow-xl">
+          <img src="{{ scheme.photo.url }}" alt="{{ scheme.name_mr|default:scheme.name_en }}" class="w-full h-80 object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+          <div class="absolute bottom-6 left-6 right-6">
+            <div class="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+              <h1 class="text-3xl md:text-4xl font-bold text-white mb-2">
+                <span class="english-text hidden">{{ scheme.name_en }}</span>
+                <span class="marathi-text">{{ scheme.name_mr|default:scheme.name_en }}</span>
+              </h1>
+              <div class="flex flex-wrap items-center gap-3">
+                <span class="bg-[#FF9933] text-white px-3 py-1 rounded-full text-sm font-medium">
+                  <i class="fas fa-tag mr-1"></i>
+                  {{ scheme.sector }}
+                </span>
+                <span class="bg-white/20 text-white px-3 py-1 rounded-full text-sm font-medium">
+                  <i class="fas fa-calendar mr-1"></i>
+                  {{ scheme.created_at|date:"d M Y" }}
+                </span>
+              </div>
             </div>
-
-            <div id="marathi" class="tab-content mt-6 hidden">
-                <!-- Scheme Details in Marathi -->
-                <h1 class="text-4xl font-extrabold text-gray800 mb-6">{{ scheme.name_mr }}</h1>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div>
-                        <h2 class="text-lg font-semibold text-dark-gray">योजना प्रकार</h2>
-                        <p class="text-gray600 mt-1">{{ scheme.scheme_type }}</p>
-                    </div>
-                    <div>
-                        <h2 class="text-lg font-semibold text-dark-gray">क्षेत्र</h2>
-                        <p class="text-gray600 mt-1">{{ scheme.sector }}</p>
-                    </div>
-                    <div>
-                        <h2 class="text-lg font-semibold text-dark-gray">सुरुवातीची तारीख</h2>
-                        <p class="text-gray600 mt-1">{{ scheme.created_at|date:"F j, Y" }}</p>
-                    </div>
-                    <div>
-                        <h2 class="text-lg font-semibold text-dark-gray">पात्रता</h2>
-                        <p class="text-gray600 mt-1">{{ scheme.eligibility_criteria_mr }}</p>
-                    </div>
-                </div>
-                <div class="mt-8">
-                    <h2 class="text-lg font-semibold text-dark-gray">वर्णन</h2>
-                    <p class="text-gray600 mt-2 leading-relaxed">{{ scheme.details_mr }}</p>
-                </div>
-                <div class="mt-8">
-                    <h2 class="text-lg font-semibold text-dark-gray">फायदे</h2>
-                    <ul class="list-disc list-inside text-gray600 mt-2 space-y-2">
-                        <li>{{ scheme.summary_mr }}</li>
-                    </ul>
-                </div>
-                {% if scheme.website_link %}
-                <div class="mt-8">
-                    <h2 class="text-lg font-semibold text-dark-gray">वेबसाईट</h2>
-                    <a href="{{ scheme.website_link }}" class="text-blue-700 hover:underline font-medium mt-2 inline-block" target="_blank">
-                        अधिकृत वेबसाईटला भेट द्या
-                    </a>
-                </div>
-                {% endif %}
-            </div>
+          </div>
         </div>
-    </main>
+        {% else %}
+        <!-- Header without image -->
+        <div class="bg-gradient-to-r from-[#FF9933] to-[#FF7722] rounded-2xl p-8 mb-8 shadow-xl">
+          <h1 class="text-3xl md:text-4xl font-bold text-white mb-4">
+            <span class="english-text hidden">{{ scheme.name_en }}</span>
+            <span class="marathi-text">{{ scheme.name_mr|default:scheme.name_en }}</span>
+          </h1>
+          <div class="flex flex-wrap items-center gap-3">
+            <span class="bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm font-medium">
+              <i class="fas fa-tag mr-1"></i>
+              {{ scheme.sector }}
+            </span>
+            <span class="bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm font-medium">
+              <i class="fas fa-calendar mr-1"></i>
+              {{ scheme.created_at|date:"d M Y" }}
+            </span>
+          </div>
+        </div>
+        {% endif %}
 
-    <script>
-        // Tab switching logic
-        document.querySelectorAll('.tabs a').forEach(tab => {
-            tab.addEventListener('click', function(e) {
-                e.preventDefault();
-                document.querySelectorAll('.tabs a').forEach(t => t.classList.remove('text-navyBlue', 'active-tab'));
-                document.querySelectorAll('.tab-content').forEach(content => content.classList.add('hidden'));
-                this.classList.add('text-navyBlue', 'active-tab');
-                document.querySelector(this.getAttribute('href')).classList.remove('hidden');
-            });
-        });
-    </script>
-    {% endblock %}
+        <!-- Language Toggle -->
+        <div class="bg-white rounded-2xl shadow-lg border border-gray-200 mb-8 overflow-hidden">
+          <div class="bg-gradient-to-r from-[#000080] to-[#0066CC] p-6">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center">
+                <div class="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center mr-4">
+                  <i class="fas fa-language text-white text-xl"></i>
+                </div>
+                <div>
+                  <h2 class="text-xl font-semibold text-white">
+                    <span class="english-text hidden">Scheme Details</span>
+                    <span class="marathi-text">योजनेचे तपशील</span>
+                  </h2>
+                  <p class="text-blue-200 text-sm">
+                    <span class="english-text hidden">Complete information about this scheme</span>
+                    <span class="marathi-text">या योजनेची संपूर्ण माहिती</span>
+                  </p>
+                </div>
+              </div>
+              
+              <!-- Language Toggle Buttons -->
+              <div class="bg-white/20 backdrop-blur-lg rounded-full p-1 border border-white/30">
+                <div class="flex">
+                  <button id="marathiBtn" class="px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 bg-[#FF9933] text-white shadow-lg transform scale-105">
+                    मराठी
+                  </button>
+                  <button id="englishBtn" class="px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 text-gray-600 hover:text-white">
+                    English
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scheme Information Cards -->
+        <div class="space-y-6">
+          
+          <!-- Basic Information Card -->
+          <div class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+            <div class="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 border-b border-gray-200">
+              <div class="flex items-center">
+                <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
+                  <i class="fas fa-info-circle text-blue-600"></i>
+                </div>
+                <h2 class="text-xl font-semibold text-gray-800">
+                  <span class="english-text hidden">Basic Information</span>
+                  <span class="marathi-text">मूलभूत माहिती</span>
+                </h2>
+              </div>
+            </div>
+            <div class="p-6">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-gradient-to-br from-red-50 to-red-100 border border-red-200 rounded-xl p-4">
+                  <div class="flex items-center mb-2">
+                    <i class="fas fa-tag text-red-600 mr-2"></i>
+                    <h3 class="font-semibold text-red-800 text-lg">
+                      <span class="english-text hidden">Scheme Type</span>
+                      <span class="marathi-text">योजना प्रकार</span>
+                    </h3>
+                  </div>
+                  <p class="text-red-700 font-medium text-base">{{ scheme.scheme_type }}</p>
+                </div>
+                
+                <div class="bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-xl p-4">
+                  <div class="flex items-center mb-2">
+                    <i class="fas fa-industry text-blue-600 mr-2"></i>
+                    <h3 class="font-semibold text-blue-800 text-lg">
+                      <span class="english-text hidden">Sector</span>
+                      <span class="marathi-text">क्षेत्र</span>
+                    </h3>
+                  </div>
+                  <p class="text-blue-700 font-medium text-base">{{ scheme.sector }}</p>
+                </div>
+                
+                <div class="bg-gradient-to-br from-green-50 to-green-100 border border-green-200 rounded-xl p-4">
+                  <div class="flex items-center mb-2">
+                    <i class="fas fa-calendar text-green-600 mr-2"></i>
+                    <h3 class="font-semibold text-green-800 text-lg">
+                      <span class="english-text hidden">Launch Date</span>
+                      <span class="marathi-text">सुरुवातीची तारीख</span>
+                    </h3>
+                  </div>
+                  <p class="text-green-700 font-medium text-base">{{ scheme.created_at|date:"d F Y" }}</p>
+                </div>
+                
+                <div class="bg-gradient-to-br from-purple-50 to-purple-100 border border-purple-200 rounded-xl p-4">
+                  <div class="flex items-center mb-2">
+                    <i class="fas fa-users text-purple-600 mr-2"></i>
+                    <h3 class="font-semibold text-purple-800 text-lg">
+                      <span class="english-text hidden">Eligibility</span>
+                      <span class="marathi-text">पात्रता</span>
+                    </h3>
+                  </div>
+                  <p class="text-purple-700 font-medium text-base leading-relaxed">
+                    <span class="english-text hidden">{{ scheme.eligibility_criteria_en|default:"General eligibility criteria apply" }}</span>
+                    <span class="marathi-text">{{ scheme.eligibility_criteria_mr|default:"सामान्य पात्रता निकष लागू" }}</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Description Card -->
+          <div class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+            <div class="bg-gradient-to-r from-yellow-50 to-orange-50 p-6 border-b border-gray-200">
+              <div class="flex items-center">
+                <div class="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center mr-3">
+                  <i class="fas fa-file-alt text-yellow-600"></i>
+                </div>
+                <h2 class="text-xl font-semibold text-gray-800">
+                  <span class="english-text hidden">Scheme Description</span>
+                  <span class="marathi-text">योजनेचे वर्णन</span>
+                </h2>
+              </div>
+            </div>
+            <div class="p-6">
+              <div class="bg-gradient-to-br from-gray-50 to-blue-50 rounded-xl p-6 border border-gray-200">
+                <div class="prose prose-lg max-w-none">
+                  <p class="text-gray-800 text-lg leading-relaxed font-medium">
+                    <span class="english-text hidden">{{ scheme.details_en|linebreaks|default:"Detailed information about this scheme will be available soon. Please contact the office for more information." }}</span>
+                    <span class="marathi-text">{{ scheme.details_mr|linebreaks|default:"या योजनेची तपशीलवार माहिती लवकरच उपलब्ध होईल. अधिक माहितीसाठी कार्यालयाशी संपर्क साधा." }}</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Benefits Card -->
+          <div class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+            <div class="bg-gradient-to-r from-green-50 to-emerald-50 p-6 border-b border-gray-200">
+              <div class="flex items-center">
+                <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mr-3">
+                  <i class="fas fa-gift text-green-600"></i>
+                </div>
+                <h2 class="text-xl font-semibold text-gray-800">
+                  <span class="english-text hidden">Key Benefits</span>
+                  <span class="marathi-text">मुख्य फायदे</span>
+                </h2>
+              </div>
+            </div>
+            <div class="p-6">
+              <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-6 border border-green-200">
+                <div class="flex items-start">
+                  <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0 mt-1">
+                    <i class="fas fa-check text-green-600"></i>
+                  </div>
+                  <div class="flex-1">
+                    <p class="text-gray-800 text-lg leading-relaxed font-medium">
+                      <span class="english-text hidden">{{ scheme.summary_en|default:"This scheme provides various benefits and support to eligible beneficiaries." }}</span>
+                      <span class="marathi-text">{{ scheme.summary_mr|default:"ही योजना पात्र लाभार्थ्यांना विविध फायदे आणि सहाय्य प्रदान करते." }}</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Website Link Card -->
+          {% if scheme.website_link %}
+          <div class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+            <div class="bg-gradient-to-r from-indigo-50 to-purple-50 p-6 border-b border-gray-200">
+              <div class="flex items-center">
+                <div class="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center mr-3">
+                  <i class="fas fa-external-link-alt text-indigo-600"></i>
+                </div>
+                <h2 class="text-xl font-semibold text-gray-800">
+                  <span class="english-text hidden">Official Website</span>
+                  <span class="marathi-text">अधिकृत वेबसाईट</span>
+                </h2>
+              </div>
+            </div>
+            <div class="p-6">
+              <a href="{{ scheme.website_link }}" target="_blank" 
+                 class="inline-flex items-center bg-gradient-to-r from-[#000080] to-[#0066CC] hover:from-[#000060] hover:to-[#0055AA] text-white font-semibold py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                <i class="fas fa-globe mr-3"></i>
+                <span class="english-text hidden">Visit Official Website</span>
+                <span class="marathi-text">अधिकृत वेबसाईटला भेट द्या</span>
+                <i class="fas fa-arrow-right ml-3"></i>
+              </a>
+            </div>
+          </div>
+          {% endif %}
+
+        </div>
+      </div>
+      <!-- Sidebar -->
+      <div class="lg:col-span-1">
+        
+        <!-- Quick Actions -->
+        <div class="bg-white rounded-2xl shadow-lg border border-gray-200 mb-6 overflow-hidden">
+          <div class="bg-gradient-to-r from-[#FF9933] to-[#FF7722] p-6">
+            <div class="flex items-center">
+              <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center mr-3">
+                <i class="fas fa-bolt text-white"></i>
+              </div>
+              <h3 class="text-xl font-semibold text-white">
+                <span class="english-text hidden">Quick Actions</span>
+                <span class="marathi-text">त्वरित कृती</span>
+              </h3>
+            </div>
+          </div>
+          <div class="p-6">
+            <div class="space-y-4">
+              <button class="w-full bg-[#FF9933] hover:bg-[#e6831a] text-white font-medium py-3 px-4 rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center text-base shadow-md hover:shadow-lg">
+                <i class="fas fa-bookmark mr-2"></i>
+                <span class="english-text hidden">Save Scheme</span>
+                <span class="marathi-text">योजना जतन करा</span>
+              </button>
+              <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center text-base shadow-md hover:shadow-lg">
+                <i class="fas fa-share mr-2"></i>
+                <span class="english-text hidden">Share Scheme</span>
+                <span class="marathi-text">योजना शेअर करा</span>
+              </button>
+              <button class="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-4 rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center text-base shadow-md hover:shadow-lg">
+                <i class="fas fa-download mr-2"></i>
+                <span class="english-text hidden">Download Info</span>
+                <span class="marathi-text">माहिती डाउनलोड करा</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Application Process -->
+        <div class="bg-white rounded-2xl shadow-lg border border-gray-200 mb-6 overflow-hidden">
+          <div class="bg-gradient-to-r from-green-50 to-emerald-50 p-6 border-b border-gray-200">
+            <div class="flex items-center">
+              <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mr-3">
+                <i class="fas fa-clipboard-list text-green-600"></i>
+              </div>
+              <h3 class="text-xl font-semibold text-gray-800">
+                <span class="english-text hidden">How to Apply</span>
+                <span class="marathi-text">अर्ज कसा करावा</span>
+              </h3>
+            </div>
+          </div>
+          <div class="p-6">
+            <div class="space-y-4">
+              <div class="flex items-start">
+                <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3 flex-shrink-0 mt-1">
+                  <span class="text-blue-600 font-bold text-sm">1</span>
+                </div>
+                <p class="text-gray-700 text-base">
+                  <span class="english-text hidden">Check eligibility criteria</span>
+                  <span class="marathi-text">पात्रता निकष तपासा</span>
+                </p>
+              </div>
+              <div class="flex items-start">
+                <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3 flex-shrink-0 mt-1">
+                  <span class="text-blue-600 font-bold text-sm">2</span>
+                </div>
+                <p class="text-gray-700 text-base">
+                  <span class="english-text hidden">Collect required documents</span>
+                  <span class="marathi-text">आवश्यक कागदपत्रे गोळा करा</span>
+                </p>
+              </div>
+              <div class="flex items-start">
+                <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3 flex-shrink-0 mt-1">
+                  <span class="text-blue-600 font-bold text-sm">3</span>
+                </div>
+                <p class="text-gray-700 text-base">
+                  <span class="english-text hidden">Submit application online or offline</span>
+                  <span class="marathi-text">ऑनलाइन किंवा ऑफलाइन अर्ज सादर करा</span>
+                </p>
+              </div>
+              <div class="flex items-start">
+                <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3 flex-shrink-0 mt-1">
+                  <span class="text-blue-600 font-bold text-sm">4</span>
+                </div>
+                <p class="text-gray-700 text-base">
+                  <span class="english-text hidden">Track application status</span>
+                  <span class="marathi-text">अर्जाची स्थिती ट्रॅक करा</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="bg-gradient-to-br from-orange-50 to-red-50 border border-orange-200 rounded-2xl shadow-lg p-6">
+          <div class="flex items-center mb-6">
+            <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center mr-3">
+              <i class="fas fa-phone text-orange-600"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800">
+              <span class="english-text hidden">Need Help?</span>
+              <span class="marathi-text">मदत हवी आहे?</span>
+            </h3>
+          </div>
+          <div class="space-y-4">
+            <div class="flex items-center text-base">
+              <i class="fas fa-phone text-orange-600 mr-3 w-5"></i>
+              <span class="text-gray-700 font-medium">0721-2563894</span>
+            </div>
+            <div class="flex items-center text-base">
+              <i class="fas fa-envelope text-orange-600 mr-3 w-5"></i>
+              <span class="text-gray-700 font-medium">info@udyogsetu.gov.in</span>
+            </div>
+            <div class="flex items-start text-base">
+              <i class="fas fa-map-marker-alt text-orange-600 mr-3 w-5 mt-1"></i>
+              <span class="text-gray-700 font-medium">
+                <span class="english-text hidden">District Office, Amravati</span>
+                <span class="marathi-text">जिल्हा कार्यालय, अमरावती</span>
+              </span>
+            </div>
+            <div class="pt-4 border-t border-orange-200">
+              <p class="text-orange-700 text-sm">
+                <span class="english-text hidden">Office hours: Monday to Friday, 10:00 AM to 5:00 PM</span>
+                <span class="marathi-text">कार्यालयीन वेळ: सोमवार ते शुक्रवार, सकाळी १० ते संध्याकाळी ५</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Set Marathi as default language
+  let isEnglish = false;
+
+  // Initialize when DOM is loaded
+  document.addEventListener('DOMContentLoaded', function() {
+      // Set Marathi as active by default
+      const marathiBtn = document.getElementById('marathiBtn');
+      const englishBtn = document.getElementById('englishBtn');
+      
+      marathiBtn.classList.add('bg-[#FF9933]', 'text-white', 'shadow-lg', 'transform', 'scale-105');
+      englishBtn.classList.add('text-gray-600', 'hover:text-white');
+      
+      // Hide English, show Marathi by default
+      document.querySelectorAll('.english-text').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.marathi-text').forEach(el => el.classList.remove('hidden'));
+      
+      // Initialize event listeners
+      setupEventListeners();
+      
+      // Add enhanced animations
+      addEnhancedAnimations();
+  });
+
+  function setupEventListeners() {
+      // Language toggle buttons
+      document.getElementById('englishBtn').addEventListener('click', function() {
+          isEnglish = true;
+          updateLanguageUI();
+      });
+      
+      document.getElementById('marathiBtn').addEventListener('click', function() {
+          isEnglish = false;
+          updateLanguageUI();
+      });
+  }
+
+  function updateLanguageUI() {
+      const englishBtn = document.getElementById('englishBtn');
+      const marathiBtn = document.getElementById('marathiBtn');
+      
+      if (isEnglish) {
+          document.querySelectorAll('.english-text').forEach(el => el.classList.remove('hidden'));
+          document.querySelectorAll('.marathi-text').forEach(el => el.classList.add('hidden'));
+          
+          // Enhanced button styling
+          englishBtn.classList.add('bg-[#FF9933]', 'text-white', 'shadow-lg', 'transform', 'scale-105');
+          englishBtn.classList.remove('text-gray-600', 'hover:text-white');
+          marathiBtn.classList.remove('bg-[#FF9933]', 'text-white', 'shadow-lg', 'transform', 'scale-105');
+          marathiBtn.classList.add('text-gray-600', 'hover:text-white');
+      } else {
+          document.querySelectorAll('.english-text').forEach(el => el.classList.add('hidden'));
+          document.querySelectorAll('.marathi-text').forEach(el => el.classList.remove('hidden'));
+          
+          // Enhanced button styling
+          marathiBtn.classList.add('bg-[#FF9933]', 'text-white', 'shadow-lg', 'transform', 'scale-105');
+          marathiBtn.classList.remove('text-gray-600', 'hover:text-white');
+          englishBtn.classList.remove('bg-[#FF9933]', 'text-white', 'shadow-lg', 'transform', 'scale-105');
+          englishBtn.classList.add('text-gray-600', 'hover:text-white');
+      }
+  }
+
+  function addEnhancedAnimations() {
+      // Add hover effects to cards
+      const cards = document.querySelectorAll('.bg-white.rounded-2xl');
+      cards.forEach(card => {
+          card.addEventListener('mouseenter', function() {
+              this.style.transform = 'translateY(-2px)';
+              this.style.boxShadow = '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)';
+          });
+          
+          card.addEventListener('mouseleave', function() {
+              this.style.transform = 'translateY(0)';
+              this.style.boxShadow = '';
+          });
+      });
+
+      // Add ripple effect to buttons
+      const buttons = document.querySelectorAll('button');
+      buttons.forEach(button => {
+          button.addEventListener('click', function(e) {
+              const x = e.clientX - e.target.getBoundingClientRect().left;
+              const y = e.clientY - e.target.getBoundingClientRect().top;
+              
+              const ripple = document.createElement('span');
+              ripple.classList.add('ripple-effect');
+              ripple.style.top = `${y}px`;
+              ripple.style.left = `${x}px`;
+              
+              this.appendChild(ripple);
+              
+              setTimeout(() => {
+                  ripple.remove();
+              }, 600);
+          });
+      });
+
+      // Add necessary CSS
+      if (!document.querySelector('#enhanced-styles')) {
+          const style = document.createElement('style');
+          style.id = 'enhanced-styles';
+          style.innerHTML = `
+              .ripple-effect {
+                  position: absolute;
+                  background: rgba(255, 255, 255, 0.4);
+                  border-radius: 50%;
+                  pointer-events: none;
+                  width: 100px;
+                  height: 100px;
+                  transform: scale(0);
+                  animation: ripple 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+              }
+              
+              @keyframes ripple {
+                  to {
+                      transform: scale(4);
+                      opacity: 0;
+                  }
+              }
+              
+              button {
+                  overflow: hidden;
+                  position: relative;
+              }
+              
+              .prose p {
+                  margin-bottom: 0;
+              }
+          `;
+          document.head.appendChild(style);
+      }
+  }
+</script>
+{% endblock %}

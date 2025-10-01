@@ -1,8 +1,14 @@
 {% extends 'base.html' %}
 {% block title %}
   {{ work_type.name_en }} in {{ gram_panchayat.name_en }} | UdyogSetu | Maharashtra State Khadi & Village Industries Board
-{% endblock %}
-{% load static %}
+{% endblock              {% for point in ai_analysis.why_suitable %}
+              <div class="bg-white/70 backdrop-blur-sm rounded-lg p-5 flex items-start">
+                <div class="w-7 h-7 bg-green-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0 mt-1">
+                  <i class="fas fa-check text-green-600 text-sm"></i>
+                </div>
+                <p class="text-gray-800 text-base leading-relaxed font-medium">{{ point }}</p>
+              </div>
+              {% endfor %}load static %}
 
 {% block content %}
 <!-- Breadcrumb Navigation -->
@@ -41,7 +47,7 @@
           <div class="bg-gradient-to-r from-[#FF9933] to-[#FF7722] p-6">
             <div class="flex items-start justify-between">
               <div class="flex-1">
-                <h1 class="text-2xl md:text-3xl font-bold text-white mb-2">
+                <h1 class="text-3xl md:text-4xl font-bold text-white mb-2">
                   <span class="english-text">{{ work_type.name_en }}</span>
                   <span class="marathi-text hidden">{{ work_type.name_mr }}</span>
                 </h1>
@@ -73,7 +79,7 @@
             <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
               <i class="fas fa-map-marker-alt text-blue-600"></i>
             </div>
-            <h2 class="text-xl font-semibold text-gray-800">
+            <h2 class="text-2xl font-semibold text-gray-800">
               <span class="english-text">Location Details</span>
               <span class="marathi-text hidden">स्थानाचे तपशील</span>
             </h2>
@@ -84,12 +90,12 @@
             <div class="bg-gradient-to-br from-red-50 to-red-100 border border-red-200 rounded-lg p-4">
               <div class="flex items-center mb-2">
                 <i class="fas fa-map text-red-600 mr-2"></i>
-                <h3 class="font-semibold text-red-800">
+                <h3 class="font-semibold text-red-800 text-lg">
                   <span class="english-text">District</span>
                   <span class="marathi-text hidden">जिल्हा</span>
                 </h3>
               </div>
-              <p class="text-red-700 font-medium">
+              <p class="text-red-700 font-medium text-lg">
                 <span class="english-text">{{ district.name_en }}</span>
                 <span class="marathi-text hidden">{{ district.name_mr }}</span>
               </p>
@@ -99,12 +105,12 @@
             <div class="bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-lg p-4">
               <div class="flex items-center mb-2">
                 <i class="fas fa-location-dot text-blue-600 mr-2"></i>
-                <h3 class="font-semibold text-blue-800">
+                <h3 class="font-semibold text-blue-800 text-lg">
                   <span class="english-text">Taluka</span>
                   <span class="marathi-text hidden">तालुका</span>
                 </h3>
               </div>
-              <p class="text-blue-700 font-medium">
+              <p class="text-blue-700 font-medium text-lg">
                 <span class="english-text">{{ taluka.name_en }}</span>
                 <span class="marathi-text hidden">{{ taluka.name_mr }}</span>
               </p>
@@ -114,12 +120,12 @@
             <div class="bg-gradient-to-br from-green-50 to-green-100 border border-green-200 rounded-lg p-4">
               <div class="flex items-center mb-2">
                 <i class="fas fa-home text-green-600 mr-2"></i>
-                <h3 class="font-semibold text-green-800">
+                <h3 class="font-semibold text-green-800 text-lg">
                   <span class="english-text">Village/Gram Panchayat</span>
                   <span class="marathi-text hidden">गाव/ग्राम पंचायत</span>
                 </h3>
               </div>
-              <p class="text-green-700 font-medium">
+              <p class="text-green-700 font-medium text-lg">
                 <span class="english-text">{{ gram_panchayat.name_en }}</span>
                 <span class="marathi-text hidden">{{ gram_panchayat.name_mr }}</span>
               </p>
@@ -134,11 +140,11 @@
               <i class="fas fa-brain text-indigo-600 text-xl"></i>
             </div>
             <div>
-              <h2 class="text-xl font-semibold text-gray-800">
+              <h2 class="text-2xl font-semibold text-gray-800">
                 <span class="english-text">AI Analysis & Recommendations</span>
                 <span class="marathi-text hidden">AI विश्लेषण आणि शिफारसी</span>
               </h2>
-              <p class="text-sm text-gray-600">
+              <p class="text-base text-gray-600">
                 <span class="english-text">Powered by advanced AI for location-specific insights</span>
                 <span class="marathi-text hidden">स्थान-विशिष्ट अंतर्दृष्टीसाठी प्रगत AI द्वारे संचालित</span>
               </p>
@@ -150,16 +156,18 @@
           {% if ai_analysis.overview %}
           <div class="bg-gradient-to-r from-yellow-50 to-orange-50 border border-yellow-200 rounded-xl p-6 mb-6 shadow-md">
             <div class="flex items-center mb-4">
-              <div class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center mr-3">
-                <i class="fas fa-lightbulb text-yellow-600 text-lg"></i>
+              <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mr-3">
+                <i class="fas fa-lightbulb text-yellow-600 text-xl"></i>
               </div>
-              <h3 class="text-lg font-bold text-yellow-800">
+              <h3 class="text-xl font-bold text-yellow-800">
                 <span class="english-text">Business Overview</span>
                 <span class="marathi-text hidden">व्यवसायाचे विहंगावलोकन</span>
               </h3>
             </div>
-            <div class="bg-white/70 backdrop-blur-sm rounded-lg p-4">
-              <p class="text-gray-800 text-base leading-relaxed font-medium">{{ ai_analysis.overview }}</p>
+            <div class="bg-white/80 backdrop-blur-sm rounded-lg p-6 shadow-sm">
+              <div class="prose prose-lg max-w-none">
+                <p class="text-gray-800 text-lg leading-relaxed font-medium mb-0">{{ ai_analysis.overview|linebreaks }}</p>
+              </div>
             </div>
           </div>
           {% endif %}
@@ -171,7 +179,7 @@
               <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-3">
                 <i class="fas fa-check-circle text-green-600 text-lg"></i>
               </div>
-              <h3 class="text-lg font-bold text-green-800">
+              <h3 class="text-xl font-bold text-green-800">
                 <span class="english-text">Why Perfect for {{ gram_panchayat.name_en }}</span>
                 <span class="marathi-text hidden">{{ gram_panchayat.name_mr }}साठी का योग्य</span>
               </h3>
@@ -196,18 +204,18 @@
               <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-3">
                 <i class="fas fa-chart-line text-blue-600 text-lg"></i>
               </div>
-              <h3 class="text-lg font-bold text-blue-800">
+              <h3 class="text-xl font-bold text-blue-800">
                 <span class="english-text">Business Growth Potential</span>
                 <span class="marathi-text hidden">व्यवसाय वाढीची शक्यता</span>
               </h3>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
               {% for point in ai_analysis.business_potential %}
-              <div class="bg-white/70 backdrop-blur-sm rounded-lg p-4 flex items-start">
-                <div class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center mr-3 flex-shrink-0 mt-1">
-                  <i class="fas fa-trending-up text-blue-600 text-xs"></i>
+              <div class="bg-white/70 backdrop-blur-sm rounded-lg p-5 flex items-start">
+                <div class="w-7 h-7 bg-blue-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0 mt-1">
+                  <i class="fas fa-trending-up text-blue-600 text-sm"></i>
                 </div>
-                <p class="text-gray-800 text-sm leading-relaxed font-medium">{{ point }}</p>
+                <p class="text-gray-800 text-base leading-relaxed font-medium">{{ point }}</p>
               </div>
               {% endfor %}
             </div>
@@ -221,18 +229,18 @@
               <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center mr-3">
                 <i class="fas fa-map-marker-alt text-orange-600 text-lg"></i>
               </div>
-              <h3 class="text-lg font-bold text-orange-800">
+              <h3 class="text-xl font-bold text-orange-800">
                 <span class="english-text">Location-Specific Advantages</span>
                 <span class="marathi-text hidden">स्थान-विशिष्ट फायदे</span>
               </h3>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
               {% for point in ai_analysis.local_advantages %}
-              <div class="bg-white/70 backdrop-blur-sm rounded-lg p-4 flex items-start">
-                <div class="w-6 h-6 bg-orange-100 rounded-full flex items-center justify-center mr-3 flex-shrink-0 mt-1">
-                  <i class="fas fa-star text-orange-600 text-xs"></i>
+              <div class="bg-white/70 backdrop-blur-sm rounded-lg p-5 flex items-start">
+                <div class="w-7 h-7 bg-orange-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0 mt-1">
+                  <i class="fas fa-star text-orange-600 text-sm"></i>
                 </div>
-                <p class="text-gray-800 text-sm leading-relaxed font-medium">{{ point }}</p>
+                <p class="text-gray-800 text-base leading-relaxed font-medium">{{ point }}</p>
               </div>
               {% endfor %}
             </div>
@@ -246,18 +254,18 @@
               <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center mr-3">
                 <i class="fas fa-building text-purple-600 text-lg"></i>
               </div>
-              <h3 class="text-lg font-bold text-purple-800">
+              <h3 class="text-xl font-bold text-purple-800">
                 <span class="english-text">Government Support Available</span>
                 <span class="marathi-text hidden">उपलब्ध सरकारी सहाय्य</span>
               </h3>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
               {% for point in ai_analysis.government_support %}
-              <div class="bg-white/70 backdrop-blur-sm rounded-lg p-4 flex items-start">
-                <div class="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center mr-3 flex-shrink-0 mt-1">
-                  <i class="fas fa-handshake text-purple-600 text-xs"></i>
+              <div class="bg-white/70 backdrop-blur-sm rounded-lg p-5 flex items-start">
+                <div class="w-7 h-7 bg-purple-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0 mt-1">
+                  <i class="fas fa-handshake text-purple-600 text-sm"></i>
                 </div>
-                <p class="text-gray-800 text-sm leading-relaxed font-medium">{{ point }}</p>
+                <p class="text-gray-800 text-base leading-relaxed font-medium">{{ point }}</p>
               </div>
               {% endfor %}
             </div>
@@ -271,18 +279,18 @@
               <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center mr-3">
                 <i class="fas fa-trophy text-red-600 text-lg"></i>
               </div>
-              <h3 class="text-lg font-bold text-red-800">
+              <h3 class="text-xl font-bold text-red-800">
                 <span class="english-text">Keys to Success</span>
                 <span class="marathi-text hidden">यशाच्या गुरुकिल्ली</span>
               </h3>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
               {% for point in ai_analysis.success_factors %}
-              <div class="bg-white/70 backdrop-blur-sm rounded-lg p-4 flex items-start">
-                <div class="w-6 h-6 bg-red-100 rounded-full flex items-center justify-center mr-3 flex-shrink-0 mt-1">
-                  <i class="fas fa-key text-red-600 text-xs"></i>
+              <div class="bg-white/70 backdrop-blur-sm rounded-lg p-5 flex items-start">
+                <div class="w-7 h-7 bg-red-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0 mt-1">
+                  <i class="fas fa-key text-red-600 text-sm"></i>
                 </div>
-                <p class="text-gray-800 text-sm leading-relaxed font-medium">{{ point }}</p>
+                <p class="text-gray-800 text-base leading-relaxed font-medium">{{ point }}</p>
               </div>
               {% endfor %}
             </div>
@@ -340,22 +348,22 @@
         
         <!-- Quick Actions -->
         <div class="bg-white border border-gray-200 rounded-xl shadow-sm mb-6 p-6">
-          <h3 class="text-lg font-semibold text-gray-800 mb-4">
+          <h3 class="text-xl font-semibold text-gray-800 mb-4">
             <span class="english-text">Quick Actions</span>
             <span class="marathi-text hidden">त्वरित कृती</span>
           </h3>
           <div class="space-y-3">
-            <button class="w-full bg-[#FF9933] hover:bg-[#e6831a] text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center">
+            <button class="w-full bg-[#FF9933] hover:bg-[#e6831a] text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center text-base">
               <i class="fas fa-bookmark mr-2"></i>
               <span class="english-text">Save for Later</span>
               <span class="marathi-text hidden">नंतरसाठी जतन करा</span>
             </button>
-            <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center">
+            <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center text-base">
               <i class="fas fa-share mr-2"></i>
               <span class="english-text">Share</span>
               <span class="marathi-text hidden">शेअर करा</span>
             </button>
-            <a href="#" class="block w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center">
+            <a href="#" class="block w-full bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center text-base">
               <i class="fas fa-phone mr-2"></i>
               <span class="english-text">Get Support</span>
               <span class="marathi-text hidden">सहाय्य मिळवा</span>
@@ -366,7 +374,7 @@
         <!-- Related Suggestions -->
         {% if related_suggestions %}
         <div class="bg-white border border-gray-200 rounded-xl shadow-sm mb-6 p-6">
-          <h3 class="text-lg font-semibold text-gray-800 mb-4">
+          <h3 class="text-xl font-semibold text-gray-800 mb-4">
             <span class="english-text">Other Options in {{ gram_panchayat.name_en }}</span>
             <span class="marathi-text hidden">{{ gram_panchayat.name_mr }}मधील इतर पर्याय</span>
           </h3>
@@ -401,7 +409,7 @@
         <!-- Similar Suggestions in Area -->
         {% if similar_suggestions %}
         <div class="bg-white border border-gray-200 rounded-xl shadow-sm mb-6 p-6">
-          <h3 class="text-lg font-semibold text-gray-800 mb-4">
+          <h3 class="text-xl font-semibold text-gray-800 mb-4">
             <span class="english-text">Same Work in {{ taluka.name_en }}</span>
             <span class="marathi-text hidden">{{ taluka.name_mr }}मधील समान काम</span>
           </h3>
@@ -435,22 +443,22 @@
 
         <!-- Contact Information -->
         <div class="bg-gradient-to-br from-orange-50 to-red-50 border border-orange-200 rounded-xl shadow-sm p-6">
-          <h3 class="text-lg font-semibold text-gray-800 mb-4">
+          <h3 class="text-xl font-semibold text-gray-800 mb-4">
             <span class="english-text">Need Help?</span>
             <span class="marathi-text hidden">मदत हवी आहे?</span>
           </h3>
           <div class="space-y-3">
-            <div class="flex items-center text-sm">
-              <i class="fas fa-phone text-orange-600 mr-3 w-4"></i>
-              <span class="text-gray-700">0721-2563894</span>
+            <div class="flex items-center text-base">
+              <i class="fas fa-phone text-orange-600 mr-3 w-5"></i>
+              <span class="text-gray-700 font-medium">0721-2563894</span>
             </div>
-            <div class="flex items-center text-sm">
-              <i class="fas fa-envelope text-orange-600 mr-3 w-4"></i>
-              <span class="text-gray-700">info@udyogsetu.gov.in</span>
+            <div class="flex items-center text-base">
+              <i class="fas fa-envelope text-orange-600 mr-3 w-5"></i>
+              <span class="text-gray-700 font-medium">info@udyogsetu.gov.in</span>
             </div>
-            <div class="flex items-start text-sm">
-              <i class="fas fa-map-marker-alt text-orange-600 mr-3 w-4 mt-1"></i>
-              <span class="text-gray-700">
+            <div class="flex items-start text-base">
+              <i class="fas fa-map-marker-alt text-orange-600 mr-3 w-5 mt-1"></i>
+              <span class="text-gray-700 font-medium">
                 <span class="english-text">District Office, Amravati</span>
                 <span class="marathi-text hidden">जिल्हा कार्यालय, अमरावती</span>
               </span>
