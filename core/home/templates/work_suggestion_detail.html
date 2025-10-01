@@ -1,14 +1,8 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}
   {{ work_type.name_en }} in {{ gram_panchayat.name_en }} | UdyogSetu | Maharashtra State Khadi & Village Industries Board
-{% endblock              {% for point in ai_analysis.why_suitable %}
-              <div class="bg-white/70 backdrop-blur-sm rounded-lg p-5 flex items-start">
-                <div class="w-7 h-7 bg-green-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0 mt-1">
-                  <i class="fas fa-check text-green-600 text-sm"></i>
-                </div>
-                <p class="text-gray-800 text-base leading-relaxed font-medium">{{ point }}</p>
-              </div>
-              {% endfor %}load static %}
+{% endblock %}
 
 {% block content %}
 <!-- Breadcrumb Navigation -->
